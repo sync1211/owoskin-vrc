@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Xml;
 using OWOGame;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -28,24 +29,22 @@ namespace OWOVRC.Classes.Sensations
         // public float VelAngularZ { get; private set; } // Not implemented by VRChat
 
         // Calculated Values
-        public double Speed { get;  private set; }
+        public double Speed { get; private set; }
         private double SpeedLast;
         private DateTime LastSpeedPacket;
         public Vector3 Direction { get; private set; }
 
+        // Cooldown
+        private DateTime LastSensation;
+        public float SensationDuration = 0.3f;
+
         // Settings
-        public double Threshold { get; set; } = 6;
+        public double Threshold { get; set; } = 8;
         public double StopVelocityThreshold = 10;
         public double SpeedCap { get; set; } = 200.0;
         public bool IgnoreWhenGrounded { get; set; }
         public bool IgnoreWhenSeated { get; set; }
         public TimeSpan StopVelocityTime = TimeSpan.FromSeconds(1);
-        public int Frequency = 50;
-
-        private double Normalize(float x, float y, float z)
-        {
-            return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
-        }
 
         private Vector3 GetDirectionVector()
         {
@@ -134,13 +133,13 @@ namespace OWOVRC.Classes.Sensations
 
         private void ProcessSensations()
         {
-            bool feedbackEnabled = (!IsGrounded)       // Is flying
-                || (IsGrounded && !IgnoreWhenGrounded) // Is not flying (non-grounded setting disabled)
-                || (IsSeated && !IgnoreWhenSeated);    // Is sitting (non-seated setting disabled)
+            bool feedbackEnabled = !IsGrounded       // Is flying
+                || IsGrounded && !IgnoreWhenGrounded // Is not flying (non-grounded setting disabled)
+                || IsSeated && !IgnoreWhenSeated;    // Is sitting (non-seated setting disabled)
 
             // Sudden stop effect (e.g. hitting the ground after falling)
             TimeSpan stoppingTime = DateTime.Now - LastSpeedPacket;
-            if (feedbackEnabled && (stoppingTime < StopVelocityTime) && Speed <= 1 && SpeedLast > 0)
+            if (feedbackEnabled && stoppingTime < StopVelocityTime && Speed <= 1 && SpeedLast > 0)
             {
                 double stopVelocity = Math.Min(SpeedLast, SpeedCap);
                 int velocityPercent = (int)(100 * stopVelocity / SpeedCap);
@@ -168,12 +167,22 @@ namespace OWOVRC.Classes.Sensations
                 return;
             }
 
+            TimeSpan lastUpdateDiff = DateTime.Now - LastSensation;
+            //Log.Information("TimeDiff {diff}", lastUpdateDiff.TotalSeconds);
+
+            bool updateCooldown = lastUpdateDiff.TotalSeconds < SensationDuration;
+            if (updateCooldown)
+            {
+                Log.Debug("Ignoring update (cooldown) (diff: {diff})", lastUpdateDiff.TotalSeconds);
+                return;
+            }
+            LastSensation = DateTime.Now;
+
             double speedCapped = Math.Min(Speed, SpeedCap);
             int speedPercent = (int)(100 * speedCapped / SpeedCap);
             Log.Information("Movement speed: {speedCapped} ({speed}) => {intensity}%", speedCapped, Speed, speedPercent);
 
             // Send senstations to vest
-            //throw new NotImplementedException(); //TODO: Implement me!
             Sensation sensation = CreateSensation(speedPercent);
             owo.AddSensation(sensation);
 
@@ -183,13 +192,12 @@ namespace OWOVRC.Classes.Sensations
 
         private Sensation CreateSensation(int speed)
         {
-            int speedScaled = (int)(50 * (speed / 100.0)); // Temporary until I figure out how to play the wind sensation
-            return SensationsFactory.Create(Frequency, 0.3f, speedScaled, 0, 0, 0);
+            return owo.Sensations.Wind.MultiplyIntensityBy(speed / 100);
         }
 
         private Sensation CreateStopSensation(int power)
         {
-            return Sensation.Ball;
+            return owo.Sensations.FallDmg.MultiplyIntensityBy(power / 100).WithPriority(1);
         }
     }
 }

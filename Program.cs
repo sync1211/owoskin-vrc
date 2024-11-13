@@ -35,14 +35,18 @@ receiver.Dispose();
 owo.Dispose();
 UnregisterSensations();
 
-
 async Task Main()
 {
     await owo.Connect();
-    await Task.Delay(100000000);
-    Log.Information("Quit");
+    try
+    {
+        await Task.Delay(-1);
+    }
+    finally
+    {
+        Log.Information("Quit");
+    }
 }
-
 
 void RegisterSensations()
 {

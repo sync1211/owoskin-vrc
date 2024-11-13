@@ -6,14 +6,15 @@ namespace OWOVRC.Classes.OWOSuit
     public partial class OWOHelper: IDisposable
     {
         public bool IsConnected => OWO.ConnectionState == ConnectionState.Connected;
+        public readonly OWOSensations Sensations = new();
 
         public async Task Connect()
         {
             Log.Information("Connecting to OWO...");
 
-            BakedSensation ball = BakedSensation.Parse("0~Ball~100,1,100,0,0,0,Impact|5%100~impact-0~");
+            //NOTE: Baked sensations are registered in OWOSensations.cs!
+            GameAuth auth = GameAuth.Create(Sensations.FallDmg, Sensations.Wind);
 
-            GameAuth auth = GameAuth.Create(ball);
             OWO.Configure(auth);
 
             await OWO.AutoConnect();
@@ -46,6 +47,7 @@ namespace OWOVRC.Classes.OWOSuit
         {
             OWO.Stop();
             OWO.Disconnect();
+            GC.SuppressFinalize(this);
         }
     }
 }

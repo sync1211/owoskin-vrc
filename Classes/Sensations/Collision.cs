@@ -3,30 +3,54 @@ using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Sensations.Muscles;
 using Serilog;
+using System.Collections.Concurrent;
+using System.Timers;
 
 namespace OWOVRC.Classes.Sensations
 {
     // (Core functionality copied from https://github.com/shadorki/vrc-owo-suit)
-    public class Collision(OWOHelper owo) : OSCSensationBase
+    public class Collision : OSCSensationBase
     {
-        // Event handler
+        // OWOHelper
+        private readonly OWOHelper owo;
+
+        // Event handler for UI updates
         //public EventHandler? OnCollisionChange;
         //public string[] ActiveMuscles => [.. activeMuscles.Keys];
+
+        // Timer for haptic updates without OSC messages
+        private readonly System.Timers.Timer timer;
 
         // Param base
         private const string ADDRESS_BASE = "owo_suit_";
 
         // Dictionary to keep track of active haptic effects
-        private readonly Dictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
+        private readonly ConcurrentDictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
 
         // Settings
+        //TODO: Implement per-muscle intensity
         public bool IsEnabled = true;
         public bool UseVelocity = true;
+        public bool AllowContinuous = true;
         public int BaseIntensity = 100;
-        public int MinIntensity = 25;
+        public int MinIntensity = 25; // Min intensity when calculating speed
+        public int RestIntensty = 50; // Intensity to use persistent contacts
         public int Frequency = 50;
+        public float SensationSeconds = 0.3f;
         public float SpeedMultiplier = 200.0f;
         public TimeSpan MaxTimeDiff = TimeSpan.FromSeconds(1);
+
+        public Collision(OWOHelper owo)
+        {
+            this.owo = owo;
+
+            timer = new System.Timers.Timer()
+            {
+                Interval = SensationSeconds * 1000 - 50, // Subtract 50ms to reduce "gaps" between sensations
+                AutoReset = true
+            };
+            timer.Elapsed += OnTimerElapsed; //TODO: Would it be better to calculate the speed on timer elapsed rather than on message received?
+        }
 
         public override void OnOSCMessageReceived(object? sender, OSCMessage message)
         {
@@ -44,7 +68,8 @@ namespace OWOVRC.Classes.Sensations
             string muscle = message.Address;
             float proxmimity = message.Values.ReadFloatElement(0);
 
-            if (proxmimity > 0) {
+            if (proxmimity > 0)
+            {
                 OnCollisionEnter(muscle, proxmimity);
             }
             else
@@ -57,12 +82,22 @@ namespace OWOVRC.Classes.Sensations
 
         private void OnCollisionEnter(string muscle, float proxmimity)
         {
+            // Make sure the timer is running
+            if (!timer.Enabled && AllowContinuous)
+            {
+                Log.Debug("Timer started!");
+                timer.Start();
+            }
+
             MuscleCollisionData muscleData = new(muscle, proxmimity);
             MuscleCollisionData? valuePrev = activeMuscles.GetValueOrDefault(muscle);
 
             if (valuePrev == null)
             {
-                activeMuscles.Add(muscle, muscleData);
+                if (!activeMuscles.TryAdd(muscle, muscleData))
+                {
+                    Log.Warning("Unable to add muscle '{muscle}' to active muscles.", muscle);
+                }
                 return;
             }
 
@@ -71,9 +106,9 @@ namespace OWOVRC.Classes.Sensations
             //      This is not very ideal, but it's the best I've got so far
             float distance = Math.Abs(valuePrev.Proximity - proxmimity);
 
-            TimeSpan timediff = (muscleData.LastUpdate - valuePrev.LastUpdate);
+            TimeSpan timediff = muscleData.LastUpdate - valuePrev.LastUpdate;
 
-            float time = (float) timediff.TotalMilliseconds;
+            float time = (float)timediff.TotalMilliseconds;
             float speed = distance / time;
 
             if (timediff < MaxTimeDiff)
@@ -97,20 +132,34 @@ namespace OWOVRC.Classes.Sensations
             if (activeMuscles.ContainsKey(muscle))
             {
                 Log.Debug("Stop: {muscle}", muscle);
-                activeMuscles.Remove(muscle);
+                if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData? _))
+                {
+                    Log.Warning("Muscle '{muscle}' could not be from active muscles.", muscle);
+                }
+            }
+
+            // Stop timer to preserve resources
+            if (activeMuscles.IsEmpty)
+            {
+                Log.Debug("No sensations playing, timer stopped.");
+                timer.Stop();
             }
         }
 
-        private Sensation CreateSensation(MuscleCollisionData muscleData)
+        private MicroSensation CreateSensation(MuscleCollisionData muscleData)
         {
             int intensity = BaseIntensity;
 
-            if (UseVelocity)
+            if (muscleData.VelocityMultiplier == -1)
             {
-                float increase = (muscleData.VelocityMultiplier * MinIntensity);
+                intensity = RestIntensty;
+            }
+            else if (UseVelocity)
+            {
+                float increase = muscleData.VelocityMultiplier * MinIntensity;
                 Log.Debug("Increase: {inc}", increase);
-                intensity = MinIntensity + (int) increase;
-                intensity = Math.Min(Math.Max(intensity, MinIntensity), 100); //Math.Clamp(intensity, MinIntensity, 100);
+                intensity = MinIntensity + (int)increase;
+                intensity = Math.Min(Math.Max(intensity, MinIntensity), 100);
             }
 
             Log.Information(
@@ -121,7 +170,7 @@ namespace OWOVRC.Classes.Sensations
                 muscleData.VelocityMultiplier
             );
 
-            return SensationsFactory.Create(Frequency, 0.3f, intensity, 0, 0, 0);
+            return SensationsFactory.Create(Frequency, SensationSeconds, intensity, 0, 0, 0);
         }
 
         private void UpdateHaptics()
@@ -137,13 +186,14 @@ namespace OWOVRC.Classes.Sensations
                 return;
             }
 
-            if (activeMuscles.Count == 0)
+            if (activeMuscles.IsEmpty)
             {
                 owo.StopAllSensations();
                 return;
             }
 
-            foreach (MuscleCollisionData muscleData in activeMuscles.Values)
+            MuscleCollisionData[] muscleCollisionData = [.. activeMuscles.Values];
+            foreach (MuscleCollisionData muscleData in muscleCollisionData)
             {
                 Sensation sensation = CreateSensation(muscleData);
                 Muscle? muscle = OWOHelper.Muscles.GetValueOrDefault(muscleData.Name);
@@ -158,6 +208,17 @@ namespace OWOVRC.Classes.Sensations
 
                 Muscle[] muscles = [muscle.Value];
                 owo.AddSensation(sensation, muscles);
+            }
+        }
+
+        public void OnTimerElapsed(object? sender, ElapsedEventArgs e)
+        {
+            UpdateHaptics();
+
+            // Disable velocity-based haptics until the next time we receive a message
+            foreach (MuscleCollisionData muscleData in activeMuscles.Values)
+            {
+                muscleData.VelocityMultiplier = -1;
             }
         }
     }
