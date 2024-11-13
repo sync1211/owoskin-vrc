@@ -33,8 +33,7 @@ namespace OWOVRC.Classes.Sensations
         public bool UseVelocity = true;
         public bool AllowContinuous = true;
         public int BaseIntensity = 100;
-        public int MinIntensity = 25; // Min intensity when calculating speed
-        public int RestIntensty = 50; // Intensity to use persistent contacts
+        public int MinIntensity = 50; // Min intensity when calculating speed
         public int Frequency = 50;
         public float SensationSeconds = 0.3f;
         public float SpeedMultiplier = 200.0f;
@@ -46,7 +45,7 @@ namespace OWOVRC.Classes.Sensations
 
             timer = new System.Timers.Timer()
             {
-                Interval = SensationSeconds * 1000 - 50, // Subtract 50ms to reduce "gaps" between sensations
+                Interval = (SensationSeconds * 1000) - 50, // Subtract 50ms to reduce "gaps" between sensations
                 AutoReset = true
             };
             timer.Elapsed += OnTimerElapsed; //TODO: Would it be better to calculate the speed on timer elapsed rather than on message received?
@@ -150,11 +149,7 @@ namespace OWOVRC.Classes.Sensations
         {
             int intensity = BaseIntensity;
 
-            if (muscleData.VelocityMultiplier == -1)
-            {
-                intensity = RestIntensty;
-            }
-            else if (UseVelocity)
+            if (UseVelocity)
             {
                 float increase = muscleData.VelocityMultiplier * MinIntensity;
                 Log.Debug("Increase: {inc}", increase);
@@ -218,7 +213,7 @@ namespace OWOVRC.Classes.Sensations
             // Disable velocity-based haptics until the next time we receive a message
             foreach (MuscleCollisionData muscleData in activeMuscles.Values)
             {
-                muscleData.VelocityMultiplier = -1;
+                muscleData.VelocityMultiplier = 0;
             }
         }
     }

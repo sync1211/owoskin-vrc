@@ -133,9 +133,9 @@ namespace OWOVRC.Classes.Sensations
 
         private void ProcessSensations()
         {
-            bool feedbackEnabled = !IsGrounded       // Is flying
-                || IsGrounded && !IgnoreWhenGrounded // Is not flying (non-grounded setting disabled)
-                || IsSeated && !IgnoreWhenSeated;    // Is sitting (non-seated setting disabled)
+            bool feedbackEnabled = !IsGrounded         // Is flying
+                || (IsGrounded && !IgnoreWhenGrounded) // Is not flying (non-grounded setting disabled)
+                || (IsSeated && !IgnoreWhenSeated);    // Is sitting (non-seated setting disabled)
 
             // Sudden stop effect (e.g. hitting the ground after falling)
             TimeSpan stoppingTime = DateTime.Now - LastSpeedPacket;
