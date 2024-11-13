@@ -157,6 +157,14 @@ namespace OWOVRC.Classes.Sensations
             if (Speed < Threshold)
             {
                 //Log.Debug("Speed below threshold: {speed} < {threshold}", Speed, Threshold);
+
+                //// Stop sensations
+                if (SpeedLast > Threshold)
+                {
+                    SpeedLast = -1;
+                    LastSpeedPacket = DateTime.MinValue;
+                    owo.StopAllSensations();
+                }
                 return;
             }
 
@@ -173,7 +181,7 @@ namespace OWOVRC.Classes.Sensations
             bool updateCooldown = lastUpdateDiff.TotalSeconds < SensationDuration;
             if (updateCooldown)
             {
-                Log.Debug("Ignoring update (cooldown) (diff: {diff})", lastUpdateDiff.TotalSeconds);
+                //Log.Debug("Ignoring update (cooldown) (diff: {diff})", lastUpdateDiff.TotalSeconds);
                 return;
             }
             LastSensation = DateTime.Now;

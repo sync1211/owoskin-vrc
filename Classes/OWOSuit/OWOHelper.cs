@@ -41,7 +41,11 @@ namespace OWOVRC.Classes.OWOSuit
             OWO.Send(sensation);
         }
 
-        public void StopAllSensations() => OWO.Stop();
+        public void StopAllSensations()
+        {
+            OWO.Stop();
+            Log.Debug("All sensations stopped!");
+        }
 
         public void Dispose()
         {
