@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using System.Xml;
 using OWOGame;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -7,8 +6,11 @@ using Serilog;
 
 namespace OWOVRC.Classes.Sensations
 {
-    public class Velocity(OWOHelper owo) : OSCSensationBase
+    public class Velocity : OSCSensationBase
     {
+        private readonly OWOHelper owo;
+
+        // OSC Addresses
         private const string ADDRESS_VEL_X = "VelocityX";
         private const string ADDRESS_VEL_Y = "VelocityY";
         private const string ADDRESS_VEL_Z = "VelocityZ";
@@ -34,8 +36,7 @@ namespace OWOVRC.Classes.Sensations
         private DateTime LastSpeedPacket;
         public Vector3 Direction { get; private set; }
 
-        // Cooldown
-        private DateTime LastSensation;
+        // Sensation duration
         public float SensationDuration = 0.3f;
 
         // Settings
@@ -45,6 +46,23 @@ namespace OWOVRC.Classes.Sensations
         public bool IgnoreWhenGrounded { get; set; }
         public bool IgnoreWhenSeated { get; set; }
         public TimeSpan StopVelocityTime = TimeSpan.FromSeconds(1);
+
+        // Timer
+        private readonly System.Timers.Timer timer;
+
+        public Velocity(OWOHelper owo)
+        {
+            this.owo = owo;
+            timer = new System.Timers.Timer();
+            timer.Interval = SensationDuration * 1000;
+            timer.Elapsed += OnTimerElapsed;
+            timer.Start();
+        }
+
+        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            ProcessSensations();
+        }
 
         private Vector3 GetDirectionVector()
         {
@@ -117,7 +135,24 @@ namespace OWOVRC.Classes.Sensations
 
             // Update
             Update();
-            ProcessSensations();
+
+            // Sudden stop effect (e.g. hitting the ground after falling)
+            TimeSpan stoppingTime = DateTime.Now - LastSpeedPacket;
+            if (stoppingTime < StopVelocityTime && Speed <= 1 && SpeedLast > 0)
+            {
+                double stopVelocity = Math.Min(SpeedLast, SpeedCap);
+                int velocityPercent = (int)(100 * stopVelocity / SpeedCap);
+
+                if (stopVelocity >= StopVelocityThreshold)
+                {
+                    owo.StopAllSensations();
+                    Log.Information("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
+                    Sensation stopSensation = CreateStopSensation(velocityPercent);
+                    owo.AddSensation(stopSensation);
+                    LastSpeedPacket = DateTime.MinValue;
+                    return;
+                }
+            }
 
             if (message.Address == ADDRESS_VEL_SPEED)
             {
@@ -137,28 +172,12 @@ namespace OWOVRC.Classes.Sensations
                 || (IsGrounded && !IgnoreWhenGrounded) // Is not flying (non-grounded setting disabled)
                 || (IsSeated && !IgnoreWhenSeated);    // Is sitting (non-seated setting disabled)
 
-            // Sudden stop effect (e.g. hitting the ground after falling)
-            TimeSpan stoppingTime = DateTime.Now - LastSpeedPacket;
-            if (feedbackEnabled && stoppingTime < StopVelocityTime && Speed <= 1 && SpeedLast > 0)
-            {
-                double stopVelocity = Math.Min(SpeedLast, SpeedCap);
-                int velocityPercent = (int)(100 * stopVelocity / SpeedCap);
-
-                if (stopVelocity >= StopVelocityThreshold)
-                {
-                    Log.Information("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
-                    Sensation stopSensation = CreateStopSensation(velocityPercent);
-                    owo.AddSensation(stopSensation);
-                    return;
-                }
-            }
-
             // Speed too low
             if (Speed < Threshold)
             {
                 //Log.Debug("Speed below threshold: {speed} < {threshold}", Speed, Threshold);
 
-                //// Stop sensations
+                // Stop sensations
                 if (SpeedLast > Threshold)
                 {
                     SpeedLast = -1;
@@ -174,17 +193,6 @@ namespace OWOVRC.Classes.Sensations
                 Log.Debug("Ignoring grounded velocity.");
                 return;
             }
-
-            TimeSpan lastUpdateDiff = DateTime.Now - LastSensation;
-            //Log.Information("TimeDiff {diff}", lastUpdateDiff.TotalSeconds);
-
-            bool updateCooldown = lastUpdateDiff.TotalSeconds < SensationDuration;
-            if (updateCooldown)
-            {
-                //Log.Debug("Ignoring update (cooldown) (diff: {diff})", lastUpdateDiff.TotalSeconds);
-                return;
-            }
-            LastSensation = DateTime.Now;
 
             double speedCapped = Math.Min(Speed, SpeedCap);
             int speedPercent = (int)(100 * speedCapped / SpeedCap);

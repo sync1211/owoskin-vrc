@@ -48,7 +48,7 @@ namespace OWOVRC.Classes.Sensations
                 Interval = (SensationSeconds * 1000) - 50, // Subtract 50ms to reduce "gaps" between sensations
                 AutoReset = true
             };
-            timer.Elapsed += OnTimerElapsed; //TODO: Would it be better to calculate the speed on timer elapsed rather than on message received?
+            timer.Elapsed += OnTimerElapsed;
         }
 
         public override void OnOSCMessageReceived(object? sender, OSCMessage message)
