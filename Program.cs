@@ -3,6 +3,7 @@ using OWOVRC.Classes;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Sensations;
+using OWOVRC.Classes.Settings;
 using Serilog;
 using Serilog.Core;
 
@@ -13,8 +14,11 @@ LoggingLevelSwitch logLevel = Logging.SetUpLogger();
 logLevel.MinimumLevel = Serilog.Events.LogEventLevel.Debug;
 Log.Information("Starting up...");
 
+// Get Settings
+ConnectionSettings settings = new();
+
 // Prepare OWOHelper
-OWOHelper owo = new();
+OWOHelper owo = new(settings.OWOAddress);
 
 // Prepare sensation processors
 OSCSensationBase[] sensations = [
@@ -23,7 +27,7 @@ OSCSensationBase[] sensations = [
 ];
 
 // Start OSC listener
-OSCReceiver receiver = new();
+OSCReceiver receiver = new(settings.OSCPort);
 RegisterSensations();
 receiver.Start();
 

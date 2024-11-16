@@ -1,9 +1,10 @@
 ﻿using OWOGame;
 using Serilog;
+using System.Net;
 
 namespace OWOVRC.Classes.OWOSuit
 {
-    public partial class OWOHelper: IDisposable
+    public partial class OWOHelper(IPAddress address): IDisposable
     {
         public bool IsConnected => OWO.ConnectionState == ConnectionState.Connected;
         public readonly OWOSensations Sensations = new();
@@ -17,7 +18,7 @@ namespace OWOVRC.Classes.OWOSuit
 
             OWO.Configure(auth);
 
-            await OWO.AutoConnect();
+            await OWO.Connect(address.ToString());
             Log.Information("Connected to OWO!");
         }
 
