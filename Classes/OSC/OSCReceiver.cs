@@ -23,9 +23,15 @@ namespace OWOVRC.Classes.OSC
         private void MessageReceived(BlobString address, OscMessageValues values)
         {
             string addressString = address.ToString();
-            if (!addressString.StartsWith(OSC_ADDRESS))
+            if (!addressString.StartsWith(OSC_ADDRESS, StringComparison.CurrentCultureIgnoreCase))
             {
                 Log.Verbose("Ignoring non-vrchat message at {address}", addressString);
+                return;
+            }
+
+            if (values.ElementCount == 0)
+            {
+                Log.Verbose("Message at {address} does not include any values, ignoring.", addressString);
                 return;
             }
 

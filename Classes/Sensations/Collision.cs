@@ -76,7 +76,7 @@ namespace OWOVRC.Classes.Sensations
                 OnCollisionExit(muscle);
             }
 
-            UpdateHaptics();
+            //UpdateHaptics();
         }
 
         private void OnCollisionEnter(string muscle, float proxmimity)
