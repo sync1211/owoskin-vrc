@@ -4,7 +4,7 @@ using Serilog;
 
 namespace OWOVRC.Classes.OSC
 {
-    public class OSCReceiver(int port = 9001): IDisposable
+    public partial class OSCReceiver(int port = 9001): IDisposable
     {
         private bool disposed;
 

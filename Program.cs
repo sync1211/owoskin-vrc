@@ -12,18 +12,21 @@ using Serilog.Core;
 // Logger
 LoggingLevelSwitch logLevel = Logging.SetUpLogger();
 logLevel.MinimumLevel = Serilog.Events.LogEventLevel.Debug;
+
 Log.Information("Starting up...");
 
 // Get Settings
 ConnectionSettings settings = new();
+VelocitySensationSettings velocitySettings = new();
+CollisionSensationSettings collisionSettings = new();
 
 // Prepare OWOHelper
 OWOHelper owo = new(settings.OWOAddress);
 
 // Prepare sensation processors
 OSCSensationBase[] sensations = [
-    new Collision(owo),
-    new Velocity(owo)
+    new Collision(owo, collisionSettings),
+    new Velocity(owo, velocitySettings)
 ];
 
 // Start OSC listener

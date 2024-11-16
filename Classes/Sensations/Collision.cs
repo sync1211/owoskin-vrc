@@ -2,6 +2,7 @@
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Sensations.Muscles;
+using OWOVRC.Classes.Settings;
 using Serilog;
 using System.Collections.Concurrent;
 using System.Timers;
@@ -29,23 +30,16 @@ namespace OWOVRC.Classes.Sensations
 
         // Settings
         //TODO: Implement per-muscle intensity
-        public bool IsEnabled = true;
-        public bool UseVelocity = true;
-        public bool AllowContinuous = true;
-        public int BaseIntensity = 100;
-        public int MinIntensity = 50; // Min intensity when calculating speed
-        public int Frequency = 50;
-        public float SensationSeconds = 0.3f;
-        public float SpeedMultiplier = 200.0f;
-        public TimeSpan MaxTimeDiff = TimeSpan.FromSeconds(1);
+        public readonly CollisionSensationSettings Settings;
 
-        public Collision(OWOHelper owo)
+        public Collision(OWOHelper owo, CollisionSensationSettings settings)
         {
             this.owo = owo;
+            Settings = settings;
 
             timer = new System.Timers.Timer()
             {
-                Interval = (SensationSeconds * 1000) - 50, // Subtract 50ms to reduce "gaps" between sensations
+                Interval = (Settings.SensationSeconds * 1000) - 50, // Subtract 50ms to reduce "gaps" between sensations
                 AutoReset = true
             };
             timer.Elapsed += OnTimerElapsed;
@@ -82,7 +76,7 @@ namespace OWOVRC.Classes.Sensations
         private void OnCollisionEnter(string muscle, float proxmimity)
         {
             // Make sure the timer is running
-            if (!timer.Enabled && AllowContinuous)
+            if (!timer.Enabled && Settings.AllowContinuous)
             {
                 Log.Debug("Timer started!");
                 timer.Start();
@@ -110,9 +104,9 @@ namespace OWOVRC.Classes.Sensations
             float time = (float)timediff.TotalMilliseconds;
             float speed = distance / time;
 
-            if (timediff < MaxTimeDiff)
+            if (timediff < Settings.MaxTimeDiff)
             {
-                muscleData.VelocityMultiplier = speed * SpeedMultiplier;
+                muscleData.VelocityMultiplier = speed * Settings.SpeedMultiplier;
 
                 //Log.Debug(
                 //    "Speed: {speed}, Current proximity: {current}, Last proximity: {last}, Distance: {distance}, Time: {time}",
@@ -147,30 +141,30 @@ namespace OWOVRC.Classes.Sensations
 
         private MicroSensation CreateSensation(MuscleCollisionData muscleData)
         {
-            int intensity = BaseIntensity;
+            int intensity = Settings.BaseIntensity;
 
-            if (UseVelocity)
+            if (Settings.UseVelocity)
             {
-                float increase = muscleData.VelocityMultiplier * MinIntensity;
+                float increase = muscleData.VelocityMultiplier * Settings.MinIntensity;
                 Log.Debug("Increase: {inc}", increase);
-                intensity = MinIntensity + (int)increase;
-                intensity = Math.Min(Math.Max(intensity, MinIntensity), 100);
+                intensity = Settings.MinIntensity + (int)increase;
+                intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
             }
 
             Log.Information(
                 "Muscle: {muscle}, Intensity: {intensity}% (Min: {base}%, Multiplier: {multiplier})",
                 muscleData.Name,
                 intensity,
-                MinIntensity,
+                Settings.MinIntensity,
                 muscleData.VelocityMultiplier
             );
 
-            return SensationsFactory.Create(Frequency, SensationSeconds, intensity, 0, 0, 0);
+            return SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, intensity, 0, 0, 0);
         }
 
         private void UpdateHaptics()
         {
-            if (!IsEnabled)
+            if (!Settings.IsEnabled)
             {
                 return;
             }
