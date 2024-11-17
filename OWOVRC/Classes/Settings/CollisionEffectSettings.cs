@@ -2,7 +2,7 @@
 
 namespace OWOVRC.Classes.Settings
 {
-    public class CollisionSensationSettings
+    public class CollisionEffectSettings
     {
         public bool IsEnabled = true;
         public bool UseVelocity = true;
@@ -13,10 +13,5 @@ namespace OWOVRC.Classes.Settings
         public float SensationSeconds = 0.3f;
         public float SpeedMultiplier = 200.0f;
         public TimeSpan MaxTimeDiff = TimeSpan.FromSeconds(1);
-
-        public static CollisionSensationSettings? FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<CollisionSensationSettings>(json);
-        }
     }
 }

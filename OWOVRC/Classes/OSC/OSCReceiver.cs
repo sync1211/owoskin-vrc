@@ -4,20 +4,29 @@ using Serilog;
 
 namespace OWOVRC.Classes.OSC
 {
-    public partial class OSCReceiver(int port = 9001): IDisposable
+    public partial class OSCReceiver: IDisposable
     {
+        public bool IsRunning { get; private set; }
         private bool disposed;
 
         private const string OSC_ADDRESS = "/avatar/parameters/";
-        private readonly OscServer receiver = new(port);
+        private readonly OscServer receiver;
 
         public EventHandler<OSCMessage>? OnMessageReceived;
+        public int Port = 9001;
+
+        public OSCReceiver(int port = 9001)
+        {
+            Port = port;
+            receiver = new OscServer(Port);
+        }
 
         public void Start()
         {
             receiver.AddMonitorCallback(MessageReceived);
             receiver.Start();
-            Log.Information("OSC listener started on port {port}!", port);
+            IsRunning = true;
+            Log.Information("OSC listener started on port {port}!", Port);
         }
 
         private void MessageReceived(BlobString address, OscMessageValues values)

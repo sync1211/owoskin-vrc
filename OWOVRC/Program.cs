@@ -17,14 +17,14 @@ Log.Information("Starting up...");
 
 // Get Settings
 ConnectionSettings settings = new();
-VelocitySensationSettings velocitySettings = new();
-CollisionSensationSettings collisionSettings = new();
+VelocityEffectSettings velocitySettings = new();
+CollisionEffectSettings collisionSettings = new();
 
 // Prepare OWOHelper
 OWOHelper owo = new(settings.OWOAddress);
 
 // Prepare sensation processors
-OSCSensationBase[] sensations = [
+OSCEffectBase[] sensations = [
     new Collision(owo, collisionSettings),
     new Velocity(owo, velocitySettings)
 ];
@@ -57,7 +57,7 @@ async Task Main()
 
 void RegisterSensations()
 {
-    foreach (OSCSensationBase sensation in sensations)
+    foreach (OSCEffectBase sensation in sensations)
     {
         receiver.OnMessageReceived += sensation.OnOSCMessageReceived;
     }
@@ -65,7 +65,7 @@ void RegisterSensations()
 
 void UnregisterSensations()
 {
-    foreach (OSCSensationBase sensation in sensations)
+    foreach (OSCEffectBase sensation in sensations)
     {
         receiver.OnMessageReceived -= sensation.OnOSCMessageReceived;
     }

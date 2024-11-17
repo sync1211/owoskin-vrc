@@ -4,10 +4,17 @@ using System.Net;
 
 namespace OWOVRC.Classes.OWOSuit
 {
-    public partial class OWOHelper(IPAddress address): IDisposable
+    public partial class OWOHelper: IDisposable
     {
         public bool IsConnected => OWO.ConnectionState == ConnectionState.Connected;
         public readonly OWOSensations Sensations = new();
+
+        public string Address { get; set; }
+
+        public OWOHelper(string? ip=null)
+        {
+            Address = ip ?? "127.0.0.1";
+        }
 
         public async Task Connect()
         {
@@ -18,8 +25,15 @@ namespace OWOVRC.Classes.OWOSuit
 
             OWO.Configure(auth);
 
-            await OWO.Connect(address.ToString());
+            await OWO.Connect(Address.ToString());
             Log.Information("Connected to OWO!");
+        }
+
+        public void Disconnect()
+        {
+            StopAllSensations();
+            OWO.Disconnect();
+            Log.Information("Disconnected from OWO!");
         }
 
         //void SendDynamicSensation() => OWO.Send(Sensation.Dagger);
@@ -50,7 +64,7 @@ namespace OWOVRC.Classes.OWOSuit
 
         public void Dispose()
         {
-            OWO.Stop();
+            StopAllSensations();
             OWO.Disconnect();
             GC.SuppressFinalize(this);
         }

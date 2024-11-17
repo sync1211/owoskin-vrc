@@ -42,7 +42,7 @@ namespace OWOVRC.Classes.Effects.Builders
         {
             Duration = durationSeconds;
 
-            Muscles = new();
+            Muscles = [];
             foreach (Muscle muscle in directions["front"])
             {
                 Muscles[muscle] = 100;
@@ -66,7 +66,7 @@ namespace OWOVRC.Classes.Effects.Builders
             int intensityPercent = Intensity * (IntensityPercent / 100);
 
             // Apply intensities
-            List<Muscle> musclesWithIntensity = new();
+            List<Muscle> musclesWithIntensity = [];
             foreach (Muscle muscle in Muscles.Keys)
             {
                 int muscleIntensity = Muscles[muscle];
@@ -76,7 +76,7 @@ namespace OWOVRC.Classes.Effects.Builders
                 }
             }
 
-            Sensation sensation = CreateSensation(IntensityPercent);
+            Sensation sensation = CreateSensation(intensityPercent);
             owo.AddSensation(sensation, musclesWithIntensity.ToArray());
         }
 
@@ -108,7 +108,7 @@ namespace OWOVRC.Classes.Effects.Builders
             float maxVelocity = velocities.Max();
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
-            Dictionary<Muscle, int> muscleValues = new();
+            Dictionary<Muscle, int> muscleValues = [];
             foreach (Muscle muscle in OWOHelper.Muscles.Values)
             {
                 muscleValues[muscle] = 0;

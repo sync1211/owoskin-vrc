@@ -8,7 +8,7 @@ using Serilog;
 
 namespace OWOVRC.Classes.Effects
 {
-    public class Velocity : OSCSensationBase
+    public class Velocity : OSCEffectBase
     {
         private readonly OWOHelper owo;
 
@@ -40,17 +40,19 @@ namespace OWOVRC.Classes.Effects
         public float SensationDuration = 0.3f;
 
         // Settings
-        public readonly VelocitySensationSettings Settings;
+        public readonly VelocityEffectSettings Settings;
 
         // Timer
         private readonly System.Timers.Timer timer;
 
-        public Velocity(OWOHelper owo, VelocitySensationSettings Settings)
+        public Velocity(OWOHelper owo, VelocityEffectSettings Settings)
         {
             this.owo = owo;
             this.Settings = Settings;
-            timer = new System.Timers.Timer();
-            timer.Interval = SensationDuration * 1000;
+            timer = new System.Timers.Timer
+            {
+                Interval = SensationDuration * 1000
+            };
             timer.Elapsed += OnTimerElapsed;
             timer.Start();
         }
@@ -58,12 +60,6 @@ namespace OWOVRC.Classes.Effects
         private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             ProcessSensations();
-        }
-
-        private Vector3 GetDirectionVector()
-        {
-            // Generate a vector from the 3 velocity components
-            return new Vector3(VelX, VelY, VelZ);
         }
 
         public override void OnOSCMessageReceived(object? sender, OSCMessage message)
@@ -129,9 +125,6 @@ namespace OWOVRC.Classes.Effects
                     break;
             }
 
-            // Update
-            Update();
-
             // Sudden stop effect (e.g. hitting the ground after falling)
             TimeSpan stoppingTime = DateTime.Now - LastSpeedPacket;
             if (stoppingTime < Settings.StopVelocityTime && Speed <= 1 && SpeedLast > 0)
@@ -150,16 +143,11 @@ namespace OWOVRC.Classes.Effects
                 }
             }
 
-            if (message.Address == ADDRESS_VEL_SPEED)
+            if (message.Address.Equals(ADDRESS_VEL_SPEED))
             {
                 LastSpeedPacket = DateTime.Now;
                 SpeedLast = Speed;
             }
-        }
-
-        private void Update()
-        {
-            Direction = GetDirectionVector();
         }
 
         private void ProcessSensations()

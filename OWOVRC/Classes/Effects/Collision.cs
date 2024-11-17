@@ -10,7 +10,7 @@ using System.Timers;
 namespace OWOVRC.Classes.Effects
 {
     // (Loosely based on https://github.com/shadorki/vrc-owo-suit)
-    public class Collision : OSCSensationBase
+    public class Collision : OSCEffectBase
     {
         // OWOHelper
         private readonly OWOHelper owo;
@@ -30,9 +30,9 @@ namespace OWOVRC.Classes.Effects
 
         // Settings
         //TODO: Implement per-muscle intensity
-        public readonly CollisionSensationSettings Settings;
+        public readonly CollisionEffectSettings Settings;
 
-        public Collision(OWOHelper owo, CollisionSensationSettings settings)
+        public Collision(OWOHelper owo, CollisionEffectSettings settings)
         {
             this.owo = owo;
             Settings = settings;
@@ -139,29 +139,6 @@ namespace OWOVRC.Classes.Effects
             }
         }
 
-        private MicroSensation CreateSensation(MuscleCollisionData muscleData)
-        {
-            int intensity = Settings.BaseIntensity;
-
-            if (Settings.UseVelocity)
-            {
-                float increase = muscleData.VelocityMultiplier * Settings.MinIntensity;
-                Log.Debug("Increase: {inc}", increase);
-                intensity = Settings.MinIntensity + (int)increase;
-                intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
-            }
-
-            Log.Information(
-                "Muscle: {muscle}, Intensity: {intensity}% (Min: {base}%, Multiplier: {multiplier})",
-                muscleData.Name,
-                intensity,
-                Settings.MinIntensity,
-                muscleData.VelocityMultiplier
-            );
-
-            return SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, intensity, 0, 0, 0);
-        }
-
         private void UpdateHaptics()
         {
             if (!Settings.IsEnabled)
@@ -182,7 +159,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             MuscleCollisionData[] muscleCollisionData = [.. activeMuscles.Values];
-            List<Muscle> musclesScaled = new();
+            List<Muscle> musclesScaled = [];
 
             foreach (MuscleCollisionData muscleData in muscleCollisionData)
             {
@@ -198,7 +175,7 @@ namespace OWOVRC.Classes.Effects
 
                 // Velocity-based intensity
                 int intensity = Settings.BaseIntensity;
-                if(Settings.UseVelocity)
+                if (Settings.UseVelocity)
                 {
                     float increase = muscleData.VelocityMultiplier * Settings.MinIntensity;
                     Log.Debug("Increase: {inc}", increase);
@@ -218,7 +195,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             Sensation sensation = SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, 100, 0, 0, 0);
-            owo.AddSensation(sensation, musclesScaled.ToArray());
+            owo.AddSensation(sensation, [.. musclesScaled]);
         }
 
         public void OnTimerElapsed(object? sender, ElapsedEventArgs e)
