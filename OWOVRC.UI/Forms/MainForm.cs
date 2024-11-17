@@ -37,6 +37,14 @@ namespace OWOVRC.UI
         {
             InitializeComponent();
             logLevelSwitch = Logging.SetUpLogger(logBox);
+
+            // Call UpdateConnectionStatus on every ui update
+            Application.Idle += OnApplicationIdle;
+        }
+
+        private void OnApplicationIdle(object? sender, EventArgs e)
+        {
+            UpdateConnectionStatus();
         }
 
         private static T? GetSettingsData<T>(string settingsDir, string filename, string displayName)
@@ -110,6 +118,9 @@ namespace OWOVRC.UI
             StartOWO();
             startButton.Visible = false;
             stopButton.Visible = true;
+
+            owoIPInput.Enabled = false;
+            oscPortInput.Enabled = false;
         }
 
         private void StopButton_Click(object sender, EventArgs e)
@@ -117,16 +128,23 @@ namespace OWOVRC.UI
             StopOWO();
             startButton.Visible = true;
             stopButton.Visible = false;
-            UpdateStatus();
+
+            owoIPInput.Enabled = true;
+            oscPortInput.Enabled = true;
         }
 
-        private void UpdateStatus()
+        private void UpdateConnectionStatus()
         {
             // OWO connection
             if (owo.IsConnected)
             {
                 connectionStatusLabel.Text = "Connected";
                 connectionStatusLabel.ForeColor = Color.Green;
+            }
+            else if(OWO.ConnectionState == ConnectionState.Connecting)
+            {
+                connectionStatusLabel.Text = "Connecting...";
+                connectionStatusLabel.ForeColor = Color.Blue;
             }
             else
             {
@@ -162,8 +180,13 @@ namespace OWOVRC.UI
 
             // Start OWO connection
             owo.Address = connectionSettings.OWOAddress;
-            Task.Run(owo.Connect);
+            Task.Run(StartOWOHelper);
             Log.Information("Started OWOVRC");
+        }
+
+        private async Task StartOWOHelper()
+        {
+            await owo.Connect();
         }
 
         private void StopOWO()

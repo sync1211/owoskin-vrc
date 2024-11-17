@@ -60,6 +60,7 @@ namespace OWOVRC.Classes.OSC
 
         public void Dispose()
         {
+            IsRunning = false;
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
