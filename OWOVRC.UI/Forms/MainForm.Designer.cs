@@ -48,6 +48,8 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
+            label6 = new Label();
+            label7 = new Label();
             tabControl1.SuspendLayout();
             collisionSettingsPage.SuspendLayout();
             velocitySettingsPage.SuspendLayout();
@@ -67,6 +69,7 @@
             // 
             // collisionSettingsPage
             // 
+            collisionSettingsPage.Controls.Add(label6);
             collisionSettingsPage.Controls.Add(applyCollisionSettingsButton);
             collisionSettingsPage.Location = new Point(4, 24);
             collisionSettingsPage.Name = "collisionSettingsPage";
@@ -79,7 +82,7 @@
             // applyCollisionSettingsButton
             // 
             applyCollisionSettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            applyCollisionSettingsButton.Location = new Point(230, 160);
+            applyCollisionSettingsButton.Location = new Point(279, 263);
             applyCollisionSettingsButton.Name = "applyCollisionSettingsButton";
             applyCollisionSettingsButton.Size = new Size(75, 23);
             applyCollisionSettingsButton.TabIndex = 0;
@@ -89,6 +92,7 @@
             // 
             // velocitySettingsPage
             // 
+            velocitySettingsPage.Controls.Add(label7);
             velocitySettingsPage.Controls.Add(applyVelocitySettingsButton);
             velocitySettingsPage.Location = new Point(4, 24);
             velocitySettingsPage.Name = "velocitySettingsPage";
@@ -101,7 +105,7 @@
             // applyVelocitySettingsButton
             // 
             applyVelocitySettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            applyVelocitySettingsButton.Location = new Point(229, 114);
+            applyVelocitySettingsButton.Location = new Point(279, 263);
             applyVelocitySettingsButton.Name = "applyVelocitySettingsButton";
             applyVelocitySettingsButton.Size = new Size(75, 23);
             applyVelocitySettingsButton.TabIndex = 0;
@@ -270,6 +274,24 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(6, 6);
+            label6.Name = "label6";
+            label6.Size = new Size(125, 15);
+            label6.TabIndex = 1;
+            label6.Text = "TODO: Implement me!";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(6, 6);
+            label7.Name = "label7";
+            label7.Size = new Size(125, 15);
+            label7.TabIndex = 1;
+            label7.Text = "TODO: Implement me!";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -285,7 +307,9 @@
             Shown += MainForm_Shown;
             tabControl1.ResumeLayout(false);
             collisionSettingsPage.ResumeLayout(false);
+            collisionSettingsPage.PerformLayout();
             velocitySettingsPage.ResumeLayout(false);
+            velocitySettingsPage.PerformLayout();
             connectionGroup.ResumeLayout(false);
             connectionGroup.PerformLayout();
             groupBox1.ResumeLayout(false);
@@ -315,5 +339,7 @@
         private TabPage collisionSettingsPage;
         private Button applyCollisionSettingsButton;
         private Button applyVelocitySettingsButton;
+        private Label label6;
+        private Label label7;
     }
 }

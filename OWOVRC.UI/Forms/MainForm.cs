@@ -8,6 +8,7 @@ using OWOVRC.UI.Classes;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using System;
 using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
@@ -20,7 +21,7 @@ namespace OWOVRC.UI
         private readonly LoggingLevelSwitch logLevelSwitch;
 
         // Settings
-        private readonly string settingsDir;
+        private readonly string settingsDir = Environment.CurrentDirectory;
         private ConnectionSettings connectionSettings = new();
         private VelocityEffectSettings velocitySettings = new();
         private CollisionEffectSettings collisionSettings = new();
@@ -36,13 +37,6 @@ namespace OWOVRC.UI
         {
             InitializeComponent();
             logLevelSwitch = Logging.SetUpLogger(logBox);
-
-            settingsDir = GetSettingsDirectory();
-            if (settingsDir.Length == 0)
-            {
-                Close();
-                return;
-            }
         }
 
         private static T? GetSettingsData<T>(string settingsDir, string filename, string displayName)
@@ -69,18 +63,6 @@ namespace OWOVRC.UI
             }
 
             return settings;
-        }
-
-        private static string GetSettingsDirectory()
-        {
-            string? settingsDir = Assembly.GetEntryAssembly()?.Location;
-            if (settingsDir == null)
-            {
-                Log.Error("Failed to get settings directory");
-                return String.Empty;
-            }
-
-            return settingsDir;
         }
 
         private void LoadSettings()
@@ -111,6 +93,12 @@ namespace OWOVRC.UI
         {
             string settingsData = JsonConvert.SerializeObject(settings);
             string settingsFilePath = Path.Combine(settingsDir, fileName);
+
+            if (!File.Exists(settingsFilePath))
+            {
+                FileStream newFile = File.Create(settingsFilePath);
+                newFile.Close();
+            }
 
             File.WriteAllText(settingsFilePath, settingsData);
 
@@ -204,6 +192,8 @@ namespace OWOVRC.UI
         {
             LoadSettings();
             logLevelComboBox.DataSource = Logging.Levels;
+            logLevelSwitch.MinimumLevel = LogEventLevel.Information;
+            logLevelComboBox.SelectedItem = logLevelSwitch.MinimumLevel;
 
             // Set up effects
             effects = [
@@ -214,7 +204,7 @@ namespace OWOVRC.UI
 
         private void UpdateConnectionSettings()
         {
-            owoIPInput.Text = connectionSettings.OWOAddress.ToString();
+            owoIPInput.Text = connectionSettings.OWOAddress;
             oscPortInput.Text = connectionSettings.OSCPort.ToString();
         }
 
@@ -239,7 +229,7 @@ namespace OWOVRC.UI
             }
             else
             {
-                owoIPInput.Text = connectionSettings.OWOAddress.ToString();
+                owoIPInput.Text = connectionSettings.OWOAddress;
             }
 
             SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection settings");
