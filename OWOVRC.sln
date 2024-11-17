@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWOVRC", "OWOVRC\OWOVRC.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.UI", "OWOVRC.UI\OWOVRC.UI.csproj", "{89C2E8C1-845E-48C0-AA3D-1203A7173A47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Test", "OWOVRC.Test\OWOVRC.Test.csproj", "{4F74746D-4E5C-4791-8318-6F7945A771D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
