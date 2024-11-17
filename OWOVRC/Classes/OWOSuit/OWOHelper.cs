@@ -25,7 +25,7 @@ namespace OWOVRC.Classes.OWOSuit
 
             OWO.Configure(auth);
 
-            await OWO.Connect(Address.ToString());
+            await OWO.Connect(Address);
             if (IsConnected)
             {
                 Log.Information("Connected to OWO!");
