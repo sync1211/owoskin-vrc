@@ -35,7 +35,6 @@ namespace OWOVRC.Classes.Effects
         public double Speed { get; private set; }
         private double SpeedLast;
         private DateTime LastSpeedPacket;
-        public Vector3 Direction { get; private set; }
 
         // Sensation duration
         public float SensationDuration = 0.3f;
