@@ -64,7 +64,6 @@ namespace OWOVRC.Classes.Effects.Builders
         public void Play(OWOHelper owo)
         {
             int intensityPercent = Intensity * (IntensityPercent / 100);
-            intensityPercent = 100;
 
             // Apply intensities
             List<Muscle> musclesWithIntensity = new();
@@ -73,8 +72,6 @@ namespace OWOVRC.Classes.Effects.Builders
                 int muscleIntensity = Muscles[muscle];
                 if (muscleIntensity > 0)
                 {
-                    Log.Debug("AddMuscle");
-                    muscleIntensity = 100;
                     musclesWithIntensity.Add(muscle.WithIntensity(muscleIntensity));
                 }
             }
