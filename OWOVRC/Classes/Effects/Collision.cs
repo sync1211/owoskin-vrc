@@ -6,6 +6,7 @@ using OWOVRC.Classes.Settings;
 using Serilog;
 using System.Collections.Concurrent;
 using System.Timers;
+using Windows.Networking.Proximity;
 
 namespace OWOVRC.Classes.Effects
 {
@@ -59,11 +60,29 @@ namespace OWOVRC.Classes.Effects
             }
 
             string muscle = message.Address;
-            float proxmimity = message.Values.ReadFloatElement(0);
 
-            if (proxmimity > 0)
+            float proximity;
+            try
             {
-                OnCollisionEnter(muscle, proxmimity);
+                proximity = message.Values.ReadFloatElement(0);
+            }
+            catch (InvalidOperationException)
+            {
+                Log.Error("InvalidOperationException while reading float value on address {address}, trying to read int value", message.Address);
+                try
+                {
+                    proximity = (float)message.Values.ReadIntElement(0);
+                }
+                catch(InvalidOperationException)
+                {
+                    Log.Error("InvalidOperationException while reading int value on address {address}", message.Address);
+                    proximity = 0f;
+                }
+            }
+
+            if (proximity > 0)
+            {
+                OnCollisionEnter(muscle, proximity);
             }
             else
             {
@@ -141,7 +160,7 @@ namespace OWOVRC.Classes.Effects
 
         private void UpdateHaptics()
         {
-            if (!Settings.IsEnabled)
+            if (!Settings.Enabled)
             {
                 return;
             }

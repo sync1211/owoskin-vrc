@@ -231,10 +231,33 @@ namespace OWOVRC.UI
             oscPortInput.Text = connectionSettings.OSCPort.ToString();
         }
 
+        private void UpdateCollisionEffectSettings()
+        {
+            collisionEnabledCheckbox.Checked = collisionSettings.Enabled;
+            collisionUseVelocityCheckbox.Checked = collisionSettings.UseVelocity;
+            collisionAllowContinuousCheckbox.Checked = collisionSettings.AllowContinuous;
+            collisionIntensityInput.Text = collisionSettings.BaseIntensity.ToString();
+            collisionMinIntensityInput.Text = collisionSettings.MinIntensity.ToString();
+            collisionSpeedMultiplierInput.Text = collisionSettings.SpeedMultiplier.ToString();
+        }
+
+        private void UpdateVelocityEffectSettings()
+        {
+            velocityEnabledCheckbox.Checked = velocitySettings.Enabled;
+            velocityThresholdInput.Text = velocitySettings.Threshold.ToString();
+            velocityImpactEnabledCheckbox.Checked = velocitySettings.ImpactEnabled;
+            velocityMinImpactInput.Text = velocitySettings.StopVelocityThreshold.ToString();
+            velocitySpeedCapInput.Text = velocitySettings.SpeedCap.ToString();
+            velocityIgnoreWhenGroundedCheckbox.Checked = velocitySettings.IgnoreWhenGrounded;
+            velocityIgnoreWhenSeatedCheckbox.Checked = velocitySettings.IgnoreWhenSeated;
+        }
+
         private void MainForm_Shown(object sender, EventArgs e)
         {
             owoIPInput.ValidatingType = typeof(System.Net.IPAddress);
             UpdateConnectionSettings();
+            UpdateCollisionEffectSettings();
+            UpdateVelocityEffectSettings();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -274,13 +297,80 @@ namespace OWOVRC.UI
 
         private void ApplyCollisionSettingsButton_Click(object sender, EventArgs e)
         {
-            //TODO: Implement me!
+            collisionSettings.Enabled = collisionEnabledCheckbox.Checked;
+            collisionSettings.UseVelocity = collisionUseVelocityCheckbox.Checked;
+            collisionSettings.AllowContinuous = collisionAllowContinuousCheckbox.Checked;
+
+            // Collision min intensity
+            if (int.TryParse(collisionIntensityInput.Text, out int baseIntensity))
+            {
+                collisionSettings.BaseIntensity = baseIntensity;
+            }
+            else
+            {
+                collisionIntensityInput.Text = collisionSettings.BaseIntensity.ToString();
+            }
+
+            // MinIintensity
+            if (int.TryParse(collisionMinIntensityInput.Text, out int minIntensity))
+            {
+                collisionSettings.MinIntensity = minIntensity;
+            }
+            else
+            {
+                collisionMinIntensityInput.Text = collisionSettings.MinIntensity.ToString();
+            }
+
+            // Speed multiplier
+            if(int.TryParse(collisionSpeedMultiplierInput.Text, out int speedMultiplier))
+            {
+                collisionSettings.SpeedMultiplier = speedMultiplier;
+            }
+            else
+            {
+                collisionSpeedMultiplierInput.Text = collisionSettings.SpeedMultiplier.ToString();
+            }
+
             SaveSettings<CollisionEffectSettings>(collisionSettings, "collision.json", "collision effect");
         }
 
         private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
         {
-            //TODO: Implement me!
+            velocitySettings.Enabled = velocityEnabledCheckbox.Checked;
+            velocitySettings.ImpactEnabled = velocityImpactEnabledCheckbox.Checked;
+            velocitySettings.IgnoreWhenGrounded = velocityIgnoreWhenGroundedCheckbox.Checked;
+            velocitySettings.IgnoreWhenSeated = velocityIgnoreWhenSeatedCheckbox.Checked;
+
+            // Threshold
+            if (int.TryParse(velocityThresholdInput.Text, out int threshold))
+            {
+                velocitySettings.Threshold = threshold;
+            }
+            else
+            {
+                collisionSpeedMultiplierInput.Text = velocitySettings.Threshold.ToString();
+            }
+
+            // Min impact
+            if (int.TryParse(velocityMinImpactInput.Text, out int minImpact))
+            {
+                velocitySettings.StopVelocityThreshold = minImpact;
+            }
+            else
+            {
+                velocityMinImpactInput.Text = velocitySettings.StopVelocityThreshold.ToString();
+            }
+
+            // Speed cap
+            if (int.TryParse(velocitySpeedCapInput.Text, out int speedCap))
+            {
+                velocitySettings.SpeedCap = speedCap;
+            }
+            else
+            {
+                velocitySpeedCapInput.Text = velocitySettings.SpeedCap.ToString();
+            }
+
             SaveSettings<VelocityEffectSettings>(velocitySettings, "velocity.json", "velocity effect");
         }
     }

@@ -14,7 +14,7 @@ namespace OWOVRC.Test.Classes.Settings
                 AllowContinuous = false,
                 BaseIntensity = 200,
                 Frequency = 100,
-                IsEnabled = false,
+                Enabled = false,
                 MaxTimeDiff = TimeSpan.FromSeconds(2),
                 MinIntensity = 100,
                 SensationSeconds = 0.5f,
@@ -31,7 +31,7 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.AllowContinuous, decodedSettings.AllowContinuous);
             Assert.AreEqual(settings.BaseIntensity, decodedSettings.BaseIntensity);
             Assert.AreEqual(settings.Frequency, decodedSettings.Frequency);
-            Assert.AreEqual(settings.IsEnabled, decodedSettings.IsEnabled);
+            Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);
             Assert.AreEqual(settings.MaxTimeDiff, decodedSettings.MaxTimeDiff);
             Assert.AreEqual(settings.MinIntensity, decodedSettings.MinIntensity);
             Assert.AreEqual(settings.SensationSeconds, decodedSettings.SensationSeconds);

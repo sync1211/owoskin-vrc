@@ -127,7 +127,7 @@ namespace OWOVRC.Classes.Effects
 
             // Sudden stop effect (e.g. hitting the ground after falling)
             TimeSpan stoppingTime = DateTime.Now - LastSpeedPacket;
-            if (stoppingTime < Settings.StopVelocityTime && Speed <= 1 && SpeedLast > 0)
+            if (Settings.ImpactEnabled && stoppingTime < Settings.StopVelocityTime && Speed <= 1 && SpeedLast > 0)
             {
                 double stopVelocity = Math.Min(SpeedLast, Settings.SpeedCap);
                 int velocityPercent = (int)(100 * stopVelocity / Settings.SpeedCap);
@@ -156,7 +156,7 @@ namespace OWOVRC.Classes.Effects
                 || (IsGrounded && !Settings.IgnoreWhenGrounded) // Is not flying (non-grounded setting disabled)
                 || (IsSeated && !Settings.IgnoreWhenSeated);    // Is sitting (non-seated setting disabled)
 
-            if (!owo.IsConnected)
+            if (!owo.IsConnected || !Settings.Enabled)
             {
                 return;
             }
