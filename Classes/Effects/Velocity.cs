@@ -1,11 +1,12 @@
 ﻿using System.Numerics;
 using OWOGame;
+using OWOVRC.Classes.Effects.Builders;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
 
-namespace OWOVRC.Classes.Sensations
+namespace OWOVRC.Classes.Effects
 {
     public class Velocity : OSCSensationBase
     {
@@ -26,9 +27,8 @@ namespace OWOVRC.Classes.Sensations
         public float VelX { get; private set; } // LEFT/RIGHT (-1 to 1)
         public float VelY { get; private set; } // DOWN/UP (-1 to 1)
         public float VelZ { get; private set; } // BACK/FWD (-1 to 1)
-        //TODO: Implement rotational velocity. (Not enough coffee to look up the math right now. Will revisit later.)
         // public float VelAngularX { get; private set; } // Not implemented by VRChat
-        // public float VelAngularY { get; private set; }
+        // public float VelAngularY { get; private set; } // Not relevant to us
         // public float VelAngularZ { get; private set; } // Not implemented by VRChat
 
         // Calculated Values
@@ -165,9 +165,14 @@ namespace OWOVRC.Classes.Sensations
 
         private void ProcessSensations()
         {
-            bool feedbackEnabled = !IsGrounded         // Is flying
+            bool feedbackEnabled = !IsGrounded                  // Is flying
                 || (IsGrounded && !Settings.IgnoreWhenGrounded) // Is not flying (non-grounded setting disabled)
                 || (IsSeated && !Settings.IgnoreWhenSeated);    // Is sitting (non-seated setting disabled)
+
+            if (!owo.IsConnected)
+            {
+                return;
+            }
 
             // Speed too low
             if (Speed < Settings.Threshold)
@@ -192,24 +197,31 @@ namespace OWOVRC.Classes.Sensations
             }
 
             double speedCapped = Math.Min(Speed, Settings.SpeedCap);
-            int speedPercent = (int)(100 * speedCapped / Settings.SpeedCap);
+            int speedPercent = (int) (100 * (speedCapped / Settings.SpeedCap));
             Log.Information("Movement speed: {speedCapped} ({speed}) => {intensity}%", speedCapped, Speed, speedPercent);
 
             // Send senstations to vest
-            Sensation sensation = CreateSensation(speedPercent);
-            owo.AddSensation(sensation);
+            //Sensation sensation = owo.Sensations.Wind.MultiplyIntensityBy(speed / 100);
+            //owo.AddSensation(sensation);
+            WindSensation windSensation = CreateWindSensation();
+            windSensation.IntensityPercent = speedPercent;
+            windSensation.Play(owo);
 
             LastSpeedPacket = DateTime.Now;
             SpeedLast = Speed;
         }
 
-        private Sensation CreateSensation(int speed)
+        private WindSensation CreateWindSensation()
         {
-            return owo.Sensations.Wind.MultiplyIntensityBy(speed / 100);
+            float windVelX = VelX * -1;
+            float windVelY = VelY * -1;
+            float windVelZ = VelZ * -1;
+            return WindSensation.CreateFromVelocity(windVelX, windVelY, windVelZ, SensationDuration);
         }
 
         private Sensation CreateStopSensation(int power)
         {
+            //TODO: Make this directional!
             return owo.Sensations.FallDmg.MultiplyIntensityBy(power / 100).WithPriority(1);
         }
     }

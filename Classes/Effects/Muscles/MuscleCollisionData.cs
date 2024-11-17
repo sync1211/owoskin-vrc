@@ -1,4 +1,4 @@
-﻿namespace OWOVRC.Classes.Sensations.Muscles
+﻿namespace OWOVRC.Classes.Effects.Muscles
 {
     public class MuscleCollisionData
     {

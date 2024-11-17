@@ -1,6 +1,6 @@
 ﻿using OWOVRC.Classes.OSC;
 
-namespace OWOVRC.Classes.Sensations
+namespace OWOVRC.Classes.Effects
 {
     public abstract class OSCSensationBase
     {

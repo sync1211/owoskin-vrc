@@ -1,15 +1,15 @@
 ﻿using OWOGame;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
-using OWOVRC.Classes.Sensations.Muscles;
+using OWOVRC.Classes.Effects.Muscles;
 using OWOVRC.Classes.Settings;
 using Serilog;
 using System.Collections.Concurrent;
 using System.Timers;
 
-namespace OWOVRC.Classes.Sensations
+namespace OWOVRC.Classes.Effects
 {
-    // (Core functionality copied from https://github.com/shadorki/vrc-owo-suit)
+    // (Loosely based on https://github.com/shadorki/vrc-owo-suit)
     public class Collision : OSCSensationBase
     {
         // OWOHelper
@@ -182,9 +182,10 @@ namespace OWOVRC.Classes.Sensations
             }
 
             MuscleCollisionData[] muscleCollisionData = [.. activeMuscles.Values];
+            List<Muscle> musclesScaled = new();
+
             foreach (MuscleCollisionData muscleData in muscleCollisionData)
             {
-                Sensation sensation = CreateSensation(muscleData);
                 Muscle? muscle = OWOHelper.Muscles.GetValueOrDefault(muscleData.Name);
                 if (muscle == null)
                 {
@@ -195,9 +196,29 @@ namespace OWOVRC.Classes.Sensations
                     continue;
                 }
 
-                Muscle[] muscles = [muscle.Value];
-                owo.AddSensation(sensation, muscles);
+                // Velocity-based intensity
+                int intensity = Settings.BaseIntensity;
+                if(Settings.UseVelocity)
+                {
+                    float increase = muscleData.VelocityMultiplier * Settings.MinIntensity;
+                    Log.Debug("Increase: {inc}", increase);
+                    intensity = Settings.MinIntensity + (int)increase;
+                    intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
+                }
+
+                Log.Information(
+                    "Muscle: {muscle}, Intensity: {intensity}% (Min: {base}%, Multiplier: {multiplier})",
+                    muscleData.Name,
+                    intensity,
+                    Settings.MinIntensity,
+                    muscleData.VelocityMultiplier
+                );
+
+                musclesScaled.Add(muscle.Value.WithIntensity(intensity));
             }
+
+            Sensation sensation = SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, 100, 0, 0, 0);
+            owo.AddSensation(sensation, musclesScaled.ToArray());
         }
 
         public void OnTimerElapsed(object? sender, ElapsedEventArgs e)

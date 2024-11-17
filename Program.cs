@@ -2,7 +2,7 @@
 using OWOVRC.Classes;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
-using OWOVRC.Classes.Sensations;
+using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.Settings;
 using Serilog;
 using Serilog.Core;
