@@ -30,8 +30,10 @@
         {
             tabControl1 = new TabControl();
             collisionSettingsPage = new TabPage();
+            label6 = new Label();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
+            label7 = new Label();
             applyVelocitySettingsButton = new Button();
             logLevelComboBox = new ComboBox();
             label3 = new Label();
@@ -48,8 +50,6 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
-            label6 = new Label();
-            label7 = new Label();
             tabControl1.SuspendLayout();
             collisionSettingsPage.SuspendLayout();
             velocitySettingsPage.SuspendLayout();
@@ -79,6 +79,15 @@
             collisionSettingsPage.Text = "Collision";
             collisionSettingsPage.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(6, 6);
+            label6.Name = "label6";
+            label6.Size = new Size(125, 15);
+            label6.TabIndex = 1;
+            label6.Text = "TODO: Implement me!";
+            // 
             // applyCollisionSettingsButton
             // 
             applyCollisionSettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -101,6 +110,15 @@
             velocitySettingsPage.TabIndex = 1;
             velocitySettingsPage.Text = "Velocity";
             velocitySettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(6, 6);
+            label7.Name = "label7";
+            label7.Size = new Size(125, 15);
+            label7.TabIndex = 1;
+            label7.Text = "TODO: Implement me!";
             // 
             // applyVelocitySettingsButton
             // 
@@ -166,7 +184,7 @@
             oscPortInput.Name = "oscPortInput";
             oscPortInput.Size = new Size(100, 23);
             oscPortInput.TabIndex = 9;
-            oscPortInput.TextChanged += OscPortInput_TextChanged;
+            oscPortInput.Leave += OscPortInput_Exit;
             // 
             // owoIPInput
             // 
@@ -273,24 +291,6 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(6, 6);
-            label6.Name = "label6";
-            label6.Size = new Size(125, 15);
-            label6.TabIndex = 1;
-            label6.Text = "TODO: Implement me!";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(6, 6);
-            label7.Name = "label7";
-            label7.Size = new Size(125, 15);
-            label7.TabIndex = 1;
-            label7.Text = "TODO: Implement me!";
             // 
             // MainForm
             // 

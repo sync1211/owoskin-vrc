@@ -235,7 +235,7 @@ namespace OWOVRC.UI
             SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection settings");
         }
 
-        private void OscPortInput_TextChanged(object sender, EventArgs e)
+        private void OscPortInput_Exit(object sender, EventArgs e)
         {
             if (int.TryParse(oscPortInput.Text, out int port))
             {
