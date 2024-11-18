@@ -7,6 +7,7 @@ using Serilog;
 using System.Collections.Concurrent;
 using System.Timers;
 using Windows.Networking.Proximity;
+using BuildSoft.OscCore;
 
 namespace OWOVRC.Classes.Effects
 {
@@ -60,25 +61,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             string muscle = message.Address;
-
-            float proximity;
-            try
-            {
-                proximity = message.Values.ReadFloatElement(0);
-            }
-            catch (InvalidOperationException)
-            {
-                Log.Error("InvalidOperationException while reading float value on address {address}, trying to read int value", message.Address);
-                try
-                {
-                    proximity = (float)message.Values.ReadIntElement(0);
-                }
-                catch(InvalidOperationException)
-                {
-                    Log.Error("InvalidOperationException while reading int value on address {address}", message.Address);
-                    proximity = 0f;
-                }
-            }
+            float proximity = GetFloatFromMessage(message);
 
             if (proximity > 0)
             {
@@ -88,8 +71,6 @@ namespace OWOVRC.Classes.Effects
             {
                 OnCollisionExit(muscle);
             }
-
-            //UpdateHaptics();
         }
 
         private void OnCollisionEnter(string muscle, float proxmimity)
@@ -126,15 +107,6 @@ namespace OWOVRC.Classes.Effects
             if (timediff < Settings.MaxTimeDiff)
             {
                 muscleData.VelocityMultiplier = speed * Settings.SpeedMultiplier;
-
-                //Log.Debug(
-                //    "Speed: {speed}, Current proximity: {current}, Last proximity: {last}, Distance: {distance}, Time: {time}",
-                //    speed,
-                //    proxmimity,
-                //    valuePrev.Proximity,
-                //    distance,
-                //    timediff.TotalSeconds
-                //);
             }
             activeMuscles[muscle] = muscleData;
         }
@@ -156,6 +128,29 @@ namespace OWOVRC.Classes.Effects
                 Log.Debug("No sensations playing, timer stopped.");
                 timer.Stop();
             }
+        }
+
+        private static float GetFloatFromMessage(OSCMessage message)
+        {
+            try
+            {
+                return message.Values.ReadFloatElement(0);
+            }
+            catch (InvalidOperationException)
+            {
+                Log.Warning("No valid float value received in message for {address}, trying int...", message.Address);
+            }
+
+            try
+            {
+                return message.Values.ReadIntElement(0);
+            }
+            catch (InvalidOperationException)
+            {
+                Log.Error("No int value received in message for {address}!", message.Address);
+            }
+
+            return 0;
         }
 
         private void UpdateHaptics()
