@@ -14,7 +14,7 @@ namespace OWOVRC.Test.Classes.Settings
             {
                 Threshold = 22,
                 StopVelocityThreshold = 11,
-                SpeedCap = 201.0,
+                SpeedCap = 201.0f,
                 IgnoreWhenGrounded = true,
                 IgnoreWhenSeated = true,
                 StopVelocityTime = TimeSpan.FromSeconds(2)

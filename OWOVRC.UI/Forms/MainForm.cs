@@ -281,16 +281,31 @@ namespace OWOVRC.UI
             SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection settings");
         }
 
+        private static int ValidateIntSetting(TextBox input, int settingsValue)
+        {
+            if (!int.TryParse(input.Text, out int value))
+            {
+                input.Text = settingsValue.ToString();
+                return settingsValue;
+            }
+
+            return value;
+        }
+
+        private static float ValidateFloatSetting(TextBox input, float settingsValue)
+        {
+            if (!float.TryParse(input.Text, out float value))
+            {
+                input.Text = settingsValue.ToString();
+                return settingsValue;
+            }
+
+            return value;
+        }
+
         private void OscPortInput_Exit(object sender, EventArgs e)
         {
-            if (int.TryParse(oscPortInput.Text, out int port))
-            {
-                connectionSettings.OSCPort = port;
-            }
-            else
-            {
-                oscPortInput.Text = connectionSettings.OSCPort.ToString();
-            }
+            connectionSettings.OSCPort = ValidateIntSetting(oscPortInput, connectionSettings.OSCPort);
 
             SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection");
         }
@@ -302,34 +317,13 @@ namespace OWOVRC.UI
             collisionSettings.AllowContinuous = collisionAllowContinuousCheckbox.Checked;
 
             // Collision min intensity
-            if (int.TryParse(collisionIntensityInput.Text, out int baseIntensity))
-            {
-                collisionSettings.BaseIntensity = baseIntensity;
-            }
-            else
-            {
-                collisionIntensityInput.Text = collisionSettings.BaseIntensity.ToString();
-            }
+            collisionSettings.BaseIntensity = ValidateIntSetting(collisionIntensityInput, collisionSettings.BaseIntensity);
 
             // MinIintensity
-            if (int.TryParse(collisionMinIntensityInput.Text, out int minIntensity))
-            {
-                collisionSettings.MinIntensity = minIntensity;
-            }
-            else
-            {
-                collisionMinIntensityInput.Text = collisionSettings.MinIntensity.ToString();
-            }
+            collisionSettings.MinIntensity = ValidateIntSetting(collisionMinIntensityInput, collisionSettings.MinIntensity);
 
             // Speed multiplier
-            if(int.TryParse(collisionSpeedMultiplierInput.Text, out int speedMultiplier))
-            {
-                collisionSettings.SpeedMultiplier = speedMultiplier;
-            }
-            else
-            {
-                collisionSpeedMultiplierInput.Text = collisionSettings.SpeedMultiplier.ToString();
-            }
+            collisionSettings.SpeedMultiplier = ValidateFloatSetting(collisionSpeedMultiplierInput, collisionSettings.SpeedMultiplier);
 
             SaveSettings<CollisionEffectSettings>(collisionSettings, "collision.json", "collision effect");
         }
@@ -342,34 +336,13 @@ namespace OWOVRC.UI
             velocitySettings.IgnoreWhenSeated = velocityIgnoreWhenSeatedCheckbox.Checked;
 
             // Threshold
-            if (int.TryParse(velocityThresholdInput.Text, out int threshold))
-            {
-                velocitySettings.Threshold = threshold;
-            }
-            else
-            {
-                collisionSpeedMultiplierInput.Text = velocitySettings.Threshold.ToString();
-            }
+            velocitySettings.Threshold = ValidateFloatSetting(velocityThresholdInput, velocitySettings.Threshold);
 
             // Min impact
-            if (int.TryParse(velocityMinImpactInput.Text, out int minImpact))
-            {
-                velocitySettings.StopVelocityThreshold = minImpact;
-            }
-            else
-            {
-                velocityMinImpactInput.Text = velocitySettings.StopVelocityThreshold.ToString();
-            }
+            velocitySettings.StopVelocityThreshold = ValidateFloatSetting(velocityMinImpactInput, velocitySettings.StopVelocityThreshold);
 
             // Speed cap
-            if (int.TryParse(velocitySpeedCapInput.Text, out int speedCap))
-            {
-                velocitySettings.SpeedCap = speedCap;
-            }
-            else
-            {
-                velocitySpeedCapInput.Text = velocitySettings.SpeedCap.ToString();
-            }
+            velocitySettings.SpeedCap = ValidateFloatSetting(velocitySpeedCapInput, velocitySettings.SpeedCap);
 
             SaveSettings<VelocityEffectSettings>(velocitySettings, "velocity.json", "velocity effect");
         }
