@@ -141,7 +141,7 @@ namespace OWOVRC.UI
                 connectionStatusLabel.Text = "Connected";
                 connectionStatusLabel.ForeColor = Color.Green;
             }
-            else if(OWO.ConnectionState == ConnectionState.Connecting)
+            else if (OWO.ConnectionState == ConnectionState.Connecting)
             {
                 connectionStatusLabel.Text = "Connecting...";
                 connectionStatusLabel.ForeColor = Color.Blue;
@@ -199,6 +199,7 @@ namespace OWOVRC.UI
 
             receiver.Dispose();
 
+            owo.StopAllSensations();
             owo.Disconnect();
             Log.Information("Stopped OWOVRC");
         }
@@ -345,6 +346,11 @@ namespace OWOVRC.UI
             velocitySettings.SpeedCap = ValidateFloatSetting(velocitySpeedCapInput, velocitySettings.SpeedCap);
 
             SaveSettings<VelocityEffectSettings>(velocitySettings, "velocity.json", "velocity effect");
+        }
+
+        private void stopSensationsButton_Click(object sender, EventArgs e)
+        {
+            owo.StopAllSensations();
         }
     }
 }

@@ -69,6 +69,7 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
+            stopSensationsButton = new Button();
             tabControl1.SuspendLayout();
             collisionSettingsPage.SuspendLayout();
             velocityBasedGroupBox.SuspendLayout();
@@ -367,6 +368,7 @@
             // 
             // connectionGroup
             // 
+            connectionGroup.Controls.Add(stopSensationsButton);
             connectionGroup.Controls.Add(oscPortInput);
             connectionGroup.Controls.Add(owoIPInput);
             connectionGroup.Controls.Add(label5);
@@ -498,6 +500,17 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
             // 
+            // stopSensationsButton
+            // 
+            stopSensationsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            stopSensationsButton.Location = new Point(6, 71);
+            stopSensationsButton.Name = "stopSensationsButton";
+            stopSensationsButton.Size = new Size(167, 23);
+            stopSensationsButton.TabIndex = 10;
+            stopSensationsButton.Text = "Stop all sensations";
+            stopSensationsButton.UseVisualStyleBackColor = true;
+            stopSensationsButton.Click += stopSensationsButton_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -573,5 +586,6 @@
         private CheckBox velocityImpactEnabledCheckbox;
         private CheckBox velocityIgnoreWhenGroundedCheckbox;
         private CheckBox velocityIgnoreWhenSeatedCheckbox;
+        private Button stopSensationsButton;
     }
 }
