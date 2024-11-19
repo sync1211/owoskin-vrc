@@ -58,6 +58,12 @@
             velocityIgnoreWhenGroundedCheckbox = new CheckBox();
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
+            owiSettingsPage = new TabPage();
+            label14 = new Label();
+            owiPriorityInput = new TextBox();
+            owiEnabledCheckbox = new CheckBox();
+            applyOwiSettingsButton = new Button();
+            owiLinkLabel = new LinkLabel();
             logLevelComboBox = new ComboBox();
             label3 = new Label();
             logBox = new RichTextBox();
@@ -74,19 +80,24 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
+            label15 = new Label();
+            groupBox3 = new GroupBox();
             tabControl1.SuspendLayout();
             collisionSettingsPage.SuspendLayout();
             velocityBasedGroupBox.SuspendLayout();
             velocitySettingsPage.SuspendLayout();
             groupBox2.SuspendLayout();
+            owiSettingsPage.SuspendLayout();
             connectionGroup.SuspendLayout();
             groupBox1.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
             // 
             tabControl1.Controls.Add(collisionSettingsPage);
             tabControl1.Controls.Add(velocitySettingsPage);
+            tabControl1.Controls.Add(owiSettingsPage);
             tabControl1.Location = new Point(12, 118);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -378,6 +389,69 @@
             applyVelocitySettingsButton.UseVisualStyleBackColor = true;
             applyVelocitySettingsButton.Click += ApplyVelocitySettingsButton_Click;
             // 
+            // owiSettingsPage
+            // 
+            owiSettingsPage.Controls.Add(groupBox3);
+            owiSettingsPage.Controls.Add(owiLinkLabel);
+            owiSettingsPage.Controls.Add(label14);
+            owiSettingsPage.Controls.Add(owiPriorityInput);
+            owiSettingsPage.Controls.Add(owiEnabledCheckbox);
+            owiSettingsPage.Controls.Add(applyOwiSettingsButton);
+            owiSettingsPage.Location = new Point(4, 24);
+            owiSettingsPage.Name = "owiSettingsPage";
+            owiSettingsPage.Size = new Size(360, 275);
+            owiSettingsPage.TabIndex = 2;
+            owiSettingsPage.Text = "OWI";
+            owiSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(6, 30);
+            label14.Name = "label14";
+            label14.Size = new Size(45, 15);
+            label14.TabIndex = 19;
+            label14.Text = "Priority";
+            // 
+            // owiPriorityInput
+            // 
+            owiPriorityInput.Location = new Point(262, 26);
+            owiPriorityInput.Name = "owiPriorityInput";
+            owiPriorityInput.Size = new Size(89, 23);
+            owiPriorityInput.TabIndex = 18;
+            // 
+            // owiEnabledCheckbox
+            // 
+            owiEnabledCheckbox.AutoSize = true;
+            owiEnabledCheckbox.Location = new Point(6, 6);
+            owiEnabledCheckbox.Name = "owiEnabledCheckbox";
+            owiEnabledCheckbox.Size = new Size(68, 19);
+            owiEnabledCheckbox.TabIndex = 17;
+            owiEnabledCheckbox.Text = "Enabled";
+            owiEnabledCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // applyOwiSettingsButton
+            // 
+            applyOwiSettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            applyOwiSettingsButton.Location = new Point(279, 246);
+            applyOwiSettingsButton.Name = "applyOwiSettingsButton";
+            applyOwiSettingsButton.Size = new Size(75, 23);
+            applyOwiSettingsButton.TabIndex = 16;
+            applyOwiSettingsButton.Text = "Apply";
+            applyOwiSettingsButton.UseVisualStyleBackColor = true;
+            applyOwiSettingsButton.Click += ApplyOwiSettingsButton_Click;
+            // 
+            // owiLinkLabel
+            // 
+            owiLinkLabel.AutoSize = true;
+            owiLinkLabel.Location = new Point(6, 239);
+            owiLinkLabel.Name = "owiLinkLabel";
+            owiLinkLabel.Size = new Size(133, 30);
+            owiLinkLabel.TabIndex = 0;
+            owiLinkLabel.TabStop = true;
+            owiLinkLabel.Text = "OWOWorldIntegrator\r\nby RevoForge && SonoVr\r\n";
+            owiLinkLabel.LinkClicked += OwiLinkLabel_LinkClicked;
+            // 
             // logLevelComboBox
             // 
             logLevelComboBox.FormattingEnabled = true;
@@ -435,7 +509,7 @@
             stopSensationsButton.TabIndex = 10;
             stopSensationsButton.Text = "Stop all sensations";
             stopSensationsButton.UseVisualStyleBackColor = true;
-            stopSensationsButton.Click += stopSensationsButton_Click;
+            stopSensationsButton.Click += StopSensationsButton_Click;
             // 
             // oscPortInput
             // 
@@ -551,6 +625,28 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
             // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.FlatStyle = FlatStyle.Popup;
+            label15.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label15.ForeColor = SystemColors.ControlDarkDark;
+            label15.Location = new Point(6, 19);
+            label15.Name = "label15";
+            label15.Size = new Size(308, 85);
+            label15.TabIndex = 20;
+            label15.Text = "This effect receives data from worlds\r\nusing OWO World Integrator.\r\n\r\nTo use this effect, please enable debug logging in your\r\nVRChat client and visit a world that supports OWI.";
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(label15);
+            groupBox3.Location = new Point(6, 75);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(348, 161);
+            groupBox3.TabIndex = 21;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Information";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -576,10 +672,14 @@
             velocitySettingsPage.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            owiSettingsPage.ResumeLayout(false);
+            owiSettingsPage.PerformLayout();
             connectionGroup.ResumeLayout(false);
             connectionGroup.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -631,5 +731,13 @@
         private TextBox collisionPriorityInput;
         private Label label13;
         private TextBox velocityPriorityInput;
+        private TabPage owiSettingsPage;
+        private LinkLabel owiLinkLabel;
+        private Label label14;
+        private TextBox owiPriorityInput;
+        private CheckBox owiEnabledCheckbox;
+        private Button applyOwiSettingsButton;
+        private Label label15;
+        private GroupBox groupBox3;
     }
 }

@@ -11,6 +11,7 @@ namespace OWOVRC.Test.Classes.Settings
         {
             CollisionEffectSettings settings = new()
             {
+                Priority = 2,
                 AllowContinuous = false,
                 BaseIntensity = 200,
                 Frequency = 100,
@@ -37,6 +38,7 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.SensationSeconds, decodedSettings.SensationSeconds);
             Assert.AreEqual(settings.SpeedMultiplier, decodedSettings.SpeedMultiplier);
             Assert.AreEqual(settings.UseVelocity, decodedSettings.UseVelocity);
+            Assert.AreEqual(settings.Priority, decodedSettings.Priority);
         }
     }
 }

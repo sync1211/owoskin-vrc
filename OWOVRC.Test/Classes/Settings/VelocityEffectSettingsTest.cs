@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using OWOVRC.Classes.Settings;
-using System.Net;
 
 namespace OWOVRC.Test.Classes.Settings
 {
@@ -12,6 +11,7 @@ namespace OWOVRC.Test.Classes.Settings
         {
             VelocityEffectSettings settings = new()
             {
+                Priority = 2,
                 Threshold = 22,
                 StopVelocityThreshold = 11,
                 SpeedCap = 201.0f,
@@ -32,6 +32,7 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.IgnoreWhenGrounded, decodedSettings.IgnoreWhenGrounded);
             Assert.AreEqual(settings.IgnoreWhenSeated, decodedSettings.IgnoreWhenSeated);
             Assert.AreEqual(settings.StopVelocityTime, decodedSettings.StopVelocityTime);
+            Assert.AreEqual(settings.Priority, decodedSettings.Priority);
         }
     }
 }

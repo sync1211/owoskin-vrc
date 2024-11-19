@@ -1,13 +1,11 @@
 ﻿using OWOGame;
+using OWOVRC.Classes.Effects.Muscles;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
-using OWOVRC.Classes.Effects.Muscles;
 using OWOVRC.Classes.Settings;
 using Serilog;
 using System.Collections.Concurrent;
 using System.Timers;
-using Windows.Networking.Proximity;
-using BuildSoft.OscCore;
 
 namespace OWOVRC.Classes.Effects
 {

@@ -28,11 +28,11 @@ namespace OWOVRC.UI.Classes
         public static readonly LogEventLevel[] Levels =
         [
             LogEventLevel.Verbose,
-                    LogEventLevel.Debug,
-                    LogEventLevel.Information,
-                    LogEventLevel.Warning,
-                    LogEventLevel.Error,
-                    LogEventLevel.Fatal
+            LogEventLevel.Debug,
+            LogEventLevel.Information,
+            LogEventLevel.Warning,
+            LogEventLevel.Error,
+            LogEventLevel.Fatal
         ];
     }
 }

@@ -22,6 +22,7 @@ namespace OWOVRC.UI
         private ConnectionSettings connectionSettings = new();
         private VelocityEffectSettings velocitySettings = new();
         private CollisionEffectSettings collisionSettings = new();
+        private WorldIntegratorSettings owiSettings = new();
 
         // OWO
         private readonly OWOHelper owo = new();
@@ -29,10 +30,12 @@ namespace OWOVRC.UI
 
         // Effects
         private OSCEffectBase[] effects = [];
+        private WorldIntegrator? owi;
 
         public MainForm()
         {
             InitializeComponent();
+
             logLevelSwitch = Logging.SetUpLogger(logBox);
 
             // Call UpdateConnectionStatus on every ui update
@@ -91,6 +94,13 @@ namespace OWOVRC.UI
             if (velocitySettings != null)
             {
                 this.velocitySettings = velocitySettings;
+            }
+
+            // OWI settings
+            WorldIntegratorSettings? owiSettings = GetSettingsData<WorldIntegratorSettings>(settingsDir, "owi.json", "OWI integration");
+            if (owiSettings != null)
+            {
+                this.owiSettings = owiSettings;
             }
         }
 
@@ -164,15 +174,32 @@ namespace OWOVRC.UI
 
         private void StartOWO()
         {
-            // Start OSC receiver
+            // Create OSC receiver
             receiver.Dispose(); // The receiver does not have a stop method, so we're re-creating it on launch
             receiver = new(connectionSettings.OSCPort);
-            receiver.Start();
 
             // Register effects
             foreach (OSCEffectBase effect in effects)
             {
                 receiver.OnMessageReceived += effect.OnOSCMessageReceived;
+            }
+
+            // Start OSC receiver
+            receiver.Start();
+
+            // Start OWI
+            if (owi == null)
+            {
+                Log.Warning("OWO World Integration has not been initialized!");
+                SetUpOWI();
+            }
+
+            try {
+                owi!.Start();
+            }
+            catch (FileNotFoundException e)
+            {
+                Log.Warning("Failed to start OWO World Integration: {0}", e.Message);
             }
 
             // Start OWO connection
@@ -194,6 +221,13 @@ namespace OWOVRC.UI
                 receiver.OnMessageReceived -= effect.OnOSCMessageReceived;
             }
 
+            // Stop OWI
+            if (owi != null)
+            {
+                owi.Stop();
+            }
+
+            // Stop osc receiver
             receiver.Dispose();
 
             owo.StopAllSensations();
@@ -206,21 +240,31 @@ namespace OWOVRC.UI
             if (logLevelComboBox.SelectedItem is LogEventLevel level)
             {
                 logLevelSwitch.MinimumLevel = level;
+                Log.Information("Log level changed to {level}", level);
             }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LoadSettings();
             logLevelComboBox.DataSource = Logging.Levels;
             logLevelSwitch.MinimumLevel = LogEventLevel.Information;
             logLevelComboBox.SelectedItem = logLevelSwitch.MinimumLevel;
+
+            LoadSettings();
 
             // Set up effects
             effects = [
                 new Collision(owo, collisionSettings),
                 new Velocity(owo, velocitySettings)
             ];
+
+            // Set up OWI
+            SetUpOWI();
+        }
+
+        private void SetUpOWI()
+        {
+            owi = new(owiSettings, owo);
         }
 
         private void UpdateConnectionSettings()
@@ -232,6 +276,7 @@ namespace OWOVRC.UI
         private void UpdateCollisionEffectSettings()
         {
             collisionEnabledCheckbox.Checked = collisionSettings.Enabled;
+            collisionPriorityInput.Text = collisionSettings.Priority.ToString();
             collisionUseVelocityCheckbox.Checked = collisionSettings.UseVelocity;
             collisionAllowContinuousCheckbox.Checked = collisionSettings.AllowContinuous;
             collisionIntensityInput.Text = collisionSettings.BaseIntensity.ToString();
@@ -242,6 +287,7 @@ namespace OWOVRC.UI
         private void UpdateVelocityEffectSettings()
         {
             velocityEnabledCheckbox.Checked = velocitySettings.Enabled;
+            velocityPriorityInput.Text = velocitySettings.Priority.ToString();
             velocityThresholdInput.Text = velocitySettings.Threshold.ToString();
             velocityImpactEnabledCheckbox.Checked = velocitySettings.ImpactEnabled;
             velocityMinImpactInput.Text = velocitySettings.StopVelocityThreshold.ToString();
@@ -250,12 +296,19 @@ namespace OWOVRC.UI
             velocityIgnoreWhenSeatedCheckbox.Checked = velocitySettings.IgnoreWhenSeated;
         }
 
+        private void UpdateOWISettings()
+        {
+            owiEnabledCheckbox.Checked = owiSettings.Enabled;
+            owiPriorityInput.Text = owiSettings.Priority.ToString();
+        }
+
         private void MainForm_Shown(object sender, EventArgs e)
         {
             owoIPInput.ValidatingType = typeof(System.Net.IPAddress);
             UpdateConnectionSettings();
             UpdateCollisionEffectSettings();
             UpdateVelocityEffectSettings();
+            UpdateOWISettings();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -279,7 +332,7 @@ namespace OWOVRC.UI
             SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection settings");
         }
 
-        private static int ValidateIntSetting(TextBox input, int settingsValue, int minValue=0, int maxValue=int.MaxValue)
+        private static int ValidateIntSetting(TextBox input, int settingsValue, int minValue = 0, int maxValue = int.MaxValue)
         {
             if (!int.TryParse(input.Text, out int value))
             {
@@ -375,9 +428,26 @@ namespace OWOVRC.UI
             SaveSettings<VelocityEffectSettings>(velocitySettings, "velocity.json", "velocity effect");
         }
 
-        private void stopSensationsButton_Click(object sender, EventArgs e)
+        private void StopSensationsButton_Click(object sender, EventArgs e)
         {
             owo.StopAllSensations();
+            //TODO: Reset all effects
+            Log.Information("Stopped all running sensations!");
+        }
+
+        private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(WorldIntegrator.OWI_GITHUB_URL);
+        }
+
+        private void ApplyOwiSettingsButton_Click(object sender, EventArgs e)
+        {
+            owiSettings.Enabled = owiEnabledCheckbox.Checked;
+
+            // Priority
+            owiSettings.Priority = ValidateIntSetting(owiPriorityInput, owiSettings.Priority);
+
+            SaveSettings<WorldIntegratorSettings>(owiSettings, "owi.json", "OWO World Integrator");
         }
     }
 }
