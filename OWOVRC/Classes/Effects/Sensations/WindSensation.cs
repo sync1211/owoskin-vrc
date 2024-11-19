@@ -61,7 +61,7 @@ namespace OWOVRC.Classes.Effects.Builders
             return SensationsFactory.Create(frequency, Duration, intensity, 0, 0, 0);
         }
 
-        public void Play(OWOHelper owo)
+        public void Play(OWOHelper owo, int priority = 0)
         {
             int intensityPercent = Intensity * (IntensityPercent / 100);
 
@@ -76,7 +76,7 @@ namespace OWOVRC.Classes.Effects.Builders
                 }
             }
 
-            Sensation sensation = CreateSensation(intensityPercent);
+            Sensation sensation = CreateSensation(intensityPercent).WithPriority(priority);
             owo.AddSensation(sensation, musclesWithIntensity.ToArray());
         }
 
@@ -88,7 +88,7 @@ namespace OWOVRC.Classes.Effects.Builders
         /// <param name="velocityZ">back/front</param></param>
         /// <param name="durationSeconds">duration of the sensation</param></param>
         /// </summary>
-        public static WindSensation CreateFromVelocity(float velocityX, float velocityY, float velocityZ, float durationSeconds=0.2f)
+        public static WindSensation CreateFromVelocity(float velocityX, float velocityY, float velocityZ, float durationSeconds = 0.2f)
         {
             // Generate affected muscles dynamically based on direction
             // 1. Assign a weight to every direction based on their % of the maximum
@@ -121,12 +121,12 @@ namespace OWOVRC.Classes.Effects.Builders
             }
 
             // 2. Assign a weight to every direction based on their % of the maximum
-            int frontWeight = (int) (frontVelocity / maxVelocity) * 100;
-            int backWeight = (int) (backVelocity / maxVelocity) * 100;
-            int leftWeight = (int) (leftVelocity / maxVelocity) * 100;
-            int rightWeight = (int) (rightVelocity / maxVelocity) * 100;
-            int upWeight = (int) (upVelocity / maxVelocity) * 100;
-            int downWeight = (int) (downVelocity / maxVelocity) * 100;
+            int frontWeight = (int)(frontVelocity / maxVelocity) * 100;
+            int backWeight = (int)(backVelocity / maxVelocity) * 100;
+            int leftWeight = (int)(leftVelocity / maxVelocity) * 100;
+            int rightWeight = (int)(rightVelocity / maxVelocity) * 100;
+            int upWeight = (int)(upVelocity / maxVelocity) * 100;
+            int downWeight = (int)(downVelocity / maxVelocity) * 100;
 
             // 3. For each direction, add its weight to the muscles affected by it
             AddMuscleWeights(muscleValues, "front", frontWeight);
@@ -141,7 +141,7 @@ namespace OWOVRC.Classes.Effects.Builders
             foreach (Muscle muscle in muscleValues.Keys)
             {
                 int muscleValue = muscleValues[muscle];
-                muscleValues[muscle] = (int) ((float) muscleValue / (float) maxMuscleValue) * 100;
+                muscleValues[muscle] = (int)((float)muscleValue / (float)maxMuscleValue) * 100;
             }
 
             return new WindSensation(muscleValues, durationSeconds);

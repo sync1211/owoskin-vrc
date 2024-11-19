@@ -54,6 +54,11 @@ namespace OWOVRC.Classes.Effects
 
         private void ProcessMessage(OSCMessage message)
         {
+            if (!Settings.Enabled)
+            {
+                return;
+            }
+
             // Non-OWO message
             if (!message.Address.StartsWith(ADDRESS_BASE))
             {
@@ -208,7 +213,7 @@ namespace OWOVRC.Classes.Effects
                 musclesScaled.Add(muscle.Value.WithIntensity(intensity));
             }
 
-            Sensation sensation = SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, 100, 0, 0, 0);
+            Sensation sensation = SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, 100, 0, 0, 0).WithPriority(Settings.Priority);
             owo.AddSensation(sensation, [.. musclesScaled]);
         }
 

@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using OWOGame;
+﻿using OWOGame;
 using OWOVRC.Classes.Effects.Builders;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -184,7 +183,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             double speedCapped = Math.Min(Speed, Settings.SpeedCap);
-            int speedPercent = (int) (100 * (speedCapped / Settings.SpeedCap));
+            int speedPercent = (int)(100 * (speedCapped / Settings.SpeedCap));
             Log.Information("Movement speed: {speedCapped} ({speed}) => {intensity}%", speedCapped, Speed, speedPercent);
 
             // Send senstations to vest
@@ -192,7 +191,7 @@ namespace OWOVRC.Classes.Effects
             //owo.AddSensation(sensation);
             WindSensation windSensation = CreateWindSensation();
             windSensation.IntensityPercent = speedPercent;
-            windSensation.Play(owo);
+            windSensation.Play(owo, Settings.Priority);
 
             LastSpeedPacket = DateTime.Now;
             SpeedLast = Speed;
@@ -209,7 +208,7 @@ namespace OWOVRC.Classes.Effects
         private Sensation CreateStopSensation(int power)
         {
             //TODO: Make this directional!
-            return owo.Sensations.FallDmg.MultiplyIntensityBy(power / 100).WithPriority(1);
+            return owo.Sensations.FallDmg.MultiplyIntensityBy(power / 100).WithPriority(Settings.StopPriority);
         }
     }
 }

@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-
-namespace OWOVRC.Classes.Settings
+﻿namespace OWOVRC.Classes.Settings
 {
-    public class VelocityEffectSettings
+    public class VelocityEffectSettings : EffectSettingsBase
     {
-        public bool Enabled { get; set; } = true;
         public float Threshold { get; set; } = 8;
         public bool ImpactEnabled { get; set; } = true;
+        public int StopPriority { get; set; } = 1;
         public float StopVelocityThreshold { get; set; } = 10;
         public float SpeedCap { get; set; } = 200.0f;
         public bool IgnoreWhenGrounded { get; set; }

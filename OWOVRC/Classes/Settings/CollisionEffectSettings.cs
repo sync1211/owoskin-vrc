@@ -1,10 +1,7 @@
-﻿using Newtonsoft.Json;
-
-namespace OWOVRC.Classes.Settings
+﻿namespace OWOVRC.Classes.Settings
 {
-    public class CollisionEffectSettings
+    public class CollisionEffectSettings : EffectSettingsBase
     {
-        public bool Enabled { get; set; }  = true;
         public bool UseVelocity { get; set; } = true;
         public bool AllowContinuous { get; set; } = true;
         public int BaseIntensity { get; set; } = 100;
