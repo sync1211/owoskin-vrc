@@ -92,7 +92,7 @@ namespace OWOVRC.Classes.Effects
             // Angular Velocity
             if (message.Address.StartsWith("Angular"))
             {
-                Log.Verbose("Ignoring Angular velocity: This feature is not yet implemented!");
+                //Log.Verbose("Ignoring Angular velocity: This feature is not yet implemented!");
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace OWOVRC.Classes.Effects
                 if (stopVelocity >= Settings.StopVelocityThreshold)
                 {
                     owo.StopAllSensations();
-                    Log.Information("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
+                    Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
                     Sensation stopSensation = CreateStopSensation(velocityPercent);
                     owo.AddSensation(stopSensation);
                     LastSpeedPacket = DateTime.MinValue;
@@ -184,13 +184,11 @@ namespace OWOVRC.Classes.Effects
 
             double speedCapped = Math.Min(Speed, Settings.SpeedCap);
             int speedPercent = (int)(100 * (speedCapped / Settings.SpeedCap));
-            Log.Information("Movement speed: {speedCapped} ({speed}) => {intensity}%", speedCapped, Speed, speedPercent);
+            Log.Debug("Movement speed: {speed} (max {speedCap}) => {intensity}%", Speed, Settings.SpeedCap, speedPercent);
 
             // Send senstations to vest
-            //Sensation sensation = owo.Sensations.Wind.MultiplyIntensityBy(speed / 100);
-            //owo.AddSensation(sensation);
             WindSensation windSensation = CreateWindSensation();
-            windSensation.IntensityPercent = speedPercent;
+            windSensation.Intensity = speedPercent;
             windSensation.Play(owo, Settings.Priority);
 
             LastSpeedPacket = DateTime.Now;

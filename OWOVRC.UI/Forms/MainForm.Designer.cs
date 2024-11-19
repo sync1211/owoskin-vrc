@@ -245,7 +245,9 @@
             // 
             // velocitySettingsPage
             // 
+            velocitySettingsPage.Controls.Add(label11);
             velocitySettingsPage.Controls.Add(label13);
+            velocitySettingsPage.Controls.Add(velocitySpeedCapInput);
             velocitySettingsPage.Controls.Add(velocityPriorityInput);
             velocitySettingsPage.Controls.Add(velocityIgnoreWhenSeatedCheckbox);
             velocitySettingsPage.Controls.Add(groupBox2);
@@ -281,7 +283,7 @@
             // velocityIgnoreWhenSeatedCheckbox
             // 
             velocityIgnoreWhenSeatedCheckbox.AutoSize = true;
-            velocityIgnoreWhenSeatedCheckbox.Location = new Point(6, 110);
+            velocityIgnoreWhenSeatedCheckbox.Location = new Point(6, 138);
             velocityIgnoreWhenSeatedCheckbox.Name = "velocityIgnoreWhenSeatedCheckbox";
             velocityIgnoreWhenSeatedCheckbox.Size = new Size(129, 19);
             velocityIgnoreWhenSeatedCheckbox.TabIndex = 13;
@@ -290,14 +292,12 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(label11);
-            groupBox2.Controls.Add(velocitySpeedCapInput);
             groupBox2.Controls.Add(label10);
             groupBox2.Controls.Add(velocityImpactEnabledCheckbox);
             groupBox2.Controls.Add(velocityMinImpactInput);
-            groupBox2.Location = new Point(6, 135);
+            groupBox2.Location = new Point(6, 165);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(345, 106);
+            groupBox2.Size = new Size(345, 75);
             groupBox2.TabIndex = 12;
             groupBox2.TabStop = false;
             groupBox2.Text = "Impact";
@@ -305,7 +305,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(6, 73);
+            label11.Location = new Point(6, 83);
             label11.Name = "label11";
             label11.Size = new Size(96, 15);
             label11.TabIndex = 11;
@@ -313,7 +313,7 @@
             // 
             // velocitySpeedCapInput
             // 
-            velocitySpeedCapInput.Location = new Point(247, 70);
+            velocitySpeedCapInput.Location = new Point(262, 83);
             velocitySpeedCapInput.Name = "velocitySpeedCapInput";
             velocitySpeedCapInput.Size = new Size(89, 23);
             velocitySpeedCapInput.TabIndex = 10;
@@ -363,7 +363,7 @@
             // velocityIgnoreWhenGroundedCheckbox
             // 
             velocityIgnoreWhenGroundedCheckbox.AutoSize = true;
-            velocityIgnoreWhenGroundedCheckbox.Location = new Point(6, 85);
+            velocityIgnoreWhenGroundedCheckbox.Location = new Point(6, 113);
             velocityIgnoreWhenGroundedCheckbox.Name = "velocityIgnoreWhenGroundedCheckbox";
             velocityIgnoreWhenGroundedCheckbox.Size = new Size(147, 19);
             velocityIgnoreWhenGroundedCheckbox.TabIndex = 4;

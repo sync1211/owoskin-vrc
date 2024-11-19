@@ -8,8 +8,18 @@ namespace OWOVRC.Classes.Effects.Builders
     {
         // Sensation parameters
         private const int frequency = 100;
-        private const int Intensity = 25; // Max intensity of the sensation itself
-        public int IntensityPercent { get; set; } = 100; // Intensity of whole sensation (scale/wind speed)
+        public int Intensity
+        {
+            get
+            {
+                return intensity * 4;
+            }
+            set
+            {
+                intensity = value / 4;
+            }
+        }
+        private int intensity = 25;
         public readonly float Duration;
         public readonly Dictionary<Muscle, int> Muscles;
 
@@ -63,8 +73,6 @@ namespace OWOVRC.Classes.Effects.Builders
 
         public void Play(OWOHelper owo, int priority = 0)
         {
-            int intensityPercent = Intensity * (IntensityPercent / 100);
-
             // Apply intensities
             List<Muscle> musclesWithIntensity = [];
             foreach (Muscle muscle in Muscles.Keys)
@@ -76,7 +84,8 @@ namespace OWOVRC.Classes.Effects.Builders
                 }
             }
 
-            Sensation sensation = CreateSensation(intensityPercent).WithPriority(priority);
+            Log.Verbose("Playing wind sensation at {0}%", Intensity);
+            Sensation sensation = CreateSensation(intensity).WithPriority(priority);
             owo.AddSensation(sensation, musclesWithIntensity.ToArray());
         }
 

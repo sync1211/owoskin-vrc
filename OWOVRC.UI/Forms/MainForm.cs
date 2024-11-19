@@ -404,6 +404,7 @@ namespace OWOVRC.UI
             // Speed multiplier
             collisionSettings.SpeedMultiplier = ValidateFloatSetting(collisionSpeedMultiplierInput, collisionSettings.SpeedMultiplier, 0, 100);
 
+            UpdateCollisionEffectSettings();
             SaveSettings<CollisionEffectSettings>(collisionSettings, "collision.json", "collision effect");
         }
 
@@ -426,6 +427,7 @@ namespace OWOVRC.UI
             // Speed cap
             velocitySettings.SpeedCap = ValidateFloatSetting(velocitySpeedCapInput, velocitySettings.SpeedCap);
 
+            UpdateVelocityEffectSettings();
             SaveSettings<VelocityEffectSettings>(velocitySettings, "velocity.json", "velocity effect");
         }
 
@@ -451,6 +453,7 @@ namespace OWOVRC.UI
             // Log update interval
             owiSettings.UpdateInterval = ValidateIntSetting(owiUpdateIntervalInput, owiSettings.UpdateInterval, 100, 10000);
 
+            UpdateOWISettings();
             SaveSettings<WorldIntegratorSettings>(owiSettings, "owi.json", "OWO World Integrator");
         }
     }
