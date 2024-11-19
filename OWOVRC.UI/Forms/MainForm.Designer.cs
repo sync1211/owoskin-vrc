@@ -30,6 +30,8 @@
         {
             tabControl1 = new TabControl();
             collisionSettingsPage = new TabPage();
+            label12 = new Label();
+            collisionPriorityInput = new TextBox();
             label6 = new Label();
             velocityBasedGroupBox = new GroupBox();
             label9 = new Label();
@@ -42,6 +44,8 @@
             collisionIntensityInput = new TextBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
+            label13 = new Label();
+            velocityPriorityInput = new TextBox();
             velocityIgnoreWhenSeatedCheckbox = new CheckBox();
             groupBox2 = new GroupBox();
             label11 = new Label();
@@ -58,6 +62,7 @@
             label3 = new Label();
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
+            stopSensationsButton = new Button();
             oscPortInput = new TextBox();
             owoIPInput = new MaskedTextBox();
             label5 = new Label();
@@ -69,7 +74,6 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
-            stopSensationsButton = new Button();
             tabControl1.SuspendLayout();
             collisionSettingsPage.SuspendLayout();
             velocityBasedGroupBox.SuspendLayout();
@@ -86,11 +90,13 @@
             tabControl1.Location = new Point(12, 118);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(368, 296);
+            tabControl1.Size = new Size(368, 303);
             tabControl1.TabIndex = 0;
             // 
             // collisionSettingsPage
             // 
+            collisionSettingsPage.Controls.Add(label12);
+            collisionSettingsPage.Controls.Add(collisionPriorityInput);
             collisionSettingsPage.Controls.Add(label6);
             collisionSettingsPage.Controls.Add(velocityBasedGroupBox);
             collisionSettingsPage.Controls.Add(collisionEnabledCheckbox);
@@ -99,15 +105,31 @@
             collisionSettingsPage.Location = new Point(4, 24);
             collisionSettingsPage.Name = "collisionSettingsPage";
             collisionSettingsPage.Padding = new Padding(3);
-            collisionSettingsPage.Size = new Size(360, 268);
+            collisionSettingsPage.Size = new Size(360, 275);
             collisionSettingsPage.TabIndex = 0;
             collisionSettingsPage.Text = "Collision";
             collisionSettingsPage.UseVisualStyleBackColor = true;
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 30);
+            label12.Name = "label12";
+            label12.Size = new Size(45, 15);
+            label12.TabIndex = 9;
+            label12.Text = "Priority";
+            // 
+            // collisionPriorityInput
+            // 
+            collisionPriorityInput.Location = new Point(262, 26);
+            collisionPriorityInput.Name = "collisionPriorityInput";
+            collisionPriorityInput.Size = new Size(89, 23);
+            collisionPriorityInput.TabIndex = 8;
+            // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(6, 30);
+            label6.Location = new Point(6, 59);
             label6.Name = "label6";
             label6.Size = new Size(52, 15);
             label6.TabIndex = 7;
@@ -121,7 +143,7 @@
             velocityBasedGroupBox.Controls.Add(collisionMinIntensityInput);
             velocityBasedGroupBox.Controls.Add(collisionUseVelocityCheckbox);
             velocityBasedGroupBox.Controls.Add(collisionAllowContinuousCheckbox);
-            velocityBasedGroupBox.Location = new Point(6, 56);
+            velocityBasedGroupBox.Location = new Point(6, 85);
             velocityBasedGroupBox.Name = "velocityBasedGroupBox";
             velocityBasedGroupBox.Size = new Size(348, 135);
             velocityBasedGroupBox.TabIndex = 5;
@@ -192,7 +214,7 @@
             // 
             // collisionIntensityInput
             // 
-            collisionIntensityInput.Location = new Point(262, 27);
+            collisionIntensityInput.Location = new Point(262, 56);
             collisionIntensityInput.Name = "collisionIntensityInput";
             collisionIntensityInput.Size = new Size(89, 23);
             collisionIntensityInput.TabIndex = 6;
@@ -200,7 +222,7 @@
             // applyCollisionSettingsButton
             // 
             applyCollisionSettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            applyCollisionSettingsButton.Location = new Point(279, 239);
+            applyCollisionSettingsButton.Location = new Point(279, 246);
             applyCollisionSettingsButton.Name = "applyCollisionSettingsButton";
             applyCollisionSettingsButton.Size = new Size(75, 23);
             applyCollisionSettingsButton.TabIndex = 0;
@@ -210,6 +232,8 @@
             // 
             // velocitySettingsPage
             // 
+            velocitySettingsPage.Controls.Add(label13);
+            velocitySettingsPage.Controls.Add(velocityPriorityInput);
             velocitySettingsPage.Controls.Add(velocityIgnoreWhenSeatedCheckbox);
             velocitySettingsPage.Controls.Add(groupBox2);
             velocitySettingsPage.Controls.Add(label7);
@@ -220,15 +244,31 @@
             velocitySettingsPage.Location = new Point(4, 24);
             velocitySettingsPage.Name = "velocitySettingsPage";
             velocitySettingsPage.Padding = new Padding(3);
-            velocitySettingsPage.Size = new Size(360, 268);
+            velocitySettingsPage.Size = new Size(360, 275);
             velocitySettingsPage.TabIndex = 1;
             velocitySettingsPage.Text = "Velocity";
             velocitySettingsPage.UseVisualStyleBackColor = true;
             // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(6, 30);
+            label13.Name = "label13";
+            label13.Size = new Size(45, 15);
+            label13.TabIndex = 15;
+            label13.Text = "Priority";
+            // 
+            // velocityPriorityInput
+            // 
+            velocityPriorityInput.Location = new Point(262, 26);
+            velocityPriorityInput.Name = "velocityPriorityInput";
+            velocityPriorityInput.Size = new Size(89, 23);
+            velocityPriorityInput.TabIndex = 14;
+            // 
             // velocityIgnoreWhenSeatedCheckbox
             // 
             velocityIgnoreWhenSeatedCheckbox.AutoSize = true;
-            velocityIgnoreWhenSeatedCheckbox.Location = new Point(6, 82);
+            velocityIgnoreWhenSeatedCheckbox.Location = new Point(6, 110);
             velocityIgnoreWhenSeatedCheckbox.Name = "velocityIgnoreWhenSeatedCheckbox";
             velocityIgnoreWhenSeatedCheckbox.Size = new Size(129, 19);
             velocityIgnoreWhenSeatedCheckbox.TabIndex = 13;
@@ -242,7 +282,7 @@
             groupBox2.Controls.Add(label10);
             groupBox2.Controls.Add(velocityImpactEnabledCheckbox);
             groupBox2.Controls.Add(velocityMinImpactInput);
-            groupBox2.Location = new Point(6, 107);
+            groupBox2.Location = new Point(6, 135);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(345, 106);
             groupBox2.TabIndex = 12;
@@ -294,7 +334,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(6, 30);
+            label7.Location = new Point(6, 58);
             label7.Name = "label7";
             label7.Size = new Size(75, 15);
             label7.TabIndex = 9;
@@ -302,7 +342,7 @@
             // 
             // velocityThresholdInput
             // 
-            velocityThresholdInput.Location = new Point(262, 27);
+            velocityThresholdInput.Location = new Point(262, 55);
             velocityThresholdInput.Name = "velocityThresholdInput";
             velocityThresholdInput.Size = new Size(89, 23);
             velocityThresholdInput.TabIndex = 8;
@@ -310,7 +350,7 @@
             // velocityIgnoreWhenGroundedCheckbox
             // 
             velocityIgnoreWhenGroundedCheckbox.AutoSize = true;
-            velocityIgnoreWhenGroundedCheckbox.Location = new Point(6, 57);
+            velocityIgnoreWhenGroundedCheckbox.Location = new Point(6, 85);
             velocityIgnoreWhenGroundedCheckbox.Name = "velocityIgnoreWhenGroundedCheckbox";
             velocityIgnoreWhenGroundedCheckbox.Size = new Size(147, 19);
             velocityIgnoreWhenGroundedCheckbox.TabIndex = 4;
@@ -330,7 +370,7 @@
             // applyVelocitySettingsButton
             // 
             applyVelocitySettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            applyVelocitySettingsButton.Location = new Point(279, 239);
+            applyVelocitySettingsButton.Location = new Point(279, 246);
             applyVelocitySettingsButton.Name = "applyVelocitySettingsButton";
             applyVelocitySettingsButton.Size = new Size(75, 23);
             applyVelocitySettingsButton.TabIndex = 0;
@@ -362,7 +402,7 @@
             logBox.BackColor = Color.Black;
             logBox.Location = new Point(6, 51);
             logBox.Name = "logBox";
-            logBox.Size = new Size(390, 239);
+            logBox.Size = new Size(390, 246);
             logBox.TabIndex = 1;
             logBox.Text = "";
             // 
@@ -385,6 +425,17 @@
             connectionGroup.TabIndex = 1;
             connectionGroup.TabStop = false;
             connectionGroup.Text = "Connection";
+            // 
+            // stopSensationsButton
+            // 
+            stopSensationsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            stopSensationsButton.Location = new Point(6, 71);
+            stopSensationsButton.Name = "stopSensationsButton";
+            stopSensationsButton.Size = new Size(167, 23);
+            stopSensationsButton.TabIndex = 10;
+            stopSensationsButton.Text = "Stop all sensations";
+            stopSensationsButton.UseVisualStyleBackColor = true;
+            stopSensationsButton.Click += stopSensationsButton_Click;
             // 
             // oscPortInput
             // 
@@ -495,27 +546,16 @@
             groupBox1.Controls.Add(logBox);
             groupBox1.Location = new Point(386, 118);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(402, 296);
+            groupBox1.Size = new Size(402, 303);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
-            // 
-            // stopSensationsButton
-            // 
-            stopSensationsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            stopSensationsButton.Location = new Point(6, 71);
-            stopSensationsButton.Name = "stopSensationsButton";
-            stopSensationsButton.Size = new Size(167, 23);
-            stopSensationsButton.TabIndex = 10;
-            stopSensationsButton.Text = "Stop all sensations";
-            stopSensationsButton.UseVisualStyleBackColor = true;
-            stopSensationsButton.Click += stopSensationsButton_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 419);
+            ClientSize = new Size(800, 423);
             Controls.Add(groupBox1);
             Controls.Add(connectionGroup);
             Controls.Add(tabControl1);
@@ -587,5 +627,9 @@
         private CheckBox velocityIgnoreWhenGroundedCheckbox;
         private CheckBox velocityIgnoreWhenSeatedCheckbox;
         private Button stopSensationsButton;
+        private Label label12;
+        private TextBox collisionPriorityInput;
+        private Label label13;
+        private TextBox velocityPriorityInput;
     }
 }

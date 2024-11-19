@@ -8,10 +8,7 @@ using OWOVRC.UI.Classes;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using System;
 using System.Net;
-using System.Reflection;
-using System.Windows.Forms;
 
 namespace OWOVRC.UI
 {
@@ -282,7 +279,7 @@ namespace OWOVRC.UI
             SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection settings");
         }
 
-        private static int ValidateIntSetting(TextBox input, int settingsValue)
+        private static int ValidateIntSetting(TextBox input, int settingsValue, int minValue=0, int maxValue=int.MaxValue)
         {
             if (!int.TryParse(input.Text, out int value))
             {
@@ -290,15 +287,39 @@ namespace OWOVRC.UI
                 return settingsValue;
             }
 
+            if (value < minValue)
+            {
+                input.Text = minValue.ToString();
+                return minValue;
+            }
+
+            if (value > maxValue)
+            {
+                input.Text = maxValue.ToString();
+                return maxValue;
+            }
+
             return value;
         }
 
-        private static float ValidateFloatSetting(TextBox input, float settingsValue)
+        private static float ValidateFloatSetting(TextBox input, float settingsValue, float minValue = 0, float maxValue = float.MaxValue)
         {
             if (!float.TryParse(input.Text, out float value))
             {
                 input.Text = settingsValue.ToString();
                 return settingsValue;
+            }
+
+            if (value < minValue)
+            {
+                input.Text = minValue.ToString();
+                return minValue;
+            }
+
+            if (value > maxValue)
+            {
+                input.Text = maxValue.ToString();
+                return maxValue;
             }
 
             return value;
@@ -317,14 +338,17 @@ namespace OWOVRC.UI
             collisionSettings.UseVelocity = collisionUseVelocityCheckbox.Checked;
             collisionSettings.AllowContinuous = collisionAllowContinuousCheckbox.Checked;
 
+            // Priority
+            collisionSettings.Priority = ValidateIntSetting(collisionPriorityInput, collisionSettings.Priority);
+
             // Collision min intensity
-            collisionSettings.BaseIntensity = ValidateIntSetting(collisionIntensityInput, collisionSettings.BaseIntensity);
+            collisionSettings.BaseIntensity = ValidateIntSetting(collisionIntensityInput, collisionSettings.BaseIntensity, 0, 100);
 
             // MinIintensity
-            collisionSettings.MinIntensity = ValidateIntSetting(collisionMinIntensityInput, collisionSettings.MinIntensity);
+            collisionSettings.MinIntensity = ValidateIntSetting(collisionMinIntensityInput, collisionSettings.MinIntensity, 0, 100);
 
             // Speed multiplier
-            collisionSettings.SpeedMultiplier = ValidateFloatSetting(collisionSpeedMultiplierInput, collisionSettings.SpeedMultiplier);
+            collisionSettings.SpeedMultiplier = ValidateFloatSetting(collisionSpeedMultiplierInput, collisionSettings.SpeedMultiplier, 0, 100);
 
             SaveSettings<CollisionEffectSettings>(collisionSettings, "collision.json", "collision effect");
         }
@@ -335,6 +359,9 @@ namespace OWOVRC.UI
             velocitySettings.ImpactEnabled = velocityImpactEnabledCheckbox.Checked;
             velocitySettings.IgnoreWhenGrounded = velocityIgnoreWhenGroundedCheckbox.Checked;
             velocitySettings.IgnoreWhenSeated = velocityIgnoreWhenSeatedCheckbox.Checked;
+
+            // Priority
+            velocitySettings.Priority = ValidateIntSetting(velocityPriorityInput, velocitySettings.Priority);
 
             // Threshold
             velocitySettings.Threshold = ValidateFloatSetting(velocityThresholdInput, velocitySettings.Threshold);
