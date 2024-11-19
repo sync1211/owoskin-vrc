@@ -22,9 +22,8 @@ namespace OWOVRC.Classes.Effects
         private const string OWI_PREFIX = "VRC_OWO_WorldIntegration:";
         private readonly string VRC_LOG_DIR = $"{Environment.GetEnvironmentVariable("USERPROFILE")}\\AppData\\LocalLow\\VRChat\\VRChat";
 
-        // File watcher
-        private FileSystemWatcher? Watcher;
-        private int LinesRead;
+        // Log watcher
+        private readonly LogWatcher logWatcher;
 
         // Settings
         private readonly WorldIntegratorSettings Settings;
@@ -33,6 +32,8 @@ namespace OWOVRC.Classes.Effects
         {
             Settings = settings;
             this.owo = owo;
+            logWatcher = new("", settings.UpdateInterval);
+            logWatcher.OnLogLineRead += OnLogChange;
         }
 
         public void Start()
@@ -43,8 +44,11 @@ namespace OWOVRC.Classes.Effects
                 throw new FileNotFoundException($"No VRChat log file not found at {VRC_LOG_DIR}!");
             }
 
-            Watcher = CreateFileWatcher(logFile);
-            Watcher.Changed += OnLogChange;
+            // Update log watcher parameters
+            logWatcher.LogPath = logFile.FullName;
+            logWatcher.SleepMillis = Settings.UpdateInterval;
+
+            logWatcher.Start();
 
             Log.Information("OWO World Integration log watcher started!");
             Log.Information("Based on OWOWorldIntegrator by RevoForge & SonoVr: {0}", OWI_GITHUB_URL);
@@ -52,16 +56,12 @@ namespace OWOVRC.Classes.Effects
 
         public void Stop()
         {
-            if (Watcher == null)
+            if (logWatcher == null)
             {
                 return;
             }
 
             Log.Information("OWI log watcher stopped!");
-            Watcher.Changed -= OnLogChange;
-
-            Watcher.Dispose();
-            Watcher = null;
         }
 
         private FileInfo? GetVRCLogFile()
@@ -89,50 +89,20 @@ namespace OWOVRC.Classes.Effects
             return recentLogFile;
         }
 
-        private FileSystemWatcher CreateFileWatcher(FileInfo logFile)
+        private void OnLogChange(object? source, string logLine)
         {
-            return new()
-            {
-                Path = logFile.Directory!.FullName,
-                NotifyFilter = NotifyFilters.LastWrite,
-                EnableRaisingEvents = true,
-                Filter = logFile.Name
-            };
-        }
-
-        private void OnLogChange(object source, FileSystemEventArgs e)
-        {
-            if (!Settings.Enabled && e.ChangeType != WatcherChangeTypes.Changed)
+            if (!Settings.Enabled)
             {
                 return;
             }
 
-            string content;
-            using (FileStream fileStream = new(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            if (!logLine.Contains(OWI_PREFIX))
             {
-                using (StreamReader streamReader = new(fileStream))
-                {
-                    content = streamReader.ReadToEnd();
-                }
-            }
-
-            string[] lines = content.Split(Environment.NewLine);
-            string[] owoLines = lines.Where(lines => lines.Contains(OWI_PREFIX)).ToArray();
-
-            // Ignore the first lines
-            if (LinesRead == 0)
-            {
-                LinesRead = owoLines.Length;
                 return;
             }
 
-            if (owoLines.Length <= LinesRead)
-            {
-                Log.Debug("No change in effect lines! ({0} <= {1})", lines.Length, LinesRead);
-                return;
-            }
 
-            ProcessLogLine(owoLines[^1]);
+            ProcessLogLine(logLine);
         }
 
         public void ProcessLogLine(string content)
@@ -195,8 +165,10 @@ namespace OWOVRC.Classes.Effects
 
         public void Dispose()
         {
-            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in der Methode "Dispose(bool disposing)" ein.
             Stop();
+
+            logWatcher.OnLogLineRead -= OnLogChange;
+
             GC.SuppressFinalize(this);
         }
     }

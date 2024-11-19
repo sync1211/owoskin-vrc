@@ -59,11 +59,15 @@
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             owiSettingsPage = new TabPage();
+            label16 = new Label();
+            owiUpdateIntervalInput = new TextBox();
+            groupBox3 = new GroupBox();
+            label15 = new Label();
+            owiLinkLabel = new LinkLabel();
             label14 = new Label();
             owiPriorityInput = new TextBox();
             owiEnabledCheckbox = new CheckBox();
             applyOwiSettingsButton = new Button();
-            owiLinkLabel = new LinkLabel();
             logLevelComboBox = new ComboBox();
             label3 = new Label();
             logBox = new RichTextBox();
@@ -80,17 +84,15 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
-            label15 = new Label();
-            groupBox3 = new GroupBox();
             tabControl1.SuspendLayout();
             collisionSettingsPage.SuspendLayout();
             velocityBasedGroupBox.SuspendLayout();
             velocitySettingsPage.SuspendLayout();
             groupBox2.SuspendLayout();
             owiSettingsPage.SuspendLayout();
+            groupBox3.SuspendLayout();
             connectionGroup.SuspendLayout();
             groupBox1.SuspendLayout();
-            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -305,9 +307,9 @@
             label11.AutoSize = true;
             label11.Location = new Point(6, 73);
             label11.Name = "label11";
-            label11.Size = new Size(64, 15);
+            label11.Size = new Size(96, 15);
             label11.TabIndex = 11;
-            label11.Text = "Max speed";
+            label11.Text = "Max speed (m/s)";
             // 
             // velocitySpeedCapInput
             // 
@@ -321,9 +323,9 @@
             label10.AutoSize = true;
             label10.Location = new Point(6, 44);
             label10.Name = "label10";
-            label10.Size = new Size(115, 15);
+            label10.Size = new Size(147, 15);
             label10.TabIndex = 11;
-            label10.Text = "Min. impact velocity";
+            label10.Text = "Min. impact velocity (m/s)";
             // 
             // velocityImpactEnabledCheckbox
             // 
@@ -347,9 +349,9 @@
             label7.AutoSize = true;
             label7.Location = new Point(6, 58);
             label7.Name = "label7";
-            label7.Size = new Size(75, 15);
+            label7.Size = new Size(107, 15);
             label7.TabIndex = 9;
-            label7.Text = "Min. velocity";
+            label7.Text = "Min. velocity (m/s)";
             // 
             // velocityThresholdInput
             // 
@@ -391,6 +393,8 @@
             // 
             // owiSettingsPage
             // 
+            owiSettingsPage.Controls.Add(label16);
+            owiSettingsPage.Controls.Add(owiUpdateIntervalInput);
             owiSettingsPage.Controls.Add(groupBox3);
             owiSettingsPage.Controls.Add(owiLinkLabel);
             owiSettingsPage.Controls.Add(label14);
@@ -403,6 +407,55 @@
             owiSettingsPage.TabIndex = 2;
             owiSettingsPage.Text = "OWI";
             owiSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(6, 59);
+            label16.Name = "label16";
+            label16.Size = new Size(112, 15);
+            label16.TabIndex = 23;
+            label16.Text = "Log scan delay (ms)";
+            // 
+            // owiUpdateIntervalInput
+            // 
+            owiUpdateIntervalInput.Location = new Point(262, 55);
+            owiUpdateIntervalInput.Name = "owiUpdateIntervalInput";
+            owiUpdateIntervalInput.Size = new Size(89, 23);
+            owiUpdateIntervalInput.TabIndex = 22;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(label15);
+            groupBox3.Location = new Point(6, 84);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(348, 152);
+            groupBox3.TabIndex = 21;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Information";
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.FlatStyle = FlatStyle.Popup;
+            label15.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label15.ForeColor = SystemColors.ControlDarkDark;
+            label15.Location = new Point(20, 37);
+            label15.Name = "label15";
+            label15.Size = new Size(308, 85);
+            label15.TabIndex = 20;
+            label15.Text = "This effect receives data from worlds\r\nusing OWO World Integrator.\r\n\r\nTo use this effect, please enable debug logging in your\r\nVRChat client and visit a world that supports OWI.";
+            // 
+            // owiLinkLabel
+            // 
+            owiLinkLabel.AutoSize = true;
+            owiLinkLabel.Location = new Point(6, 239);
+            owiLinkLabel.Name = "owiLinkLabel";
+            owiLinkLabel.Size = new Size(133, 30);
+            owiLinkLabel.TabIndex = 0;
+            owiLinkLabel.TabStop = true;
+            owiLinkLabel.Text = "OWOWorldIntegrator\r\nby RevoForge && SonoVr\r\n";
+            owiLinkLabel.LinkClicked += OwiLinkLabel_LinkClicked;
             // 
             // label14
             // 
@@ -440,17 +493,6 @@
             applyOwiSettingsButton.Text = "Apply";
             applyOwiSettingsButton.UseVisualStyleBackColor = true;
             applyOwiSettingsButton.Click += ApplyOwiSettingsButton_Click;
-            // 
-            // owiLinkLabel
-            // 
-            owiLinkLabel.AutoSize = true;
-            owiLinkLabel.Location = new Point(6, 239);
-            owiLinkLabel.Name = "owiLinkLabel";
-            owiLinkLabel.Size = new Size(133, 30);
-            owiLinkLabel.TabIndex = 0;
-            owiLinkLabel.TabStop = true;
-            owiLinkLabel.Text = "OWOWorldIntegrator\r\nby RevoForge && SonoVr\r\n";
-            owiLinkLabel.LinkClicked += OwiLinkLabel_LinkClicked;
             // 
             // logLevelComboBox
             // 
@@ -625,28 +667,6 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
             // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.FlatStyle = FlatStyle.Popup;
-            label15.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label15.ForeColor = SystemColors.ControlDarkDark;
-            label15.Location = new Point(6, 19);
-            label15.Name = "label15";
-            label15.Size = new Size(308, 85);
-            label15.TabIndex = 20;
-            label15.Text = "This effect receives data from worlds\r\nusing OWO World Integrator.\r\n\r\nTo use this effect, please enable debug logging in your\r\nVRChat client and visit a world that supports OWI.";
-            // 
-            // groupBox3
-            // 
-            groupBox3.Controls.Add(label15);
-            groupBox3.Location = new Point(6, 75);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(348, 161);
-            groupBox3.TabIndex = 21;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Information";
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -674,12 +694,12 @@
             groupBox2.PerformLayout();
             owiSettingsPage.ResumeLayout(false);
             owiSettingsPage.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             connectionGroup.ResumeLayout(false);
             connectionGroup.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -739,5 +759,7 @@
         private Button applyOwiSettingsButton;
         private Label label15;
         private GroupBox groupBox3;
+        private Label label16;
+        private TextBox owiUpdateIntervalInput;
     }
 }

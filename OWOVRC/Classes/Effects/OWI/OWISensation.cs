@@ -7,7 +7,6 @@ namespace OWOVRC.Classes.Effects.OWI
 {
     public class OWISensation
     {
-
         [JsonProperty("priority")]
         public readonly int Priority;
         [JsonProperty("sensation ")]
