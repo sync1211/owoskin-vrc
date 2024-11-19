@@ -61,6 +61,7 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
+            logWatcher.Stop();
             Log.Information("OWI log watcher stopped!");
         }
 
