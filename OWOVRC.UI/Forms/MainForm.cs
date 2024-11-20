@@ -303,7 +303,7 @@ namespace OWOVRC.UI
             effects = [
                 new Collision(owo, collisionSettings),
                 new Velocity(owo, velocitySettings),
-                new OSCPresetTrigger(owo, oscPresetsSettings) //TODO: collisionSettings is a placeholder, replace with actual settings!
+                new OSCPresetTrigger(owo, oscPresetsSettings)
             ];
 
             // Set up OWI
