@@ -157,7 +157,9 @@ namespace OWOVRC.Classes.Effects
 
         private void PlaySensations(OWISensation[] sensations)
         {
-            foreach(OWISensation owiSensation in sensations)
+            float intensityMultiplier = ((float)Settings.Intensity / 100.0f);
+
+            foreach (OWISensation owiSensation in sensations)
             {
                 if (owiSensation.SensationName.Equals("STOP", StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -166,7 +168,8 @@ namespace OWOVRC.Classes.Effects
                 }
 
                 Muscle[] muscles = owiSensation.GetMusclesWithIntensity();
-                Sensation sensation = owiSensation.AsSensation();
+                Sensation sensation = owiSensation.AsSensation()
+                    .MultiplyIntensityBy((Multiplier)intensityMultiplier);
 
                 owo.AddSensation(sensation, muscles);
             }

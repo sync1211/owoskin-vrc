@@ -309,6 +309,7 @@ namespace OWOVRC.UI
             owiEnabledCheckbox.Checked = owiSettings.Enabled;
             owiPriorityInput.Text = owiSettings.Priority.ToString();
             owiUpdateIntervalInput.Text = owiSettings.UpdateInterval.ToString();
+            owiIntensityInput.Text = owiSettings.Intensity.ToString();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -462,6 +463,9 @@ namespace OWOVRC.UI
 
             // Log update interval
             owiSettings.UpdateInterval = ValidateIntSetting(owiUpdateIntervalInput, owiSettings.UpdateInterval, 10, 10000);
+
+            // Intensity
+            owiSettings.Intensity = ValidateIntSetting(owiIntensityInput, owiSettings.Intensity, 0, 100);
 
             UpdateOWISettings();
             SaveSettings<WorldIntegratorSettings>(owiSettings, "owi.json", "OWO World Integrator");

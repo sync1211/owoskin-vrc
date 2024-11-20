@@ -3,6 +3,6 @@
     public class WorldIntegratorSettings : EffectSettingsBase
     {
         public int UpdateInterval { get; set; } = 200;
-        //TODO: Intensity multiplier
+        public int Intensity { get; set; } = 100;
     }
 }

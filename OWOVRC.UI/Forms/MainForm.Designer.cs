@@ -84,6 +84,8 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
+            label17 = new Label();
+            owiIntensityInput = new TextBox();
             tabControl1.SuspendLayout();
             collisionSettingsPage.SuspendLayout();
             velocityBasedGroupBox.SuspendLayout();
@@ -144,9 +146,9 @@
             label6.AutoSize = true;
             label6.Location = new Point(6, 59);
             label6.Name = "label6";
-            label6.Size = new Size(52, 15);
+            label6.Size = new Size(73, 15);
             label6.TabIndex = 7;
-            label6.Text = "Intensity";
+            label6.Text = "Intensity (%)";
             // 
             // velocityBasedGroupBox
             // 
@@ -393,6 +395,8 @@
             // 
             // owiSettingsPage
             // 
+            owiSettingsPage.Controls.Add(label17);
+            owiSettingsPage.Controls.Add(owiIntensityInput);
             owiSettingsPage.Controls.Add(label16);
             owiSettingsPage.Controls.Add(owiUpdateIntervalInput);
             owiSettingsPage.Controls.Add(groupBox3);
@@ -427,9 +431,9 @@
             // groupBox3
             // 
             groupBox3.Controls.Add(label15);
-            groupBox3.Location = new Point(6, 84);
+            groupBox3.Location = new Point(6, 115);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(348, 152);
+            groupBox3.Size = new Size(348, 121);
             groupBox3.TabIndex = 21;
             groupBox3.TabStop = false;
             groupBox3.Text = "Information";
@@ -440,7 +444,7 @@
             label15.FlatStyle = FlatStyle.Popup;
             label15.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
             label15.ForeColor = SystemColors.ControlDarkDark;
-            label15.Location = new Point(20, 37);
+            label15.Location = new Point(21, 23);
             label15.Name = "label15";
             label15.Size = new Size(308, 85);
             label15.TabIndex = 20;
@@ -667,6 +671,22 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
             // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(6, 89);
+            label17.Name = "label17";
+            label17.Size = new Size(73, 15);
+            label17.TabIndex = 25;
+            label17.Text = "Intensity (%)";
+            // 
+            // owiIntensityInput
+            // 
+            owiIntensityInput.Location = new Point(262, 86);
+            owiIntensityInput.Name = "owiIntensityInput";
+            owiIntensityInput.Size = new Size(89, 23);
+            owiIntensityInput.TabIndex = 24;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -761,5 +781,7 @@
         private GroupBox groupBox3;
         private Label label16;
         private TextBox owiUpdateIntervalInput;
+        private Label label17;
+        private TextBox owiIntensityInput;
     }
 }

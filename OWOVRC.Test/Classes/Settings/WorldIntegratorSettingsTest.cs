@@ -12,7 +12,9 @@ namespace OWOVRC.Test.Classes.Settings
             WorldIntegratorSettings settings = new()
             {
                 Priority = 2,
-                Enabled = false
+                Enabled = false,
+                UpdateInterval = 90,
+                Intensity = 89
             };
 
             string json = JsonConvert.SerializeObject(settings);
@@ -23,6 +25,8 @@ namespace OWOVRC.Test.Classes.Settings
 
             Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
+            Assert.AreEqual(settings.UpdateInterval, decodedSettings.UpdateInterval);
+            Assert.AreEqual(settings.Intensity, decodedSettings.Intensity);
         }
     }
 }
