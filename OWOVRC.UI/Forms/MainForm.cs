@@ -197,13 +197,16 @@ namespace OWOVRC.UI
                 SetUpOWI();
             }
 
-            try
+            if (owiSettings.Enabled)
             {
-                owi!.Start();
-            }
-            catch (FileNotFoundException e)
-            {
-                Log.Warning("Failed to start OWO World Integration: {0}", e.Message);
+                try
+                {
+                    owi!.Start();
+                }
+                catch (FileNotFoundException e)
+                {
+                    Log.Warning("Failed to start OWO World Integration: {0}", e.Message);
+                }
             }
 
             // Start OWO connection
@@ -228,10 +231,7 @@ namespace OWOVRC.UI
             }
 
             // Stop OWI
-            if (owi != null)
-            {
-                owi.Stop();
-            }
+            owi?.Stop();
 
             // Stop osc receiver
             receiver.Dispose();
@@ -414,6 +414,8 @@ namespace OWOVRC.UI
 
             UpdateCollisionEffectSettings();
             SaveSettings<CollisionEffectSettings>(collisionSettings, "collision.json", "collision effect");
+
+            EnableOrDisableOWI();
         }
 
         private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
@@ -465,11 +467,25 @@ namespace OWOVRC.UI
             SaveSettings<WorldIntegratorSettings>(owiSettings, "owi.json", "OWO World Integrator");
         }
 
-        private void owiEnabledCheckbox_CheckedChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Enables or disables OWI based on settings while the program is running.
+        /// This is done to preserve resources, as VRC can be very CPU intensive.
+        /// </summary>
+        private void EnableOrDisableOWI()
         {
-            if (IsRunning)
+            if (!IsRunning || owi == null)
             {
-                
+                return;
+            }
+
+            if (owi.IsRunning && !owiSettings.Enabled)
+            {
+                owi.Stop();
+            }
+
+            if (!owi.IsRunning && owiSettings.Enabled)
+            {
+                owi.Start();
             }
         }
     }

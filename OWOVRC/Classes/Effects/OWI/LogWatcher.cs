@@ -11,6 +11,14 @@ namespace OWOVRC.Classes.Effects.OWI
         private CancellationTokenSource? cancellationTokenSource;
         public int SleepMillis = 1000;
 
+        public bool IsRunning
+        {
+            get
+            {
+                return readerThread != null && readerThread.IsAlive;
+            }
+        }
+
         public EventHandler<string>? OnLogLineRead;
 
         public LogWatcher(string logPath, int SleepMillis = 1000)

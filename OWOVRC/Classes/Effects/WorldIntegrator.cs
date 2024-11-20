@@ -28,6 +28,9 @@ namespace OWOVRC.Classes.Effects
         // Settings
         private readonly WorldIntegratorSettings Settings;
 
+        // Status
+        public bool IsRunning => logWatcher.IsRunning;
+
         public WorldIntegrator(WorldIntegratorSettings settings, OWOHelper owo)
         {
             Settings = settings;

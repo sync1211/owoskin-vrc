@@ -482,7 +482,6 @@
             owiEnabledCheckbox.TabIndex = 17;
             owiEnabledCheckbox.Text = "Enabled";
             owiEnabledCheckbox.UseVisualStyleBackColor = true;
-            owiEnabledCheckbox.CheckedChanged += owiEnabledCheckbox_CheckedChanged;
             // 
             // applyOwiSettingsButton
             // 
