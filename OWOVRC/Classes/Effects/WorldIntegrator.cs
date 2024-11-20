@@ -13,7 +13,7 @@ namespace OWOVRC.Classes.Effects
     {
         // Required for deserialization via System.Text.Json
         [JsonSerializable(typeof(OWISensation[]))]
-        public partial class OWISensationJsonContext : JsonSerializerContext { }
+        public partial class OWISensationJsonContext : JsonSerializerContext;
 
         // Credits to the authors of OWI
         public static readonly string OWI_GITHUB_URL = "https://github.com/RevoForge/Vrchat-OWO-Integration";
@@ -143,7 +143,6 @@ namespace OWOVRC.Classes.Effects
 
             PlaySensations(sensations);
         }
-
 
         private void PlaySensations(OWISensation[] sensations)
         {

@@ -146,7 +146,7 @@ namespace OWOVRC.UI
         private void UpdateConnectionStatus()
         {
             // OWO connection
-            if (owo.IsConnected)
+            if (OWOHelper.IsConnected)
             {
                 connectionStatusLabel.Text = "Connected";
                 connectionStatusLabel.ForeColor = Color.Green;

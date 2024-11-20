@@ -163,7 +163,7 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            if (!owo.IsConnected)
+            if (!OWOHelper.IsConnected)
             {
                 Log.Information("OWO Suit not connected, skipping haptics update.");
                 return;

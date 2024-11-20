@@ -12,7 +12,6 @@ namespace OWOVRC.Classes.Settings
 
         public ConnectionSettings() {}
 
-
         [JsonConstructor]
         public ConnectionSettings(string owoAddress, int oscPort)
         {

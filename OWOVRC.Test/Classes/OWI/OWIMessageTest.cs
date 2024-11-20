@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using OWOVRC.Classes.Effects.OWI;
-using System;
-using System.Linq;
 
 namespace OWOVRC.Test.Classes.OWI
 {
@@ -14,7 +12,7 @@ namespace OWOVRC.Test.Classes.OWI
         [DataRow("{\"priority\": 2,\"sensation\": \"Weight\",\"frequency\": 35,\"duration\": 2,\"intensity\": 50,\"rampup\":0.8,\"rampdown\":0,\"exitdelay\":0,\"Muscles\": {\"arm_R\": 100,\"pectoral_R\": 50,\"dorsal_R\": 25}}", 2, "Weight", 35, 2f, 50, 0.8f, 0f, 0f)]
         public void TestDeserialize(string jsonString, int priority, string sensation, int frequency, float duration, int intensity, float rampup, float rampdown, float exitdelay)
         {
-            OWISensation? message = JsonConvert.DeserializeObject<OWISensation>(jsonString);
+            OWISensation? message = JsonSerializer.Deserialize<OWISensation>(jsonString);
 
             Assert.IsNotNull(message);
             Assert.AreEqual(priority, message.Priority);
@@ -23,6 +21,8 @@ namespace OWOVRC.Test.Classes.OWI
             Assert.AreEqual(duration, message.Duration);
             Assert.AreEqual(intensity, message.Intensity);
             Assert.AreEqual(rampup, message.Rampup);
+            Assert.AreEqual(rampdown, message.Rampdown);
+            Assert.AreEqual(exitdelay, message.ExitDelay);
         }
     }
 }

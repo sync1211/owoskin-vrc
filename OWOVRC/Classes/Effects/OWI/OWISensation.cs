@@ -56,17 +56,17 @@ namespace OWOVRC.Classes.Effects.OWI
                 string muscleKey = $"owo_suit_{muscleName.ToLower()}";
 
                 // Single muscle
-                if (OWOHelper.Muscles.ContainsKey(muscleKey))
+                if (OWOHelper.Muscles.TryGetValue(muscleKey, out Muscle muscle))
                 {
-                    musclesScaled.Add(OWOHelper.Muscles[muscleKey].WithIntensity(intensity));
+                    musclesScaled.Add(muscle.WithIntensity(intensity));
                 }
 
                 // Muscle group
-                else if (OWOHelper.MuscleGroups.ContainsKey(muscleName))
+                else if (OWOHelper.MuscleGroups.TryGetValue(muscleName, out Muscle[]? muscles))
                 {
-                    foreach (Muscle muscle in OWOHelper.MuscleGroups[muscleName])
+                    foreach (Muscle groupMuscle in muscles)
                     {
-                        musclesScaled.Add(muscle.WithIntensity(intensity));
+                        musclesScaled.Add(groupMuscle.WithIntensity(intensity));
                     }
                 }
 
