@@ -10,7 +10,7 @@ using System.IO;
 namespace OWOVRC.Classes.Effects
 {
     // My own implementation of a client for https://github.com/RevoForge/Vrchat-OWO-Integration
-    public class WorldIntegrator: IDisposable
+    public partial class WorldIntegrator: IDisposable
     {
         // Credits to the authors of OWI
         public static readonly string OWI_GITHUB_URL = "https://github.com/RevoForge/Vrchat-OWO-Integration";
@@ -102,7 +102,6 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-
             ProcessLogLine(logLine);
         }
 
@@ -134,10 +133,10 @@ namespace OWOVRC.Classes.Effects
             PlaySensations(sensations);
         }
 
-        private OWISensation[] CreateSensationsFromJSON(JArray data)
+        private static OWISensation[] CreateSensationsFromJSON(JArray data)
         {
-            List<OWISensation> sensations = new();
-            foreach (JObject dataEntry in data)
+            List<OWISensation> sensations = [];
+            foreach (JToken dataEntry in data)
             {
                 OWISensation? message = dataEntry.ToObject<OWISensation>();
                 if (message == null)
