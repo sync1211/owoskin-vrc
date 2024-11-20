@@ -68,6 +68,11 @@ namespace OWOVRC.Classes.Effects
 
         private void ProcessMessage(OSCMessage message)
         {
+            if (!Settings.Enabled)
+            {
+                return;
+            }
+
             // Empty message
             if (message.Values.ElementCount == 0)
             {
@@ -207,6 +212,20 @@ namespace OWOVRC.Classes.Effects
         {
             //TODO: Make this directional!
             return OWOSensations.FallDmg.MultiplyIntensityBy(power / 100).WithPriority(Settings.StopPriority);
+        }
+
+        public override void Reset()
+        {
+            VelX = 0;
+            VelY = 0;
+            VelZ = 0;
+            Speed = 0;
+            SpeedLast = 0;
+            LastSpeedPacket = DateTime.MinValue;
+            IsGrounded = false;
+            IsSeated = false;
+
+            Log.Debug("Velocity effect reset!");
         }
     }
 }

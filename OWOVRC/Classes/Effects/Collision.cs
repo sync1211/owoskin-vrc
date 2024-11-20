@@ -225,5 +225,11 @@ namespace OWOVRC.Classes.Effects
                 muscleData.VelocityMultiplier = 0;
             }
         }
+
+        public override void Reset()
+        {
+            activeMuscles.Clear();
+            Log.Debug("Collision effect reset!");
+        }
     }
 }

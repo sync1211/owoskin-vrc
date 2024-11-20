@@ -462,7 +462,13 @@ namespace OWOVRC.UI
         private void StopSensationsButton_Click(object sender, EventArgs e)
         {
             owo.StopAllSensations();
-            //TODO: Reset all effects
+
+            // Reset all effects
+            foreach (OSCEffectBase effect in effects)
+            {
+                effect.Reset();
+            }
+
             Log.Information("Stopped all running sensations!");
         }
 
