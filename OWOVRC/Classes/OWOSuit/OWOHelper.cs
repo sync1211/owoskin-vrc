@@ -1,17 +1,15 @@
 ﻿using OWOGame;
 using Serilog;
-using System.Net;
 
 namespace OWOVRC.Classes.OWOSuit
 {
-    public partial class OWOHelper: IDisposable
+    public partial class OWOHelper : IDisposable
     {
         public bool IsConnected => OWO.ConnectionState == ConnectionState.Connected;
-        public readonly OWOSensations Sensations = new();
 
         public string Address { get; set; }
 
-        public OWOHelper(string? ip=null)
+        public OWOHelper(string? ip = null)
         {
             Address = ip ?? "127.0.0.1";
         }
@@ -21,7 +19,9 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Information("Connecting to OWO...");
 
             //NOTE: Baked sensations are registered in OWOSensations.cs!
-            GameAuth auth = GameAuth.Create(Sensations.FallDmg, Sensations.Wind);
+            GameAuth auth = GameAuth.Create();
+            auth.sensations.Append(OWOSensations.FallDmg);
+            auth.sensations.Append(OWOSensations.Wind);
 
             OWO.Configure(auth);
 

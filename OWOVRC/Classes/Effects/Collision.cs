@@ -180,7 +180,7 @@ namespace OWOVRC.Classes.Effects
 
             foreach (MuscleCollisionData muscleData in muscleCollisionData)
             {
-                Muscle? muscle = OWOHelper.Muscles.GetValueOrDefault(muscleData.Name);
+                Muscle? muscle = OWOHelper.Muscles.GetValueOrDefault(muscleData.Name.ToLower());
                 if (muscle == null)
                 {
                     Log.Warning(

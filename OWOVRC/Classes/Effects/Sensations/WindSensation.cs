@@ -26,12 +26,12 @@ namespace OWOVRC.Classes.Effects.Builders
         // Muscles to apply the sensation
         private static readonly Dictionary<string, Muscle[]> directions = new()
         {
-            { "front", [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Abdominal_L, Muscle.Abdominal_R] },
-            { "back", [Muscle.Dorsal_L, Muscle.Dorsal_R, Muscle.Lumbar_L, Muscle.Lumbar_R] },
-            { "left", [Muscle.Arm_L, Muscle.Pectoral_L, Muscle.Dorsal_L, Muscle.Abdominal_L, Muscle.Lumbar_L] },
-            { "right", [Muscle.Arm_R, Muscle.Pectoral_R, Muscle.Dorsal_R, Muscle.Abdominal_R, Muscle.Lumbar_R] },
+            { "front", OWOHelper.MuscleGroups["frontMuscles"] },
+            { "back", OWOHelper.MuscleGroups["backMuscles"] },
+            { "left", OWOHelper.MuscleGroups["leftMuscles"] },
+            { "right", OWOHelper.MuscleGroups["rightMuscles"] },
             { "up", [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Dorsal_L, Muscle.Dorsal_L] },
-            { "down", [Muscle.Abdominal_L, Muscle.Abdominal_R, Muscle.Lumbar_L, Muscle.Lumbar_R] }
+            { "down", [Muscle.Dorsal_L, Muscle.Dorsal_R, Muscle.Lumbar_L, Muscle.Lumbar_R, Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Abdominal_L, Muscle.Abdominal_R] }
         };
         /*
             (For reference)
@@ -53,7 +53,7 @@ namespace OWOVRC.Classes.Effects.Builders
             Duration = durationSeconds;
 
             Muscles = [];
-            foreach (Muscle muscle in directions["front"])
+            foreach (Muscle muscle in OWOHelper.MuscleGroups["frontMuscles"])
             {
                 Muscles[muscle] = 100;
             }

@@ -206,7 +206,7 @@ namespace OWOVRC.Classes.Effects
         private Sensation CreateStopSensation(int power)
         {
             //TODO: Make this directional!
-            return owo.Sensations.FallDmg.MultiplyIntensityBy(power / 100).WithPriority(Settings.StopPriority);
+            return OWOSensations.FallDmg.MultiplyIntensityBy(power / 100).WithPriority(Settings.StopPriority);
         }
     }
 }

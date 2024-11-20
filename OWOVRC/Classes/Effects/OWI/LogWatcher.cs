@@ -13,7 +13,7 @@ namespace OWOVRC.Classes.Effects.OWI
 
         public EventHandler<string>? OnLogLineRead;
 
-        public LogWatcher(string logPath, int SleepMillis=1000)
+        public LogWatcher(string logPath, int SleepMillis = 1000)
         {
             this.LogPath = logPath;
             this.SleepMillis = SleepMillis;

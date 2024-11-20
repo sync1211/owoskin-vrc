@@ -49,18 +49,32 @@ namespace OWOVRC.Classes.Effects.OWI
         {
             List<Muscle> musclesScaled = [];
 
+            // Apply intensity for each muscle
             foreach (string muscleName in Muscles.Keys)
             {
                 int intensity = Muscles[muscleName];
-                Muscle? muscle = OWOHelper.Muscles.GetValueOrDefault(muscleName);
+                string muscleKey = $"owo_suit_{muscleName.ToLower()}";
 
-                if (muscle == null)
+                // Single muscle
+                if (OWOHelper.Muscles.ContainsKey(muscleKey))
                 {
-                    Log.Warning("Muscle not found {muscleName}", muscleName);
-                    continue;
+                    musclesScaled.Add(OWOHelper.Muscles[muscleKey].WithIntensity(intensity));
                 }
 
-                musclesScaled.Append(muscle.Value.WithIntensity(intensity));
+                // Muscle group
+                else if (OWOHelper.MuscleGroups.ContainsKey(muscleName))
+                {
+                    foreach (Muscle muscle in OWOHelper.MuscleGroups[muscleName])
+                    {
+                        musclesScaled.Add(muscle.WithIntensity(intensity));
+                    }
+                }
+
+                // Not found
+                else
+                {
+                    Log.Warning("Muscle not found {muscleName}", muscleName);
+                }
             }
 
             return musclesScaled.ToArray();

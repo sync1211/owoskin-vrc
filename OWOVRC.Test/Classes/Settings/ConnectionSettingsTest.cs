@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using OWOVRC.Classes.Settings;
-using System.Net;
 
 namespace OWOVRC.Test.Classes.Settings
 {

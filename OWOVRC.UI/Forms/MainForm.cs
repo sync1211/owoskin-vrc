@@ -451,7 +451,7 @@ namespace OWOVRC.UI
             owiSettings.Priority = ValidateIntSetting(owiPriorityInput, owiSettings.Priority);
 
             // Log update interval
-            owiSettings.UpdateInterval = ValidateIntSetting(owiUpdateIntervalInput, owiSettings.UpdateInterval, 100, 10000);
+            owiSettings.UpdateInterval = ValidateIntSetting(owiUpdateIntervalInput, owiSettings.UpdateInterval, 10, 10000);
 
             UpdateOWISettings();
             SaveSettings<WorldIntegratorSettings>(owiSettings, "owi.json", "OWO World Integrator");
