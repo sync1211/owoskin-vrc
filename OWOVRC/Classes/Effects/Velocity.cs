@@ -9,8 +9,6 @@ namespace OWOVRC.Classes.Effects
 {
     public class Velocity : OSCEffectBase
     {
-        private readonly OWOHelper owo;
-
         // OSC Addresses
         private const string ADDRESS_VEL_X = "VelocityX";
         private const string ADDRESS_VEL_Y = "VelocityY";
@@ -44,9 +42,8 @@ namespace OWOVRC.Classes.Effects
         // Timer
         private readonly System.Timers.Timer timer;
 
-        public Velocity(OWOHelper owo, VelocityEffectSettings Settings)
+        public Velocity(OWOHelper owo, VelocityEffectSettings Settings): base(owo)
         {
-            this.owo = owo;
             this.Settings = Settings;
             timer = new System.Timers.Timer
             {

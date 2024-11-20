@@ -12,9 +12,6 @@ namespace OWOVRC.Classes.Effects
     // (Loosely based on https://github.com/shadorki/vrc-owo-suit)
     public class Collision : OSCEffectBase
     {
-        // OWOHelper
-        private readonly OWOHelper owo;
-
         // Event handler for UI updates
         //public EventHandler? OnCollisionChange;
         //public string[] ActiveMuscles => [.. activeMuscles.Keys];
@@ -32,9 +29,8 @@ namespace OWOVRC.Classes.Effects
         //TODO: Implement per-muscle intensity
         public readonly CollisionEffectSettings Settings;
 
-        public Collision(OWOHelper owo, CollisionEffectSettings settings)
+        public Collision(OWOHelper owo, CollisionEffectSettings settings): base(owo)
         {
-            this.owo = owo;
             Settings = settings;
 
             timer = new System.Timers.Timer()
