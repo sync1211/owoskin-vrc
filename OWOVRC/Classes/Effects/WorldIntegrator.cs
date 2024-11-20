@@ -150,7 +150,7 @@ namespace OWOVRC.Classes.Effects
 
             foreach (OWISensation owiSensation in sensations)
             {
-                if (owiSensation.SensationName.Equals("STOP", StringComparison.CurrentCultureIgnoreCase))
+                if (owiSensation.Sensation.Equals("STOP", StringComparison.CurrentCultureIgnoreCase))
                 {
                     owo.StopAllSensations();
                     return;

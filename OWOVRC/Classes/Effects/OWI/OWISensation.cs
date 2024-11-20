@@ -8,29 +8,29 @@ namespace OWOVRC.Classes.Effects.OWI
     public class OWISensation
     {
         [JsonPropertyName("priority")]
-        public readonly int Priority;
-        [JsonPropertyName("sensation ")]
-        public readonly string SensationName = String.Empty;
+        public int Priority { get; }
+        [JsonPropertyName("sensation")]
+        public string Sensation { get; }
         [JsonPropertyName("frequency")]
-        public readonly int Frequency;
+        public int Frequency { get; }
         [JsonPropertyName("duration")]
-        public readonly float Duration;
+        public float Duration { get; }
         [JsonPropertyName("intensity")]
-        public readonly int Intensity;
+        public int Intensity { get; }
         [JsonPropertyName("rampup")]
-        public readonly float Rampup;
+        public float Rampup { get; }
         [JsonPropertyName("rampdown")]
-        public readonly float Rampdown;
+        public float Rampdown { get; }
         [JsonPropertyName("exitdelay")]
-        public readonly float ExitDelay;
-        [JsonPropertyName("Muscles")]
-        public readonly Dictionary<string, int> Muscles = [];
+        public float ExitDelay { get; }
+        [JsonPropertyName("muscles")]
+        public Dictionary<string, int> Muscles { get; }
 
         [JsonConstructor]
         public OWISensation(int priority, string sensation, int frequency, float duration, int intensity, float rampup, float rampdown, float exitdelay, Dictionary<string, int> muscles)
         {
             Priority = priority;
-            SensationName = sensation;
+            Sensation = sensation;
             Frequency = frequency;
             Duration = duration;
             Intensity = intensity;
@@ -47,7 +47,7 @@ namespace OWOVRC.Classes.Effects.OWI
 
         public Muscle[] GetMusclesWithIntensity()
         {
-            List<Muscle> musclesScaled = [];
+            List<Muscle> musclesScaled = new List<Muscle>();
 
             // Apply intensity for each muscle
             foreach (string muscleName in Muscles.Keys)

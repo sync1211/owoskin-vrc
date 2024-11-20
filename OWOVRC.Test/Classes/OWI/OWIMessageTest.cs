@@ -16,7 +16,7 @@ namespace OWOVRC.Test.Classes.OWI
 
             Assert.IsNotNull(message);
             Assert.AreEqual(priority, message.Priority);
-            Assert.AreEqual(sensation, message.SensationName);
+            Assert.AreEqual(sensation, message.Sensation);
             Assert.AreEqual(frequency, message.Frequency);
             Assert.AreEqual(duration, message.Duration);
             Assert.AreEqual(intensity, message.Intensity);
