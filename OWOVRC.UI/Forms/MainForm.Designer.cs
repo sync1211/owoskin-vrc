@@ -124,7 +124,7 @@
             collisionSettingsPage.Padding = new Padding(3);
             collisionSettingsPage.Size = new Size(360, 275);
             collisionSettingsPage.TabIndex = 0;
-            collisionSettingsPage.Text = "Collision";
+            collisionSettingsPage.Text = "Colliders";
             collisionSettingsPage.UseVisualStyleBackColor = true;
             // 
             // label12
