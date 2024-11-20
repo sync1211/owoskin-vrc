@@ -1,29 +1,29 @@
-﻿using Newtonsoft.Json;
-using OWOGame;
+﻿using OWOGame;
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
+using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Effects.OWI
 {
     public class OWISensation
     {
-        [JsonProperty("priority")]
+        [JsonPropertyName("priority")]
         public readonly int Priority;
-        [JsonProperty("sensation ")]
+        [JsonPropertyName("sensation ")]
         public readonly string SensationName = String.Empty;
-        [JsonProperty("frequency")]
+        [JsonPropertyName("frequency")]
         public readonly int Frequency;
-        [JsonProperty("duration")]
+        [JsonPropertyName("duration")]
         public readonly float Duration;
-        [JsonProperty("intensity")]
+        [JsonPropertyName("intensity")]
         public readonly int Intensity;
-        [JsonProperty("rampup")]
+        [JsonPropertyName("rampup")]
         public readonly float Rampup;
-        [JsonProperty("rampdown")]
+        [JsonPropertyName("rampdown")]
         public readonly float Rampdown;
-        [JsonProperty("exitdelay")]
+        [JsonPropertyName("exitdelay")]
         public readonly float ExitDelay;
-        [JsonProperty("Muscles")]
+        [JsonPropertyName("Muscles")]
         public readonly Dictionary<string, int> Muscles = [];
 
         [JsonConstructor]

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using OWOVRC.Classes.Settings;
 
 namespace OWOVRC.Test.Classes.Settings
@@ -17,10 +17,10 @@ namespace OWOVRC.Test.Classes.Settings
                 Intensity = 89
             };
 
-            string json = JsonConvert.SerializeObject(settings);
+            string json = JsonSerializer.Serialize(settings);
             Assert.AreNotEqual(0, json.Length);
 
-            WorldIntegratorSettings? decodedSettings = JsonConvert.DeserializeObject<WorldIntegratorSettings>(json);
+            WorldIntegratorSettings? decodedSettings = JsonSerializer.Deserialize<WorldIntegratorSettings>(json);
             Assert.IsNotNull(decodedSettings);
 
             Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);

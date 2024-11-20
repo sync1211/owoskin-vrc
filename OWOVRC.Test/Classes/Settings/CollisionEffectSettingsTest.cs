@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using OWOVRC.Classes.Settings;
+﻿using OWOVRC.Classes.Settings;
+using System.Text.Json;
 
 namespace OWOVRC.Test.Classes.Settings
 {
@@ -23,10 +23,10 @@ namespace OWOVRC.Test.Classes.Settings
                 UseVelocity = false
             };
 
-            string json = JsonConvert.SerializeObject(settings);
+            string json = JsonSerializer.Serialize(settings);
             Assert.AreNotEqual(0, json.Length);
 
-            CollisionEffectSettings? decodedSettings = JsonConvert.DeserializeObject<CollisionEffectSettings>(json);
+            CollisionEffectSettings? decodedSettings = JsonSerializer.Deserialize<CollisionEffectSettings>(json);
             Assert.IsNotNull(decodedSettings);
 
             Assert.AreEqual(settings.AllowContinuous, decodedSettings.AllowContinuous);

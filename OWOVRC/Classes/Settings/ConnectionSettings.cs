@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Net;
+﻿using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Settings
 {

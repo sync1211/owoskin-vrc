@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using OWOVRC.Classes.Settings;
+﻿using OWOVRC.Classes.Settings;
+using System.Text.Json;
 
 namespace OWOVRC.Test.Classes.Settings
 {
@@ -11,10 +11,10 @@ namespace OWOVRC.Test.Classes.Settings
         {
             ConnectionSettings settings = new("192.168.178.1", 9999);
 
-            string json = JsonConvert.SerializeObject(settings);
+            string json = JsonSerializer.Serialize(settings);
             Assert.AreNotEqual(0, json.Length);
 
-            ConnectionSettings? decodedSettings = JsonConvert.DeserializeObject<ConnectionSettings>(json);
+            ConnectionSettings? decodedSettings = JsonSerializer.Deserialize<ConnectionSettings>(json);
             Assert.IsNotNull(decodedSettings);
 
             Assert.AreEqual(settings.OSCPort, decodedSettings.OSCPort);

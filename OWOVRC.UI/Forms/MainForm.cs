@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json;
 using OWOGame;
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.OSC;
@@ -65,7 +65,7 @@ namespace OWOVRC.UI
                 return default;
             }
 
-            T? settings = JsonConvert.DeserializeObject<T>(settingsData);
+            T? settings = JsonSerializer.Deserialize<T>(settingsData);
             if (settings == null)
             {
                 Log.Error("Failed to load {0} settings: failed to deserialize", displayName);
@@ -108,7 +108,7 @@ namespace OWOVRC.UI
 
         private void SaveSettings<T>(T settings, string fileName, string displayName)
         {
-            string settingsData = JsonConvert.SerializeObject(settings);
+            string settingsData = JsonSerializer.Serialize<T>(settings);
             string settingsFilePath = Path.Combine(settingsDir, fileName);
 
             if (!File.Exists(settingsFilePath))

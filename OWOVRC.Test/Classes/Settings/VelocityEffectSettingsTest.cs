@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using OWOVRC.Classes.Settings;
 
 namespace OWOVRC.Test.Classes.Settings
@@ -20,10 +20,10 @@ namespace OWOVRC.Test.Classes.Settings
                 StopVelocityTime = TimeSpan.FromSeconds(2)
             };
 
-            string json = JsonConvert.SerializeObject(settings);
+            string json = JsonSerializer.Serialize(settings);
             Assert.AreNotEqual(0, json.Length);
 
-            VelocityEffectSettings? decodedSettings = JsonConvert.DeserializeObject<VelocityEffectSettings>(json);
+            VelocityEffectSettings? decodedSettings = JsonSerializer.Deserialize<VelocityEffectSettings>(json);
             Assert.IsNotNull(decodedSettings);
 
             Assert.AreEqual(settings.Threshold, decodedSettings.Threshold);

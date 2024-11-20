@@ -1,17 +1,20 @@
-﻿
-using Newtonsoft.Json.Linq;
-using OWOGame;
+﻿using OWOGame;
 using OWOVRC.Classes.Effects.OWI;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
-using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Effects
 {
     // My own implementation of a client for https://github.com/RevoForge/Vrchat-OWO-Integration
     public partial class WorldIntegrator: IDisposable
     {
+        // Required for deserialization via System.Text.Json
+        [JsonSerializable(typeof(OWISensation[]))]
+        public partial class OWISensationJsonContext : JsonSerializerContext { }
+
         // Credits to the authors of OWI
         public static readonly string OWI_GITHUB_URL = "https://github.com/RevoForge/Vrchat-OWO-Integration";
 
@@ -130,30 +133,17 @@ namespace OWOVRC.Classes.Effects
             string contentClean = content.Substring(owiIndex + OWI_PREFIX.Length).Trim();
 
             // Convert to JSON
-            JArray data = JArray.Parse(contentClean);
+            OWISensation[]? sensations = JsonSerializer.Deserialize(contentClean, OWISensationJsonContext.Default.OWISensationArray);
+            if (sensations == null)
+            {
+                Log.Warning("Unable to deserialize OWI message! (See debug log for message)");
+                Log.Debug("Message: {0}", contentClean);
+                return;
+            }
 
-            OWISensation[] sensations = CreateSensationsFromJSON(data);
             PlaySensations(sensations);
         }
 
-        private static OWISensation[] CreateSensationsFromJSON(JArray data)
-        {
-            List<OWISensation> sensations = [];
-            foreach (JToken dataEntry in data)
-            {
-                OWISensation? message = dataEntry.ToObject<OWISensation>();
-                if (message == null)
-                {
-                    Log.Warning("Unable to deserialize OWI message! (See debug log for message)");
-                    Log.Debug("Message: {0}", dataEntry);
-                    continue;
-                }
-
-                sensations.Add(message);
-            }
-
-            return sensations.ToArray();
-        }
 
         private void PlaySensations(OWISensation[] sensations)
         {
