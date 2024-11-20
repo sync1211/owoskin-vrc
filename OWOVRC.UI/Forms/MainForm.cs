@@ -32,6 +32,8 @@ namespace OWOVRC.UI
         private OSCEffectBase[] effects = [];
         private WorldIntegrator? owi;
 
+        private bool IsRunning;
+
         public MainForm()
         {
             InitializeComponent();
@@ -120,24 +122,25 @@ namespace OWOVRC.UI
             Log.Information("{0} settings saved", displayName);
         }
 
+        private void UpdateControlAvailability()
+        {
+            startButton.Visible = !IsRunning;
+            stopButton.Visible = IsRunning;
+
+            owoIPInput.Enabled = !IsRunning;
+            oscPortInput.Enabled = !IsRunning;
+        }
+
         private void StartButton_Click(object sender, EventArgs e)
         {
             StartOWO();
-            startButton.Visible = false;
-            stopButton.Visible = true;
-
-            owoIPInput.Enabled = false;
-            oscPortInput.Enabled = false;
+            UpdateControlAvailability();
         }
 
         private void StopButton_Click(object sender, EventArgs e)
         {
             StopOWO();
-            startButton.Visible = true;
-            stopButton.Visible = false;
-
-            owoIPInput.Enabled = true;
-            oscPortInput.Enabled = true;
+            UpdateControlAvailability();
         }
 
         private void UpdateConnectionStatus()
@@ -194,7 +197,8 @@ namespace OWOVRC.UI
                 SetUpOWI();
             }
 
-            try {
+            try
+            {
                 owi!.Start();
             }
             catch (FileNotFoundException e)
@@ -206,6 +210,8 @@ namespace OWOVRC.UI
             owo.Address = connectionSettings.OWOAddress;
             Task.Run(StartOWOHelper);
             Log.Information("Started OWOVRC");
+
+            IsRunning = true;
         }
 
         private async Task StartOWOHelper()
@@ -233,6 +239,8 @@ namespace OWOVRC.UI
             owo.StopAllSensations();
             owo.Disconnect();
             Log.Information("Stopped OWOVRC");
+
+            IsRunning = false;
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -455,6 +463,14 @@ namespace OWOVRC.UI
 
             UpdateOWISettings();
             SaveSettings<WorldIntegratorSettings>(owiSettings, "owi.json", "OWO World Integrator");
+        }
+
+        private void owiEnabledCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (IsRunning)
+            {
+                
+            }
         }
     }
 }

@@ -44,12 +44,12 @@
             collisionIntensityInput = new TextBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
+            label11 = new Label();
             label13 = new Label();
+            velocitySpeedCapInput = new TextBox();
             velocityPriorityInput = new TextBox();
             velocityIgnoreWhenSeatedCheckbox = new CheckBox();
             groupBox2 = new GroupBox();
-            label11 = new Label();
-            velocitySpeedCapInput = new TextBox();
             label10 = new Label();
             velocityImpactEnabledCheckbox = new CheckBox();
             velocityMinImpactInput = new TextBox();
@@ -264,6 +264,15 @@
             velocitySettingsPage.Text = "Velocity";
             velocitySettingsPage.UseVisualStyleBackColor = true;
             // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(6, 83);
+            label11.Name = "label11";
+            label11.Size = new Size(96, 15);
+            label11.TabIndex = 11;
+            label11.Text = "Max speed (m/s)";
+            // 
             // label13
             // 
             label13.AutoSize = true;
@@ -272,6 +281,13 @@
             label13.Size = new Size(45, 15);
             label13.TabIndex = 15;
             label13.Text = "Priority";
+            // 
+            // velocitySpeedCapInput
+            // 
+            velocitySpeedCapInput.Location = new Point(262, 83);
+            velocitySpeedCapInput.Name = "velocitySpeedCapInput";
+            velocitySpeedCapInput.Size = new Size(89, 23);
+            velocitySpeedCapInput.TabIndex = 10;
             // 
             // velocityPriorityInput
             // 
@@ -301,22 +317,6 @@
             groupBox2.TabIndex = 12;
             groupBox2.TabStop = false;
             groupBox2.Text = "Impact";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(6, 83);
-            label11.Name = "label11";
-            label11.Size = new Size(96, 15);
-            label11.TabIndex = 11;
-            label11.Text = "Max speed (m/s)";
-            // 
-            // velocitySpeedCapInput
-            // 
-            velocitySpeedCapInput.Location = new Point(262, 83);
-            velocitySpeedCapInput.Name = "velocitySpeedCapInput";
-            velocitySpeedCapInput.Size = new Size(89, 23);
-            velocitySpeedCapInput.TabIndex = 10;
             // 
             // label10
             // 
@@ -482,6 +482,7 @@
             owiEnabledCheckbox.TabIndex = 17;
             owiEnabledCheckbox.Text = "Enabled";
             owiEnabledCheckbox.UseVisualStyleBackColor = true;
+            owiEnabledCheckbox.CheckedChanged += owiEnabledCheckbox_CheckedChanged;
             // 
             // applyOwiSettingsButton
             // 
