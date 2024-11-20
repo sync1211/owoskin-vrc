@@ -9,6 +9,8 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.Net;
+using OWOVRC.UI.Forms;
+using OWOVRC.Classes.Effects.OSCPresets;
 
 namespace OWOVRC.UI
 {
@@ -23,6 +25,12 @@ namespace OWOVRC.UI
         private VelocityEffectSettings velocitySettings = new();
         private CollisionEffectSettings collisionSettings = new();
         private WorldIntegratorSettings owiSettings = new();
+        private OSCPresetsSettings oscPresetsSettings = new(new Dictionary<string, OSCSensationPreset>() {
+            // Test presets
+            //TODO: Remove once the UI is implemented!
+            { "Test1", new(true, "Test1", 1, 1, "4~Ball~100,1,100,0,0,0,Impact|0%100~impact-0~Impacts") },
+            { "Test2", new(true, "Test2", 1, 1, "5~Dart~11,1,100,0,0,0,Impact|0%100~impact-1~Impacts")}
+        });
 
         // OWO
         private readonly OWOHelper owo = new();
@@ -33,6 +41,9 @@ namespace OWOVRC.UI
         private WorldIntegrator? owi;
 
         private bool IsRunning;
+
+        // Forms
+        private PresetsForm presetsForm = new();
 
         public MainForm()
         {
@@ -104,6 +115,13 @@ namespace OWOVRC.UI
             {
                 this.owiSettings = owiSettings;
             }
+
+            // OSC Presets settings
+            OSCPresetsSettings? oscPresetsSettings = GetSettingsData<OSCPresetsSettings>(settingsDir, "oscPresets.json", "OSC Presets");
+            if (oscPresetsSettings != null)
+            {
+                this.oscPresetsSettings = oscPresetsSettings;
+            }
         }
 
         private void SaveSettings<T>(T settings, string fileName, string displayName)
@@ -129,6 +147,8 @@ namespace OWOVRC.UI
 
             owoIPInput.Enabled = !IsRunning;
             oscPortInput.Enabled = !IsRunning;
+
+            openOscPresetsFormButton.Enabled = !IsRunning;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -199,9 +219,11 @@ namespace OWOVRC.UI
             receiver = new(connectionSettings.OSCPort);
 
             // Register effects
+            owo.ClearBakedSensations();
             foreach (OSCEffectBase effect in effects)
             {
                 receiver.OnMessageReceived += effect.OnOSCMessageReceived;
+                effect.RegisterSensations();
             }
 
             // Start OSC receiver
@@ -280,7 +302,8 @@ namespace OWOVRC.UI
             // Set up effects
             effects = [
                 new Collision(owo, collisionSettings),
-                new Velocity(owo, velocitySettings)
+                new Velocity(owo, velocitySettings),
+                new OSCPresetTrigger(owo, oscPresetsSettings) //TODO: collisionSettings is a placeholder, replace with actual settings!
             ];
 
             // Set up OWI
@@ -329,6 +352,12 @@ namespace OWOVRC.UI
             owiIntensityInput.Text = owiSettings.Intensity.ToString();
         }
 
+        private void UpdateOSCPrestsSettings()
+        {
+            oscPresetsEnabledCheckbox.Checked = oscPresetsSettings.Enabled;
+            oscPresetsPriorityInput.Text = oscPresetsSettings.Priority.ToString();
+        }
+
         private void MainForm_Shown(object sender, EventArgs e)
         {
             owoIPInput.ValidatingType = typeof(System.Net.IPAddress);
@@ -336,6 +365,7 @@ namespace OWOVRC.UI
             UpdateCollisionEffectSettings();
             UpdateVelocityEffectSettings();
             UpdateOWISettings();
+            UpdateOSCPrestsSettings();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -343,6 +373,8 @@ namespace OWOVRC.UI
             Application.Idle -= OnApplicationIdle;
 
             StopOWO();
+            presetsForm.Close();
+            presetsForm.Dispose();
             owo.Dispose();
             receiver.Dispose();
         }
@@ -515,6 +547,22 @@ namespace OWOVRC.UI
             {
                 owi.Start();
             }
+        }
+
+        private void ApplyOscPresetsSettingsButton_Click(object sender, EventArgs e)
+        {
+            oscPresetsSettings.Enabled = oscPresetsEnabledCheckbox.Checked;
+
+            // Priority
+            oscPresetsSettings.Priority = ValidateIntSetting(oscPresetsPriorityInput, oscPresetsSettings.Priority);
+
+            UpdateOSCPrestsSettings();
+            SaveSettings<OSCPresetsSettings>(oscPresetsSettings, "oscPresets.json", "OSC Presets");
+        }
+
+        private void OpenOscPresetsFormButton_Click(object sender, EventArgs e)
+        {
+            presetsForm.ShowDialog(oscPresetsSettings);
         }
     }
 }

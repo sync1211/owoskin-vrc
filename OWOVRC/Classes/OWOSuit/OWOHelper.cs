@@ -8,6 +8,7 @@ namespace OWOVRC.Classes.OWOSuit
         public static bool IsConnected => OWO.ConnectionState == ConnectionState.Connected;
 
         public string Address { get; set; }
+        private readonly List<BakedSensation> Sensations = [];
 
         public OWOHelper(string ip = "127.0.0.1")
         {
@@ -19,7 +20,8 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Information("Connecting to OWO...");
 
             //NOTE: Baked sensations are registered in OWOSensations.cs!
-            GameAuth auth = GameAuth.Create(OWOSensations.FallDmg, OWOSensations.Wind);
+
+            GameAuth auth = GameAuth.Create([.. Sensations]);
 
             OWO.Configure(auth);
 
@@ -61,6 +63,17 @@ namespace OWOVRC.Classes.OWOSuit
         {
             OWO.Stop();
             Log.Debug("All sensations stopped!");
+        }
+
+        public void AddBakedSensation(BakedSensation sensation)
+        {
+            Log.Verbose("Registering baked sensation {sensation}", sensation);
+            Sensations.Add(sensation);
+        }
+
+        public void ClearBakedSensations()
+        {
+            Sensations.Clear();
         }
 
         public void Dispose()

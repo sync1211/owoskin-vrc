@@ -70,6 +70,12 @@
             owiPriorityInput = new TextBox();
             owiEnabledCheckbox = new CheckBox();
             applyOwiSettingsButton = new Button();
+            oscPresetsPage = new TabPage();
+            label18 = new Label();
+            oscPresetsPriorityInput = new TextBox();
+            oscPresetsEnabledCheckbox = new CheckBox();
+            openOscPresetsFormButton = new Button();
+            applyOscPresetsSettingsButton = new Button();
             logLevelComboBox = new ComboBox();
             label3 = new Label();
             logBox = new RichTextBox();
@@ -95,6 +101,7 @@
             groupBox2.SuspendLayout();
             owiSettingsPage.SuspendLayout();
             groupBox3.SuspendLayout();
+            oscPresetsPage.SuspendLayout();
             connectionGroup.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -104,6 +111,7 @@
             tabControl1.Controls.Add(collisionSettingsPage);
             tabControl1.Controls.Add(velocitySettingsPage);
             tabControl1.Controls.Add(owiSettingsPage);
+            tabControl1.Controls.Add(oscPresetsPage);
             tabControl1.Location = new Point(12, 118);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -516,6 +524,69 @@
             applyOwiSettingsButton.UseVisualStyleBackColor = true;
             applyOwiSettingsButton.Click += ApplyOwiSettingsButton_Click;
             // 
+            // oscPresetsPage
+            // 
+            oscPresetsPage.Controls.Add(label18);
+            oscPresetsPage.Controls.Add(oscPresetsPriorityInput);
+            oscPresetsPage.Controls.Add(oscPresetsEnabledCheckbox);
+            oscPresetsPage.Controls.Add(openOscPresetsFormButton);
+            oscPresetsPage.Controls.Add(applyOscPresetsSettingsButton);
+            oscPresetsPage.Location = new Point(4, 24);
+            oscPresetsPage.Name = "oscPresetsPage";
+            oscPresetsPage.Padding = new Padding(3);
+            oscPresetsPage.Size = new Size(360, 275);
+            oscPresetsPage.TabIndex = 3;
+            oscPresetsPage.Text = "Presets";
+            oscPresetsPage.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(6, 30);
+            label18.Name = "label18";
+            label18.Size = new Size(45, 15);
+            label18.TabIndex = 22;
+            label18.Text = "Priority";
+            // 
+            // oscPresetsPriorityInput
+            // 
+            oscPresetsPriorityInput.Location = new Point(262, 26);
+            oscPresetsPriorityInput.Name = "oscPresetsPriorityInput";
+            oscPresetsPriorityInput.Size = new Size(89, 23);
+            oscPresetsPriorityInput.TabIndex = 21;
+            // 
+            // oscPresetsEnabledCheckbox
+            // 
+            oscPresetsEnabledCheckbox.AutoSize = true;
+            oscPresetsEnabledCheckbox.Location = new Point(6, 6);
+            oscPresetsEnabledCheckbox.Name = "oscPresetsEnabledCheckbox";
+            oscPresetsEnabledCheckbox.Size = new Size(68, 19);
+            oscPresetsEnabledCheckbox.TabIndex = 20;
+            oscPresetsEnabledCheckbox.Text = "Enabled";
+            oscPresetsEnabledCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // openOscPresetsFormButton
+            // 
+            openOscPresetsFormButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            openOscPresetsFormButton.Location = new Point(96, 98);
+            openOscPresetsFormButton.Name = "openOscPresetsFormButton";
+            openOscPresetsFormButton.Size = new Size(148, 38);
+            openOscPresetsFormButton.TabIndex = 18;
+            openOscPresetsFormButton.Text = "Configure";
+            openOscPresetsFormButton.UseVisualStyleBackColor = true;
+            openOscPresetsFormButton.Click += OpenOscPresetsFormButton_Click;
+            // 
+            // applyOscPresetsSettingsButton
+            // 
+            applyOscPresetsSettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            applyOscPresetsSettingsButton.Location = new Point(279, 246);
+            applyOscPresetsSettingsButton.Name = "applyOscPresetsSettingsButton";
+            applyOscPresetsSettingsButton.Size = new Size(75, 23);
+            applyOscPresetsSettingsButton.TabIndex = 17;
+            applyOscPresetsSettingsButton.Text = "Apply";
+            applyOscPresetsSettingsButton.UseVisualStyleBackColor = true;
+            applyOscPresetsSettingsButton.Click += ApplyOscPresetsSettingsButton_Click;
+            // 
             // logLevelComboBox
             // 
             logLevelComboBox.FormattingEnabled = true;
@@ -741,6 +812,8 @@
             owiSettingsPage.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            oscPresetsPage.ResumeLayout(false);
+            oscPresetsPage.PerformLayout();
             connectionGroup.ResumeLayout(false);
             connectionGroup.PerformLayout();
             groupBox1.ResumeLayout(false);
@@ -810,5 +883,11 @@
         private TextBox owiIntensityInput;
         private Label owiStatusLabel;
         private Label label19;
+        private TabPage oscPresetsPage;
+        private Button applyOscPresetsSettingsButton;
+        private Button openOscPresetsFormButton;
+        private Label label18;
+        private TextBox oscPresetsPriorityInput;
+        private CheckBox oscPresetsEnabledCheckbox;
     }
 }

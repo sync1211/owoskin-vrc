@@ -33,8 +33,9 @@ namespace OWOVRC.Classes.Effects
         private double SpeedLast;
         private DateTime LastSpeedPacket;
 
-        // Sensation duration
+        // Sensation
         public float SensationDuration = 0.3f;
+        private readonly BakedSensation FallDmg = BakedSensation.Parse("9~Fall Damage~50,1,100,0,0,0,Hit|0%100,1%100,2%100,3%100,4%100,5%100~environment-5~Impacts");
 
         // Settings
         public readonly VelocityEffectSettings Settings;
@@ -44,6 +45,8 @@ namespace OWOVRC.Classes.Effects
 
         public Velocity(OWOHelper owo, VelocityEffectSettings Settings): base(owo)
         {
+            RegisterSensations();
+
             this.Settings = Settings;
             timer = new System.Timers.Timer
             {
@@ -51,6 +54,11 @@ namespace OWOVRC.Classes.Effects
             };
             timer.Elapsed += OnTimerElapsed;
             timer.Start();
+        }
+
+        public override void RegisterSensations()
+        {
+            owo.AddBakedSensation(FallDmg);
         }
 
         private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -208,7 +216,7 @@ namespace OWOVRC.Classes.Effects
         private Sensation CreateStopSensation(int power)
         {
             //TODO: Make this directional!
-            return OWOSensations.FallDmg.MultiplyIntensityBy(power / 100).WithPriority(Settings.StopPriority);
+            return FallDmg.MultiplyIntensityBy(power / 100).WithPriority(Settings.StopPriority);
         }
 
         public override void Reset()

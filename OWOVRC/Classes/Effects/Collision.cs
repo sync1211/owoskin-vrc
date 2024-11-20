@@ -41,6 +41,11 @@ namespace OWOVRC.Classes.Effects
             timer.Elapsed += OnTimerElapsed;
         }
 
+        public override void RegisterSensations()
+        {
+            // No sensations to register
+        }
+
         public override void OnOSCMessageReceived(object? sender, OSCMessage message)
         {
             ProcessMessage(message);
