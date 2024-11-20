@@ -173,6 +173,23 @@ namespace OWOVRC.UI
                 oscStatusLabel.Text = "Stopped";
                 oscStatusLabel.ForeColor = Color.Red;
             }
+
+            // OWO World Integration support
+            if (owi == null)
+            {
+                owiStatusLabel.Text = "Not initialized";
+                owiStatusLabel.ForeColor = Color.Black;
+            }
+            else if (owi.IsRunning)
+            {
+                owiStatusLabel.Text = "Running";
+                owiStatusLabel.ForeColor = Color.Green;
+            }
+            else
+            {
+                owiStatusLabel.Text = "Stopped";
+                owiStatusLabel.ForeColor = Color.Red;
+            }
         }
 
         private void StartOWO()
@@ -321,8 +338,10 @@ namespace OWOVRC.UI
             UpdateOWISettings();
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Application.Idle -= OnApplicationIdle;
+
             StopOWO();
             owo.Dispose();
             receiver.Dispose();
@@ -415,8 +434,6 @@ namespace OWOVRC.UI
 
             UpdateCollisionEffectSettings();
             SaveSettings<CollisionEffectSettings>(collisionSettings, "collision.json", "collision effect");
-
-            EnableOrDisableOWI();
         }
 
         private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
@@ -469,6 +486,7 @@ namespace OWOVRC.UI
 
             UpdateOWISettings();
             SaveSettings<WorldIntegratorSettings>(owiSettings, "owi.json", "OWO World Integrator");
+            EnableOrDisableOWI();
         }
 
         /// <summary>

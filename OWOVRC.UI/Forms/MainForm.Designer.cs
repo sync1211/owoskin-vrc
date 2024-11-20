@@ -59,6 +59,8 @@
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             owiSettingsPage = new TabPage();
+            label17 = new Label();
+            owiIntensityInput = new TextBox();
             label16 = new Label();
             owiUpdateIntervalInput = new TextBox();
             groupBox3 = new GroupBox();
@@ -72,6 +74,8 @@
             label3 = new Label();
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
+            owiStatusLabel = new Label();
+            label19 = new Label();
             stopSensationsButton = new Button();
             oscPortInput = new TextBox();
             owoIPInput = new MaskedTextBox();
@@ -84,8 +88,6 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
-            label17 = new Label();
-            owiIntensityInput = new TextBox();
             tabControl1.SuspendLayout();
             collisionSettingsPage.SuspendLayout();
             velocityBasedGroupBox.SuspendLayout();
@@ -412,6 +414,22 @@
             owiSettingsPage.Text = "OWI";
             owiSettingsPage.UseVisualStyleBackColor = true;
             // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(6, 89);
+            label17.Name = "label17";
+            label17.Size = new Size(73, 15);
+            label17.TabIndex = 25;
+            label17.Text = "Intensity (%)";
+            // 
+            // owiIntensityInput
+            // 
+            owiIntensityInput.Location = new Point(262, 86);
+            owiIntensityInput.Name = "owiIntensityInput";
+            owiIntensityInput.Size = new Size(89, 23);
+            owiIntensityInput.TabIndex = 24;
+            // 
             // label16
             // 
             label16.AutoSize = true;
@@ -528,6 +546,8 @@
             // 
             // connectionGroup
             // 
+            connectionGroup.Controls.Add(owiStatusLabel);
+            connectionGroup.Controls.Add(label19);
             connectionGroup.Controls.Add(stopSensationsButton);
             connectionGroup.Controls.Add(oscPortInput);
             connectionGroup.Controls.Add(owoIPInput);
@@ -545,6 +565,27 @@
             connectionGroup.TabIndex = 1;
             connectionGroup.TabStop = false;
             connectionGroup.Text = "Connection";
+            // 
+            // owiStatusLabel
+            // 
+            owiStatusLabel.AutoSize = true;
+            owiStatusLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            owiStatusLabel.ForeColor = Color.Red;
+            owiStatusLabel.Location = new Point(687, 50);
+            owiStatusLabel.Name = "owiStatusLabel";
+            owiStatusLabel.Size = new Size(54, 15);
+            owiStatusLabel.TabIndex = 12;
+            owiStatusLabel.Text = "Stopped";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label19.Location = new Point(644, 50);
+            label19.Name = "label19";
+            label19.Size = new Size(35, 15);
+            label19.TabIndex = 11;
+            label19.Text = "OWI:";
             // 
             // stopSensationsButton
             // 
@@ -671,22 +712,6 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
             // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new Point(6, 89);
-            label17.Name = "label17";
-            label17.Size = new Size(73, 15);
-            label17.TabIndex = 25;
-            label17.Text = "Intensity (%)";
-            // 
-            // owiIntensityInput
-            // 
-            owiIntensityInput.Location = new Point(262, 86);
-            owiIntensityInput.Name = "owiIntensityInput";
-            owiIntensityInput.Size = new Size(89, 23);
-            owiIntensityInput.TabIndex = 24;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -700,7 +725,7 @@
             Name = "MainForm";
             ShowIcon = false;
             Text = "OWOVRC";
-            FormClosed += MainForm_FormClosed;
+            FormClosing += MainForm_FormClosing;
             Load += MainForm_Load;
             Shown += MainForm_Shown;
             tabControl1.ResumeLayout(false);
@@ -783,5 +808,7 @@
         private TextBox owiUpdateIntervalInput;
         private Label label17;
         private TextBox owiIntensityInput;
+        private Label owiStatusLabel;
+        private Label label19;
     }
 }
