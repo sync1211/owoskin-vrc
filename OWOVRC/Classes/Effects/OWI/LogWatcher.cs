@@ -15,7 +15,7 @@ namespace OWOVRC.Classes.Effects.OWI
         {
             get
             {
-                return readerThread != null && readerThread.IsAlive;
+                return readerThread?.IsAlive == true;
             }
         }
 
