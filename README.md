@@ -2,12 +2,13 @@
 
 Yet another VRChat integration for the [OWO Skin](https://owogame.com/).
 
-// Screenshots go here! (UI is still unfinished)
+// Screenshots go here! (UI is still WIP)
 
 ## Features
 * Velocity-based wind simulation (no setup required!)
 * Collider feedback (similar to [Shadorki's OWO integration](https://github.com/shadorki/vrc-owo-suit))
 * Velocity-based collider feedback
+* Custom sensations triggered via OSC
 
 ## Avatar setup
 
