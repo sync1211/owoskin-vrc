@@ -13,47 +13,6 @@ namespace OWOVRC.UI.Forms
         public PresetsForm()
         {
             InitializeComponent();
-            dataGridView1.CellContentClick += GridViewCellClick;
-        }
-
-        public DataGridViewButtonColumn AddButtonColumn(string name, string text)
-        {
-            DataGridViewButtonColumn buttonColumn = new()
-            {
-                Text = text,
-                Name = name
-            };
-            if (dataGridView1.Columns[name] == null)
-            {
-                dataGridView1.Columns.Add(buttonColumn);
-            }
-
-            return buttonColumn;
-        }
-
-        public void AddControlColumns()
-        {
-            // Remove button
-            AddButtonColumn("Remove", "REMOVE");
-        }
-
-        public void GridViewCellClick(object? sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0 || presets.Count == 0)
-            {
-                return;
-            }
-
-            if (dataGridView1.Columns[e.ColumnIndex].Name != "Remove")
-            {
-                return;
-            }
-
-            // Remove entry
-            presets.RemoveAt(e.RowIndex);
-
-            // Update table
-            ForceDataRefresh();
         }
 
         private void ForceDataRefresh()
@@ -61,9 +20,7 @@ namespace OWOVRC.UI.Forms
             //NOTE: Idk why, but the gridView isn't removing the entry unless I do this terribleness
             dataGridView1.DataSource = null;
             dataGridView1.Columns.Clear();
-
             dataGridView1.DataSource = presets;
-            AddControlColumns();
         }
 
         public void ShowDialog(OSCPresetsSettings settings)
@@ -73,7 +30,6 @@ namespace OWOVRC.UI.Forms
 
             dataGridView1.DataSource = presets;
 
-            AddControlColumns();
             this.ShowDialog();
         }
 
@@ -102,6 +58,8 @@ namespace OWOVRC.UI.Forms
             {
                 ImportOWOSensationFromFile(filePath);
             }
+
+            ForceDataRefresh();
         }
 
         private void ImportOWOSensationFromFile(string path)
@@ -133,8 +91,6 @@ namespace OWOVRC.UI.Forms
             {
                 MessageBox.Show("Error parsing sensation file!", "Import failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            ForceDataRefresh();
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -179,6 +135,8 @@ namespace OWOVRC.UI.Forms
                 Log.Debug("Importing sensation via Drag&Drop: {file}", file);
                 ImportOWOSensationFromFile(file);
             }
+
+            ForceDataRefresh();
         }
 
         private void DataGridView1_DragEnter(object sender, DragEventArgs e)
@@ -202,6 +160,29 @@ namespace OWOVRC.UI.Forms
         private void DataGridView1_DragLeave(object sender, EventArgs e)
         {
             dropIndicatorLabel.Visible = false;
+        }
+
+        private void removePresetButton_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count == 0)
+            {
+                return;
+            }
+
+            // Get preset objects as the index will change when removing
+            List<OSCSensationPreset> presetsToDelete = [];
+            foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+            {
+                presetsToDelete.Add(presets[cell.RowIndex]);
+            }
+
+            // Delete selected presets
+            foreach (OSCSensationPreset preset in presetsToDelete)
+            {
+                presets.Remove(preset);
+            }
+
+            ForceDataRefresh();
         }
     }
 }

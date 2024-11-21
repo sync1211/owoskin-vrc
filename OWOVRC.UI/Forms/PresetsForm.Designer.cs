@@ -34,6 +34,7 @@
             importSensationButton = new Button();
             saveButton = new Button();
             dropIndicatorLabel = new Label();
+            removePresetButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -104,11 +105,22 @@
             dropIndicatorLabel.Text = "Drop files here to import";
             dropIndicatorLabel.Visible = false;
             // 
+            // removePresetButton
+            // 
+            removePresetButton.Location = new Point(12, 12);
+            removePresetButton.Name = "removePresetButton";
+            removePresetButton.Size = new Size(75, 23);
+            removePresetButton.TabIndex = 6;
+            removePresetButton.Text = "Remove";
+            removePresetButton.UseVisualStyleBackColor = true;
+            removePresetButton.Click += removePresetButton_Click;
+            // 
             // PresetsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(removePresetButton);
             Controls.Add(dropIndicatorLabel);
             Controls.Add(saveButton);
             Controls.Add(importSensationButton);
@@ -129,5 +141,6 @@
         private Button importSensationButton;
         private Button saveButton;
         private Label dropIndicatorLabel;
+        private Button removePresetButton;
     }
 }
