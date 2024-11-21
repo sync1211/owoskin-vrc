@@ -147,11 +147,11 @@ namespace OWOVRC.Classes.Effects
         private void PlaySensations(OWISensation[] sensations)
         {
             float intensityMultiplier = ((float)Settings.Intensity / 100.0f);
-            
+
             for (int i = 0; i < sensations.Length; i++)
             {
                 OWISensation owiSensation = sensations[i];
-                
+
                 if (owiSensation.Sensation.Equals("STOP", StringComparison.CurrentCultureIgnoreCase))
                 {
                     owo.StopAllSensations();

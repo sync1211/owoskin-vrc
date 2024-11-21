@@ -25,12 +25,7 @@ namespace OWOVRC.UI
         private VelocityEffectSettings velocitySettings = new();
         private CollisionEffectSettings collisionSettings = new();
         private WorldIntegratorSettings owiSettings = new();
-        private OSCPresetsSettings oscPresetsSettings = new(new Dictionary<string, OSCSensationPreset>() {
-            // Test presets
-            //TODO: Remove once the UI is implemented!
-            { "Test1", new(true, "Test1", 1, 1, "4~Ball~100,1,100,0,0,0,Impact|0%100~impact-0~Impacts") },
-            { "Test2", new(true, "Test2", 1, 1, "5~Dart~11,1,100,0,0,0,Impact|0%100~impact-1~Impacts")}
-        });
+        private OSCPresetsSettings oscPresetsSettings = new();
 
         // OWO
         private readonly OWOHelper owo = new();
@@ -43,7 +38,7 @@ namespace OWOVRC.UI
         private bool IsRunning;
 
         // Forms
-        private PresetsForm presetsForm = new();
+        private readonly PresetsForm presetsForm = new();
 
         public MainForm()
         {
@@ -53,6 +48,7 @@ namespace OWOVRC.UI
 
             // Call UpdateConnectionStatus on every ui update
             Application.Idle += OnApplicationIdle;
+            presetsForm.OnSave += OnPresetsFormSave;
         }
 
         private void OnApplicationIdle(object? sender, EventArgs e)
@@ -371,12 +367,21 @@ namespace OWOVRC.UI
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Idle -= OnApplicationIdle;
+            presetsForm.OnSave -= OnPresetsFormSave;
 
+            // Stop OWO
             StopOWO();
+            owo.Dispose();
+
+            // Stop OSC receiver
+            receiver.Dispose();
+
+            // Stop logging
+            Log.CloseAndFlush();
+
+            // Close presets form
             presetsForm.Close();
             presetsForm.Dispose();
-            owo.Dispose();
-            receiver.Dispose();
         }
 
         private void OwoIPInput_Exit(object sender, EventArgs e)
@@ -557,6 +562,11 @@ namespace OWOVRC.UI
             oscPresetsSettings.Priority = ValidateIntSetting(oscPresetsPriorityInput, oscPresetsSettings.Priority);
 
             UpdateOSCPrestsSettings();
+            SaveSettings<OSCPresetsSettings>(oscPresetsSettings, "oscPresets.json", "OSC Presets");
+        }
+
+        private void OnPresetsFormSave(object? sender, EventArgs args)
+        {
             SaveSettings<OSCPresetsSettings>(oscPresetsSettings, "oscPresets.json", "OSC Presets");
         }
 

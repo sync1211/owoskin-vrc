@@ -1,4 +1,5 @@
 ﻿using OWOGame;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Effects.OSCPresets
@@ -13,8 +14,11 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         public int Priority { get; set; }
         [JsonInclude]
         public int Intensity { get; set; }
+        [JsonInclude]
+        [Browsable(false)]
         public string SensationString { get; private set; }
         [JsonIgnore]
+        [Browsable(false)]
         public readonly BakedSensation SensationObject;
 
         [JsonConstructor]
