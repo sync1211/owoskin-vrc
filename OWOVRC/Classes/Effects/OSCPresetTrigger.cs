@@ -34,8 +34,10 @@ namespace OWOVRC.Classes.Effects
 
         public override void RegisterSensations()
         {
-            foreach(OSCSensationPreset preset in Settings.Presets.Values)
+            for (int i = 0; i < Settings.Presets.Count; i++)
             {
+                OSCSensationPreset preset = Settings.Presets.Values.ElementAt(i);
+
                 Log.Debug("Registering custom sensation {name}...", preset.Name);
                 owo.AddBakedSensation(preset.SensationObject);
             }

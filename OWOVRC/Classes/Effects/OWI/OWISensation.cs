@@ -1,6 +1,7 @@
 ﻿using OWOGame;
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Effects.OWI
@@ -47,12 +48,14 @@ namespace OWOVRC.Classes.Effects.OWI
 
         public Muscle[] GetMusclesWithIntensity()
         {
-            List<Muscle> musclesScaled = new List<Muscle>();
+            List<Muscle> musclesScaled = [];
 
             // Apply intensity for each muscle
-            foreach (string muscleName in Muscles.Keys)
+            for (int i = 0; i < Muscles.Count; i++)
             {
-                int intensity = Muscles[muscleName];
+                KeyValuePair<string, int> muscleData = Muscles.ElementAt(i);
+                string muscleName = muscleData.Key;
+                int intensity = muscleData.Value;
                 string muscleKey = $"owo_suit_{muscleName.ToLower()}";
 
                 // Single muscle
@@ -64,9 +67,9 @@ namespace OWOVRC.Classes.Effects.OWI
                 // Muscle group
                 else if (OWOHelper.MuscleGroups.TryGetValue(muscleName, out Muscle[]? muscles))
                 {
-                    foreach (Muscle groupMuscle in muscles)
+                    for (int j = 0; j < muscles.Length; j++)
                     {
-                        musclesScaled.Add(groupMuscle.WithIntensity(intensity));
+                        musclesScaled.Add(muscles[j].WithIntensity(intensity));
                     }
                 }
 

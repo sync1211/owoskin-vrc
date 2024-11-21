@@ -52,9 +52,13 @@ namespace OWOVRC.Classes.Effects.Builders
         {
             Duration = durationSeconds;
 
+            // No direction specified -> front
             Muscles = [];
-            foreach (Muscle muscle in OWOHelper.MuscleGroups["frontMuscles"])
+            Muscle[] frontMuscles = OWOHelper.MuscleGroups["frontMuscles"];
+
+            for (int i = 0; i < frontMuscles.Length; i++)
             {
+                Muscle muscle = frontMuscles[i];
                 Muscles[muscle] = 100;
             }
         }
@@ -74,19 +78,22 @@ namespace OWOVRC.Classes.Effects.Builders
         public void Play(OWOHelper owo, int priority = 0)
         {
             // Apply intensities
-            List<Muscle> musclesWithIntensity = [];
-            foreach (Muscle muscle in Muscles.Keys)
+            Muscle[] musclesScaled = new Muscle[Muscles.Count];
+            for (int i = 0; i < Muscles.Count; i++)
             {
-                int muscleIntensity = Muscles[muscle];
+                KeyValuePair<Muscle, int> muscleData = Muscles.ElementAt(i);
+                Muscle muscle = muscleData.Key;
+                int muscleIntensity = muscleData.Value;
+
                 if (muscleIntensity > 0)
                 {
-                    musclesWithIntensity.Add(muscle.WithIntensity(muscleIntensity));
+                    musclesScaled[i] = muscle.WithIntensity(muscleIntensity);
                 }
             }
 
             Log.Verbose("Playing wind sensation at {0}%", Intensity);
             Sensation sensation = CreateSensation(intensity).WithPriority(priority);
-            owo.AddSensation(sensation, musclesWithIntensity.ToArray());
+            owo.AddSensation(sensation, musclesScaled);
         }
 
         /// <summary>
@@ -118,9 +125,10 @@ namespace OWOVRC.Classes.Effects.Builders
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
             Dictionary<Muscle, int> muscleValues = [];
-            foreach (Muscle muscle in OWOHelper.Muscles.Values)
+            for (int i = 0; i < OWOHelper.Muscles.Count; i++)
             {
-                muscleValues[muscle] = 0;
+                Muscle muscle = OWOHelper.Muscles.Values.ElementAt(i);
+                muscleValues.Add(muscle, 0);
             }
 
             if (maxVelocity == 0)
@@ -147,9 +155,13 @@ namespace OWOVRC.Classes.Effects.Builders
 
             // 4. Convert the muscle values to a % value of the maximum
             int maxMuscleValue = muscleValues.Values.Max();
-            foreach (Muscle muscle in muscleValues.Keys)
+            for (int i = 0; i < OWOHelper.Muscles.Count; i++)
             {
-                int muscleValue = muscleValues[muscle];
+                KeyValuePair<Muscle, int> muscleData = muscleValues.ElementAt(i);
+
+                Muscle muscle = muscleData.Key;
+                int muscleValue = muscleData.Value;
+
                 muscleValues[muscle] = (int)((float)muscleValue / (float)maxMuscleValue) * 100;
             }
 
@@ -158,8 +170,10 @@ namespace OWOVRC.Classes.Effects.Builders
 
         private static void AddMuscleWeights(Dictionary<Muscle, int> muscles, string directionName, int weight)
         {
-            foreach (Muscle muscle in directions[directionName])
+            Muscle[] directionMuscles = directions[directionName];
+            for (int i = 0; i < directionMuscles.Length; i++)
             {
+                Muscle muscle = directionMuscles[i];
                 muscles[muscle] += weight;
             }
         }

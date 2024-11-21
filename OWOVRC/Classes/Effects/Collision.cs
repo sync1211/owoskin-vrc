@@ -177,10 +177,11 @@ namespace OWOVRC.Classes.Effects
             }
 
             MuscleCollisionData[] muscleCollisionData = [.. activeMuscles.Values];
-            List<Muscle> musclesScaled = [];
+            Muscle[] musclesScaled = new Muscle[muscleCollisionData.Length];
 
-            foreach (MuscleCollisionData muscleData in muscleCollisionData)
+            for (int i = 0; i < muscleCollisionData.Length; i++)
             {
+                MuscleCollisionData muscleData = muscleCollisionData[i];
                 Muscle? muscle = OWOHelper.Muscles.GetValueOrDefault(muscleData.Name.ToLower());
                 if (muscle == null)
                 {
@@ -209,11 +210,11 @@ namespace OWOVRC.Classes.Effects
                     muscleData.VelocityMultiplier
                 );
 
-                musclesScaled.Add(muscle.Value.WithIntensity(intensity));
+                musclesScaled[i] = muscle.Value.WithIntensity(intensity);
             }
 
             Sensation sensation = SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, 100, 0, 0, 0).WithPriority(Settings.Priority);
-            owo.AddSensation(sensation, [.. musclesScaled]);
+            owo.AddSensation(sensation, musclesScaled);
         }
 
         public void OnTimerElapsed(object? sender, ElapsedEventArgs e)
@@ -221,8 +222,9 @@ namespace OWOVRC.Classes.Effects
             UpdateHaptics();
 
             // Disable velocity-based haptics until the next time we receive a message
-            foreach (MuscleCollisionData muscleData in activeMuscles.Values)
+            for (int i = 0; i < activeMuscles.Count; i++)
             {
+                MuscleCollisionData muscleData = activeMuscles.ElementAt(i).Value;
                 muscleData.VelocityMultiplier = 0;
             }
         }
