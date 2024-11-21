@@ -35,6 +35,8 @@
             saveButton = new Button();
             dropIndicatorLabel = new Label();
             removePresetButton = new Button();
+            label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -115,11 +117,33 @@
             removePresetButton.UseVisualStyleBackColor = true;
             removePresetButton.Click += removePresetButton_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(118, 16);
+            label1.Name = "label1";
+            label1.Size = new Size(231, 15);
+            label1.TabIndex = 7;
+            label1.Text = "Parameter OSC path for calling sensations:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.Blue;
+            label2.Location = new Point(355, 16);
+            label2.Name = "label2";
+            label2.Size = new Size(257, 15);
+            label2.TabIndex = 8;
+            label2.Text = "/OWO/SensationsTrigger/<Sensation Name>";
+            // 
             // PresetsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(removePresetButton);
             Controls.Add(dropIndicatorLabel);
             Controls.Add(saveButton);
@@ -142,5 +166,7 @@
         private Button saveButton;
         private Label dropIndicatorLabel;
         private Button removePresetButton;
+        private Label label1;
+        private Label label2;
     }
 }
