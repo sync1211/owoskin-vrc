@@ -107,6 +107,10 @@ namespace OWOVRC.Classes.Effects
             {
                 muscles = [muscle];
             }
+            else
+            {
+                muscles = OWOHelper.MuscleGroups["all"];
+            }
 
             return preset;
         }
@@ -119,8 +123,8 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Get intensity
-            float intensityMultiplier = GetIntensityFromMessage(message);
-            if (intensityMultiplier == 0)
+            float oscIntensity = GetIntensityFromMessage(message);
+            if (oscIntensity == 0)
             {
                 return;
             }
@@ -138,11 +142,18 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, intensityMultiplier);
             float presetIntensity = (float)preset.Intensity / 100;
+            float intensity = presetIntensity * oscIntensity;
+
+            // Apply intensity to muscles
+            for (int i = 0; i < muscles.Length; i++)
+            {
+                muscles[i] = muscles[i].WithIntensity((int)(intensity * 100));
+            }
+
+            Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, oscIntensity);
             Sensation sensation = preset.SensationObject
-                .MultiplyIntensityBy((Multiplier) presetIntensity)       // Multiplier from preset settings
-                .MultiplyIntensityBy((Multiplier) intensityMultiplier);  // Multiplier from OSC message
+                .MultiplyIntensityBy((Multiplier) intensity);
 
             owo.AddSensation(sensation, muscles);
         }
