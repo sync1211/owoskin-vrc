@@ -172,7 +172,6 @@ namespace OWOVRC.Classes.Effects
 
             if (activeMuscles.IsEmpty)
             {
-                owo.StopAllSensations();
                 return;
             }
 
