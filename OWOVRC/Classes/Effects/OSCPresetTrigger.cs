@@ -139,9 +139,9 @@ namespace OWOVRC.Classes.Effects
             }
 
             Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, intensityMultiplier);
-            float intensity = (float)preset.Intensity / 100;
+            float presetIntensity = (float)preset.Intensity / 100;
             Sensation sensation = preset.SensationObject
-                .MultiplyIntensityBy((Multiplier) intensity)             // Multiplier from preset settings
+                .MultiplyIntensityBy((Multiplier) presetIntensity)       // Multiplier from preset settings
                 .MultiplyIntensityBy((Multiplier) intensityMultiplier);  // Multiplier from OSC message
 
             owo.AddSensation(sensation, muscles);
