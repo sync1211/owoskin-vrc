@@ -1,4 +1,5 @@
-﻿using OWOGame;
+﻿using BuildSoft.OscCore;
+using OWOGame;
 using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -48,19 +49,24 @@ namespace OWOVRC.Classes.Effects
             ProcessMessage(message);
         }
 
-        public void ProcessMessage(OSCMessage message)
+        private float GetIntensityFromMessage(OSCMessage message)
         {
-            if (!Settings.Enabled)
-            {
-                return;
-            }
-
+            // Float
             try
             {
-                bool value = message.Values.ReadBooleanElement(0); //TODO: Support floats for variable intensity
-                if (!value)
+                return message.Values.ReadFloatElement(0);
+            }
+            catch (InvalidOperationException)
+            {
+                Log.Debug("Unable to parse OSC message as float value!");
+            }
+
+            // Bool
+            try
+            {
+                if (message.Values.ReadBooleanElement(0))
                 {
-                    return;
+                    return 1;
                 }
             }
             catch (InvalidOperationException)
@@ -68,7 +74,27 @@ namespace OWOVRC.Classes.Effects
                 Log.Error("Unable to parse OSC message at {address} as boolean value!", message.Address);
             }
 
+            return 0;
+        }
+
+        public void ProcessMessage(OSCMessage message)
+        {
+            if (!Settings.Enabled)
+            {
+                return;
+            }
+
+            // Get intensity
+            float intensityMultiplier = GetIntensityFromMessage(message);
+            if (intensityMultiplier == 0)
+            {
+                return;
+            }
+
+            // Get preset name
             string presetName = message.Address.Substring(OSC_ADDRESS_PREFIX.Length);
+
+            // Get preset
             if (!Settings.Presets.TryGetValue(presetName, out OSCSensationPreset? preset) || preset == null)
             {
                 return;
@@ -83,7 +109,8 @@ namespace OWOVRC.Classes.Effects
             Log.Debug("Triggering preset {presetName}!", preset.Name);
             float intensity = (float)preset.Intensity / 100;
             Sensation sensation = preset.SensationObject
-                .MultiplyIntensityBy((Multiplier) intensity);
+                .MultiplyIntensityBy((Multiplier) intensity)             // Multiplier from preset settings
+                .MultiplyIntensityBy((Multiplier) intensityMultiplier);  // Multiplier from OSC message
 
             owo.AddSensation(sensation, []);
         }
