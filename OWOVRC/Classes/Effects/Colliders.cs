@@ -10,7 +10,7 @@ using System.Timers;
 namespace OWOVRC.Classes.Effects
 {
     // (Loosely based on https://github.com/shadorki/vrc-owo-suit)
-    public class Collision : OSCEffectBase
+    public class Colliders : OSCEffectBase
     {
         // Event handler for UI updates
         //public EventHandler? OnCollisionChange;
@@ -27,9 +27,9 @@ namespace OWOVRC.Classes.Effects
 
         // Settings
         //TODO: Implement per-muscle intensity
-        public readonly CollisionEffectSettings Settings;
+        public readonly CollidersEffectSettings Settings;
 
-        public Collision(OWOHelper owo, CollisionEffectSettings settings): base(owo)
+        public Colliders(OWOHelper owo, CollidersEffectSettings settings): base(owo)
         {
             Settings = settings;
 

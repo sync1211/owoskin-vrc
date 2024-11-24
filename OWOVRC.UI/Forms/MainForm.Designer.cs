@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             tabControl1 = new TabControl();
-            collisionSettingsPage = new TabPage();
+            collidersSettingsPage = new TabPage();
             label12 = new Label();
-            collisionPriorityInput = new TextBox();
+            collidersPriorityInput = new TextBox();
             label6 = new Label();
             velocityBasedGroupBox = new GroupBox();
             label9 = new Label();
-            collisionSpeedMultiplierInput = new TextBox();
+            collidersSpeedMultiplierInput = new TextBox();
             label8 = new Label();
-            collisionMinIntensityInput = new TextBox();
-            collisionUseVelocityCheckbox = new CheckBox();
-            collisionAllowContinuousCheckbox = new CheckBox();
-            collisionEnabledCheckbox = new CheckBox();
-            collisionIntensityInput = new TextBox();
+            collidersMinIntensityInput = new TextBox();
+            collidersUseVelocityCheckbox = new CheckBox();
+            collidersAllowContinuousCheckbox = new CheckBox();
+            collidersEnabledCheckbox = new CheckBox();
+            collidersIntensityInput = new TextBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
             label11 = new Label();
@@ -95,7 +95,7 @@
             stopButton = new Button();
             groupBox1 = new GroupBox();
             tabControl1.SuspendLayout();
-            collisionSettingsPage.SuspendLayout();
+            collidersSettingsPage.SuspendLayout();
             velocityBasedGroupBox.SuspendLayout();
             velocitySettingsPage.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -108,7 +108,7 @@
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(collisionSettingsPage);
+            tabControl1.Controls.Add(collidersSettingsPage);
             tabControl1.Controls.Add(velocitySettingsPage);
             tabControl1.Controls.Add(owiSettingsPage);
             tabControl1.Controls.Add(oscPresetsPage);
@@ -118,22 +118,22 @@
             tabControl1.Size = new Size(368, 303);
             tabControl1.TabIndex = 0;
             // 
-            // collisionSettingsPage
+            // collidersSettingsPage
             // 
-            collisionSettingsPage.Controls.Add(label12);
-            collisionSettingsPage.Controls.Add(collisionPriorityInput);
-            collisionSettingsPage.Controls.Add(label6);
-            collisionSettingsPage.Controls.Add(velocityBasedGroupBox);
-            collisionSettingsPage.Controls.Add(collisionEnabledCheckbox);
-            collisionSettingsPage.Controls.Add(collisionIntensityInput);
-            collisionSettingsPage.Controls.Add(applyCollisionSettingsButton);
-            collisionSettingsPage.Location = new Point(4, 24);
-            collisionSettingsPage.Name = "collisionSettingsPage";
-            collisionSettingsPage.Padding = new Padding(3);
-            collisionSettingsPage.Size = new Size(360, 275);
-            collisionSettingsPage.TabIndex = 0;
-            collisionSettingsPage.Text = "Colliders";
-            collisionSettingsPage.UseVisualStyleBackColor = true;
+            collidersSettingsPage.Controls.Add(label12);
+            collidersSettingsPage.Controls.Add(collidersPriorityInput);
+            collidersSettingsPage.Controls.Add(label6);
+            collidersSettingsPage.Controls.Add(velocityBasedGroupBox);
+            collidersSettingsPage.Controls.Add(collidersEnabledCheckbox);
+            collidersSettingsPage.Controls.Add(collidersIntensityInput);
+            collidersSettingsPage.Controls.Add(applyCollisionSettingsButton);
+            collidersSettingsPage.Location = new Point(4, 24);
+            collidersSettingsPage.Name = "collidersSettingsPage";
+            collidersSettingsPage.Padding = new Padding(3);
+            collidersSettingsPage.Size = new Size(360, 275);
+            collidersSettingsPage.TabIndex = 0;
+            collidersSettingsPage.Text = "Colliders";
+            collidersSettingsPage.UseVisualStyleBackColor = true;
             // 
             // label12
             // 
@@ -146,10 +146,10 @@
             // 
             // collisionPriorityInput
             // 
-            collisionPriorityInput.Location = new Point(262, 26);
-            collisionPriorityInput.Name = "collisionPriorityInput";
-            collisionPriorityInput.Size = new Size(89, 23);
-            collisionPriorityInput.TabIndex = 8;
+            collidersPriorityInput.Location = new Point(262, 26);
+            collidersPriorityInput.Name = "collidersPriorityInput";
+            collidersPriorityInput.Size = new Size(89, 23);
+            collidersPriorityInput.TabIndex = 8;
             // 
             // label6
             // 
@@ -163,11 +163,11 @@
             // velocityBasedGroupBox
             // 
             velocityBasedGroupBox.Controls.Add(label9);
-            velocityBasedGroupBox.Controls.Add(collisionSpeedMultiplierInput);
+            velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierInput);
             velocityBasedGroupBox.Controls.Add(label8);
-            velocityBasedGroupBox.Controls.Add(collisionMinIntensityInput);
-            velocityBasedGroupBox.Controls.Add(collisionUseVelocityCheckbox);
-            velocityBasedGroupBox.Controls.Add(collisionAllowContinuousCheckbox);
+            velocityBasedGroupBox.Controls.Add(collidersMinIntensityInput);
+            velocityBasedGroupBox.Controls.Add(collidersUseVelocityCheckbox);
+            velocityBasedGroupBox.Controls.Add(collidersAllowContinuousCheckbox);
             velocityBasedGroupBox.Location = new Point(6, 85);
             velocityBasedGroupBox.Name = "velocityBasedGroupBox";
             velocityBasedGroupBox.Size = new Size(348, 135);
@@ -186,10 +186,10 @@
             // 
             // collisionSpeedMultiplierInput
             // 
-            collisionSpeedMultiplierInput.Location = new Point(247, 104);
-            collisionSpeedMultiplierInput.Name = "collisionSpeedMultiplierInput";
-            collisionSpeedMultiplierInput.Size = new Size(89, 23);
-            collisionSpeedMultiplierInput.TabIndex = 10;
+            collidersSpeedMultiplierInput.Location = new Point(247, 104);
+            collidersSpeedMultiplierInput.Name = "collidersSpeedMultiplierInput";
+            collidersSpeedMultiplierInput.Size = new Size(89, 23);
+            collidersSpeedMultiplierInput.TabIndex = 10;
             // 
             // label8
             // 
@@ -202,47 +202,47 @@
             // 
             // collisionMinIntensityInput
             // 
-            collisionMinIntensityInput.Location = new Point(247, 75);
-            collisionMinIntensityInput.Name = "collisionMinIntensityInput";
-            collisionMinIntensityInput.Size = new Size(89, 23);
-            collisionMinIntensityInput.TabIndex = 8;
+            collidersMinIntensityInput.Location = new Point(247, 75);
+            collidersMinIntensityInput.Name = "collidersMinIntensityInput";
+            collidersMinIntensityInput.Size = new Size(89, 23);
+            collidersMinIntensityInput.TabIndex = 8;
             // 
             // collisionUseVelocityCheckbox
             // 
-            collisionUseVelocityCheckbox.AutoSize = true;
-            collisionUseVelocityCheckbox.Location = new Point(6, 22);
-            collisionUseVelocityCheckbox.Name = "collisionUseVelocityCheckbox";
-            collisionUseVelocityCheckbox.Size = new Size(68, 19);
-            collisionUseVelocityCheckbox.TabIndex = 3;
-            collisionUseVelocityCheckbox.Text = "Enabled";
-            collisionUseVelocityCheckbox.UseVisualStyleBackColor = true;
+            collidersUseVelocityCheckbox.AutoSize = true;
+            collidersUseVelocityCheckbox.Location = new Point(6, 22);
+            collidersUseVelocityCheckbox.Name = "collidersUseVelocityCheckbox";
+            collidersUseVelocityCheckbox.Size = new Size(68, 19);
+            collidersUseVelocityCheckbox.TabIndex = 3;
+            collidersUseVelocityCheckbox.Text = "Enabled";
+            collidersUseVelocityCheckbox.UseVisualStyleBackColor = true;
             // 
             // collisionAllowContinuousCheckbox
             // 
-            collisionAllowContinuousCheckbox.AutoSize = true;
-            collisionAllowContinuousCheckbox.Location = new Point(6, 47);
-            collisionAllowContinuousCheckbox.Name = "collisionAllowContinuousCheckbox";
-            collisionAllowContinuousCheckbox.Size = new Size(195, 19);
-            collisionAllowContinuousCheckbox.TabIndex = 4;
-            collisionAllowContinuousCheckbox.Text = "Continuous sensation when idle";
-            collisionAllowContinuousCheckbox.UseVisualStyleBackColor = true;
+            collidersAllowContinuousCheckbox.AutoSize = true;
+            collidersAllowContinuousCheckbox.Location = new Point(6, 47);
+            collidersAllowContinuousCheckbox.Name = "collidersAllowContinuousCheckbox";
+            collidersAllowContinuousCheckbox.Size = new Size(195, 19);
+            collidersAllowContinuousCheckbox.TabIndex = 4;
+            collidersAllowContinuousCheckbox.Text = "Continuous sensation when idle";
+            collidersAllowContinuousCheckbox.UseVisualStyleBackColor = true;
             // 
             // collisionEnabledCheckbox
             // 
-            collisionEnabledCheckbox.AutoSize = true;
-            collisionEnabledCheckbox.Location = new Point(6, 6);
-            collisionEnabledCheckbox.Name = "collisionEnabledCheckbox";
-            collisionEnabledCheckbox.Size = new Size(68, 19);
-            collisionEnabledCheckbox.TabIndex = 2;
-            collisionEnabledCheckbox.Text = "Enabled";
-            collisionEnabledCheckbox.UseVisualStyleBackColor = true;
+            collidersEnabledCheckbox.AutoSize = true;
+            collidersEnabledCheckbox.Location = new Point(6, 6);
+            collidersEnabledCheckbox.Name = "collidersEnabledCheckbox";
+            collidersEnabledCheckbox.Size = new Size(68, 19);
+            collidersEnabledCheckbox.TabIndex = 2;
+            collidersEnabledCheckbox.Text = "Enabled";
+            collidersEnabledCheckbox.UseVisualStyleBackColor = true;
             // 
             // collisionIntensityInput
             // 
-            collisionIntensityInput.Location = new Point(262, 56);
-            collisionIntensityInput.Name = "collisionIntensityInput";
-            collisionIntensityInput.Size = new Size(89, 23);
-            collisionIntensityInput.TabIndex = 6;
+            collidersIntensityInput.Location = new Point(262, 56);
+            collidersIntensityInput.Name = "collidersIntensityInput";
+            collidersIntensityInput.Size = new Size(89, 23);
+            collidersIntensityInput.TabIndex = 6;
             // 
             // applyCollisionSettingsButton
             // 
@@ -253,7 +253,7 @@
             applyCollisionSettingsButton.TabIndex = 0;
             applyCollisionSettingsButton.Text = "Apply";
             applyCollisionSettingsButton.UseVisualStyleBackColor = true;
-            applyCollisionSettingsButton.Click += ApplyCollisionSettingsButton_Click;
+            applyCollisionSettingsButton.Click += ApplyCollidersSettingsButton_Click;
             // 
             // velocitySettingsPage
             // 
@@ -800,8 +800,8 @@
             Load += MainForm_Load;
             Shown += MainForm_Shown;
             tabControl1.ResumeLayout(false);
-            collisionSettingsPage.ResumeLayout(false);
-            collisionSettingsPage.PerformLayout();
+            collidersSettingsPage.ResumeLayout(false);
+            collidersSettingsPage.PerformLayout();
             velocityBasedGroupBox.ResumeLayout(false);
             velocityBasedGroupBox.PerformLayout();
             velocitySettingsPage.ResumeLayout(false);
@@ -840,19 +840,19 @@
         private Label label5;
         private Label label4;
         private GroupBox groupBox1;
-        private TabPage collisionSettingsPage;
+        private TabPage collidersSettingsPage;
         private Button applyCollisionSettingsButton;
         private Button applyVelocitySettingsButton;
-        private CheckBox collisionEnabledCheckbox;
+        private CheckBox collidersEnabledCheckbox;
         private Label label6;
         private GroupBox velocityBasedGroupBox;
-        private CheckBox collisionUseVelocityCheckbox;
-        private CheckBox collisionAllowContinuousCheckbox;
-        private TextBox collisionIntensityInput;
+        private CheckBox collidersUseVelocityCheckbox;
+        private CheckBox collidersAllowContinuousCheckbox;
+        private TextBox collidersIntensityInput;
         private Label label8;
-        private TextBox collisionMinIntensityInput;
+        private TextBox collidersMinIntensityInput;
         private Label label9;
-        private TextBox collisionSpeedMultiplierInput;
+        private TextBox collidersSpeedMultiplierInput;
         private CheckBox velocityEnabledCheckbox;
         private Label label7;
         private TextBox velocityThresholdInput;
@@ -866,7 +866,7 @@
         private CheckBox velocityIgnoreWhenSeatedCheckbox;
         private Button stopSensationsButton;
         private Label label12;
-        private TextBox collisionPriorityInput;
+        private TextBox collidersPriorityInput;
         private Label label13;
         private TextBox velocityPriorityInput;
         private TabPage owiSettingsPage;

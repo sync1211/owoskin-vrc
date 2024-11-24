@@ -4,12 +4,12 @@ using System.Text.Json;
 namespace OWOVRC.Test.Classes.Settings
 {
     [TestClass]
-    public class CollisionEffectSettingsTest
+    public class CollidersEffectSettingsTest
     {
         [TestMethod]
         public void TestJsonEncodeDecode()
         {
-            CollisionEffectSettings settings = new()
+            CollidersEffectSettings settings = new()
             {
                 Priority = 2,
                 AllowContinuous = false,
@@ -26,7 +26,7 @@ namespace OWOVRC.Test.Classes.Settings
             string json = JsonSerializer.Serialize(settings);
             Assert.AreNotEqual(0, json.Length);
 
-            CollisionEffectSettings? decodedSettings = JsonSerializer.Deserialize<CollisionEffectSettings>(json);
+            CollidersEffectSettings? decodedSettings = JsonSerializer.Deserialize<CollidersEffectSettings>(json);
             Assert.IsNotNull(decodedSettings);
 
             Assert.AreEqual(settings.AllowContinuous, decodedSettings.AllowContinuous);

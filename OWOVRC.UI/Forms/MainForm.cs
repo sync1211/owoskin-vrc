@@ -23,7 +23,7 @@ namespace OWOVRC.UI
         private readonly string settingsDir = Environment.CurrentDirectory;
         private ConnectionSettings connectionSettings = new();
         private VelocityEffectSettings velocitySettings = new();
-        private CollisionEffectSettings collisionSettings = new();
+        private CollidersEffectSettings collidersSettings = new();
         private WorldIntegratorSettings owiSettings = new();
         private OSCPresetsSettings oscPresetsSettings = new();
 
@@ -91,11 +91,11 @@ namespace OWOVRC.UI
                 this.connectionSettings = connectionSettings;
             }
 
-            // Collision effect settings
-            CollisionEffectSettings? collisionSettings = GetSettingsData<CollisionEffectSettings>(settingsDir, "collision.json", "collision effect");
-            if (collisionSettings != null)
+            // Colliders effect settings
+            CollidersEffectSettings? collidersSettings = GetSettingsData<CollidersEffectSettings>(settingsDir, "colliders.json", "colliders effect");
+            if (collidersSettings != null)
             {
-                this.collisionSettings = collisionSettings;
+                this.collidersSettings = collidersSettings;
             }
 
             // Velocity effect settings
@@ -297,7 +297,7 @@ namespace OWOVRC.UI
 
             // Set up effects
             effects = [
-                new Collision(owo, collisionSettings),
+                new Colliders(owo, collidersSettings),
                 new Velocity(owo, velocitySettings),
                 new OSCPresetTrigger(owo, oscPresetsSettings)
             ];
@@ -317,15 +317,15 @@ namespace OWOVRC.UI
             oscPortInput.Text = connectionSettings.OSCPort.ToString();
         }
 
-        private void UpdateCollisionEffectSettings()
+        private void UpdateCollidersEffectSettings()
         {
-            collisionEnabledCheckbox.Checked = collisionSettings.Enabled;
-            collisionPriorityInput.Text = collisionSettings.Priority.ToString();
-            collisionUseVelocityCheckbox.Checked = collisionSettings.UseVelocity;
-            collisionAllowContinuousCheckbox.Checked = collisionSettings.AllowContinuous;
-            collisionIntensityInput.Text = collisionSettings.BaseIntensity.ToString();
-            collisionMinIntensityInput.Text = collisionSettings.MinIntensity.ToString();
-            collisionSpeedMultiplierInput.Text = collisionSettings.SpeedMultiplier.ToString();
+            collidersEnabledCheckbox.Checked = collidersSettings.Enabled;
+            collidersPriorityInput.Text = collidersSettings.Priority.ToString();
+            collidersUseVelocityCheckbox.Checked = collidersSettings.UseVelocity;
+            collidersAllowContinuousCheckbox.Checked = collidersSettings.AllowContinuous;
+            collidersIntensityInput.Text = collidersSettings.BaseIntensity.ToString();
+            collidersMinIntensityInput.Text = collidersSettings.MinIntensity.ToString();
+            collidersSpeedMultiplierInput.Text = collidersSettings.SpeedMultiplier.ToString();
         }
 
         private void UpdateVelocityEffectSettings()
@@ -358,7 +358,7 @@ namespace OWOVRC.UI
         {
             owoIPInput.ValidatingType = typeof(System.Net.IPAddress);
             UpdateConnectionSettings();
-            UpdateCollisionEffectSettings();
+            UpdateCollidersEffectSettings();
             UpdateVelocityEffectSettings();
             UpdateOWISettings();
             UpdateOSCPrestsSettings();
@@ -451,26 +451,26 @@ namespace OWOVRC.UI
             SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection");
         }
 
-        private void ApplyCollisionSettingsButton_Click(object sender, EventArgs e)
+        private void ApplyCollidersSettingsButton_Click(object sender, EventArgs e)
         {
-            collisionSettings.Enabled = collisionEnabledCheckbox.Checked;
-            collisionSettings.UseVelocity = collisionUseVelocityCheckbox.Checked;
-            collisionSettings.AllowContinuous = collisionAllowContinuousCheckbox.Checked;
+            collidersSettings.Enabled = collidersEnabledCheckbox.Checked;
+            collidersSettings.UseVelocity = collidersUseVelocityCheckbox.Checked;
+            collidersSettings.AllowContinuous = collidersAllowContinuousCheckbox.Checked;
 
             // Priority
-            collisionSettings.Priority = ValidateIntSetting(collisionPriorityInput, collisionSettings.Priority);
+            collidersSettings.Priority = ValidateIntSetting(collidersPriorityInput, collidersSettings.Priority);
 
-            // Collision min intensity
-            collisionSettings.BaseIntensity = ValidateIntSetting(collisionIntensityInput, collisionSettings.BaseIntensity, 0, 100);
+            // Colliders min intensity
+            collidersSettings.BaseIntensity = ValidateIntSetting(collidersIntensityInput, collidersSettings.BaseIntensity, 0, 100);
 
             // MinIintensity
-            collisionSettings.MinIntensity = ValidateIntSetting(collisionMinIntensityInput, collisionSettings.MinIntensity, 0, 100);
+            collidersSettings.MinIntensity = ValidateIntSetting(collidersMinIntensityInput, collidersSettings.MinIntensity, 0, 100);
 
             // Speed multiplier
-            collisionSettings.SpeedMultiplier = ValidateFloatSetting(collisionSpeedMultiplierInput, collisionSettings.SpeedMultiplier, 0, 100);
+            collidersSettings.SpeedMultiplier = ValidateFloatSetting(collidersSpeedMultiplierInput, collidersSettings.SpeedMultiplier, 0, 100);
 
-            UpdateCollisionEffectSettings();
-            SaveSettings<CollisionEffectSettings>(collisionSettings, "collision.json", "collision effect");
+            UpdateCollidersEffectSettings();
+            SaveSettings<CollidersEffectSettings>(collidersSettings, "colliders.json", "colliders effect");
         }
 
         private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
