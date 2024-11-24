@@ -201,7 +201,7 @@ namespace OWOVRC.Classes.Effects
                     intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
                 }
 
-                Log.Information(
+                Log.Debug(
                     "Muscle: {muscle}, Intensity: {intensity}% (Min: {base}%, Multiplier: {multiplier})",
                     muscleData.Name,
                     intensity,

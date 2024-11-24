@@ -165,7 +165,7 @@ namespace OWOVRC.Classes.Effects
 
         public override void Reset()
         {
-            throw new NotImplementedException();
+            // Nothing to reset
         }
     }
 }
