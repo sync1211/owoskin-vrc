@@ -25,7 +25,16 @@ namespace OWOVRC.Classes.OWOSuit
 
             OWO.Configure(auth);
 
-            await OWO.Connect(Address);
+            try
+            {
+                await OWO.Connect(Address);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Failed to start OWO connection!");
+                return;
+            }
+
             if (IsConnected)
             {
                 Log.Information("Connected to OWO!");
