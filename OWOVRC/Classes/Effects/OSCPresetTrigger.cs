@@ -49,7 +49,7 @@ namespace OWOVRC.Classes.Effects
             ProcessMessage(message);
         }
 
-        private float GetIntensityFromMessage(OSCMessage message)
+        private static float GetIntensityFromMessage(OSCMessage message)
         {
             // Float
             try

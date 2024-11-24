@@ -1,5 +1,5 @@
 ﻿using OWOGame;
-using OWOVRC.Classes.Effects.Builders;
+using OWOVRC.Classes.Effects.Sensations;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;

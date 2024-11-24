@@ -115,7 +115,7 @@
             removePresetButton.TabIndex = 6;
             removePresetButton.Text = "Remove";
             removePresetButton.UseVisualStyleBackColor = true;
-            removePresetButton.Click += removePresetButton_Click;
+            removePresetButton.Click += RemovePresetButton_Click;
             // 
             // label1
             // 

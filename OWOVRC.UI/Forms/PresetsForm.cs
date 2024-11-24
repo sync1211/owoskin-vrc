@@ -80,11 +80,44 @@ namespace OWOVRC.UI.Forms
             ImportOWOSensation(fileName, sensationString);
         }
 
+        private string ResolveNameCollisions(string name)
+        {
+            if (presets.Any((preset) => preset.Name.Equals(name)))
+            {
+                int i = 0;
+                while (presets.Any((preset) => preset.Name.Equals($"{name} ({i})")))
+                {
+                    i++;
+                }
+
+                return $"{name} ({i})";
+            }
+
+            return name;
+        }
+
         private void ImportOWOSensation(string name, string sensationString)
         {
+            // Check if sensation is baked
+            if (!sensationString.Contains('~'))
+            {
+                Log.Warning("Not importing sensation {name}: only baked sensations are supported!", name);
+                MessageBox.Show(
+                    $"The sensation {name} is baked and cannot be imported as a preset!",
+                    "Non-Baked sensation",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
             try
             {
                 Log.Verbose("Importing sensation {name}: {value}", name, sensationString);
+
+                // Fix potential name collisions
+                name = ResolveNameCollisions(name);
+
                 OSCSensationPreset preset = new(true, name, 1, 100, sensationString);
                 presets.Add(preset);
             }
@@ -99,6 +132,22 @@ namespace OWOVRC.UI.Forms
             if (settings == null)
             {
                 return;
+            }
+
+            // Check for collisions
+            List<string> names = [];
+            foreach (OSCSensationPreset preset in presets)
+            {
+                if (names.Contains(preset.Name))
+                {
+                    MessageBox.Show(
+                        $"The preset {preset.Name} is listed more than once!{Environment.NewLine}Preset names must be unique!",
+                        "Duplicate preset names found",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+                names.Add(preset.Name);
             }
 
             settings.Presets.Clear();
@@ -163,7 +212,7 @@ namespace OWOVRC.UI.Forms
             dropIndicatorLabel.Visible = false;
         }
 
-        private void removePresetButton_Click(object sender, EventArgs e)
+        private void RemovePresetButton_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedCells.Count == 0)
             {

@@ -2,7 +2,7 @@
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
 
-namespace OWOVRC.Classes.Effects.Builders
+namespace OWOVRC.Classes.Effects.Sensations
 {
     public class WindSensation
     {
@@ -70,7 +70,7 @@ namespace OWOVRC.Classes.Effects.Builders
             Muscles = muscles;
         }
 
-        private Sensation CreateSensation(int intensity)
+        private MicroSensation CreateSensation(int intensity)
         {
             return SensationsFactory.Create(frequency, Duration, intensity, 0, 0, 0);
         }
