@@ -1,16 +1,15 @@
-using System.Text.Json;
 using OWOGame;
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
+using OWOVRC.UI.Forms;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.Net;
-using OWOVRC.UI.Forms;
-using OWOVRC.Classes.Effects.OSCPresets;
+using System.Text.Json;
 
 namespace OWOVRC.UI
 {

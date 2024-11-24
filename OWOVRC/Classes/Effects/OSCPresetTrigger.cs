@@ -77,6 +77,40 @@ namespace OWOVRC.Classes.Effects
             return 0;
         }
 
+        public OSCSensationPreset? GetPresetFromMessage(OSCMessage message, out Muscle[] muscles)
+        {
+            string presetString = message.Address.Substring(OSC_ADDRESS_PREFIX.Length);
+            string muscleGroupName = String.Empty;
+            string presetName = presetString;
+            muscles = [];
+
+            // Check if preset contains muscle information
+            if (presetString.Contains('/'))
+            {
+                string[] split = presetString.Split('/');
+                presetName = split[0];
+                muscleGroupName = split[1];
+            }
+
+            // Get preset
+            if (!Settings.Presets.TryGetValue(presetName, out OSCSensationPreset? preset) || preset == null)
+            {
+                return null;
+            }
+
+            // Get muscles
+            if (OWOHelper.MuscleGroups.TryGetValue(muscleGroupName, out Muscle[]? muscleGroup))
+            {
+                muscles = muscleGroup;
+            }
+            else if (OWOHelper.Muscles.TryGetValue($"owo_suit_{muscleGroupName}", out Muscle muscle))
+            {
+                muscles = [muscle];
+            }
+
+            return preset;
+        }
+
         public void ProcessMessage(OSCMessage message)
         {
             if (!Settings.Enabled)
@@ -91,11 +125,9 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            // Get preset name
-            string presetName = message.Address.Substring(OSC_ADDRESS_PREFIX.Length);
-
             // Get preset
-            if (!Settings.Presets.TryGetValue(presetName, out OSCSensationPreset? preset) || preset == null)
+            OSCSensationPreset? preset = GetPresetFromMessage(message, out Muscle[] muscles);
+            if (preset == null)
             {
                 return;
             }
@@ -106,13 +138,13 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            Log.Debug("Triggering preset {presetName}!", preset.Name);
+            Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, intensityMultiplier);
             float intensity = (float)preset.Intensity / 100;
             Sensation sensation = preset.SensationObject
                 .MultiplyIntensityBy((Multiplier) intensity)             // Multiplier from preset settings
                 .MultiplyIntensityBy((Multiplier) intensityMultiplier);  // Multiplier from OSC message
 
-            owo.AddSensation(sensation, []);
+            owo.AddSensation(sensation, muscles);
         }
 
         public override void Reset()

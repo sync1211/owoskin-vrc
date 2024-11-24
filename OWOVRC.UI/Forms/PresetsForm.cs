@@ -84,6 +84,7 @@ namespace OWOVRC.UI.Forms
         {
             try
             {
+                Log.Verbose("Importing sensation {name}: {value}", name, sensationString);
                 OSCSensationPreset preset = new(true, name, 1, 100, sensationString);
                 presets.Add(preset);
             }
