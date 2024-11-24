@@ -79,10 +79,15 @@ namespace OWOVRC.Classes.Effects
 
         public OSCSensationPreset? GetPresetFromMessage(OSCMessage message, out Muscle[] muscles)
         {
+            muscles = [];
+            if (message.Address.Length <= OSC_ADDRESS_PREFIX.Length)
+            {
+                return null;
+            }
+
             string presetString = message.Address.Substring(OSC_ADDRESS_PREFIX.Length);
             string muscleGroupName = String.Empty;
             string presetName = presetString;
-            muscles = [];
 
             // Check if preset contains muscle information
             if (presetString.Contains('/'))
