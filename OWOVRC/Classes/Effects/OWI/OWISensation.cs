@@ -1,7 +1,6 @@
 ﻿using OWOGame;
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
-using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Effects.OWI

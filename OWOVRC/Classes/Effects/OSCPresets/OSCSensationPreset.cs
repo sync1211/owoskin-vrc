@@ -16,7 +16,7 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         public int Intensity { get; set; }
         [JsonInclude]
         [Browsable(false)]
-        public string SensationString { get; private set; }
+        public readonly string SensationString;
         [JsonIgnore]
         [Browsable(false)]
         public readonly BakedSensation SensationObject;

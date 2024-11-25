@@ -1,4 +1,5 @@
 using OWOGame;
+using OWOVRC.Classes;
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -19,7 +20,6 @@ namespace OWOVRC.UI
         private readonly LoggingLevelSwitch logLevelSwitch;
 
         // Settings
-        private readonly string settingsDir = Environment.CurrentDirectory;
         private ConnectionSettings connectionSettings = new();
         private VelocityEffectSettings velocitySettings = new();
         private CollidersEffectSettings collidersSettings = new();
@@ -55,84 +55,47 @@ namespace OWOVRC.UI
             UpdateConnectionStatus();
         }
 
-        private static T? GetSettingsData<T>(string settingsDir, string filename, string displayName)
-        {
-            string settingsFilePath = Path.Combine(settingsDir, filename);
-            if (!File.Exists(settingsFilePath))
-            {
-                Log.Warning("Failed to load {0} settings: file does not exist", displayName);
-                return default;
-            }
-
-            string settingsData = File.ReadAllText(settingsFilePath);
-            if (string.IsNullOrWhiteSpace(settingsData))
-            {
-                Log.Error("Failed to load {0} settings: file is empty", displayName);
-                return default;
-            }
-
-            T? settings = JsonSerializer.Deserialize<T>(settingsData);
-            if (settings == null)
-            {
-                Log.Error("Failed to load {0} settings: failed to deserialize", displayName);
-                return default;
-            }
-
-            return settings;
-        }
-
         private void LoadSettings()
         {
             // Connection settings
-            ConnectionSettings? connectionSettings = GetSettingsData<ConnectionSettings>(settingsDir, "connection.json", "connection");
+            ConnectionSettings? connectionSettings = SettingsHelper
+                .LoadSettingsFromFile("connection.json", "connection", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
             if (connectionSettings != null)
             {
                 this.connectionSettings = connectionSettings;
             }
 
             // Colliders effect settings
-            CollidersEffectSettings? collidersSettings = GetSettingsData<CollidersEffectSettings>(settingsDir, "colliders.json", "colliders effect");
+            CollidersEffectSettings? collidersSettings = SettingsHelper
+                .LoadSettingsFromFile("colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
             if (collidersSettings != null)
             {
                 this.collidersSettings = collidersSettings;
             }
 
             // Velocity effect settings
-            VelocityEffectSettings? velocitySettings = GetSettingsData<VelocityEffectSettings>(settingsDir, "velocity.json", "velocity effect");
+            VelocityEffectSettings? velocitySettings = SettingsHelper
+                .LoadSettingsFromFile("velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
             if (velocitySettings != null)
             {
                 this.velocitySettings = velocitySettings;
             }
 
             // OWI settings
-            WorldIntegratorSettings? owiSettings = GetSettingsData<WorldIntegratorSettings>(settingsDir, "owi.json", "OWI integration");
+            WorldIntegratorSettings? owiSettings = SettingsHelper
+                .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
             if (owiSettings != null)
             {
                 this.owiSettings = owiSettings;
             }
 
             // OSC Presets settings
-            OSCPresetsSettings? oscPresetsSettings = GetSettingsData<OSCPresetsSettings>(settingsDir, "oscPresets.json", "OSC Presets");
+            OSCPresetsSettings? oscPresetsSettings = SettingsHelper
+                .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
             if (oscPresetsSettings != null)
             {
                 this.oscPresetsSettings = oscPresetsSettings;
             }
-        }
-
-        private void SaveSettings<T>(T settings, string fileName, string displayName)
-        {
-            string settingsData = JsonSerializer.Serialize<T>(settings);
-            string settingsFilePath = Path.Combine(settingsDir, fileName);
-
-            if (!File.Exists(settingsFilePath))
-            {
-                FileStream newFile = File.Create(settingsFilePath);
-                newFile.Close();
-            }
-
-            File.WriteAllText(settingsFilePath, settingsData);
-
-            Log.Information("{0} settings saved", displayName);
         }
 
         private void UpdateControlAvailability()
@@ -394,7 +357,7 @@ namespace OWOVRC.UI
                 owoIPInput.Text = connectionSettings.OWOAddress;
             }
 
-            SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection settings");
+            SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
 
         private static int ValidateIntSetting(TextBox input, int settingsValue, int minValue = 0, int maxValue = int.MaxValue)
@@ -447,7 +410,7 @@ namespace OWOVRC.UI
         {
             connectionSettings.OSCPort = ValidateIntSetting(oscPortInput, connectionSettings.OSCPort);
 
-            SaveSettings<ConnectionSettings>(connectionSettings, "connection.json", "connection");
+            SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
 
         private void ApplyCollidersSettingsButton_Click(object sender, EventArgs e)
@@ -469,7 +432,7 @@ namespace OWOVRC.UI
             collidersSettings.SpeedMultiplier = ValidateFloatSetting(collidersSpeedMultiplierInput, collidersSettings.SpeedMultiplier, 0, 100);
 
             UpdateCollidersEffectSettings();
-            SaveSettings<CollidersEffectSettings>(collidersSettings, "colliders.json", "colliders effect");
+            SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
         }
 
         private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
@@ -492,7 +455,7 @@ namespace OWOVRC.UI
             velocitySettings.SpeedCap = ValidateFloatSetting(velocitySpeedCapInput, velocitySettings.SpeedCap);
 
             UpdateVelocityEffectSettings();
-            SaveSettings<VelocityEffectSettings>(velocitySettings, "velocity.json", "velocity effect");
+            SettingsHelper.SaveSettingsToFile(velocitySettings, "velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
         }
 
         private void StopSensationsButton_Click(object sender, EventArgs e)
@@ -527,7 +490,7 @@ namespace OWOVRC.UI
             owiSettings.Intensity = ValidateIntSetting(owiIntensityInput, owiSettings.Intensity, 0, 100);
 
             UpdateOWISettings();
-            SaveSettings<WorldIntegratorSettings>(owiSettings, "owi.json", "OWO World Integrator");
+            SettingsHelper.SaveSettingsToFile(owiSettings, "owi.json", "OWO World Integrator", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
             EnableOrDisableOWI();
         }
 
@@ -561,12 +524,12 @@ namespace OWOVRC.UI
             oscPresetsSettings.Priority = ValidateIntSetting(oscPresetsPriorityInput, oscPresetsSettings.Priority);
 
             UpdateOSCPrestsSettings();
-            SaveSettings<OSCPresetsSettings>(oscPresetsSettings, "oscPresets.json", "OSC Presets");
+            SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
         }
 
         private void OnPresetsFormSave(object? sender, EventArgs args)
         {
-            SaveSettings<OSCPresetsSettings>(oscPresetsSettings, "oscPresets.json", "OSC Presets");
+            SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
         }
 
         private void OpenOscPresetsFormButton_Click(object sender, EventArgs e)
