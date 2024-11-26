@@ -25,6 +25,9 @@ namespace OWOVRC.Classes.Effects
         // Dictionary to keep track of active haptic effects
         private readonly ConcurrentDictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
 
+        // Name for looping sensation
+        public const string SENSATION_NAME = "Colliders";
+
         // Settings
         //TODO: Implement per-muscle intensity
         public readonly CollidersEffectSettings Settings;
@@ -35,7 +38,7 @@ namespace OWOVRC.Classes.Effects
 
             timer = new System.Timers.Timer()
             {
-                Interval = (Settings.SensationSeconds * 1000) - 50, // Subtract 50ms to reduce "gaps" between sensations
+                Interval = (Settings.SensationSeconds * 1000) - 100, // Subtract 100ms to reduce "gaps" between sensations
                 AutoReset = true
             };
             timer.Elapsed += OnTimerElapsed;
@@ -130,7 +133,8 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.IsEmpty)
             {
                 Log.Debug("No sensations playing, timer stopped.");
-                timer.Stop();
+                owo.StopLoopedSensation(SENSATION_NAME);
+                //timer.Stop();
             }
         }
 
@@ -172,6 +176,7 @@ namespace OWOVRC.Classes.Effects
 
             if (activeMuscles.IsEmpty)
             {
+                owo.StopLoopedSensation(SENSATION_NAME);
                 return;
             }
 
@@ -218,7 +223,16 @@ namespace OWOVRC.Classes.Effects
             }
 
             Sensation sensation = SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, 100, 0, 0, 0).WithPriority(Settings.Priority);
-            owo.AddSensation(sensation, musclesScaled);
+
+            // Run or update sensation
+            if (owo.GetRunningSensations().ContainsKey(SENSATION_NAME))
+            {
+                owo.UpdateLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
+            }
+            else
+            {
+                owo.AddLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
+            }
         }
 
         public void OnTimerElapsed(object? sender, ElapsedEventArgs e)

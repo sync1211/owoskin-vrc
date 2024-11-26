@@ -1,12 +1,11 @@
 ﻿using OWOGame;
-using OWOVRC.Classes.OWOSuit;
-using Serilog;
 
 namespace OWOVRC.Classes.Effects.Sensations
 {
     public class WindSensation: DirectionalSensation
     {
         // Sensation parameters
+        private const string _Name = "WindSensation";
         private const int _frequency = 100;
         private const int _intensity = 25;
         new public int Intensity
@@ -21,9 +20,9 @@ namespace OWOVRC.Classes.Effects.Sensations
             }
         }
 
-        public WindSensation(float durationSeconds = 0.2f): base(_frequency, _intensity, durationSeconds) { }
+        public WindSensation(float durationSeconds = 0.2f): base(_Name, _frequency, _intensity, durationSeconds, 0, 0, 0, true) { }
 
-        public WindSensation(Dictionary<Muscle, int> muscles, float durationSeconds = 0.2f): base(muscles, _frequency, _intensity / 4, durationSeconds) { }
+        public WindSensation(Dictionary<Muscle, int> muscles, float durationSeconds = 0.2f): base(_Name, muscles, _frequency, _intensity / 4, durationSeconds, 0, 0, 0, true) { }
 
         /// <summary>
         /// Creates a sensation from the wind velocity.
