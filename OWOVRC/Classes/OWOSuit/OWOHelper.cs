@@ -1,5 +1,6 @@
 ﻿using OWOGame;
 using Serilog;
+using OwoAdvancedSensationBuilderNet8.manager;
 
 namespace OWOVRC.Classes.OWOSuit
 {
@@ -9,6 +10,8 @@ namespace OWOVRC.Classes.OWOSuit
 
         public string Address { get; set; }
         private readonly List<BakedSensation> Sensations = [];
+
+        private readonly AdvancedSensationManager sensationManager = AdvancedSensationManager.getInstance();
 
         public OWOHelper(string ip = "127.0.0.1")
         {
@@ -59,19 +62,46 @@ namespace OWOVRC.Classes.OWOSuit
         public void AddSensation(Sensation sensation, Muscle[] muscles)
         {
             //TODO: Mixing system
-            OWO.Send(sensation, muscles);
+            //OWO.Send(sensation, muscles);
+            sensationManager.playOnce(sensation.WithMuscles(muscles));
+        }
+
+        public void AddLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
+        {
+            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), true);
+            sensationManager.play(instance);
+        }
+
+        public void UpdateLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
+        {
+            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
+            sensationManager.updateSensation(instance.sensation, name);
+        }
+
+        public Dictionary<string, AdvancedSensationStreamInstance> GetRunningSensations()
+        {
+            return sensationManager.getPlayingSensationInstances();
         }
 
         public void AddSensation(Sensation sensation)
         {
             //TODO: Mixing system
-            OWO.Send(sensation);
+            //OWO.Send(sensation);
+            sensationManager.playOnce(sensation);
         }
 
         public void StopAllSensations()
         {
-            OWO.Stop();
+            //OWO.Stop();
+
+            sensationManager.stopAll();
             Log.Debug("All sensations stopped!");
+        }
+
+        public void StopLoopedSensation(string name)
+        {
+            sensationManager.stopSensation(name);
+            Log.Debug("Looped sensation {name} stopped!", name);
         }
 
         public void AddBakedSensation(BakedSensation sensation)

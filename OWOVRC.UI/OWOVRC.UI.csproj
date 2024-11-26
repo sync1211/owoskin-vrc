@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OwoAdvancedSensationBuilderNet8Demo\OwoAdvancedSensationBuilderNet8.csproj" />
     <ProjectReference Include="..\OWOVRC\OWOVRC.csproj" />
   </ItemGroup>
 
