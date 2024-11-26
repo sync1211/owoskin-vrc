@@ -33,4 +33,8 @@
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OwoAdvancedSensationBuilderNet8Demo\OwoAdvancedSensationBuilderNet8.csproj" />
+  </ItemGroup>
+
 </Project>
