@@ -40,20 +40,11 @@ namespace OWOVRC.Classes.Effects
         // Settings
         public readonly VelocityEffectSettings Settings;
 
-        // Timer
-        private readonly System.Timers.Timer timer;
-
         public Velocity(OWOHelper owo, VelocityEffectSettings Settings): base(owo)
         {
             RegisterSensations();
 
             this.Settings = Settings;
-            timer = new System.Timers.Timer
-            {
-                Interval = SensationDuration * 1000
-            };
-            timer.Elapsed += OnTimerElapsed;
-            timer.Start();
         }
 
         public override void RegisterSensations()
@@ -61,14 +52,10 @@ namespace OWOVRC.Classes.Effects
             owo.AddBakedSensation(FallDmg);
         }
 
-        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
-        {
-            ProcessSensations();
-        }
-
         public override void OnOSCMessageReceived(object? sender, OSCMessage message)
         {
             ProcessMessage(message);
+            ProcessSensations();
         }
 
         private void ProcessMessage(OSCMessage message)
@@ -173,6 +160,7 @@ namespace OWOVRC.Classes.Effects
             // Speed too low
             if (Speed < Settings.Threshold)
             {
+                owo.StopLoopedSensation(WindSensation.SENSATION_NAME);
                 //Log.Debug("Speed below threshold: {speed} < {threshold}", Speed, Threshold);
 
                 // Stop sensations

@@ -1,6 +1,7 @@
 ﻿using OWOGame;
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
+using System.Runtime.CompilerServices;
 
 namespace OWOVRC.Classes.Effects.Sensations
 {
@@ -8,6 +9,7 @@ namespace OWOVRC.Classes.Effects.Sensations
     {
         // Sensation parameters
         private const int frequency = 100;
+        public static string SENSATION_NAME = "WindSensation";
         public int Intensity
         {
             get
@@ -93,7 +95,16 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             Log.Verbose("Playing wind sensation at {0}%", Intensity);
             Sensation sensation = CreateSensation(intensity).WithPriority(priority);
-            owo.AddSensation(sensation, musclesScaled);
+
+            // Run or update sensation
+            if (owo.GetRunningSensations().ContainsKey(SENSATION_NAME))
+            {
+                owo.UpdateLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
+            }
+            else
+            {
+                owo.AddLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
+            }
         }
 
         /// <summary>
