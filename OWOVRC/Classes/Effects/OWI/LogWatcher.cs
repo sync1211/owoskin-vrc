@@ -1,6 +1,4 @@
 ﻿using Serilog;
-using System;
-using System.Linq;
 
 namespace OWOVRC.Classes.Effects.OWI
 {

@@ -1,6 +1,4 @@
 ﻿using OWOGame;
-using System;
-using System.Linq;
 
 namespace OWOVRC.Classes.OWOSuit
 {

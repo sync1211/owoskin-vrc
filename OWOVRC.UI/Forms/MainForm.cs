@@ -10,7 +10,6 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.Net;
-using System.Text.Json;
 
 namespace OWOVRC.UI
 {

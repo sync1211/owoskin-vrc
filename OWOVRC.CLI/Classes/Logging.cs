@@ -1,8 +1,6 @@
 ﻿using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using System;
-using System.Linq;
 
 namespace OWOVRC.CLI.Classes
 {
