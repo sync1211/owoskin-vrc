@@ -11,9 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Test", "OWOVRC.Test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.CLI", "OWOVRC.CLI\OWOVRC.CLI.csproj", "{2EFF406F-1746-41A6-AFA7-FD8C91C42464}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{22D78BE4-9868-48B0-8B2F-74B6EF4F8E4D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilderNet8", "OwoAdvancedSensationBuilderNet8Demo\OwoAdvancedSensationBuilderNet8.csproj", "{56755607-5B69-4B3C-A02C-46C310604ED3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilderNet8Demo\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{9543C677-081D-44FB-8BA9-C23264AD388A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +35,10 @@ Global
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22D78BE4-9868-48B0-8B2F-74B6EF4F8E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22D78BE4-9868-48B0-8B2F-74B6EF4F8E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22D78BE4-9868-48B0-8B2F-74B6EF4F8E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22D78BE4-9868-48B0-8B2F-74B6EF4F8E4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56755607-5B69-4B3C-A02C-46C310604ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56755607-5B69-4B3C-A02C-46C310604ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56755607-5B69-4B3C-A02C-46C310604ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56755607-5B69-4B3C-A02C-46C310604ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9543C677-081D-44FB-8BA9-C23264AD388A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9543C677-081D-44FB-8BA9-C23264AD388A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9543C677-081D-44FB-8BA9-C23264AD388A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9543C677-081D-44FB-8BA9-C23264AD388A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
