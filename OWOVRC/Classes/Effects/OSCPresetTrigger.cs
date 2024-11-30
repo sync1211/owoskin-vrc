@@ -1,5 +1,4 @@
-﻿using BuildSoft.OscCore;
-using OWOGame;
+﻿using OWOGame;
 using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -8,12 +7,12 @@ using Serilog;
 
 namespace OWOVRC.Classes.Effects
 {
-    public class OSCPresetTrigger: OSCEffectBase
+    public class OSCPresetTrigger : OSCEffectBase
     {
         private const string OSC_ADDRESS_PREFIX = "OWO/SensationsTrigger/";
         public readonly OSCPresetsSettings Settings;
 
-        public OSCPresetTrigger(OWOHelper owo, OSCPresetsSettings settings): base(owo)
+        public OSCPresetTrigger(OWOHelper owo, OSCPresetsSettings settings) : base(owo)
         {
             Settings = settings;
         }
@@ -114,7 +113,7 @@ namespace OWOVRC.Classes.Effects
             }
             else
             {
-                muscles = OWOHelper.MuscleGroups["all"];
+                muscles = Muscle.All;
             }
 
             return preset;
@@ -158,7 +157,7 @@ namespace OWOVRC.Classes.Effects
 
             Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, oscIntensity);
             Sensation sensation = preset.SensationObject
-                .MultiplyIntensityBy((Multiplier) intensity);
+                .MultiplyIntensityBy((Multiplier)intensity);
 
             owo.AddSensation(sensation, muscles);
         }
