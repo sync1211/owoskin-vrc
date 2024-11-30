@@ -54,7 +54,7 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             // No direction specified -> front
             Muscles = [];
-            Muscle[] frontMuscles = OWOHelper.MuscleGroups["frontMuscles"];
+            Muscle[] frontMuscles = Muscle.Front;
 
             for (int i = 0; i < frontMuscles.Length; i++)
             {
