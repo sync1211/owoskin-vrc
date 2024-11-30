@@ -19,7 +19,7 @@ namespace OWOVRC.Test.Classes.Settings
                 MaxTimeDiff = TimeSpan.FromSeconds(2),
                 MinIntensity = 100,
                 SensationSeconds = 0.5f,
-                SpeedMultiplier = 100.0f,
+                SpeedMultiplier = 2.0f,
                 UseVelocity = false
             };
 

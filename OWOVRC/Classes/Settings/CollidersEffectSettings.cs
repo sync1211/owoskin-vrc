@@ -17,7 +17,7 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public float SensationSeconds { get; set; } = 0.3f;
         [JsonInclude]
-        public float SpeedMultiplier { get; set; } = 200.0f;
+        public float SpeedMultiplier { get; set; } = 2.0f;
         [JsonInclude]
         public TimeSpan MaxTimeDiff { get; set; } = TimeSpan.FromSeconds(1);
 

@@ -428,7 +428,7 @@ namespace OWOVRC.UI
             collidersSettings.MinIntensity = ValidateIntSetting(collidersMinIntensityInput, collidersSettings.MinIntensity, 0, 100);
 
             // Speed multiplier
-            collidersSettings.SpeedMultiplier = ValidateFloatSetting(collidersSpeedMultiplierInput, collidersSettings.SpeedMultiplier, 0, 100);
+            collidersSettings.SpeedMultiplier = ValidateFloatSetting(collidersSpeedMultiplierInput, collidersSettings.SpeedMultiplier, 0, 2);
 
             UpdateCollidersEffectSettings();
             SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);

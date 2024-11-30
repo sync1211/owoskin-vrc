@@ -110,7 +110,7 @@ namespace OWOVRC.Classes.Effects
 
             if (timediff < Settings.MaxTimeDiff)
             {
-                muscleData.VelocityMultiplier = speed * Settings.SpeedMultiplier;
+                muscleData.VelocityMultiplier = speed * (Settings.SpeedMultiplier * 100);
             }
             activeMuscles[muscle] = muscleData;
         }

@@ -144,7 +144,7 @@
             label12.TabIndex = 9;
             label12.Text = "Priority";
             // 
-            // collisionPriorityInput
+            // collidersPriorityInput
             // 
             collidersPriorityInput.Location = new Point(262, 26);
             collidersPriorityInput.Name = "collidersPriorityInput";
@@ -184,7 +184,7 @@
             label9.TabIndex = 11;
             label9.Text = "Speed multiplier";
             // 
-            // collisionSpeedMultiplierInput
+            // collidersSpeedMultiplierInput
             // 
             collidersSpeedMultiplierInput.Location = new Point(247, 104);
             collidersSpeedMultiplierInput.Name = "collidersSpeedMultiplierInput";
@@ -200,14 +200,14 @@
             label8.TabIndex = 9;
             label8.Text = "Min Intensity";
             // 
-            // collisionMinIntensityInput
+            // collidersMinIntensityInput
             // 
             collidersMinIntensityInput.Location = new Point(247, 75);
             collidersMinIntensityInput.Name = "collidersMinIntensityInput";
             collidersMinIntensityInput.Size = new Size(89, 23);
             collidersMinIntensityInput.TabIndex = 8;
             // 
-            // collisionUseVelocityCheckbox
+            // collidersUseVelocityCheckbox
             // 
             collidersUseVelocityCheckbox.AutoSize = true;
             collidersUseVelocityCheckbox.Location = new Point(6, 22);
@@ -217,7 +217,7 @@
             collidersUseVelocityCheckbox.Text = "Enabled";
             collidersUseVelocityCheckbox.UseVisualStyleBackColor = true;
             // 
-            // collisionAllowContinuousCheckbox
+            // collidersAllowContinuousCheckbox
             // 
             collidersAllowContinuousCheckbox.AutoSize = true;
             collidersAllowContinuousCheckbox.Location = new Point(6, 47);
@@ -227,7 +227,7 @@
             collidersAllowContinuousCheckbox.Text = "Continuous sensation when idle";
             collidersAllowContinuousCheckbox.UseVisualStyleBackColor = true;
             // 
-            // collisionEnabledCheckbox
+            // collidersEnabledCheckbox
             // 
             collidersEnabledCheckbox.AutoSize = true;
             collidersEnabledCheckbox.Location = new Point(6, 6);
@@ -237,7 +237,7 @@
             collidersEnabledCheckbox.Text = "Enabled";
             collidersEnabledCheckbox.UseVisualStyleBackColor = true;
             // 
-            // collisionIntensityInput
+            // collidersIntensityInput
             // 
             collidersIntensityInput.Location = new Point(262, 56);
             collidersIntensityInput.Name = "collidersIntensityInput";
