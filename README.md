@@ -25,7 +25,7 @@ Additionally, this repository contains an [example avatar package](./Unity/Examp
 
 ## Credits
 
-* [Shadorki's OWO integration](https://github.com/shadorki/vrc-owo-suit)
+* [Shadoki's OWO integration](https://github.com/shadorki/vrc-owo-suit)
 * [RevoForge & SonoVr's OWO World Integration](https://github.com/RevoForge/Vrchat-OWO-Integration)
 
 ## Dislcaimer
