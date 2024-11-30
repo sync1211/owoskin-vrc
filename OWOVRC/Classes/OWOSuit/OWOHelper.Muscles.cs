@@ -22,8 +22,8 @@ namespace OWOVRC.Classes.OWOSuit
         {
             { "all", Muscle.All },
             { "upperChest", [Muscle.Pectoral_L, Muscle.Pectoral_R] },
-            { "frontMuscles", [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Abdominal_L, Muscle.Abdominal_R] },
-            { "backMuscles", [Muscle.Dorsal_L, Muscle.Dorsal_R, Muscle.Lumbar_L, Muscle.Lumbar_R] },
+            { "frontMuscles", Muscle.Front },
+            { "backMuscles", Muscle.Back },
             { "leftMuscles", [Muscle.Arm_L, Muscle.Pectoral_L, Muscle.Dorsal_L, Muscle.Abdominal_L, Muscle.Lumbar_L] },
             { "rightMuscles", [Muscle.Arm_R, Muscle.Pectoral_R, Muscle.Dorsal_R, Muscle.Abdominal_R, Muscle.Lumbar_R] }
         };

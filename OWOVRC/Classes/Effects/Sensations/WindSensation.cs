@@ -26,8 +26,8 @@ namespace OWOVRC.Classes.Effects.Sensations
         // Muscles to apply the sensation
         private static readonly Dictionary<string, Muscle[]> directions = new()
         {
-            { "front", OWOHelper.MuscleGroups["frontMuscles"] },
-            { "back", OWOHelper.MuscleGroups["backMuscles"] },
+            { "front", Muscle.Front },
+            { "back", Muscle.Back },
             { "left", OWOHelper.MuscleGroups["leftMuscles"] },
             { "right", OWOHelper.MuscleGroups["rightMuscles"] },
             { "up", [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Dorsal_L, Muscle.Dorsal_L] },
