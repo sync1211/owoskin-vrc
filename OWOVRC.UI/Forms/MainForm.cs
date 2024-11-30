@@ -472,7 +472,7 @@ namespace OWOVRC.UI
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(WorldIntegrator.OWI_GITHUB_URL);
+            System.Diagnostics.Process.Start("explorer", WorldIntegrator.OWI_GITHUB_URL);
         }
 
         private void ApplyOwiSettingsButton_Click(object sender, EventArgs e)
