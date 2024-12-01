@@ -13,15 +13,7 @@ Yet another VRChat integration for the [OWO Skin](https://owogame.com/).
 
 ## Avatar setup
 
-Required for collider-based effects and custom sensation presets.
-
-1. Import [VRCFury](https://vrcfury.com/)
-2. Import the [`OWO_Suit.unitypackage`](./Unity/OWOSkin%20Prefab.unitypackage) package
-3. Drag the `OWO Skin` prefab onto your avatar
-4. Align the colliders with your avatar
-
-Additionally, this repository contains an [example avatar package](./Unity/Example%20Avatar.unitypackage), showcasing most avatar specific features.
-
+For detailed avatar setup instructions and features, check out the [Avatar Setup Guide](https://github.com/sync1211/owoskin-vrc/wiki/VRChat-Avatar-Setup).
 
 ## Credits
 
