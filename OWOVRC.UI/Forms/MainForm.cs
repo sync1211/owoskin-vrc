@@ -470,11 +470,6 @@ namespace OWOVRC.UI
             Log.Information("Stopped all running sensations!");
         }
 
-        private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("explorer", WorldIntegrator.OWI_GITHUB_URL);
-        }
-
         private void ApplyOwiSettingsButton_Click(object sender, EventArgs e)
         {
             owiSettings.Enabled = owiEnabledCheckbox.Checked;
@@ -534,6 +529,21 @@ namespace OWOVRC.UI
         private void OpenOscPresetsFormButton_Click(object sender, EventArgs e)
         {
             presetsForm.ShowDialog(oscPresetsSettings);
+        }
+
+        private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            WikiHelper.OpenURL(WorldIntegrator.OWI_GITHUB_URL);
+        }
+
+        private void CollidersHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            WikiHelper.OpenURL(WikiHelper.COLLIDERS_WIKI_URL);
+        }
+
+        private void PresetsHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            WikiHelper.OpenURL(WikiHelper.OSC_PRESETS_WIKI_URL);
         }
     }
 }

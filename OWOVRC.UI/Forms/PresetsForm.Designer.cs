@@ -37,6 +37,7 @@
             removePresetButton = new Button();
             label1 = new Label();
             label2 = new Label();
+            presetsHelpLinkLabel = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -137,11 +138,23 @@
             label2.TabIndex = 8;
             label2.Text = "/OWO/SensationsTrigger/<Sensation Name>";
             // 
+            // presetsHelpLinkLabel
+            // 
+            presetsHelpLinkLabel.AutoSize = true;
+            presetsHelpLinkLabel.Location = new Point(12, 423);
+            presetsHelpLinkLabel.Name = "presetsHelpLinkLabel";
+            presetsHelpLinkLabel.Size = new Size(116, 15);
+            presetsHelpLinkLabel.TabIndex = 24;
+            presetsHelpLinkLabel.TabStop = true;
+            presetsHelpLinkLabel.Text = "Avatar triggers setup";
+            presetsHelpLinkLabel.LinkClicked += PresetsHelpLinkLabel_LinkClicked;
+            // 
             // PresetsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(presetsHelpLinkLabel);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(removePresetButton);
@@ -168,5 +181,6 @@
         private Button removePresetButton;
         private Label label1;
         private Label label2;
+        private LinkLabel presetsHelpLinkLabel;
     }
 }

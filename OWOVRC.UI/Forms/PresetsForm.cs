@@ -1,5 +1,6 @@
 ﻿using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Settings;
+using OWOVRC.UI.Classes;
 using Serilog;
 
 namespace OWOVRC.UI.Forms
@@ -233,6 +234,11 @@ namespace OWOVRC.UI.Forms
             }
 
             ForceDataRefresh();
+        }
+
+        private void PresetsHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            WikiHelper.OpenURL(WikiHelper.OSC_PRESETS_WIKI_URL);
         }
     }
 }

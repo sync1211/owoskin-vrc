@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             tabControl1 = new TabControl();
             collidersSettingsPage = new TabPage();
+            collidersHelpLinkLabel = new LinkLabel();
             label12 = new Label();
             collidersPriorityInput = new TextBox();
             label6 = new Label();
@@ -44,6 +46,7 @@
             collidersIntensityInput = new TextBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
+            notVeryHelpfulLabel = new Label();
             label11 = new Label();
             label13 = new Label();
             velocitySpeedCapInput = new TextBox();
@@ -71,6 +74,7 @@
             owiEnabledCheckbox = new CheckBox();
             applyOwiSettingsButton = new Button();
             oscPresetsPage = new TabPage();
+            presetsHelpLinkLabel = new LinkLabel();
             label18 = new Label();
             oscPresetsPriorityInput = new TextBox();
             oscPresetsEnabledCheckbox = new CheckBox();
@@ -94,6 +98,7 @@
             label1 = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
+            helpToolTip = new ToolTip(components);
             tabControl1.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             velocityBasedGroupBox.SuspendLayout();
@@ -117,9 +122,11 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(368, 303);
             tabControl1.TabIndex = 0;
+            helpToolTip.SetToolTip(tabControl1, "Available effects");
             // 
             // collidersSettingsPage
             // 
+            collidersSettingsPage.Controls.Add(collidersHelpLinkLabel);
             collidersSettingsPage.Controls.Add(label12);
             collidersSettingsPage.Controls.Add(collidersPriorityInput);
             collidersSettingsPage.Controls.Add(label6);
@@ -133,7 +140,20 @@
             collidersSettingsPage.Size = new Size(360, 275);
             collidersSettingsPage.TabIndex = 0;
             collidersSettingsPage.Text = "Colliders";
+            collidersSettingsPage.ToolTipText = "Avatar collider effects";
             collidersSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // collidersHelpLinkLabel
+            // 
+            collidersHelpLinkLabel.AutoSize = true;
+            collidersHelpLinkLabel.Location = new Point(6, 250);
+            collidersHelpLinkLabel.Name = "collidersHelpLinkLabel";
+            collidersHelpLinkLabel.Size = new Size(120, 15);
+            collidersHelpLinkLabel.TabIndex = 10;
+            collidersHelpLinkLabel.TabStop = true;
+            collidersHelpLinkLabel.Text = "Avatar colliders setup";
+            helpToolTip.SetToolTip(collidersHelpLinkLabel, "Open the avatar setup wiki page");
+            collidersHelpLinkLabel.LinkClicked += CollidersHelpLinkLabel_LinkClicked;
             // 
             // label12
             // 
@@ -143,6 +163,7 @@
             label12.Size = new Size(45, 15);
             label12.TabIndex = 9;
             label12.Text = "Priority";
+            helpToolTip.SetToolTip(label12, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // collidersPriorityInput
             // 
@@ -150,6 +171,7 @@
             collidersPriorityInput.Name = "collidersPriorityInput";
             collidersPriorityInput.Size = new Size(89, 23);
             collidersPriorityInput.TabIndex = 8;
+            helpToolTip.SetToolTip(collidersPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // label6
             // 
@@ -159,6 +181,7 @@
             label6.Size = new Size(73, 15);
             label6.TabIndex = 7;
             label6.Text = "Intensity (%)";
+            helpToolTip.SetToolTip(label6, "Specifies the intensity of this effect");
             // 
             // velocityBasedGroupBox
             // 
@@ -183,6 +206,7 @@
             label9.Size = new Size(93, 15);
             label9.TabIndex = 11;
             label9.Text = "Speed multiplier";
+            helpToolTip.SetToolTip(label9, "Multiplier for velocity-based sensation scaling (Supports ");
             // 
             // collidersSpeedMultiplierInput
             // 
@@ -190,6 +214,7 @@
             collidersSpeedMultiplierInput.Name = "collidersSpeedMultiplierInput";
             collidersSpeedMultiplierInput.Size = new Size(89, 23);
             collidersSpeedMultiplierInput.TabIndex = 10;
+            helpToolTip.SetToolTip(collidersSpeedMultiplierInput, "Multiplier for velocity-based sensation scaling (Supports ");
             // 
             // label8
             // 
@@ -199,6 +224,7 @@
             label8.Size = new Size(76, 15);
             label8.TabIndex = 9;
             label8.Text = "Min Intensity";
+            helpToolTip.SetToolTip(label8, "The base intensity for velocity-based collisions. (Idle intensity)");
             // 
             // collidersMinIntensityInput
             // 
@@ -206,6 +232,7 @@
             collidersMinIntensityInput.Name = "collidersMinIntensityInput";
             collidersMinIntensityInput.Size = new Size(89, 23);
             collidersMinIntensityInput.TabIndex = 8;
+            helpToolTip.SetToolTip(collidersMinIntensityInput, "The base intensity for velocity-based collisions. (Idle intensity)");
             // 
             // collidersUseVelocityCheckbox
             // 
@@ -215,6 +242,7 @@
             collidersUseVelocityCheckbox.Size = new Size(68, 19);
             collidersUseVelocityCheckbox.TabIndex = 3;
             collidersUseVelocityCheckbox.Text = "Enabled";
+            helpToolTip.SetToolTip(collidersUseVelocityCheckbox, "Enables velocity-based intensity on collision.\r\nThe velocity is calculated using the distance to the center of the collider.");
             collidersUseVelocityCheckbox.UseVisualStyleBackColor = true;
             // 
             // collidersAllowContinuousCheckbox
@@ -225,6 +253,7 @@
             collidersAllowContinuousCheckbox.Size = new Size(195, 19);
             collidersAllowContinuousCheckbox.TabIndex = 4;
             collidersAllowContinuousCheckbox.Text = "Continuous sensation when idle";
+            helpToolTip.SetToolTip(collidersAllowContinuousCheckbox, "Enables feedback on collision while the intersecting collider is not moving. (Zero velocity)");
             collidersAllowContinuousCheckbox.UseVisualStyleBackColor = true;
             // 
             // collidersEnabledCheckbox
@@ -235,6 +264,7 @@
             collidersEnabledCheckbox.Size = new Size(68, 19);
             collidersEnabledCheckbox.TabIndex = 2;
             collidersEnabledCheckbox.Text = "Enabled";
+            helpToolTip.SetToolTip(collidersEnabledCheckbox, "Enables avatar collider interactions");
             collidersEnabledCheckbox.UseVisualStyleBackColor = true;
             // 
             // collidersIntensityInput
@@ -243,6 +273,7 @@
             collidersIntensityInput.Name = "collidersIntensityInput";
             collidersIntensityInput.Size = new Size(89, 23);
             collidersIntensityInput.TabIndex = 6;
+            helpToolTip.SetToolTip(collidersIntensityInput, "Specifies the intensity for this effect");
             // 
             // applyCollisionSettingsButton
             // 
@@ -252,11 +283,13 @@
             applyCollisionSettingsButton.Size = new Size(75, 23);
             applyCollisionSettingsButton.TabIndex = 0;
             applyCollisionSettingsButton.Text = "Apply";
+            helpToolTip.SetToolTip(applyCollisionSettingsButton, "Save and apply settings");
             applyCollisionSettingsButton.UseVisualStyleBackColor = true;
             applyCollisionSettingsButton.Click += ApplyCollidersSettingsButton_Click;
             // 
             // velocitySettingsPage
             // 
+            velocitySettingsPage.Controls.Add(notVeryHelpfulLabel);
             velocitySettingsPage.Controls.Add(label11);
             velocitySettingsPage.Controls.Add(label13);
             velocitySettingsPage.Controls.Add(velocitySpeedCapInput);
@@ -274,7 +307,20 @@
             velocitySettingsPage.Size = new Size(360, 275);
             velocitySettingsPage.TabIndex = 1;
             velocitySettingsPage.Text = "Velocity";
+            velocitySettingsPage.ToolTipText = "Player velocity-based effects";
             velocitySettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // notVeryHelpfulLabel
+            // 
+            notVeryHelpfulLabel.AutoSize = true;
+            notVeryHelpfulLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            notVeryHelpfulLabel.ForeColor = SystemColors.ControlDarkDark;
+            notVeryHelpfulLabel.Location = new Point(6, 250);
+            notVeryHelpfulLabel.Name = "notVeryHelpfulLabel";
+            notVeryHelpfulLabel.Size = new Size(130, 15);
+            notVeryHelpfulLabel.TabIndex = 16;
+            notVeryHelpfulLabel.Text = "No exta setup required!";
+            helpToolTip.SetToolTip(notVeryHelpfulLabel, "This effect uses built-in VRChat OSC messages.\r\nAs a result it will work with any Avatar without any setup. :)");
             // 
             // label11
             // 
@@ -284,6 +330,7 @@
             label11.Size = new Size(96, 15);
             label11.TabIndex = 11;
             label11.Text = "Max speed (m/s)";
+            helpToolTip.SetToolTip(label11, "Maximum speed for wind effects (used for scaling)");
             // 
             // label13
             // 
@@ -293,6 +340,7 @@
             label13.Size = new Size(45, 15);
             label13.TabIndex = 15;
             label13.Text = "Priority";
+            helpToolTip.SetToolTip(label13, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // velocitySpeedCapInput
             // 
@@ -300,6 +348,7 @@
             velocitySpeedCapInput.Name = "velocitySpeedCapInput";
             velocitySpeedCapInput.Size = new Size(89, 23);
             velocitySpeedCapInput.TabIndex = 10;
+            helpToolTip.SetToolTip(velocitySpeedCapInput, "Maximum speed for wind effects (used for scaling)");
             // 
             // velocityPriorityInput
             // 
@@ -307,6 +356,7 @@
             velocityPriorityInput.Name = "velocityPriorityInput";
             velocityPriorityInput.Size = new Size(89, 23);
             velocityPriorityInput.TabIndex = 14;
+            helpToolTip.SetToolTip(velocityPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // velocityIgnoreWhenSeatedCheckbox
             // 
@@ -316,6 +366,7 @@
             velocityIgnoreWhenSeatedCheckbox.Size = new Size(129, 19);
             velocityIgnoreWhenSeatedCheckbox.TabIndex = 13;
             velocityIgnoreWhenSeatedCheckbox.Text = "Ignore when seated";
+            helpToolTip.SetToolTip(velocityIgnoreWhenSeatedCheckbox, "Disables velocity-based effects when the player is seated");
             velocityIgnoreWhenSeatedCheckbox.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -338,6 +389,7 @@
             label10.Size = new Size(147, 15);
             label10.TabIndex = 11;
             label10.Text = "Min. impact velocity (m/s)";
+            helpToolTip.SetToolTip(label10, "Minimum velocity to reach to trigger the impact effect on deceleration");
             // 
             // velocityImpactEnabledCheckbox
             // 
@@ -347,6 +399,7 @@
             velocityImpactEnabledCheckbox.Size = new Size(68, 19);
             velocityImpactEnabledCheckbox.TabIndex = 3;
             velocityImpactEnabledCheckbox.Text = "Enabled";
+            helpToolTip.SetToolTip(velocityImpactEnabledCheckbox, "Enables impact sensation on sudden deceleration.\r\nThis effect plays whenever the speed falls under the Min. velocity within a second after moving faster than the Min. impact velocity.");
             velocityImpactEnabledCheckbox.UseVisualStyleBackColor = true;
             // 
             // velocityMinImpactInput
@@ -355,6 +408,7 @@
             velocityMinImpactInput.Name = "velocityMinImpactInput";
             velocityMinImpactInput.Size = new Size(89, 23);
             velocityMinImpactInput.TabIndex = 10;
+            helpToolTip.SetToolTip(velocityMinImpactInput, "Minimum velocity to reach to trigger the impact effect on deceleration");
             // 
             // label7
             // 
@@ -364,6 +418,7 @@
             label7.Size = new Size(107, 15);
             label7.TabIndex = 9;
             label7.Text = "Min. velocity (m/s)";
+            helpToolTip.SetToolTip(label7, "Minimum speed for triggering wind effects");
             // 
             // velocityThresholdInput
             // 
@@ -371,6 +426,7 @@
             velocityThresholdInput.Name = "velocityThresholdInput";
             velocityThresholdInput.Size = new Size(89, 23);
             velocityThresholdInput.TabIndex = 8;
+            helpToolTip.SetToolTip(velocityThresholdInput, "Minimum speed for triggering wind effects");
             // 
             // velocityIgnoreWhenGroundedCheckbox
             // 
@@ -380,6 +436,7 @@
             velocityIgnoreWhenGroundedCheckbox.Size = new Size(147, 19);
             velocityIgnoreWhenGroundedCheckbox.TabIndex = 4;
             velocityIgnoreWhenGroundedCheckbox.Text = "Ignore when grounded";
+            helpToolTip.SetToolTip(velocityIgnoreWhenGroundedCheckbox, "Disables velocity-based effects when the player is standing on the ground\r\n");
             velocityIgnoreWhenGroundedCheckbox.UseVisualStyleBackColor = true;
             // 
             // velocityEnabledCheckbox
@@ -400,6 +457,7 @@
             applyVelocitySettingsButton.Size = new Size(75, 23);
             applyVelocitySettingsButton.TabIndex = 0;
             applyVelocitySettingsButton.Text = "Apply";
+            helpToolTip.SetToolTip(applyVelocitySettingsButton, "Save and apply settings");
             applyVelocitySettingsButton.UseVisualStyleBackColor = true;
             applyVelocitySettingsButton.Click += ApplyVelocitySettingsButton_Click;
             // 
@@ -420,6 +478,7 @@
             owiSettingsPage.Size = new Size(360, 275);
             owiSettingsPage.TabIndex = 2;
             owiSettingsPage.Text = "OWI";
+            owiSettingsPage.ToolTipText = "OWOWorldIntegration connector";
             owiSettingsPage.UseVisualStyleBackColor = true;
             // 
             // label17
@@ -430,6 +489,7 @@
             label17.Size = new Size(73, 15);
             label17.TabIndex = 25;
             label17.Text = "Intensity (%)";
+            helpToolTip.SetToolTip(label17, "Specifies the intensity of this effect");
             // 
             // owiIntensityInput
             // 
@@ -437,15 +497,17 @@
             owiIntensityInput.Name = "owiIntensityInput";
             owiIntensityInput.Size = new Size(89, 23);
             owiIntensityInput.TabIndex = 24;
+            helpToolTip.SetToolTip(owiIntensityInput, "Specifies the intensity of this effect");
             // 
             // label16
             // 
             label16.AutoSize = true;
             label16.Location = new Point(6, 59);
             label16.Name = "label16";
-            label16.Size = new Size(112, 15);
+            label16.Size = new Size(123, 15);
             label16.TabIndex = 23;
-            label16.Text = "Log scan delay (ms)";
+            label16.Text = "Log scan interval (ms)";
+            helpToolTip.SetToolTip(label16, "Time between checking the VRChat log for new sensations from OWI");
             // 
             // owiUpdateIntervalInput
             // 
@@ -453,6 +515,7 @@
             owiUpdateIntervalInput.Name = "owiUpdateIntervalInput";
             owiUpdateIntervalInput.Size = new Size(89, 23);
             owiUpdateIntervalInput.TabIndex = 22;
+            helpToolTip.SetToolTip(owiUpdateIntervalInput, "Time between checking the VRChat log for new sensations from OWI");
             // 
             // groupBox3
             // 
@@ -485,6 +548,7 @@
             owiLinkLabel.TabIndex = 0;
             owiLinkLabel.TabStop = true;
             owiLinkLabel.Text = "OWOWorldIntegrator\r\nby RevoForge && SonoVr\r\n";
+            helpToolTip.SetToolTip(owiLinkLabel, "Open the OWOWorldIntegrator GitHub page");
             owiLinkLabel.LinkClicked += OwiLinkLabel_LinkClicked;
             // 
             // label14
@@ -495,6 +559,7 @@
             label14.Size = new Size(45, 15);
             label14.TabIndex = 19;
             label14.Text = "Priority";
+            helpToolTip.SetToolTip(label14, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // owiPriorityInput
             // 
@@ -502,6 +567,7 @@
             owiPriorityInput.Name = "owiPriorityInput";
             owiPriorityInput.Size = new Size(89, 23);
             owiPriorityInput.TabIndex = 18;
+            helpToolTip.SetToolTip(owiPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // owiEnabledCheckbox
             // 
@@ -521,11 +587,13 @@
             applyOwiSettingsButton.Size = new Size(75, 23);
             applyOwiSettingsButton.TabIndex = 16;
             applyOwiSettingsButton.Text = "Apply";
+            helpToolTip.SetToolTip(applyOwiSettingsButton, "Save and apply settings");
             applyOwiSettingsButton.UseVisualStyleBackColor = true;
             applyOwiSettingsButton.Click += ApplyOwiSettingsButton_Click;
             // 
             // oscPresetsPage
             // 
+            oscPresetsPage.Controls.Add(presetsHelpLinkLabel);
             oscPresetsPage.Controls.Add(label18);
             oscPresetsPage.Controls.Add(oscPresetsPriorityInput);
             oscPresetsPage.Controls.Add(oscPresetsEnabledCheckbox);
@@ -537,7 +605,20 @@
             oscPresetsPage.Size = new Size(360, 275);
             oscPresetsPage.TabIndex = 3;
             oscPresetsPage.Text = "Presets";
+            oscPresetsPage.ToolTipText = "Custom sensation presets";
             oscPresetsPage.UseVisualStyleBackColor = true;
+            // 
+            // presetsHelpLinkLabel
+            // 
+            presetsHelpLinkLabel.AutoSize = true;
+            presetsHelpLinkLabel.Location = new Point(6, 250);
+            presetsHelpLinkLabel.Name = "presetsHelpLinkLabel";
+            presetsHelpLinkLabel.Size = new Size(116, 15);
+            presetsHelpLinkLabel.TabIndex = 23;
+            presetsHelpLinkLabel.TabStop = true;
+            presetsHelpLinkLabel.Text = "Avatar triggers setup";
+            helpToolTip.SetToolTip(presetsHelpLinkLabel, "Open the avatar setup wiki page");
+            presetsHelpLinkLabel.LinkClicked += PresetsHelpLinkLabel_LinkClicked;
             // 
             // label18
             // 
@@ -547,6 +628,7 @@
             label18.Size = new Size(45, 15);
             label18.TabIndex = 22;
             label18.Text = "Priority";
+            helpToolTip.SetToolTip(label18, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // oscPresetsPriorityInput
             // 
@@ -554,6 +636,7 @@
             oscPresetsPriorityInput.Name = "oscPresetsPriorityInput";
             oscPresetsPriorityInput.Size = new Size(89, 23);
             oscPresetsPriorityInput.TabIndex = 21;
+            helpToolTip.SetToolTip(oscPresetsPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // oscPresetsEnabledCheckbox
             // 
@@ -573,6 +656,7 @@
             openOscPresetsFormButton.Size = new Size(148, 38);
             openOscPresetsFormButton.TabIndex = 18;
             openOscPresetsFormButton.Text = "Configure";
+            helpToolTip.SetToolTip(openOscPresetsFormButton, "Opens a dialog to configure sensation presets");
             openOscPresetsFormButton.UseVisualStyleBackColor = true;
             openOscPresetsFormButton.Click += OpenOscPresetsFormButton_Click;
             // 
@@ -584,6 +668,7 @@
             applyOscPresetsSettingsButton.Size = new Size(75, 23);
             applyOscPresetsSettingsButton.TabIndex = 17;
             applyOscPresetsSettingsButton.Text = "Apply";
+            helpToolTip.SetToolTip(applyOscPresetsSettingsButton, "Save and apply settings");
             applyOscPresetsSettingsButton.UseVisualStyleBackColor = true;
             applyOscPresetsSettingsButton.Click += ApplyOscPresetsSettingsButton_Click;
             // 
@@ -657,6 +742,7 @@
             label19.Size = new Size(35, 15);
             label19.TabIndex = 11;
             label19.Text = "OWI:";
+            helpToolTip.SetToolTip(label19, "Status of the OWOWorldIntegration connector");
             // 
             // stopSensationsButton
             // 
@@ -666,6 +752,7 @@
             stopSensationsButton.Size = new Size(167, 23);
             stopSensationsButton.TabIndex = 10;
             stopSensationsButton.Text = "Stop all sensations";
+            helpToolTip.SetToolTip(stopSensationsButton, "Force-stop all sensations.");
             stopSensationsButton.UseVisualStyleBackColor = true;
             stopSensationsButton.Click += StopSensationsButton_Click;
             // 
@@ -675,6 +762,8 @@
             oscPortInput.Name = "oscPortInput";
             oscPortInput.Size = new Size(100, 23);
             oscPortInput.TabIndex = 9;
+            oscPortInput.Text = "9001";
+            helpToolTip.SetToolTip(oscPortInput, "Port to listen for OSC messages from VRChat");
             oscPortInput.Leave += OscPortInput_Exit;
             // 
             // owoIPInput
@@ -683,6 +772,8 @@
             owoIPInput.Name = "owoIPInput";
             owoIPInput.Size = new Size(100, 23);
             owoIPInput.TabIndex = 8;
+            owoIPInput.Text = "127.0.0.1";
+            helpToolTip.SetToolTip(owoIPInput, "IP of the OWO app to connect to");
             owoIPInput.Leave += OwoIPInput_Exit;
             // 
             // label5
@@ -694,6 +785,7 @@
             label5.Size = new Size(51, 15);
             label5.TabIndex = 7;
             label5.Text = "OWO IP";
+            helpToolTip.SetToolTip(label5, "IP of the OWO app to connect to");
             // 
             // label4
             // 
@@ -704,6 +796,7 @@
             label4.Size = new Size(57, 15);
             label4.TabIndex = 6;
             label4.Text = "OSC Port";
+            helpToolTip.SetToolTip(label4, "Port to listen for OSC messages from VRChat");
             // 
             // startButton
             // 
@@ -713,6 +806,7 @@
             startButton.Size = new Size(126, 23);
             startButton.TabIndex = 4;
             startButton.Text = "Start";
+            helpToolTip.SetToolTip(startButton, "Connect and start sensation processing");
             startButton.UseVisualStyleBackColor = true;
             startButton.Click += StartButton_Click;
             // 
@@ -736,6 +830,7 @@
             label2.Size = new Size(33, 15);
             label2.TabIndex = 2;
             label2.Text = "OSC:";
+            helpToolTip.SetToolTip(label2, "Status of the OSC listener");
             // 
             // connectionStatusLabel
             // 
@@ -757,6 +852,7 @@
             label1.Size = new Size(40, 15);
             label1.TabIndex = 0;
             label1.Text = "OWO:";
+            helpToolTip.SetToolTip(label1, "Status of the OWO app");
             // 
             // stopButton
             // 
@@ -766,6 +862,7 @@
             stopButton.Size = new Size(126, 23);
             stopButton.TabIndex = 5;
             stopButton.Text = "Stop";
+            helpToolTip.SetToolTip(stopButton, "Disconnect from OWO and VRChat");
             stopButton.UseVisualStyleBackColor = true;
             stopButton.Visible = false;
             stopButton.Click += StopButton_Click;
@@ -889,5 +986,9 @@
         private Label label18;
         private TextBox oscPresetsPriorityInput;
         private CheckBox oscPresetsEnabledCheckbox;
+        private ToolTip helpToolTip;
+        private LinkLabel collidersHelpLinkLabel;
+        private LinkLabel presetsHelpLinkLabel;
+        private Label notVeryHelpfulLabel;
     }
 }
