@@ -2,13 +2,14 @@
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
 using Serilog;
+using System.ComponentModel;
 
 namespace OWOVRC.UI.Forms
 {
     public partial class PresetsForm : Form
     {
         private OSCPresetsSettings? settings;
-        private List<OSCSensationPreset> presets = [];
+        private BindingList<OSCSensationPreset> presets = [];
         public EventHandler? OnSave;
 
         public PresetsForm()
@@ -16,18 +17,10 @@ namespace OWOVRC.UI.Forms
             InitializeComponent();
         }
 
-        private void ForceDataRefresh()
-        {
-            //NOTE: Idk why, but the gridView isn't removing the entry unless I do this terribleness
-            dataGridView1.DataSource = null;
-            dataGridView1.Columns.Clear();
-            dataGridView1.DataSource = presets;
-        }
-
         public void ShowDialog(OSCPresetsSettings settings)
         {
             this.settings = settings;
-            presets = settings.Presets.Values.ToList();
+            presets = new([.. settings.Presets.Values]);
 
             dataGridView1.DataSource = presets;
 
@@ -59,8 +52,6 @@ namespace OWOVRC.UI.Forms
             {
                 ImportOWOSensationFromFile(filePath);
             }
-
-            ForceDataRefresh();
         }
 
         private void ImportOWOSensationFromFile(string path)
@@ -186,8 +177,6 @@ namespace OWOVRC.UI.Forms
                 Log.Debug("Importing sensation via Drag&Drop: {file}", file);
                 ImportOWOSensationFromFile(file);
             }
-
-            ForceDataRefresh();
         }
 
         private void DataGridView1_DragEnter(object sender, DragEventArgs e)
@@ -232,8 +221,6 @@ namespace OWOVRC.UI.Forms
             {
                 presets.Remove(preset);
             }
-
-            ForceDataRefresh();
         }
 
         private void PresetsHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
