@@ -24,7 +24,15 @@ namespace OWOVRC.Classes.OSC
         public void Start()
         {
             receiver.AddMonitorCallback(MessageReceived);
-            receiver.Start();
+            try
+            {
+                receiver.Start();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Failed to start OSC listener on port {port}! Make sure the port is not in use!", Port);
+                return;
+            }
             IsRunning = true;
             Log.Information("OSC listener started on port {port}!", Port);
         }

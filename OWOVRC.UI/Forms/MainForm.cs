@@ -407,7 +407,7 @@ namespace OWOVRC.UI
 
         private void OscPortInput_Exit(object sender, EventArgs e)
         {
-            connectionSettings.OSCPort = ValidateIntSetting(oscPortInput, connectionSettings.OSCPort);
+            connectionSettings.OSCPort = ValidateIntSetting(oscPortInput, connectionSettings.OSCPort, 1024, 65535);
 
             SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
