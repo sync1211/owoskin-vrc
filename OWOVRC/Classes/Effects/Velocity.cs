@@ -27,15 +27,17 @@ namespace OWOVRC.Classes.Effects
         // public float VelAngularX { get; private set; } // Not implemented by VRChat
         // public float VelAngularY { get; private set; } // Not relevant to us
         // public float VelAngularZ { get; private set; } // Not implemented by VRChat
-
-        // Calculated Values
         public double Speed { get; private set; }
+
+        // Keep previous values for calculations
+        private float lastVelX;
+        private float lastVelY;
+        private float lastVelZ;
         private double SpeedLast;
         private DateTime LastSpeedPacket;
 
         // Sensation
         public float SensationDuration = 0.3f;
-        private readonly BakedSensation FallDmg = BakedSensation.Parse("9~Fall Damage~50,1,100,0,0,0,Hit|0%100,1%100,2%100,3%100,4%100,5%100~environment-5~Impacts");
 
         // Settings
         public readonly VelocityEffectSettings Settings;
@@ -58,7 +60,7 @@ namespace OWOVRC.Classes.Effects
 
         public override void RegisterSensations()
         {
-            owo.AddBakedSensation(FallDmg);
+            // Nothing to register
         }
 
         private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -118,12 +120,15 @@ namespace OWOVRC.Classes.Effects
             switch (message.Address)
             {
                 case ADDRESS_VEL_X:
+                    lastVelX = VelX;
                     VelX = value;
                     break;
                 case ADDRESS_VEL_Y:
+                    lastVelY = VelY;
                     VelY = value;
                     break;
                 case ADDRESS_VEL_Z:
+                    lastVelZ = VelZ;
                     VelZ = value;
                     break;
                 case ADDRESS_VEL_SPEED:
@@ -132,6 +137,11 @@ namespace OWOVRC.Classes.Effects
                 default:
                     Log.Warning("Unknown velocity component '{message}' with value {value}", message.Address, value);
                     break;
+            }
+
+            if (!message.Address.Equals(ADDRESS_VEL_SPEED))
+            {
+                return;
             }
 
             // Sudden stop effect (e.g. hitting the ground after falling)
@@ -145,18 +155,16 @@ namespace OWOVRC.Classes.Effects
                 {
                     owo.StopAllSensations();
                     Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
-                    Sensation stopSensation = CreateStopSensation(velocityPercent);
-                    owo.AddSensation(stopSensation);
+                    ImpactSensation stopSensation = CreateStopSensation(velocityPercent);
+                    stopSensation.Play(owo, Settings.Priority);
+
                     LastSpeedPacket = DateTime.MinValue;
                     return;
                 }
             }
 
-            if (message.Address.Equals(ADDRESS_VEL_SPEED))
-            {
-                LastSpeedPacket = DateTime.Now;
-                SpeedLast = Speed;
-            }
+            LastSpeedPacket = DateTime.Now;
+            SpeedLast = Speed;
         }
 
         private void ProcessSensations()
@@ -179,6 +187,9 @@ namespace OWOVRC.Classes.Effects
                 if (SpeedLast > Settings.Threshold)
                 {
                     SpeedLast = -1;
+                    lastVelX = 0;
+                    lastVelY = 0;
+                    lastVelZ = 0;
                     LastSpeedPacket = DateTime.MinValue;
                     owo.StopAllSensations();
                 }
@@ -213,10 +224,14 @@ namespace OWOVRC.Classes.Effects
             return WindSensation.CreateFromVelocity(windVelX, windVelY, windVelZ, SensationDuration);
         }
 
-        private Sensation CreateStopSensation(int power)
+        private ImpactSensation CreateStopSensation(int power)
         {
-            //TODO: Make this directional!
-            return FallDmg.MultiplyIntensityBy(power / 100).WithPriority(Settings.StopPriority);
+            float hitVelX = lastVelX * -1;
+            float hitVelY = lastVelY * -1;
+            float hitVelZ = lastVelZ * -1;
+            ImpactSensation impact = ImpactSensation.CreateFromVelocity(hitVelX, hitVelY, hitVelZ, 0.1f);
+            impact.Intensity = power;
+            return impact;
         }
 
         public override void Reset()
