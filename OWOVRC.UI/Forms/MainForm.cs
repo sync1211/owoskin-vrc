@@ -327,18 +327,20 @@ namespace OWOVRC.UI
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Stop logging
+            Log.CloseAndFlush();
+
             Application.Idle -= OnApplicationIdle;
             presetsForm.OnSave -= OnPresetsFormSave;
 
             // Stop OWO
             StopOWO();
+
+            // Clean up OWO
             owo.Dispose();
 
             // Stop OSC receiver
             receiver.Dispose();
-
-            // Stop logging
-            Log.CloseAndFlush();
 
             // Close presets form
             presetsForm.Close();
