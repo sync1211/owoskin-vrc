@@ -889,9 +889,9 @@
             Controls.Add(connectionGroup);
             Controls.Add(tabControl1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "MainForm";
-            ShowIcon = false;
             Text = "OWOVRC";
             FormClosing += MainForm_FormClosing;
             Load += MainForm_Load;
