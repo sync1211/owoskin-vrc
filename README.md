@@ -23,3 +23,5 @@ For detailed avatar setup instructions and features, check out the [Avatar Setup
 ## Dislcaimer
 
 This is a community project; I am not affiliated with OWOGame.
+
+All brand icons belong to their respective owners.
