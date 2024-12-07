@@ -140,6 +140,7 @@
             // 
             // presetsHelpLinkLabel
             // 
+            presetsHelpLinkLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             presetsHelpLinkLabel.AutoSize = true;
             presetsHelpLinkLabel.Location = new Point(12, 423);
             presetsHelpLinkLabel.Name = "presetsHelpLinkLabel";
