@@ -9,7 +9,19 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <StartupObject>OWOVRC.CLI.Program</StartupObject>
     <PlatformTarget>x64</PlatformTarget>
+    <ApplicationIcon>owo.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="owo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\OWOVRC.UI\Media\AppIcon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OWOVRC\OWOVRC.csproj" />
