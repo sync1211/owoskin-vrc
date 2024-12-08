@@ -8,28 +8,21 @@ namespace OWOVRC.UI.Forms
 {
     public partial class PresetsForm : Form
     {
-        private OSCPresetsSettings? settings;
-        private BindingList<OSCSensationPreset> presets = [];
-        public EventHandler? OnSave;
+        private readonly OSCPresetsSettings settings;
+        private readonly BindingList<OSCSensationPreset> presets;
 
-        public PresetsForm()
+        public PresetsForm(OSCPresetsSettings settings)
         {
             InitializeComponent();
-        }
-
-        public void ShowDialog(OSCPresetsSettings settings)
-        {
             this.settings = settings;
             presets = new([.. settings.Presets.Values]);
 
             dataGridView1.DataSource = presets;
-
-            this.ShowDialog();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            presets.Clear();
+            DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
@@ -148,9 +141,8 @@ namespace OWOVRC.UI.Forms
                 settings.Presets.Add(preset.Name, preset);
             }
 
+            DialogResult = DialogResult.OK;
             this.Close();
-            presets.Clear();
-            OnSave?.Invoke(this, EventArgs.Empty);
         }
 
         private void DataGridView1_DragDrop(object sender, DragEventArgs e)

@@ -192,7 +192,12 @@ namespace OWOVRC.Classes.Effects
                 }
 
                 // Velocity-based intensity
-                int intensity = Settings.BaseIntensity;
+                int intensity = 100;
+                if (Settings.MuscleIntensities.TryGetValue(muscle.Value.id, out int baseIntensity))
+                {
+                    intensity = baseIntensity;
+                }
+
                 if (Settings.UseVelocity)
                 {
                     float increase = muscleData.VelocityMultiplier * Settings.MinIntensity;

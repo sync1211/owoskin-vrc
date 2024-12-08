@@ -117,4 +117,77 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="muscleAbdominalL_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleAbdominalL_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleDorsalR_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleDorsalR_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="musclePectoralL_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musclePectoralL_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleDorsalL_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleDorsalL_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="musclePectoralL_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musclePectoralL_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleArmR_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleArmR_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="musclesBackClear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musclesBackClear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleDorsalR_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleDorsalR_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleLumbarR_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleLumbarR_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleArmR_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleArmR_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleLumbarR_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleLumbarR_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleAbdominalL_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleAbdominalL_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="musclesBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musclesBack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleAbdominalR_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleAbdominalR_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleArmL_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleArmL_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleLumbarL_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleLumbarL_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleAbdominalR_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleAbdominalR_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="musclePectoralR_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musclePectoralR_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="musclesFrontClear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musclesFrontClear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="musclesFront" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musclesFront.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleDorsalL_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleDorsalL_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="musclePectoralR_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musclePectoralR_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleArmL_Inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleArmL_Inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="muscleLumbarL_Active" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\muscleLumbarL_Active.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

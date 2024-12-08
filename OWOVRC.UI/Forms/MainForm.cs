@@ -35,9 +35,6 @@ namespace OWOVRC.UI
 
         private bool IsRunning;
 
-        // Forms
-        private readonly PresetsForm presetsForm = new();
-
         public MainForm()
         {
             InitializeComponent();
@@ -46,7 +43,6 @@ namespace OWOVRC.UI
 
             // Call UpdateConnectionStatus on every ui update
             Application.Idle += OnApplicationIdle;
-            presetsForm.OnSave += OnPresetsFormSave;
         }
 
         private void OnApplicationIdle(object? sender, EventArgs e)
@@ -284,7 +280,6 @@ namespace OWOVRC.UI
             collidersPriorityInput.Text = collidersSettings.Priority.ToString();
             collidersUseVelocityCheckbox.Checked = collidersSettings.UseVelocity;
             collidersAllowContinuousCheckbox.Checked = collidersSettings.AllowContinuous;
-            collidersIntensityInput.Text = collidersSettings.BaseIntensity.ToString();
             collidersMinIntensityInput.Text = collidersSettings.MinIntensity.ToString();
             collidersSpeedMultiplierInput.Text = collidersSettings.SpeedMultiplier.ToString();
         }
@@ -331,7 +326,6 @@ namespace OWOVRC.UI
             Log.CloseAndFlush();
 
             Application.Idle -= OnApplicationIdle;
-            presetsForm.OnSave -= OnPresetsFormSave;
 
             // Stop OWO
             StopOWO();
@@ -341,10 +335,6 @@ namespace OWOVRC.UI
 
             // Stop OSC receiver
             receiver.Dispose();
-
-            // Close presets form
-            presetsForm.Close();
-            presetsForm.Dispose();
         }
 
         private void OwoIPInput_Exit(object sender, EventArgs e)
@@ -422,9 +412,6 @@ namespace OWOVRC.UI
 
             // Priority
             collidersSettings.Priority = ValidateIntSetting(collidersPriorityInput, collidersSettings.Priority);
-
-            // Colliders min intensity
-            collidersSettings.BaseIntensity = ValidateIntSetting(collidersIntensityInput, collidersSettings.BaseIntensity, 0, 100);
 
             // MinIintensity
             collidersSettings.MinIntensity = ValidateIntSetting(collidersMinIntensityInput, collidersSettings.MinIntensity, 0, 100);
@@ -523,14 +510,17 @@ namespace OWOVRC.UI
             SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
         }
 
-        private void OnPresetsFormSave(object? sender, EventArgs args)
-        {
-            SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
-        }
-
         private void OpenOscPresetsFormButton_Click(object sender, EventArgs e)
         {
-            presetsForm.ShowDialog(oscPresetsSettings);
+            using (PresetsForm presetsForm = new(oscPresetsSettings))
+            {
+                DialogResult result = presetsForm.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
+                }
+            }
         }
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -546,6 +536,15 @@ namespace OWOVRC.UI
         private void PresetsHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             WikiHelper.OpenURL(WikiHelper.OSC_PRESETS_WIKI_URL);
+        }
+
+        private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
+        {
+            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities))
+            {
+                intensityForm.ShowDialog();
+                SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
+            }
         }
     }
 }
