@@ -135,7 +135,6 @@ namespace OWOVRC.Classes.Effects.Sensations
         /// </summary>
         protected static Dictionary<Muscle, int> GetMuscleValues(float velocityX, float velocityY, float velocityZ)
         {
-
             // Generate affected muscles dynamically based on direction
             // 1. Assign a weight to every direction based on their % of the maximum
             // 2. Create a dictionary of each muscle and their value (starting at 0)
