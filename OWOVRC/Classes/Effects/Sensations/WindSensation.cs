@@ -5,7 +5,7 @@ namespace OWOVRC.Classes.Effects.Sensations
     public class WindSensation: DirectionalSensation
     {
         // Sensation parameters
-        private const string _Name = "WindSensation";
+        public static readonly string _Name = "WindSensation";
         private const int _frequency = 100;
         private const int _intensity = 25;
         new public int Intensity
