@@ -1,5 +1,7 @@
-﻿using OWOVRC.Classes.Settings;
+﻿using OWOGame;
+using OWOVRC.Classes.Settings;
 using System.Text.Json;
+using Windows.Media.Core;
 
 namespace OWOVRC.Test.Classes.Settings
 {
@@ -9,19 +11,19 @@ namespace OWOVRC.Test.Classes.Settings
         [TestMethod]
         public void TestJsonEncodeDecode()
         {
-            CollidersEffectSettings settings = new()
-            {
-                Priority = 2,
-                AllowContinuous = false,
-                BaseIntensity = 200,
-                Frequency = 100,
-                Enabled = false,
-                MaxTimeDiff = TimeSpan.FromSeconds(2),
-                MinIntensity = 100,
-                SensationSeconds = 0.5f,
-                SpeedMultiplier = 2.0f,
-                UseVelocity = false
-            };
+            Dictionary<int, int> intensities = new() { { Muscle.Arm_R.id, 50 }, { Muscle.Arm_L.id, 70 } };
+            CollidersEffectSettings settings = new(
+                enabled: false,
+                priority: 2,
+                useVelocity: false,
+                allowContinuous: false,
+                minIntensity: 100,
+                frequency: 100,
+                sensationSeconds: 0.5f,
+                speedMultiplier: 2.0f,
+                maxTimeDiff: TimeSpan.FromSeconds(2),
+                muscleIntensities: intensities
+            );
 
             string json = JsonSerializer.Serialize(settings);
             Assert.AreNotEqual(0, json.Length);
@@ -30,7 +32,6 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.IsNotNull(decodedSettings);
 
             Assert.AreEqual(settings.AllowContinuous, decodedSettings.AllowContinuous);
-            Assert.AreEqual(settings.BaseIntensity, decodedSettings.BaseIntensity);
             Assert.AreEqual(settings.Frequency, decodedSettings.Frequency);
             Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);
             Assert.AreEqual(settings.MaxTimeDiff, decodedSettings.MaxTimeDiff);
@@ -39,6 +40,12 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.SpeedMultiplier, decodedSettings.SpeedMultiplier);
             Assert.AreEqual(settings.UseVelocity, decodedSettings.UseVelocity);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
+            Assert.AreEqual(settings.MuscleIntensities.Count, decodedSettings.MuscleIntensities.Count);
+            foreach (KeyValuePair<int, int> intensity in settings.MuscleIntensities)
+            {
+                Assert.IsTrue(decodedSettings.MuscleIntensities.ContainsKey(intensity.Key));
+                Assert.AreEqual(intensity.Value, decodedSettings.MuscleIntensities[intensity.Key]);
+            }
         }
     }
 }

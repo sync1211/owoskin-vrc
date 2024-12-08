@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             tabControl1 = new TabControl();
             collidersSettingsPage = new TabPage();
+            configureCollidersIntensityButton = new Button();
             collidersHelpLinkLabel = new LinkLabel();
             label12 = new Label();
             collidersPriorityInput = new TextBox();
@@ -43,7 +45,6 @@
             collidersUseVelocityCheckbox = new CheckBox();
             collidersAllowContinuousCheckbox = new CheckBox();
             collidersEnabledCheckbox = new CheckBox();
-            collidersIntensityInput = new TextBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
             notVeryHelpfulLabel = new Label();
@@ -126,13 +127,13 @@
             // 
             // collidersSettingsPage
             // 
+            collidersSettingsPage.Controls.Add(configureCollidersIntensityButton);
             collidersSettingsPage.Controls.Add(collidersHelpLinkLabel);
             collidersSettingsPage.Controls.Add(label12);
             collidersSettingsPage.Controls.Add(collidersPriorityInput);
             collidersSettingsPage.Controls.Add(label6);
             collidersSettingsPage.Controls.Add(velocityBasedGroupBox);
             collidersSettingsPage.Controls.Add(collidersEnabledCheckbox);
-            collidersSettingsPage.Controls.Add(collidersIntensityInput);
             collidersSettingsPage.Controls.Add(applyCollisionSettingsButton);
             collidersSettingsPage.Location = new Point(4, 24);
             collidersSettingsPage.Name = "collidersSettingsPage";
@@ -142,6 +143,17 @@
             collidersSettingsPage.Text = "Colliders";
             collidersSettingsPage.ToolTipText = "Avatar collider effects";
             collidersSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // configureCollidersIntensityButton
+            // 
+            configureCollidersIntensityButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            configureCollidersIntensityButton.Location = new Point(262, 55);
+            configureCollidersIntensityButton.Name = "configureCollidersIntensityButton";
+            configureCollidersIntensityButton.Size = new Size(89, 23);
+            configureCollidersIntensityButton.TabIndex = 11;
+            configureCollidersIntensityButton.Text = "Configure";
+            configureCollidersIntensityButton.UseVisualStyleBackColor = true;
+            configureCollidersIntensityButton.Click += ConfigureCollidersIntensityButton_Click;
             // 
             // collidersHelpLinkLabel
             // 
@@ -266,14 +278,6 @@
             collidersEnabledCheckbox.Text = "Enabled";
             helpToolTip.SetToolTip(collidersEnabledCheckbox, "Enables avatar collider interactions");
             collidersEnabledCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // collidersIntensityInput
-            // 
-            collidersIntensityInput.Location = new Point(262, 56);
-            collidersIntensityInput.Name = "collidersIntensityInput";
-            collidersIntensityInput.Size = new Size(89, 23);
-            collidersIntensityInput.TabIndex = 6;
-            helpToolTip.SetToolTip(collidersIntensityInput, "Specifies the intensity for this effect");
             // 
             // applyCollisionSettingsButton
             // 
@@ -945,7 +949,6 @@
         private GroupBox velocityBasedGroupBox;
         private CheckBox collidersUseVelocityCheckbox;
         private CheckBox collidersAllowContinuousCheckbox;
-        private TextBox collidersIntensityInput;
         private Label label8;
         private TextBox collidersMinIntensityInput;
         private Label label9;
@@ -990,5 +993,6 @@
         private LinkLabel collidersHelpLinkLabel;
         private LinkLabel presetsHelpLinkLabel;
         private Label notVeryHelpfulLabel;
+        private Button configureCollidersIntensityButton;
     }
 }
