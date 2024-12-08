@@ -8,13 +8,14 @@ namespace OWOVRC.UI.Forms
     public partial class MuscleIntensityForm : Form
     {
         private int currentMuscleID = 0;
-        private readonly CollidersEffectSettings settings;
+        private readonly Dictionary<int, int> muscleIntensities;
         private readonly SelectableMuscle[] selectableMuscles;
 
-        public MuscleIntensityForm(CollidersEffectSettings settings)
+        public MuscleIntensityForm(Dictionary<int, int> intensities)
         {
             InitializeComponent();
-            this.settings = settings;
+            this.muscleIntensities = intensities;
+
             selectableMuscles = [
                 pectoralRMuscle,
                 pectoralLMuscle,
@@ -100,7 +101,7 @@ namespace OWOVRC.UI.Forms
 
         private void UpdateTrackBar()
         {
-            if (!settings.MuscleIntensities.TryGetValue(currentMuscleID, out int intensity))
+            if (!muscleIntensities.TryGetValue(currentMuscleID, out int intensity))
             {
                 intensity = 0;
             }
@@ -113,7 +114,7 @@ namespace OWOVRC.UI.Forms
         {
             intensityValueTextBox.Text = muscleIntensityTrackBar.Value.ToString();
 
-            settings.MuscleIntensities[currentMuscleID] = muscleIntensityTrackBar.Value;
+            muscleIntensities[currentMuscleID] = muscleIntensityTrackBar.Value;
         }
 
         private void IntensityValueTextBox_Exit(object sender, EventArgs e)
@@ -123,7 +124,7 @@ namespace OWOVRC.UI.Forms
                 intensityValueTextBox.Text = muscleIntensityTrackBar.Value.ToString();
             }
 
-            settings.MuscleIntensities[currentMuscleID] = value;
+            muscleIntensities[currentMuscleID] = value;
 
             UpdateActiveMuscleGroup();
         }
