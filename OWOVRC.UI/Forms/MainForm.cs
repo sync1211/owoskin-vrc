@@ -1,4 +1,3 @@
-using OwoAdvancedSensationBuilderNet8.manager;
 using OWOGame;
 using OWOVRC.Classes;
 using OWOVRC.Classes.Effects;
@@ -11,7 +10,6 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.Net;
-using System.Text;
 
 namespace OWOVRC.UI
 {

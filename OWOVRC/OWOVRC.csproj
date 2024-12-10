@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OwoAdvancedSensationBuilderNet8Demo\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj" />
+    <ProjectReference Include="..\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj" />
   </ItemGroup>
 
 </Project>
