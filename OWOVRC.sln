@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Test", "OWOVRC.Test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.CLI", "OWOVRC.CLI\OWOVRC.CLI.csproj", "{2EFF406F-1746-41A6-AFA7-FD8C91C42464}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{9543C677-081D-44FB-8BA9-C23264AD388A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{94290CC7-129B-4150-B83E-3ED4ABEA2818}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder.Test", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.Test\OwoAdvancedSensationBuilder.Test.csproj", "{79E85DEB-2D1B-461D-9967-E5C8A82DF0C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder.Test", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.Test\OwoAdvancedSensationBuilder.Test.csproj", "{ED398336-24D0-444B-883F-32CE2771EF9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9543C677-081D-44FB-8BA9-C23264AD388A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9543C677-081D-44FB-8BA9-C23264AD388A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9543C677-081D-44FB-8BA9-C23264AD388A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9543C677-081D-44FB-8BA9-C23264AD388A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79E85DEB-2D1B-461D-9967-E5C8A82DF0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79E85DEB-2D1B-461D-9967-E5C8A82DF0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79E85DEB-2D1B-461D-9967-E5C8A82DF0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79E85DEB-2D1B-461D-9967-E5C8A82DF0C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED398336-24D0-444B-883F-32CE2771EF9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED398336-24D0-444B-883F-32CE2771EF9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED398336-24D0-444B-883F-32CE2771EF9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED398336-24D0-444B-883F-32CE2771EF9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

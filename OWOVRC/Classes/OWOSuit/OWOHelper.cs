@@ -1,6 +1,6 @@
 ﻿using OWOGame;
 using Serilog;
-using OwoAdvancedSensationBuilderNet8.manager;
+using OwoAdvancedSensationBuilder.manager;
 
 namespace OWOVRC.Classes.OWOSuit
 {
