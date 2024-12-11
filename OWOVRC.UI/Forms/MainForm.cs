@@ -542,7 +542,8 @@ namespace OWOVRC.UI
 
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
         {
-            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities))
+            Sensation testSensation = SensationsFactory.Create(collidersSettings.Frequency, collidersSettings.SensationSeconds, 100, 0, 0, 0);
+            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, testSensation))
             {
                 intensityForm.ShowDialog();
                 SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);

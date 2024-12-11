@@ -1,4 +1,5 @@
 ﻿using OWOGame;
+using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Controls;
 using Serilog;
@@ -10,11 +11,13 @@ namespace OWOVRC.UI.Forms
         private int currentMuscleID = 0;
         private readonly Dictionary<int, int> muscleIntensities;
         private readonly SelectableMuscle[] selectableMuscles;
+        private readonly Sensation? testSensation;
 
-        public MuscleIntensityForm(Dictionary<int, int> intensities)
+        public MuscleIntensityForm(Dictionary<int, int> intensities, Sensation? sensationForTest = null)
         {
             InitializeComponent();
             this.muscleIntensities = intensities;
+            this.testSensation = sensationForTest;
 
             selectableMuscles = [
                 pectoralRMuscle,
@@ -155,6 +158,47 @@ namespace OWOVRC.UI.Forms
                 muscleIntensities[key] = 100;
             }
             ShowFrontButton_Click(sender, e);
+        }
+
+        private void TestSensationButton_Click(object sender, EventArgs e)
+        {
+            if (testSensation == null)
+            {
+                return;
+            }
+
+            Muscle[] muscles;
+            if (Control.ModifierKeys == Keys.Shift)
+            {
+                muscles = Muscle.All;
+            }
+            else
+            {
+                Muscle? currentMuscle = Muscle.All.FirstOrDefault(m => m.id == currentMuscleID);
+                if (currentMuscle == null)
+                {
+                    return;
+                }
+
+                muscles = [currentMuscle.Value];
+            }
+
+            Muscle[] musclesWithIntensity = new Muscle[muscles.Length];
+            for (int i = 0; i < muscles.Length; i++)
+            {
+                Muscle muscle = muscles[i];
+                int intensity = muscleIntensities[muscle.id];
+                musclesWithIntensity[i] = muscle.WithIntensity(intensity);
+            }
+
+            Sensation sensation = testSensation.WithMuscles([.. muscles]);
+            OWO.Send(sensation);
+        }
+
+        private void MuscleIntensityForm_Shown(object sender, EventArgs e)
+        {
+            testSensationButton.Visible = testSensation != null;
+            testSensationButton.Enabled = OWO.ConnectionState == ConnectionState.Connected;
         }
     }
 }

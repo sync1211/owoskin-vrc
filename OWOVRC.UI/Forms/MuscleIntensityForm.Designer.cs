@@ -62,6 +62,7 @@ namespace OWOVRC.UI.Forms
             panel1 = new Panel();
             label8 = new Label();
             label7 = new Label();
+            testSensationButton = new Button();
             muscleGroupsTabControl.SuspendLayout();
             frontMusclesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).BeginInit();
@@ -315,12 +316,12 @@ namespace OWOVRC.UI.Forms
             muscleIntensityTrackBar.Size = new Size(673, 45);
             muscleIntensityTrackBar.SmallChange = 25;
             muscleIntensityTrackBar.TabIndex = 3;
-            muscleIntensityTrackBar.Value = 200;
+            muscleIntensityTrackBar.Value = 100;
             muscleIntensityTrackBar.Scroll += MuscleIntensityTrackBar_Scroll;
             // 
             // intensityValueTextBox
             // 
-            intensityValueTextBox.Location = new Point(349, 477);
+            intensityValueTextBox.Location = new Point(349, 471);
             intensityValueTextBox.Name = "intensityValueTextBox";
             intensityValueTextBox.Size = new Size(35, 23);
             intensityValueTextBox.TabIndex = 4;
@@ -329,7 +330,7 @@ namespace OWOVRC.UI.Forms
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(291, 481);
+            label1.Location = new Point(291, 475);
             label1.Name = "label1";
             label1.Size = new Size(52, 15);
             label1.TabIndex = 5;
@@ -338,7 +339,7 @@ namespace OWOVRC.UI.Forms
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(385, 481);
+            label2.Location = new Point(385, 477);
             label2.Name = "label2";
             label2.Size = new Size(17, 15);
             label2.TabIndex = 6;
@@ -347,7 +348,7 @@ namespace OWOVRC.UI.Forms
             // muscleNameLabel
             // 
             muscleNameLabel.ForeColor = Color.RoyalBlue;
-            muscleNameLabel.Location = new Point(189, 481);
+            muscleNameLabel.Location = new Point(189, 475);
             muscleNameLabel.Name = "muscleNameLabel";
             muscleNameLabel.Size = new Size(105, 14);
             muscleNameLabel.TabIndex = 7;
@@ -446,11 +447,22 @@ namespace OWOVRC.UI.Forms
             label7.TabIndex = 15;
             label7.Text = "I";
             // 
+            // testSensationButton
+            // 
+            testSensationButton.Image = Properties.Resources.Play;
+            testSensationButton.Location = new Point(404, 471);
+            testSensationButton.Name = "testSensationButton";
+            testSensationButton.Size = new Size(23, 23);
+            testSensationButton.TabIndex = 15;
+            testSensationButton.UseVisualStyleBackColor = true;
+            testSensationButton.Click += TestSensationButton_Click;
+            // 
             // MuscleIntensityForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(681, 590);
+            Controls.Add(testSensationButton);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -471,6 +483,7 @@ namespace OWOVRC.UI.Forms
             Name = "MuscleIntensityForm";
             Text = "Per Muscle Intensity";
             FormClosing += MuscleIntensityForm_FormClosing;
+            Shown += MuscleIntensityForm_Shown;
             muscleGroupsTabControl.ResumeLayout(false);
             frontMusclesPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).EndInit();
@@ -526,5 +539,6 @@ namespace OWOVRC.UI.Forms
         private Panel panel1;
         private Label label7;
         private Label label8;
+        private Button testSensationButton;
     }
 }
