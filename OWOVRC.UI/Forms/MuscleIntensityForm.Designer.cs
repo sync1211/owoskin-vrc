@@ -30,6 +30,7 @@ namespace OWOVRC.UI.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MuscleIntensityForm));
             showFrontButton = new Button();
             muscleGroupsTabControl = new TabControl();
@@ -63,6 +64,7 @@ namespace OWOVRC.UI.Forms
             label8 = new Label();
             label7 = new Label();
             testSensationButton = new Button();
+            helpToolTip = new ToolTip(components);
             muscleGroupsTabControl.SuspendLayout();
             frontMusclesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).BeginInit();
@@ -89,6 +91,7 @@ namespace OWOVRC.UI.Forms
             showFrontButton.Size = new Size(75, 23);
             showFrontButton.TabIndex = 0;
             showFrontButton.Text = "Front";
+            helpToolTip.SetToolTip(showFrontButton, "Show front muscles");
             showFrontButton.UseVisualStyleBackColor = true;
             showFrontButton.Click += ShowFrontButton_Click;
             // 
@@ -134,6 +137,7 @@ namespace OWOVRC.UI.Forms
             abdominalLMuscle.Size = new Size(65, 142);
             abdominalLMuscle.TabIndex = 6;
             abdominalLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(abdominalLMuscle, "Left Abdominal");
             // 
             // abdominalRMuscle
             // 
@@ -148,6 +152,7 @@ namespace OWOVRC.UI.Forms
             abdominalRMuscle.Size = new Size(65, 142);
             abdominalRMuscle.TabIndex = 3;
             abdominalRMuscle.TabStop = false;
+            helpToolTip.SetToolTip(abdominalRMuscle, "Right Abdominal");
             // 
             // armLMuscle
             // 
@@ -162,6 +167,7 @@ namespace OWOVRC.UI.Forms
             armLMuscle.Size = new Size(85, 96);
             armLMuscle.TabIndex = 5;
             armLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(armLMuscle, "Right Arm");
             // 
             // pectoralLMuscle
             // 
@@ -176,6 +182,7 @@ namespace OWOVRC.UI.Forms
             pectoralLMuscle.Size = new Size(112, 58);
             pectoralLMuscle.TabIndex = 4;
             pectoralLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(pectoralLMuscle, "Left Pectoral");
             // 
             // pectoralRMuscle
             // 
@@ -190,6 +197,7 @@ namespace OWOVRC.UI.Forms
             pectoralRMuscle.Size = new Size(112, 58);
             pectoralRMuscle.TabIndex = 3;
             pectoralRMuscle.TabStop = false;
+            helpToolTip.SetToolTip(pectoralRMuscle, "Right Pectoral");
             // 
             // armRMuscle
             // 
@@ -204,6 +212,7 @@ namespace OWOVRC.UI.Forms
             armRMuscle.Size = new Size(85, 96);
             armRMuscle.TabIndex = 3;
             armRMuscle.TabStop = false;
+            helpToolTip.SetToolTip(armRMuscle, "Right Arm");
             // 
             // frontMusclesImg
             // 
@@ -243,6 +252,7 @@ namespace OWOVRC.UI.Forms
             lumbarLMuscle.Size = new Size(68, 68);
             lumbarLMuscle.TabIndex = 6;
             lumbarLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(lumbarLMuscle, "Left Lumbar");
             // 
             // lumbarRMuscle
             // 
@@ -257,6 +267,7 @@ namespace OWOVRC.UI.Forms
             lumbarRMuscle.Size = new Size(68, 68);
             lumbarRMuscle.TabIndex = 4;
             lumbarRMuscle.TabStop = false;
+            helpToolTip.SetToolTip(lumbarRMuscle, "Right Lumbar");
             // 
             // dorsalLMuscle
             // 
@@ -271,6 +282,7 @@ namespace OWOVRC.UI.Forms
             dorsalLMuscle.Size = new Size(74, 108);
             dorsalLMuscle.TabIndex = 5;
             dorsalLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(dorsalLMuscle, "Left Dorsal");
             // 
             // dorsalRMuscle
             // 
@@ -285,6 +297,7 @@ namespace OWOVRC.UI.Forms
             dorsalRMuscle.Size = new Size(74, 108);
             dorsalRMuscle.TabIndex = 4;
             dorsalRMuscle.TabStop = false;
+            helpToolTip.SetToolTip(dorsalRMuscle, "Right Dorsal");
             // 
             // backMusclesImg
             // 
@@ -303,6 +316,7 @@ namespace OWOVRC.UI.Forms
             showBackButton.Size = new Size(75, 23);
             showBackButton.TabIndex = 2;
             showBackButton.Text = "Back";
+            helpToolTip.SetToolTip(showBackButton, "Show back muscles");
             showBackButton.UseVisualStyleBackColor = true;
             showBackButton.Click += ShowBackButton_Click;
             // 
@@ -325,6 +339,7 @@ namespace OWOVRC.UI.Forms
             intensityValueTextBox.Name = "intensityValueTextBox";
             intensityValueTextBox.Size = new Size(35, 23);
             intensityValueTextBox.TabIndex = 4;
+            helpToolTip.SetToolTip(intensityValueTextBox, resources.GetString("intensityValueTextBox.ToolTip"));
             intensityValueTextBox.Leave += IntensityValueTextBox_Exit;
             // 
             // label1
@@ -335,15 +350,17 @@ namespace OWOVRC.UI.Forms
             label1.Size = new Size(52, 15);
             label1.TabIndex = 5;
             label1.Text = "Intensity";
+            helpToolTip.SetToolTip(label1, "The intensity setting for the selected muscle.");
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(385, 477);
+            label2.Location = new Point(384, 476);
             label2.Name = "label2";
             label2.Size = new Size(17, 15);
             label2.TabIndex = 6;
             label2.Text = "%";
+            helpToolTip.SetToolTip(label2, "The intensity setting for the selected muscle.");
             // 
             // muscleNameLabel
             // 
@@ -354,6 +371,7 @@ namespace OWOVRC.UI.Forms
             muscleNameLabel.TabIndex = 7;
             muscleNameLabel.Text = "muscleNameLabel";
             muscleNameLabel.TextAlign = ContentAlignment.TopRight;
+            helpToolTip.SetToolTip(muscleNameLabel, "The name of the currently selected muscle.");
             // 
             // closeButton
             // 
@@ -364,6 +382,7 @@ namespace OWOVRC.UI.Forms
             closeButton.Size = new Size(75, 23);
             closeButton.TabIndex = 8;
             closeButton.Text = "Close";
+            helpToolTip.SetToolTip(closeButton, "Close this dialog.\r\nIntensities are saved automatically.");
             closeButton.UseVisualStyleBackColor = true;
             closeButton.Click += CloseButton_Click;
             // 
@@ -401,6 +420,7 @@ namespace OWOVRC.UI.Forms
             resetButton.Size = new Size(75, 23);
             resetButton.TabIndex = 12;
             resetButton.Text = "Reset";
+            helpToolTip.SetToolTip(resetButton, "Reset all muscles to 100%");
             resetButton.UseVisualStyleBackColor = true;
             resetButton.Click += ResetButton_Click;
             // 
@@ -454,6 +474,7 @@ namespace OWOVRC.UI.Forms
             testSensationButton.Name = "testSensationButton";
             testSensationButton.Size = new Size(23, 23);
             testSensationButton.TabIndex = 15;
+            helpToolTip.SetToolTip(testSensationButton, "Preview the muscle's intensity.\r\nShift+Click to preview all configured muscles at once!");
             testSensationButton.UseVisualStyleBackColor = true;
             testSensationButton.Click += TestSensationButton_Click;
             // 
@@ -540,5 +561,6 @@ namespace OWOVRC.UI.Forms
         private Label label7;
         private Label label8;
         private Button testSensationButton;
+        private ToolTip helpToolTip;
     }
 }
