@@ -51,18 +51,8 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Information("Disconnected from OWO!");
         }
 
-        //void SendDynamicSensation() => OWO.Send(Sensation.Dagger);
-
-        //Task SendBakedSensation()
-        //{
-        //    OWO.Send("0"); //This ID belongs to the Ball sensation in the GameAuth
-        //    return Task.Delay(100); //We wait for the baked sensation to finish
-        //}
-
         public void AddSensation(Sensation sensation, Muscle[] muscles)
         {
-            //TODO: Mixing system
-            //OWO.Send(sensation, muscles);
             sensationManager.playOnce(sensation.WithMuscles(muscles));
         }
 
@@ -85,15 +75,11 @@ namespace OWOVRC.Classes.OWOSuit
 
         public void AddSensation(Sensation sensation)
         {
-            //TODO: Mixing system
-            //OWO.Send(sensation);
             sensationManager.playOnce(sensation);
         }
 
         public void StopAllSensations()
         {
-            //OWO.Stop();
-
             sensationManager.stopAll();
             Log.Debug("All sensations stopped!");
         }
