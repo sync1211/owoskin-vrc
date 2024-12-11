@@ -54,6 +54,14 @@ namespace OWOVRC.UI.Forms
             label2 = new Label();
             muscleNameLabel = new Label();
             closeButton = new Button();
+            label3 = new Label();
+            label4 = new Label();
+            label5 = new Label();
+            resetButton = new Button();
+            label6 = new Label();
+            panel1 = new Panel();
+            label8 = new Label();
+            label7 = new Label();
             muscleGroupsTabControl.SuspendLayout();
             frontMusclesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).BeginInit();
@@ -70,6 +78,7 @@ namespace OWOVRC.UI.Forms
             ((System.ComponentModel.ISupportInitialize)dorsalRMuscle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)backMusclesImg).BeginInit();
             ((System.ComponentModel.ISupportInitialize)muscleIntensityTrackBar).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // showFrontButton
@@ -298,11 +307,15 @@ namespace OWOVRC.UI.Forms
             // 
             // muscleIntensityTrackBar
             // 
-            muscleIntensityTrackBar.Location = new Point(4, 499);
-            muscleIntensityTrackBar.Maximum = 100;
+            muscleIntensityTrackBar.AutoSize = false;
+            muscleIntensityTrackBar.LargeChange = 25;
+            muscleIntensityTrackBar.Location = new Point(4, 494);
+            muscleIntensityTrackBar.Maximum = 200;
             muscleIntensityTrackBar.Name = "muscleIntensityTrackBar";
             muscleIntensityTrackBar.Size = new Size(673, 45);
+            muscleIntensityTrackBar.SmallChange = 25;
             muscleIntensityTrackBar.TabIndex = 3;
+            muscleIntensityTrackBar.Value = 200;
             muscleIntensityTrackBar.Scroll += MuscleIntensityTrackBar_Scroll;
             // 
             // intensityValueTextBox
@@ -333,19 +346,19 @@ namespace OWOVRC.UI.Forms
             // 
             // muscleNameLabel
             // 
-            muscleNameLabel.Anchor = AnchorStyles.Right;
             muscleNameLabel.ForeColor = Color.RoyalBlue;
             muscleNameLabel.Location = new Point(189, 481);
             muscleNameLabel.Name = "muscleNameLabel";
-            muscleNameLabel.Size = new Size(105, 15);
+            muscleNameLabel.Size = new Size(105, 14);
             muscleNameLabel.TabIndex = 7;
             muscleNameLabel.Text = "muscleNameLabel";
             muscleNameLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // closeButton
             // 
+            closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             closeButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            closeButton.Location = new Point(594, 533);
+            closeButton.Location = new Point(598, 555);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(75, 23);
             closeButton.TabIndex = 8;
@@ -353,11 +366,96 @@ namespace OWOVRC.UI.Forms
             closeButton.UseVisualStyleBackColor = true;
             closeButton.Click += CloseButton_Click;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(11, 534);
+            label3.Name = "label3";
+            label3.Size = new Size(13, 15);
+            label3.TabIndex = 9;
+            label3.Text = "0";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(650, 534);
+            label4.Name = "label4";
+            label4.Size = new Size(25, 15);
+            label4.TabIndex = 10;
+            label4.Text = "200";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(327, 534);
+            label5.Name = "label5";
+            label5.Size = new Size(25, 15);
+            label5.TabIndex = 11;
+            label5.Text = "100";
+            // 
+            // resetButton
+            // 
+            resetButton.Location = new Point(12, 555);
+            resetButton.Name = "resetButton";
+            resetButton.Size = new Size(75, 23);
+            resetButton.TabIndex = 12;
+            resetButton.Text = "Reset";
+            resetButton.UseVisualStyleBackColor = true;
+            resetButton.Click += ResetButton_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.ForeColor = SystemColors.ControlDarkDark;
+            label6.Location = new Point(-2, -4);
+            label6.Name = "label6";
+            label6.Size = new Size(16, 25);
+            label6.TabIndex = 13;
+            label6.Text = "I";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(label8);
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(label6);
+            panel1.Location = new Point(12, 516);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(657, 32);
+            panel1.TabIndex = 14;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.ForeColor = SystemColors.ControlDarkDark;
+            label8.Location = new Point(644, -4);
+            label8.Name = "label8";
+            label8.Size = new Size(16, 25);
+            label8.TabIndex = 16;
+            label8.Text = "I";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.ForeColor = SystemColors.ControlDarkDark;
+            label7.Location = new Point(321, -4);
+            label7.Name = "label7";
+            label7.Size = new Size(16, 25);
+            label7.TabIndex = 15;
+            label7.Text = "I";
+            // 
             // MuscleIntensityForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(681, 568);
+            ClientSize = new Size(681, 590);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(panel1);
+            Controls.Add(resetButton);
             Controls.Add(closeButton);
             Controls.Add(muscleNameLabel);
             Controls.Add(label2);
@@ -372,6 +470,7 @@ namespace OWOVRC.UI.Forms
             MaximizeBox = false;
             Name = "MuscleIntensityForm";
             Text = "Per Muscle Intensity";
+            FormClosing += MuscleIntensityForm_FormClosing;
             muscleGroupsTabControl.ResumeLayout(false);
             frontMusclesPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).EndInit();
@@ -388,6 +487,8 @@ namespace OWOVRC.UI.Forms
             ((System.ComponentModel.ISupportInitialize)dorsalRMuscle).EndInit();
             ((System.ComponentModel.ISupportInitialize)backMusclesImg).EndInit();
             ((System.ComponentModel.ISupportInitialize)muscleIntensityTrackBar).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -417,5 +518,13 @@ namespace OWOVRC.UI.Forms
         private Label label2;
         private Label muscleNameLabel;
         private Button closeButton;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private Button resetButton;
+        private Label label6;
+        private Panel panel1;
+        private Label label7;
+        private Label label8;
     }
 }

@@ -47,6 +47,14 @@ namespace OWOVRC.UI.Forms
             }
         }
 
+        private void UnregisterClickEvents()
+        {
+            foreach (SelectableMuscle muscle in selectableMuscles)
+            {
+                muscle.MouseClick -= SelectableMuscle_Click;
+            }
+        }
+
         private void SelectableMuscle_Click(object? sender, EventArgs e)
         {
             if (sender is not SelectableMuscle muscle)
@@ -119,7 +127,7 @@ namespace OWOVRC.UI.Forms
 
         private void IntensityValueTextBox_Exit(object sender, EventArgs e)
         {
-            if (!int.TryParse(intensityValueTextBox.Text, out int value) || value < 0 || value > 100)
+            if (!int.TryParse(intensityValueTextBox.Text, out int value) || value < 0 || value > 200)
             {
                 intensityValueTextBox.Text = muscleIntensityTrackBar.Value.ToString();
             }
@@ -132,6 +140,21 @@ namespace OWOVRC.UI.Forms
         private void CloseButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void MuscleIntensityForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            UnregisterClickEvents();
+        }
+
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            // Reset all muscles to 100%
+            foreach (int key in muscleIntensities.Keys)
+            {
+                muscleIntensities[key] = 100;
+            }
+            ShowFrontButton_Click(sender, e);
         }
     }
 }
