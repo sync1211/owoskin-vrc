@@ -79,7 +79,7 @@ namespace OWOVRC.Classes.Effects
         public OSCSensationPreset? GetPresetFromMessage(OSCMessage message, out Muscle[] muscles)
         {
             muscles = [];
-            if (message.Address.Length <= OSC_ADDRESS_PREFIX.Length)
+            if (!message.Address.StartsWith(OSC_ADDRESS_PREFIX) || message.Address.Length <= (OSC_ADDRESS_PREFIX.Length + 1))
             {
                 return null;
             }
@@ -99,6 +99,7 @@ namespace OWOVRC.Classes.Effects
             // Get preset
             if (!Settings.Presets.TryGetValue(presetName, out OSCSensationPreset? preset) || preset == null)
             {
+                Log.Warning("Preset {presetName} not found!", presetName);
                 return null;
             }
 

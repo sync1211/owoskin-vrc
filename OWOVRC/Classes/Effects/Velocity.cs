@@ -56,12 +56,6 @@ namespace OWOVRC.Classes.Effects
 
         public override void OnOSCMessageReceived(object? sender, OSCMessage message)
         {
-            ProcessMessage(message);
-            ProcessSensations();
-        }
-
-        private void ProcessMessage(OSCMessage message)
-        {
             if (!Settings.Enabled)
             {
                 return;
@@ -74,32 +68,41 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
+            // Process OSC message
+            if (ProcessMessage(message))
+            {
+                ProcessSensations();
+            }
+        }
+
+        private bool ProcessMessage(OSCMessage message)
+        {
             // Grounded
             if (message.Address.Equals(ADDRESS_GROUNDED))
             {
                 IsGrounded = message.Values.ReadBooleanElement(0);
-                return;
+                return true;
             }
 
             // Seated
             if (message.Address.Equals(ADDRESS_SEATED))
             {
                 IsSeated = message.Values.ReadBooleanElement(0);
-                return;
+                return true;
             }
 
             // Angular Velocity
             if (message.Address.StartsWith("Angular"))
             {
                 //Log.Verbose("Ignoring Angular velocity: This feature is not yet implemented!");
-                return;
+                return true;
             }
 
             // Velocity
             if (!message.Address.StartsWith("Velocity"))
             {
                 Log.Verbose("Ignoring non-velocity message: {message}", message.Address);
-                return;
+                return false;
             }
 
             float value = message.Values.ReadFloatElement(0);
@@ -128,7 +131,7 @@ namespace OWOVRC.Classes.Effects
 
             if (!message.Address.Equals(ADDRESS_VEL_SPEED))
             {
-                return;
+                return true;
             }
 
             // Sudden stop effect (e.g. hitting the ground after falling)
@@ -146,12 +149,14 @@ namespace OWOVRC.Classes.Effects
                     stopSensation.Play(owo, Settings.Priority);
 
                     LastSpeedPacket = DateTime.MinValue;
-                    return;
+                    return true;
                 }
             }
 
             LastSpeedPacket = DateTime.Now;
             SpeedLast = Speed;
+
+            return true;
         }
 
         private void ProcessSensations()

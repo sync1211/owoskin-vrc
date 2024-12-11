@@ -134,7 +134,7 @@ namespace OWOVRC.Classes.Effects
             {
                 Log.Debug("No sensations playing, timer stopped.");
                 owo.StopLoopedSensation(SENSATION_NAME);
-                //timer.Stop();
+                timer.Stop();
             }
         }
 
@@ -146,7 +146,7 @@ namespace OWOVRC.Classes.Effects
             }
             catch (InvalidOperationException)
             {
-                Log.Warning("No valid float value received in message for {address}, trying int...", message.Address);
+                Log.Debug("No valid float value received in message for {address}, trying int...", message.Address);
             }
 
             try
@@ -155,7 +155,16 @@ namespace OWOVRC.Classes.Effects
             }
             catch (InvalidOperationException)
             {
-                Log.Error("No int value received in message for {address}!", message.Address);
+                Log.Debug("No int or float value received in message for {address}!", message.Address);
+            }
+
+            try
+            {
+                return message.Values.ReadBooleanElement(0) ? 1 : 0;
+            }
+            catch (InvalidOperationException)
+            {
+                Log.Warning("No int, float or boolean value received in message for {address}!", message.Address);
             }
 
             return 0;
