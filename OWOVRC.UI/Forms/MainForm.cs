@@ -101,6 +101,8 @@ namespace OWOVRC.UI
             owoIPInput.Enabled = !IsRunning;
             oscPortInput.Enabled = !IsRunning;
 
+            openDiscoveryButton.Enabled = !IsRunning;
+
             openOscPresetsFormButton.Enabled = !IsRunning;
         }
 
@@ -544,6 +546,23 @@ namespace OWOVRC.UI
             {
                 intensityForm.ShowDialog();
                 SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
+            }
+        }
+
+        private void OpenDiscoveryButtom_Click(object sender, EventArgs e)
+        {
+            using(AppDiscoveryForm discoveryForm = new())
+            {
+                DialogResult result = discoveryForm.ShowDialog();
+
+                if (result != DialogResult.OK || discoveryForm.SelectedApp == null)
+                {
+                    return;
+                }
+
+                owoIPInput.Text = discoveryForm.SelectedApp;
+                connectionSettings.OWOAddress = discoveryForm.SelectedApp;
+                SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
             }
         }
     }

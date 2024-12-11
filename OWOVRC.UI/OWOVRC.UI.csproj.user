@@ -7,6 +7,9 @@
     <Compile Update="Controls\SelectableMuscle.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Forms\AppDiscoveryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

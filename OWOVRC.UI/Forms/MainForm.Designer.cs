@@ -85,6 +85,7 @@
             label3 = new Label();
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
+            openDiscoveryButton = new Button();
             owiStatusLabel = new Label();
             label19 = new Label();
             stopSensationsButton = new Button();
@@ -706,6 +707,7 @@
             // 
             // connectionGroup
             // 
+            connectionGroup.Controls.Add(openDiscoveryButton);
             connectionGroup.Controls.Add(owiStatusLabel);
             connectionGroup.Controls.Add(label19);
             connectionGroup.Controls.Add(stopSensationsButton);
@@ -725,6 +727,17 @@
             connectionGroup.TabIndex = 1;
             connectionGroup.TabStop = false;
             connectionGroup.Text = "Connection";
+            // 
+            // openDiscoveryButton
+            // 
+            openDiscoveryButton.Image = Properties.Resources.Search;
+            openDiscoveryButton.Location = new Point(173, 16);
+            openDiscoveryButton.Name = "openDiscoveryButton";
+            openDiscoveryButton.Size = new Size(23, 23);
+            openDiscoveryButton.TabIndex = 13;
+            helpToolTip.SetToolTip(openDiscoveryButton, "Scan for active MyOWO apps on the local network.\r\nThe app needs to be searching for games to be detected.");
+            openDiscoveryButton.UseVisualStyleBackColor = true;
+            openDiscoveryButton.Click += OpenDiscoveryButtom_Click;
             // 
             // owiStatusLabel
             // 
@@ -994,5 +1007,6 @@
         private LinkLabel presetsHelpLinkLabel;
         private Label notVeryHelpfulLabel;
         private Button configureCollidersIntensityButton;
+        private Button openDiscoveryButton;
     }
 }
