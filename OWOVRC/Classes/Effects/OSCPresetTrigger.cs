@@ -160,7 +160,7 @@ namespace OWOVRC.Classes.Effects
             Sensation sensation = preset.SensationObject
                 .MultiplyIntensityBy((Multiplier)intensity);
 
-            owo.AddSensation(sensation, muscles);
+            owo.AddSensation(sensation, muscles, preset.Name);
         }
 
         public override void Reset()

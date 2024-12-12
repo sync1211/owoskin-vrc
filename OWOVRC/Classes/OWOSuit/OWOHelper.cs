@@ -56,6 +56,12 @@ namespace OWOVRC.Classes.OWOSuit
             sensationManager.playOnce(sensation.WithMuscles(muscles));
         }
 
+        public void AddSensation(Sensation sensation, Muscle[] muscles, string name)
+        {
+            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), false);
+            sensationManager.play(instance);
+        }
+
         public void AddLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), true);
@@ -76,6 +82,12 @@ namespace OWOVRC.Classes.OWOSuit
         public void AddSensation(Sensation sensation)
         {
             sensationManager.playOnce(sensation);
+        }
+
+        public void AddSensation(Sensation sensation, string name)
+        {
+            AdvancedSensationStreamInstance instance = new(name, sensation, false);
+            sensationManager.play(instance);
         }
 
         public void StopAllSensations()

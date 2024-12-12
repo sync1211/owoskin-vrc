@@ -114,7 +114,7 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             if (IsLoop)
             {
-                owo.AddSensation(sensation, musclesScaled);
+                owo.AddSensation(sensation, musclesScaled, Name);
             }
             // Run or update sensation
             else if (owo.GetRunningSensations().ContainsKey(Name))

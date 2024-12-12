@@ -15,6 +15,8 @@ namespace OWOVRC.UI.Forms
         private readonly Sensation? testSensation;
         private readonly OWOHelper? owoHelper;
 
+        private const string SENSATION_NAME = "IntensityTest";
+
         /// <summary>
         /// Creates a new instance of the form.
         /// </summary>
@@ -220,7 +222,7 @@ namespace OWOVRC.UI.Forms
                 return;
             }
 
-            owoHelper.AddSensation(testSensation, musclesArray);
+            owoHelper.AddSensation(testSensation, musclesArray, SENSATION_NAME);
         }
 
         private void MuscleIntensityForm_Shown(object sender, EventArgs e)

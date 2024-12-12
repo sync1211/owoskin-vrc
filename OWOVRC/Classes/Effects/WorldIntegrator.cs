@@ -162,7 +162,7 @@ namespace OWOVRC.Classes.Effects
                 Sensation sensation = owiSensation.AsSensation()
                     .MultiplyIntensityBy((Multiplier)intensityMultiplier);
 
-                owo.AddSensation(sensation, muscles);
+                owo.AddSensation(sensation, muscles, owiSensation.Sensation);
             }
         }
 
