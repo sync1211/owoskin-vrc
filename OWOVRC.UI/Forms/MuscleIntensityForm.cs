@@ -2,6 +2,7 @@
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Controls;
+using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 
 namespace OWOVRC.UI.Forms
@@ -118,21 +119,21 @@ namespace OWOVRC.UI.Forms
             }
 
             muscleIntensityTrackBar.Value = intensity;
-            intensityValueTextBox.Text = muscleIntensityTrackBar.Value.ToString();
+            intensityValueInput.Text = muscleIntensityTrackBar.Value.ToString();
         }
 
         private void MuscleIntensityTrackBar_Scroll(object sender, EventArgs e)
         {
-            intensityValueTextBox.Text = muscleIntensityTrackBar.Value.ToString();
+            intensityValueInput.Text = muscleIntensityTrackBar.Value.ToString();
 
             muscleIntensities[currentMuscleID] = muscleIntensityTrackBar.Value;
         }
 
         private void IntensityValueTextBox_Exit(object sender, EventArgs e)
         {
-            if (!int.TryParse(intensityValueTextBox.Text, out int value) || value < 0 || value > 200)
+            if (!int.TryParse(intensityValueInput.Text, out int value) || value < 0 || value > 200)
             {
-                intensityValueTextBox.Text = muscleIntensityTrackBar.Value.ToString();
+                intensityValueInput.Text = muscleIntensityTrackBar.Value.ToString();
             }
 
             muscleIntensities[currentMuscleID] = value;
@@ -150,12 +151,23 @@ namespace OWOVRC.UI.Forms
             UnregisterClickEvents();
         }
 
-        private void ResetButton_Click(object sender, EventArgs e)
+        private void SetIntensityForAllButton_Click(object sender, EventArgs e)
         {
+            int intensity = 100;
+            using (NumberInputDialog dialog = new("Enter intensity for all muscles:", "Input Intensity", 0, 200, 100))
+            {
+                if (dialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                intensity = dialog.Value;
+            }
+
             // Reset all muscles to 100%
             foreach (int key in muscleIntensities.Keys)
             {
-                muscleIntensities[key] = 100;
+                muscleIntensities[key] = intensity;
             }
             ShowFrontButton_Click(sender, e);
         }

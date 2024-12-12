@@ -353,55 +353,9 @@ namespace OWOVRC.UI
             SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
 
-        private static int ValidateIntSetting(TextBox input, int settingsValue, int minValue = 0, int maxValue = int.MaxValue)
-        {
-            if (!int.TryParse(input.Text, out int value))
-            {
-                input.Text = settingsValue.ToString();
-                return settingsValue;
-            }
-
-            if (value < minValue)
-            {
-                input.Text = minValue.ToString();
-                return minValue;
-            }
-
-            if (value > maxValue)
-            {
-                input.Text = maxValue.ToString();
-                return maxValue;
-            }
-
-            return value;
-        }
-
-        private static float ValidateFloatSetting(TextBox input, float settingsValue, float minValue = 0, float maxValue = float.MaxValue)
-        {
-            if (!float.TryParse(input.Text, out float value))
-            {
-                input.Text = settingsValue.ToString();
-                return settingsValue;
-            }
-
-            if (value < minValue)
-            {
-                input.Text = minValue.ToString();
-                return minValue;
-            }
-
-            if (value > maxValue)
-            {
-                input.Text = maxValue.ToString();
-                return maxValue;
-            }
-
-            return value;
-        }
-
         private void OscPortInput_Exit(object sender, EventArgs e)
         {
-            connectionSettings.OSCPort = ValidateIntSetting(oscPortInput, connectionSettings.OSCPort, 1024, 65535);
+            connectionSettings.OSCPort = (int) oscPortInput.Value;
 
             SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
@@ -413,13 +367,13 @@ namespace OWOVRC.UI
             collidersSettings.AllowContinuous = collidersAllowContinuousCheckbox.Checked;
 
             // Priority
-            collidersSettings.Priority = ValidateIntSetting(collidersPriorityInput, collidersSettings.Priority);
+            collidersSettings.Priority = (int) collidersPriorityInput.Value;
 
             // MinIintensity
-            collidersSettings.MinIntensity = ValidateIntSetting(collidersMinIntensityInput, collidersSettings.MinIntensity, 0, 100);
+            collidersSettings.MinIntensity = (int) collidersMinIntensityInput.Value;
 
             // Speed multiplier
-            collidersSettings.SpeedMultiplier = ValidateFloatSetting(collidersSpeedMultiplierInput, collidersSettings.SpeedMultiplier, 0, 2);
+            collidersSettings.SpeedMultiplier = (float) collidersSpeedMultiplierInput.Value;
 
             UpdateCollidersEffectSettings();
             SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
@@ -433,16 +387,16 @@ namespace OWOVRC.UI
             velocitySettings.IgnoreWhenSeated = velocityIgnoreWhenSeatedCheckbox.Checked;
 
             // Priority
-            velocitySettings.Priority = ValidateIntSetting(velocityPriorityInput, velocitySettings.Priority);
+            velocitySettings.Priority = (int) velocityPriorityInput.Value;
 
             // Threshold
-            velocitySettings.Threshold = ValidateFloatSetting(velocityThresholdInput, velocitySettings.Threshold);
+            velocitySettings.Threshold = (float) velocityThresholdInput.Value;
 
             // Min impact
-            velocitySettings.StopVelocityThreshold = ValidateFloatSetting(velocityMinImpactInput, velocitySettings.StopVelocityThreshold);
+            velocitySettings.StopVelocityThreshold = (float) velocityMinImpactInput.Value;
 
             // Speed cap
-            velocitySettings.SpeedCap = ValidateFloatSetting(velocitySpeedCapInput, velocitySettings.SpeedCap);
+            velocitySettings.SpeedCap = (float) velocitySpeedCapInput.Value;
 
             UpdateVelocityEffectSettings();
             SettingsHelper.SaveSettingsToFile(velocitySettings, "velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
@@ -466,13 +420,13 @@ namespace OWOVRC.UI
             owiSettings.Enabled = owiEnabledCheckbox.Checked;
 
             // Priority
-            owiSettings.Priority = ValidateIntSetting(owiPriorityInput, owiSettings.Priority);
+            owiSettings.Priority = (int) owiPriorityInput.Value;
 
             // Log update interval
-            owiSettings.UpdateInterval = ValidateIntSetting(owiUpdateIntervalInput, owiSettings.UpdateInterval, 10, 10000);
+            owiSettings.UpdateInterval = (int) owiUpdateIntervalInput.Value;
 
             // Intensity
-            owiSettings.Intensity = ValidateIntSetting(owiIntensityInput, owiSettings.Intensity, 0, 100);
+            owiSettings.Intensity = (int) owiIntensityInput.Value; //TODO: Replace with dialog
 
             UpdateOWISettings();
             SettingsHelper.SaveSettingsToFile(owiSettings, "owi.json", "OWO World Integrator", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
@@ -506,9 +460,7 @@ namespace OWOVRC.UI
             oscPresetsSettings.Enabled = oscPresetsEnabledCheckbox.Checked;
 
             // Priority
-            oscPresetsSettings.Priority = ValidateIntSetting(oscPresetsPriorityInput, oscPresetsSettings.Priority);
-
-            UpdateOSCPrestsSettings();
+            oscPresetsSettings.Priority = (int) oscPresetsPriorityInput.Value;
             SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
         }
 

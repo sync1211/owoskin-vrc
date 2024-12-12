@@ -50,7 +50,7 @@ namespace OWOVRC.UI.Forms
             backMusclesImg = new PictureBox();
             showBackButton = new Button();
             muscleIntensityTrackBar = new TrackBar();
-            intensityValueTextBox = new TextBox();
+            intensityValueInput = new NumericUpDown();
             label1 = new Label();
             label2 = new Label();
             muscleNameLabel = new Label();
@@ -58,7 +58,7 @@ namespace OWOVRC.UI.Forms
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
-            resetButton = new Button();
+            setIntensityForAllButton = new Button();
             label6 = new Label();
             panel1 = new Panel();
             label8 = new Label();
@@ -81,6 +81,7 @@ namespace OWOVRC.UI.Forms
             ((System.ComponentModel.ISupportInitialize)dorsalRMuscle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)backMusclesImg).BeginInit();
             ((System.ComponentModel.ISupportInitialize)muscleIntensityTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)intensityValueInput).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -333,14 +334,16 @@ namespace OWOVRC.UI.Forms
             muscleIntensityTrackBar.Value = 100;
             muscleIntensityTrackBar.Scroll += MuscleIntensityTrackBar_Scroll;
             // 
-            // intensityValueTextBox
+            // intensityValueInput
             // 
-            intensityValueTextBox.Location = new Point(349, 471);
-            intensityValueTextBox.Name = "intensityValueTextBox";
-            intensityValueTextBox.Size = new Size(35, 23);
-            intensityValueTextBox.TabIndex = 4;
-            helpToolTip.SetToolTip(intensityValueTextBox, resources.GetString("intensityValueTextBox.ToolTip"));
-            intensityValueTextBox.Leave += IntensityValueTextBox_Exit;
+            intensityValueInput.Increment = new decimal(new int[] { 5, 0, 0, 0 });
+            intensityValueInput.Location = new Point(346, 471);
+            intensityValueInput.Maximum = new decimal(new int[] { 200, 0, 0, 0 });
+            intensityValueInput.Name = "intensityValueInput";
+            intensityValueInput.Size = new Size(42, 23);
+            intensityValueInput.TabIndex = 4;
+            helpToolTip.SetToolTip(intensityValueInput, resources.GetString("intensityValueInput.ToolTip"));
+            intensityValueInput.Leave += IntensityValueTextBox_Exit;
             // 
             // label1
             // 
@@ -355,7 +358,7 @@ namespace OWOVRC.UI.Forms
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(384, 476);
+            label2.Location = new Point(388, 476);
             label2.Name = "label2";
             label2.Size = new Size(17, 15);
             label2.TabIndex = 6;
@@ -413,16 +416,16 @@ namespace OWOVRC.UI.Forms
             label5.TabIndex = 11;
             label5.Text = "100";
             // 
-            // resetButton
+            // setIntensityForAllButton
             // 
-            resetButton.Location = new Point(12, 555);
-            resetButton.Name = "resetButton";
-            resetButton.Size = new Size(75, 23);
-            resetButton.TabIndex = 12;
-            resetButton.Text = "Reset";
-            helpToolTip.SetToolTip(resetButton, "Reset all muscles to 100%");
-            resetButton.UseVisualStyleBackColor = true;
-            resetButton.Click += ResetButton_Click;
+            setIntensityForAllButton.Location = new Point(12, 555);
+            setIntensityForAllButton.Name = "setIntensityForAllButton";
+            setIntensityForAllButton.Size = new Size(75, 23);
+            setIntensityForAllButton.TabIndex = 12;
+            setIntensityForAllButton.Text = "Modify all";
+            helpToolTip.SetToolTip(setIntensityForAllButton, "Reset all muscles to 100%");
+            setIntensityForAllButton.UseVisualStyleBackColor = true;
+            setIntensityForAllButton.Click += SetIntensityForAllButton_Click;
             // 
             // label6
             // 
@@ -470,7 +473,7 @@ namespace OWOVRC.UI.Forms
             // testSensationButton
             // 
             testSensationButton.Image = Properties.Resources.Play;
-            testSensationButton.Location = new Point(404, 471);
+            testSensationButton.Location = new Point(408, 471);
             testSensationButton.Name = "testSensationButton";
             testSensationButton.Size = new Size(23, 23);
             testSensationButton.TabIndex = 15;
@@ -488,12 +491,12 @@ namespace OWOVRC.UI.Forms
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(panel1);
-            Controls.Add(resetButton);
+            Controls.Add(setIntensityForAllButton);
             Controls.Add(closeButton);
             Controls.Add(muscleNameLabel);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(intensityValueTextBox);
+            Controls.Add(intensityValueInput);
             Controls.Add(muscleIntensityTrackBar);
             Controls.Add(showBackButton);
             Controls.Add(showFrontButton);
@@ -521,6 +524,7 @@ namespace OWOVRC.UI.Forms
             ((System.ComponentModel.ISupportInitialize)dorsalRMuscle).EndInit();
             ((System.ComponentModel.ISupportInitialize)backMusclesImg).EndInit();
             ((System.ComponentModel.ISupportInitialize)muscleIntensityTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)intensityValueInput).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -547,7 +551,7 @@ namespace OWOVRC.UI.Forms
         private SelectableMuscle dorsalLMuscle;
         private SelectableMuscle lumbarRMuscle;
         private SelectableMuscle lumbarLMuscle;
-        private TextBox intensityValueTextBox;
+        private NumericUpDown intensityValueInput;
         private Label label1;
         private Label label2;
         private Label muscleNameLabel;
@@ -555,7 +559,7 @@ namespace OWOVRC.UI.Forms
         private Label label3;
         private Label label4;
         private Label label5;
-        private Button resetButton;
+        private Button setIntensityForAllButton;
         private Label label6;
         private Panel panel1;
         private Label label7;

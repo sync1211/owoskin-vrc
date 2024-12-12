@@ -35,13 +35,13 @@
             configureCollidersIntensityButton = new Button();
             collidersHelpLinkLabel = new LinkLabel();
             label12 = new Label();
-            collidersPriorityInput = new TextBox();
+            collidersPriorityInput = new NumericUpDown();
             label6 = new Label();
             velocityBasedGroupBox = new GroupBox();
             label9 = new Label();
-            collidersSpeedMultiplierInput = new TextBox();
+            collidersSpeedMultiplierInput = new NumericUpDown();
             label8 = new Label();
-            collidersMinIntensityInput = new TextBox();
+            collidersMinIntensityInput = new NumericUpDown();
             collidersUseVelocityCheckbox = new CheckBox();
             collidersAllowContinuousCheckbox = new CheckBox();
             collidersEnabledCheckbox = new CheckBox();
@@ -50,34 +50,34 @@
             notVeryHelpfulLabel = new Label();
             label11 = new Label();
             label13 = new Label();
-            velocitySpeedCapInput = new TextBox();
-            velocityPriorityInput = new TextBox();
+            velocitySpeedCapInput = new NumericUpDown();
+            velocityPriorityInput = new NumericUpDown();
             velocityIgnoreWhenSeatedCheckbox = new CheckBox();
             groupBox2 = new GroupBox();
             label10 = new Label();
             velocityImpactEnabledCheckbox = new CheckBox();
-            velocityMinImpactInput = new TextBox();
+            velocityMinImpactInput = new NumericUpDown();
             label7 = new Label();
-            velocityThresholdInput = new TextBox();
+            velocityThresholdInput = new NumericUpDown();
             velocityIgnoreWhenGroundedCheckbox = new CheckBox();
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             owiSettingsPage = new TabPage();
             label17 = new Label();
-            owiIntensityInput = new TextBox();
+            owiIntensityInput = new NumericUpDown();
             label16 = new Label();
-            owiUpdateIntervalInput = new TextBox();
+            owiUpdateIntervalInput = new NumericUpDown();
             groupBox3 = new GroupBox();
             label15 = new Label();
             owiLinkLabel = new LinkLabel();
             label14 = new Label();
-            owiPriorityInput = new TextBox();
+            owiPriorityInput = new NumericUpDown();
             owiEnabledCheckbox = new CheckBox();
             applyOwiSettingsButton = new Button();
             oscPresetsPage = new TabPage();
             presetsHelpLinkLabel = new LinkLabel();
             label18 = new Label();
-            oscPresetsPriorityInput = new TextBox();
+            oscPresetsPriorityInput = new NumericUpDown();
             oscPresetsEnabledCheckbox = new CheckBox();
             openOscPresetsFormButton = new Button();
             applyOscPresetsSettingsButton = new Button();
@@ -89,7 +89,7 @@
             owiStatusLabel = new Label();
             label19 = new Label();
             stopSensationsButton = new Button();
-            oscPortInput = new TextBox();
+            oscPortInput = new NumericUpDown();
             owoIPInput = new MaskedTextBox();
             label5 = new Label();
             label4 = new Label();
@@ -103,13 +103,25 @@
             helpToolTip = new ToolTip(components);
             tabControl1.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
             velocityBasedGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)collidersSpeedMultiplierInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)collidersMinIntensityInput).BeginInit();
             velocitySettingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)velocitySpeedCapInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).BeginInit();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)velocityMinImpactInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).BeginInit();
             owiSettingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)owiIntensityInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).BeginInit();
             groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)owiPriorityInput).BeginInit();
             oscPresetsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)oscPresetsPriorityInput).BeginInit();
             connectionGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)oscPortInput).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -153,6 +165,7 @@
             configureCollidersIntensityButton.Size = new Size(89, 23);
             configureCollidersIntensityButton.TabIndex = 11;
             configureCollidersIntensityButton.Text = "Configure";
+            helpToolTip.SetToolTip(configureCollidersIntensityButton, "Confirm muscle intensities for this effect");
             configureCollidersIntensityButton.UseVisualStyleBackColor = true;
             configureCollidersIntensityButton.Click += ConfigureCollidersIntensityButton_Click;
             // 
@@ -223,7 +236,10 @@
             // 
             // collidersSpeedMultiplierInput
             // 
+            collidersSpeedMultiplierInput.DecimalPlaces = 2;
+            collidersSpeedMultiplierInput.Increment = new decimal(new int[] { 5, 0, 0, 65536 });
             collidersSpeedMultiplierInput.Location = new Point(247, 104);
+            collidersSpeedMultiplierInput.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             collidersSpeedMultiplierInput.Name = "collidersSpeedMultiplierInput";
             collidersSpeedMultiplierInput.Size = new Size(89, 23);
             collidersSpeedMultiplierInput.TabIndex = 10;
@@ -349,6 +365,7 @@
             // 
             // velocitySpeedCapInput
             // 
+            velocitySpeedCapInput.DecimalPlaces = 2;
             velocitySpeedCapInput.Location = new Point(262, 83);
             velocitySpeedCapInput.Name = "velocitySpeedCapInput";
             velocitySpeedCapInput.Size = new Size(89, 23);
@@ -409,6 +426,7 @@
             // 
             // velocityMinImpactInput
             // 
+            velocityMinImpactInput.DecimalPlaces = 2;
             velocityMinImpactInput.Location = new Point(247, 41);
             velocityMinImpactInput.Name = "velocityMinImpactInput";
             velocityMinImpactInput.Size = new Size(89, 23);
@@ -427,6 +445,7 @@
             // 
             // velocityThresholdInput
             // 
+            velocityThresholdInput.DecimalPlaces = 2;
             velocityThresholdInput.Location = new Point(262, 55);
             velocityThresholdInput.Name = "velocityThresholdInput";
             velocityThresholdInput.Size = new Size(89, 23);
@@ -516,11 +535,15 @@
             // 
             // owiUpdateIntervalInput
             // 
+            owiUpdateIntervalInput.Increment = new decimal(new int[] { 100, 0, 0, 0 });
             owiUpdateIntervalInput.Location = new Point(262, 55);
+            owiUpdateIntervalInput.Maximum = new decimal(new int[] { 2000, 0, 0, 0 });
+            owiUpdateIntervalInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             owiUpdateIntervalInput.Name = "owiUpdateIntervalInput";
             owiUpdateIntervalInput.Size = new Size(89, 23);
             owiUpdateIntervalInput.TabIndex = 22;
             helpToolTip.SetToolTip(owiUpdateIntervalInput, "Time between checking the VRChat log for new sensations from OWI");
+            owiUpdateIntervalInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // groupBox3
             // 
@@ -731,7 +754,7 @@
             // openDiscoveryButton
             // 
             openDiscoveryButton.Image = Properties.Resources.Search;
-            openDiscoveryButton.Location = new Point(173, 16);
+            openDiscoveryButton.Location = new Point(150, 16);
             openDiscoveryButton.Name = "openDiscoveryButton";
             openDiscoveryButton.Size = new Size(23, 23);
             openDiscoveryButton.TabIndex = 13;
@@ -776,18 +799,20 @@
             // oscPortInput
             // 
             oscPortInput.Location = new Point(73, 42);
+            oscPortInput.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
+            oscPortInput.Minimum = new decimal(new int[] { 1024, 0, 0, 0 });
             oscPortInput.Name = "oscPortInput";
             oscPortInput.Size = new Size(100, 23);
             oscPortInput.TabIndex = 9;
-            oscPortInput.Text = "9001";
             helpToolTip.SetToolTip(oscPortInput, "Port to listen for OSC messages from VRChat");
+            oscPortInput.Value = new decimal(new int[] { 1024, 0, 0, 0 });
             oscPortInput.Leave += OscPortInput_Exit;
             // 
             // owoIPInput
             // 
-            owoIPInput.Location = new Point(73, 16);
+            owoIPInput.Location = new Point(74, 16);
             owoIPInput.Name = "owoIPInput";
-            owoIPInput.Size = new Size(100, 23);
+            owoIPInput.Size = new Size(76, 23);
             owoIPInput.TabIndex = 8;
             owoIPInput.Text = "127.0.0.1";
             helpToolTip.SetToolTip(owoIPInput, "IP of the OWO app to connect to");
@@ -916,20 +941,32 @@
             tabControl1.ResumeLayout(false);
             collidersSettingsPage.ResumeLayout(false);
             collidersSettingsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).EndInit();
             velocityBasedGroupBox.ResumeLayout(false);
             velocityBasedGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)collidersSpeedMultiplierInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)collidersMinIntensityInput).EndInit();
             velocitySettingsPage.ResumeLayout(false);
             velocitySettingsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)velocitySpeedCapInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)velocityMinImpactInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).EndInit();
             owiSettingsPage.ResumeLayout(false);
             owiSettingsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)owiIntensityInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).EndInit();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)owiPriorityInput).EndInit();
             oscPresetsPage.ResumeLayout(false);
             oscPresetsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)oscPresetsPriorityInput).EndInit();
             connectionGroup.ResumeLayout(false);
             connectionGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)oscPortInput).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
@@ -949,7 +986,7 @@
         private Button stopButton;
         private ComboBox logLevelComboBox;
         private Label label3;
-        private TextBox oscPortInput;
+        private NumericUpDown oscPortInput;
         private MaskedTextBox owoIPInput;
         private Label label5;
         private Label label4;
@@ -963,44 +1000,44 @@
         private CheckBox collidersUseVelocityCheckbox;
         private CheckBox collidersAllowContinuousCheckbox;
         private Label label8;
-        private TextBox collidersMinIntensityInput;
+        private NumericUpDown collidersMinIntensityInput;
         private Label label9;
-        private TextBox collidersSpeedMultiplierInput;
+        private NumericUpDown collidersSpeedMultiplierInput;
         private CheckBox velocityEnabledCheckbox;
         private Label label7;
-        private TextBox velocityThresholdInput;
+        private NumericUpDown velocityThresholdInput;
         private Label label10;
-        private TextBox velocityMinImpactInput;
+        private NumericUpDown velocityMinImpactInput;
         private GroupBox groupBox2;
         private Label label11;
-        private TextBox velocitySpeedCapInput;
+        private NumericUpDown velocitySpeedCapInput;
         private CheckBox velocityImpactEnabledCheckbox;
         private CheckBox velocityIgnoreWhenGroundedCheckbox;
         private CheckBox velocityIgnoreWhenSeatedCheckbox;
         private Button stopSensationsButton;
         private Label label12;
-        private TextBox collidersPriorityInput;
+        private NumericUpDown collidersPriorityInput;
         private Label label13;
-        private TextBox velocityPriorityInput;
+        private NumericUpDown velocityPriorityInput;
         private TabPage owiSettingsPage;
         private LinkLabel owiLinkLabel;
         private Label label14;
-        private TextBox owiPriorityInput;
+        private NumericUpDown owiPriorityInput;
         private CheckBox owiEnabledCheckbox;
         private Button applyOwiSettingsButton;
         private Label label15;
         private GroupBox groupBox3;
         private Label label16;
-        private TextBox owiUpdateIntervalInput;
+        private NumericUpDown owiUpdateIntervalInput;
         private Label label17;
-        private TextBox owiIntensityInput;
+        private NumericUpDown owiIntensityInput;
         private Label owiStatusLabel;
         private Label label19;
         private TabPage oscPresetsPage;
         private Button applyOscPresetsSettingsButton;
         private Button openOscPresetsFormButton;
         private Label label18;
-        private TextBox oscPresetsPriorityInput;
+        private NumericUpDown oscPresetsPriorityInput;
         private CheckBox oscPresetsEnabledCheckbox;
         private ToolTip helpToolTip;
         private LinkLabel collidersHelpLinkLabel;
