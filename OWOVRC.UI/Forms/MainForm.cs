@@ -1,3 +1,4 @@
+using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
 using OWOVRC.Classes;
 using OWOVRC.Classes.Effects;
@@ -33,7 +34,11 @@ namespace OWOVRC.UI
         private OSCEffectBase[] effects = [];
         private WorldIntegrator? owi;
 
+        // Status
         private bool IsRunning;
+
+        // Timer for UI updates
+        private readonly System.Timers.Timer uiUpdateTimer;
 
         public MainForm()
         {
@@ -41,13 +46,23 @@ namespace OWOVRC.UI
 
             logLevelSwitch = Logging.SetUpLogger(logBox);
 
+            // Call UpdateASMStatus every 0.1 Seconds
+            uiUpdateTimer = new();
+            uiUpdateTimer.Interval = 100;
+            uiUpdateTimer.Elapsed += HandleTimerTick;
+
             // Call UpdateConnectionStatus on every ui update
-            Application.Idle += OnApplicationIdle;
+            Application.Idle += HandleApplicationIdle;
         }
 
-        private void OnApplicationIdle(object? sender, EventArgs e)
+        private void HandleApplicationIdle(object? sender, EventArgs e)
         {
             UpdateConnectionStatus();
+        }
+
+        private void HandleTimerTick(object? sender, EventArgs e)
+        {
+            Invoke(UpdateASMStatus);
         }
 
         private void LoadSettings()
@@ -164,6 +179,32 @@ namespace OWOVRC.UI
             {
                 owiStatusLabel.Text = "Stopped";
                 owiStatusLabel.ForeColor = Color.Red;
+            }
+        }
+
+        private void UpdateASMStatus()
+        {
+            if (statusTabControl.SelectedTab != sensationsPage)
+            {
+                return;
+            }
+
+            string[] activeSensations = owo.GetRunningSensations().Keys.ToArray();
+            for (int i = 0; i < activeSensations.Length; i++)
+            {
+                string sensationName = activeSensations[i];
+                if (string.IsNullOrEmpty(sensationName))
+                {
+                    activeSensations[i] = "<Unnamed>";
+                }
+            }
+
+            int selectedItemIndex = activeSensationsListBox.SelectedIndex;
+            activeSensationsListBox.DataSource = activeSensations;
+
+            if (selectedItemIndex >= 0 && selectedItemIndex < activeSensations.Length)
+            {
+                activeSensationsListBox.SelectedIndex = selectedItemIndex;
             }
         }
 
@@ -315,19 +356,26 @@ namespace OWOVRC.UI
         private void MainForm_Shown(object sender, EventArgs e)
         {
             owoIPInput.ValidatingType = typeof(System.Net.IPAddress);
+
             UpdateConnectionSettings();
             UpdateCollidersEffectSettings();
             UpdateVelocityEffectSettings();
             UpdateOWISettings();
             UpdateOSCPrestsSettings();
+
+            uiUpdateTimer.Start();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            uiUpdateTimer.Stop();
+
             // Stop logging
             Log.CloseAndFlush();
 
-            Application.Idle -= OnApplicationIdle;
+            // Remove events
+            Application.Idle -= HandleApplicationIdle;
+            uiUpdateTimer.Elapsed -= HandleTimerTick;
 
             // Stop OWO
             StopOWO();
@@ -355,7 +403,7 @@ namespace OWOVRC.UI
 
         private void OscPortInput_Exit(object sender, EventArgs e)
         {
-            connectionSettings.OSCPort = (int) oscPortInput.Value;
+            connectionSettings.OSCPort = (int)oscPortInput.Value;
 
             SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
@@ -367,13 +415,13 @@ namespace OWOVRC.UI
             collidersSettings.AllowContinuous = collidersAllowContinuousCheckbox.Checked;
 
             // Priority
-            collidersSettings.Priority = (int) collidersPriorityInput.Value;
+            collidersSettings.Priority = (int)collidersPriorityInput.Value;
 
             // MinIintensity
-            collidersSettings.MinIntensity = (int) collidersMinIntensityInput.Value;
+            collidersSettings.MinIntensity = (int)collidersMinIntensityInput.Value;
 
             // Speed multiplier
-            collidersSettings.SpeedMultiplier = (float) collidersSpeedMultiplierInput.Value;
+            collidersSettings.SpeedMultiplier = (float)collidersSpeedMultiplierInput.Value;
 
             UpdateCollidersEffectSettings();
             SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
@@ -387,16 +435,16 @@ namespace OWOVRC.UI
             velocitySettings.IgnoreWhenSeated = velocityIgnoreWhenSeatedCheckbox.Checked;
 
             // Priority
-            velocitySettings.Priority = (int) velocityPriorityInput.Value;
+            velocitySettings.Priority = (int)velocityPriorityInput.Value;
 
             // Threshold
-            velocitySettings.Threshold = (float) velocityThresholdInput.Value;
+            velocitySettings.Threshold = (float)velocityThresholdInput.Value;
 
             // Min impact
-            velocitySettings.StopVelocityThreshold = (float) velocityMinImpactInput.Value;
+            velocitySettings.StopVelocityThreshold = (float)velocityMinImpactInput.Value;
 
             // Speed cap
-            velocitySettings.SpeedCap = (float) velocitySpeedCapInput.Value;
+            velocitySettings.SpeedCap = (float)velocitySpeedCapInput.Value;
 
             UpdateVelocityEffectSettings();
             SettingsHelper.SaveSettingsToFile(velocitySettings, "velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
@@ -420,13 +468,13 @@ namespace OWOVRC.UI
             owiSettings.Enabled = owiEnabledCheckbox.Checked;
 
             // Priority
-            owiSettings.Priority = (int) owiPriorityInput.Value;
+            owiSettings.Priority = (int)owiPriorityInput.Value;
 
             // Log update interval
-            owiSettings.UpdateInterval = (int) owiUpdateIntervalInput.Value;
+            owiSettings.UpdateInterval = (int)owiUpdateIntervalInput.Value;
 
             // Intensity
-            owiSettings.Intensity = (int) owiIntensityInput.Value; //TODO: Replace with dialog
+            owiSettings.Intensity = (int)owiIntensityInput.Value; //TODO: Replace with dialog
 
             UpdateOWISettings();
             SettingsHelper.SaveSettingsToFile(owiSettings, "owi.json", "OWO World Integrator", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
@@ -460,7 +508,7 @@ namespace OWOVRC.UI
             oscPresetsSettings.Enabled = oscPresetsEnabledCheckbox.Checked;
 
             // Priority
-            oscPresetsSettings.Priority = (int) oscPresetsPriorityInput.Value;
+            oscPresetsSettings.Priority = (int)oscPresetsPriorityInput.Value;
             SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
         }
 
@@ -495,7 +543,7 @@ namespace OWOVRC.UI
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
         {
             Sensation testSensation = SensationsFactory.Create(collidersSettings.Frequency, collidersSettings.SensationSeconds, 100, 0, 0, 0);
-            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, testSensation))
+            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, testSensation, owo))
             {
                 intensityForm.ShowDialog();
                 SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
@@ -504,7 +552,7 @@ namespace OWOVRC.UI
 
         private void OpenDiscoveryButtom_Click(object sender, EventArgs e)
         {
-            using(AppDiscoveryForm discoveryForm = new())
+            using (AppDiscoveryForm discoveryForm = new())
             {
                 DialogResult result = discoveryForm.ShowDialog();
 
@@ -517,6 +565,72 @@ namespace OWOVRC.UI
                 connectionSettings.OWOAddress = discoveryForm.SelectedApp;
                 SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
             }
+        }
+
+        private void StopSelectedSensationNowButton_Click(object sender, EventArgs e)
+        {
+            if (activeSensationsListBox.SelectedItem is not string sensationName)
+            {
+                return;
+            }
+
+            if (sensationName.Equals("<Unnamed>"))
+            {
+                sensationName = String.Empty;
+            }
+
+            Dictionary<string, AdvancedSensationStreamInstance> sensations = owo.GetRunningSensations();
+
+            AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(sensationName);
+            if (selectedSensation == null)
+            {
+                Log.Warning("The sensation {0} could not be found!", sensationName);
+                return;
+            }
+
+            StopSensationInstance(selectedSensation);
+        }
+
+        private void StopSelectedSensationLoopButton_Click(object sender, EventArgs e)
+        {
+            if (activeSensationsListBox.SelectedItem is not string sensationName)
+            {
+                return;
+            }
+
+            if (sensationName.Equals("<Unnamed>"))
+            {
+                sensationName = String.Empty;
+            }
+
+            Dictionary<string, AdvancedSensationStreamInstance> sensations = owo.GetRunningSensations();
+
+            AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(sensationName);
+            if (selectedSensation == null)
+            {
+                Log.Warning("The sensation {0} could not be found!", sensationName);
+                return;
+            }
+
+            selectedSensation.LastCalculationOfCycle += StopSensationInstance;
+
+            Log.Information("Marked sensation {0} to stop on the next loop", sensationName);
+        }
+
+        private void StopSensationInstance(AdvancedSensationStreamInstance instance)
+        {
+            owo.StopLoopedSensation(instance.name);
+
+            Log.Information("Stopped sensation {0}", instance.name);
+
+            UpdateASMStatus();
+        }
+
+        private void ActiveSensationsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool itemSelected = activeSensationsListBox.SelectedItem != null;
+            stopSelectedSensationNowButton.Enabled = itemSelected;
+            stopSelectedSensationLoopButton.Enabled = itemSelected;
         }
     }
 }
