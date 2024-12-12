@@ -29,7 +29,7 @@ namespace OWOVRC.UI
         // OWO
         private readonly OWOHelper owo = new();
         private OSCReceiver receiver = new();
-        private const string UnnamedSensatioName = "<Unnamed>";
+        private const string UnnamedSensationName = "<Unnamed>";
 
         // Effects
         private OSCEffectBase[] effects = [];
@@ -51,10 +51,6 @@ namespace OWOVRC.UI
             uiUpdateTimer = new();
             uiUpdateTimer.Interval = 100;
             uiUpdateTimer.Elapsed += HandleTimerTick;
-
-            sensationNameLabel.Text = String.Empty;
-            sensationLoopLabel.Text = String.Empty;
-            sensationFirstTickLabel.Text = String.Empty;
 
             // Call UpdateConnectionStatus on every ui update
             Application.Idle += HandleApplicationIdle;
@@ -207,7 +203,7 @@ namespace OWOVRC.UI
                 string sensationName = activeSensations[i];
                 if (string.IsNullOrEmpty(sensationName))
                 {
-                    activeSensations[i] = UnnamedSensatioName;
+                    activeSensations[i] = UnnamedSensationName;
                 }
             }
 
@@ -218,6 +214,24 @@ namespace OWOVRC.UI
             {
                 activeSensationsListBox.SelectedIndex = selectedItemIndex;
             }
+
+            UpdateSensationControls();
+
+            // Clear details if no item is selected
+            if (activeSensationsListBox.SelectedItem == null)
+            {
+                sensationNameLabel.Text = String.Empty;
+                sensationLoopLabel.Text = String.Empty;
+                sensationFirstTickLabel.Text = String.Empty;
+            }
+        }
+
+        private void UpdateSensationControls()
+        {
+            // Update buttons
+            bool itemSelected = activeSensationsListBox.SelectedItem != null;
+            stopSelectedSensationNowButton.Enabled = itemSelected;
+            stopSelectedSensationLoopButton.Enabled = itemSelected;
         }
 
         private void StartOWO()
@@ -553,7 +567,7 @@ namespace OWOVRC.UI
 
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
         {
-            Sensation testSensation = SensationsFactory.Create(collidersSettings.Frequency, collidersSettings.SensationSeconds, 100, 0, 0, 0);
+            Sensation testSensation = SensationsFactory.Create(collidersSettings.Frequency, collidersSettings.SensationSeconds + 1000, 100, 0, 0, 0);
             using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, testSensation, owo))
             {
                 intensityForm.ShowDialog();
@@ -585,7 +599,7 @@ namespace OWOVRC.UI
                 return;
             }
 
-            if (sensationName.Equals(UnnamedSensatioName))
+            if (sensationName.Equals(UnnamedSensationName))
             {
                 sensationName = String.Empty;
             }
@@ -609,7 +623,7 @@ namespace OWOVRC.UI
                 return;
             }
 
-            if (sensationName.Equals(UnnamedSensatioName))
+            if (sensationName.Equals(UnnamedSensationName))
             {
                 sensationName = String.Empty;
             }
@@ -637,24 +651,14 @@ namespace OWOVRC.UI
 
         private void ActiveSensationsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool itemSelected = true;
+            UpdateSensationControls();
+
             if (activeSensationsListBox.SelectedItem is not string sensationName)
             {
-                itemSelected = false;
                 return;
             }
 
-            stopSelectedSensationNowButton.Enabled = itemSelected;
-            stopSelectedSensationLoopButton.Enabled = itemSelected;
-
-            if (!itemSelected)
-            {
-                sensationNameLabel.Text = String.Empty;
-                sensationLoopLabel.Text = String.Empty;
-                return;
-            }
-
-            if (sensationName.Equals(UnnamedSensatioName))
+            if (sensationName.Equals(UnnamedSensationName))
             {
                 sensationName = String.Empty;
             }
@@ -668,10 +672,15 @@ namespace OWOVRC.UI
                 return;
             }
 
-            // Update the details
-            sensationNameLabel.Text = selectedSensation.name;
-            sensationLoopLabel.Text = selectedSensation.loop ? "Yes" : "No";
-            sensationFirstTickLabel.Text = selectedSensation.firstTick.ToString();
+            // Update sensation details
+            UpdateSensationDetails(selectedSensation);
+        }
+
+        public void UpdateSensationDetails(AdvancedSensationStreamInstance instance)
+        {
+            sensationNameLabel.Text = instance.name;
+            sensationLoopLabel.Text = instance.loop ? "Yes" : "No";
+            sensationFirstTickLabel.Text = instance.firstTick.ToString();
         }
     }
 }
