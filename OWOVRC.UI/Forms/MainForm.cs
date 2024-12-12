@@ -53,7 +53,21 @@ namespace OWOVRC.UI
                 Interval = 100
             };
             uiUpdateTimer.Elapsed += HandleTimerElapsed;
+
+            //owo.OnSensationChange += HandleSensationChange;
         }
+
+        //private void HandleSensationChange(object? sender, AdvancedSensationStreamInstance instance)
+        //{
+        //    if (InvokeRequired)
+        //    {
+        //        this.Invoke(UpdateASMStatus);
+        //    }
+        //    else
+        //    {
+        //        UpdateASMStatus();
+        //    }
+        //}
 
         private void HandleTimerElapsed(object? sender, EventArgs e)
         {
@@ -64,8 +78,8 @@ namespace OWOVRC.UI
 
             if (InvokeRequired)
             {
-                this.Invoke(UpdateConnectionStatus);
                 this.Invoke(UpdateASMStatus);
+                this.Invoke(UpdateConnectionStatus);
             }
             else
             {
@@ -145,7 +159,7 @@ namespace OWOVRC.UI
             uiUpdateTimer.Stop();
 
             UpdateConnectionStatus();
-            UpdateASMStatus();
+            //UpdateASMStatus();
         }
 
         private void UpdateConnectionStatus()
@@ -199,11 +213,6 @@ namespace OWOVRC.UI
 
         private void UpdateASMStatus()
         {
-            if (statusTabControl.SelectedTab != sensationsPage)
-            {
-                return;
-            }
-
             string[] activeSensations = owo.GetRunningSensations().Keys.ToArray();
             for (int i = 0; i < activeSensations.Length; i++)
             {
@@ -407,6 +416,7 @@ namespace OWOVRC.UI
 
             // Remove events
             uiUpdateTimer.Elapsed -= HandleTimerElapsed;
+            //owo.OnSensationChange -= HandleSensationChange;
 
             // Stop OWO
             StopOWO();
@@ -492,6 +502,7 @@ namespace OWOVRC.UI
             }
 
             Log.Information("Stopped all running sensations!");
+            //UpdateASMStatus();
         }
 
         private void ApplyOwiSettingsButton_Click(object sender, EventArgs e)
@@ -640,6 +651,7 @@ namespace OWOVRC.UI
             if (selectedSensation == null)
             {
                 Log.Warning("The sensation {0} could not be found!", sensationName);
+                //UpdateASMStatus();
                 return;
             }
 
@@ -653,6 +665,7 @@ namespace OWOVRC.UI
             owo.StopLoopedSensation(instance.name);
 
             Log.Information("Stopped sensation {0}", instance.name);
+            //UpdateASMStatus();
         }
 
         private void ActiveSensationsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -675,6 +688,7 @@ namespace OWOVRC.UI
             if (selectedSensation == null)
             {
                 Log.Warning("Selected sensation {0} could not be found!", sensationName);
+                //UpdateASMStatus();
                 return;
             }
 

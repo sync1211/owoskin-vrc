@@ -13,6 +13,9 @@ namespace OWOVRC.Classes.OWOSuit
 
         private readonly AdvancedSensationManager sensationManager = AdvancedSensationManager.getInstance();
 
+        // Events
+        public EventHandler<AdvancedSensationStreamInstance>? OnSensationChange;
+
         public OWOHelper(string ip = "127.0.0.1")
         {
             Address = ip;
@@ -21,8 +24,6 @@ namespace OWOVRC.Classes.OWOSuit
         public async Task Connect()
         {
             Log.Information("Connecting to OWO...");
-
-            //NOTE: Baked sensations are registered in OWOSensations.cs!
 
             GameAuth auth = GameAuth.Create([.. Sensations]);
 
@@ -51,43 +52,49 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Information("Disconnected from OWO!");
         }
 
-        public void AddSensation(Sensation sensation, Muscle[] muscles)
-        {
-            sensationManager.playOnce(sensation.WithMuscles(muscles));
-        }
-
         public void AddSensation(Sensation sensation, Muscle[] muscles, string name)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), false);
+            //instance.LastCalculationOfCycle += HandleSensationEnd;
+
             sensationManager.play(instance);
+
+            //OnSensationChange?.Invoke(this, instance);
         }
 
         public void AddLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), true);
+            //instance.LastCalculationOfCycle += HandleSensationEnd;
+
             sensationManager.play(instance);
+
+            //OnSensationChange?.Invoke(this, instance);
         }
 
         public void UpdateLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
+            //instance.LastCalculationOfCycle += HandleSensationEnd;
+
             sensationManager.updateSensation(instance.sensation, name);
-        }
 
-        public Dictionary<string, AdvancedSensationStreamInstance> GetRunningSensations()
-        {
-            return sensationManager.getPlayingSensationInstances();
-        }
-
-        public void AddSensation(Sensation sensation)
-        {
-            sensationManager.playOnce(sensation);
+            //OnSensationChange?.Invoke(this, instance);
         }
 
         public void AddSensation(Sensation sensation, string name)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation, false);
+            //instance.LastCalculationOfCycle += HandleSensationEnd;
+
             sensationManager.play(instance);
+
+            //OnSensationChange?.Invoke(this, instance);
+        }
+
+        public Dictionary<string, AdvancedSensationStreamInstance> GetRunningSensations()
+        {
+            return sensationManager.getPlayingSensationInstances();
         }
 
         public void StopAllSensations()
@@ -112,6 +119,11 @@ namespace OWOVRC.Classes.OWOSuit
         {
             Sensations.Clear();
         }
+
+        //private void HandleSensationEnd(AdvancedSensationStreamInstance instance)
+        //{
+        //    OnSensationChange?.Invoke(this, instance);
+        //}
 
         public void Dispose()
         {
