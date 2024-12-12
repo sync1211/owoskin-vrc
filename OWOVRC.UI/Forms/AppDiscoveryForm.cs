@@ -23,7 +23,14 @@ namespace OWOVRC.UI.Forms
 
         private void TimerElapsed(object? sender, EventArgs args)
         {
-            this.Invoke(RefreshItems);
+            if (InvokeRequired)
+            {
+                this.Invoke(RefreshItems);
+            }
+            else
+            {
+                RefreshItems();
+            }
         }
 
         private void RefreshItems()

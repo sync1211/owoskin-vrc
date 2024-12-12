@@ -10,7 +10,9 @@ using OWOVRC.UI.Forms;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using System;
 using System.Net;
+using System.Windows.Forms;
 
 namespace OWOVRC.UI
 {
@@ -60,9 +62,17 @@ namespace OWOVRC.UI
             UpdateConnectionStatus();
         }
 
+
         private void HandleTimerTick(object? sender, EventArgs e)
         {
-            Invoke(UpdateASMStatus);
+            if (InvokeRequired)
+            {
+                this.Invoke(UpdateASMStatus);
+            }
+            else
+            {
+                UpdateASMStatus();
+            }
         }
 
         private void LoadSettings()
@@ -271,7 +281,6 @@ namespace OWOVRC.UI
             // Stop osc receiver
             receiver.Dispose();
 
-            owo.StopAllSensations();
             owo.Disconnect();
             Log.Information("Stopped OWOVRC");
 
@@ -622,8 +631,6 @@ namespace OWOVRC.UI
             owo.StopLoopedSensation(instance.name);
 
             Log.Information("Stopped sensation {0}", instance.name);
-
-            UpdateASMStatus();
         }
 
         private void ActiveSensationsListBox_SelectedIndexChanged(object sender, EventArgs e)
