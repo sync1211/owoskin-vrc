@@ -10,9 +10,7 @@ using OWOVRC.UI.Forms;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using System;
 using System.Net;
-using System.Windows.Forms;
 
 namespace OWOVRC.UI
 {
@@ -31,6 +29,7 @@ namespace OWOVRC.UI
         // OWO
         private readonly OWOHelper owo = new();
         private OSCReceiver receiver = new();
+        private const string UnnamedSensatioName = "<Unnamed>";
 
         // Effects
         private OSCEffectBase[] effects = [];
@@ -53,6 +52,10 @@ namespace OWOVRC.UI
             uiUpdateTimer.Interval = 100;
             uiUpdateTimer.Elapsed += HandleTimerTick;
 
+            sensationNameLabel.Text = String.Empty;
+            sensationLoopLabel.Text = String.Empty;
+            sensationFirstTickLabel.Text = String.Empty;
+
             // Call UpdateConnectionStatus on every ui update
             Application.Idle += HandleApplicationIdle;
         }
@@ -61,7 +64,6 @@ namespace OWOVRC.UI
         {
             UpdateConnectionStatus();
         }
-
 
         private void HandleTimerTick(object? sender, EventArgs e)
         {
@@ -205,7 +207,7 @@ namespace OWOVRC.UI
                 string sensationName = activeSensations[i];
                 if (string.IsNullOrEmpty(sensationName))
                 {
-                    activeSensations[i] = "<Unnamed>";
+                    activeSensations[i] = UnnamedSensatioName;
                 }
             }
 
@@ -583,7 +585,7 @@ namespace OWOVRC.UI
                 return;
             }
 
-            if (sensationName.Equals("<Unnamed>"))
+            if (sensationName.Equals(UnnamedSensatioName))
             {
                 sensationName = String.Empty;
             }
@@ -607,7 +609,7 @@ namespace OWOVRC.UI
                 return;
             }
 
-            if (sensationName.Equals("<Unnamed>"))
+            if (sensationName.Equals(UnnamedSensatioName))
             {
                 sensationName = String.Empty;
             }
@@ -635,9 +637,41 @@ namespace OWOVRC.UI
 
         private void ActiveSensationsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool itemSelected = activeSensationsListBox.SelectedItem != null;
+            bool itemSelected = true;
+            if (activeSensationsListBox.SelectedItem is not string sensationName)
+            {
+                itemSelected = false;
+                return;
+            }
+
             stopSelectedSensationNowButton.Enabled = itemSelected;
             stopSelectedSensationLoopButton.Enabled = itemSelected;
+
+            if (!itemSelected)
+            {
+                sensationNameLabel.Text = String.Empty;
+                sensationLoopLabel.Text = String.Empty;
+                return;
+            }
+
+            if (sensationName.Equals(UnnamedSensatioName))
+            {
+                sensationName = String.Empty;
+            }
+
+            Dictionary<string, AdvancedSensationStreamInstance> sensations = owo.GetRunningSensations();
+
+            AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(sensationName);
+            if (selectedSensation == null)
+            {
+                Log.Warning("Selected sensation {0} could not be found!", sensationName);
+                return;
+            }
+
+            // Update the details
+            sensationNameLabel.Text = selectedSensation.name;
+            sensationLoopLabel.Text = selectedSensation.loop ? "Yes" : "No";
+            sensationFirstTickLabel.Text = selectedSensation.firstTick.ToString();
         }
     }
 }

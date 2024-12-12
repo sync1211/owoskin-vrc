@@ -103,9 +103,16 @@
             statusTabControl = new TabControl();
             logPage = new TabPage();
             sensationsPage = new TabPage();
+            sensationFirstTickLabel = new Label();
+            label23 = new Label();
+            sensationLoopLabel = new Label();
+            sensationNameLabel = new Label();
+            label21 = new Label();
+            label20 = new Label();
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
+            groupBox1 = new GroupBox();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
@@ -130,6 +137,7 @@
             statusTabControl.SuspendLayout();
             logPage.SuspendLayout();
             sensationsPage.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // effectsTabControl
@@ -942,6 +950,7 @@
             // 
             // sensationsPage
             // 
+            sensationsPage.Controls.Add(groupBox1);
             sensationsPage.Controls.Add(stopSelectedSensationLoopButton);
             sensationsPage.Controls.Add(stopSelectedSensationNowButton);
             sensationsPage.Controls.Add(activeSensationsListBox);
@@ -953,6 +962,63 @@
             sensationsPage.Text = "Sensations";
             sensationsPage.ToolTipText = "Active sensations";
             sensationsPage.UseVisualStyleBackColor = true;
+            // 
+            // sensationFirstTickLabel
+            // 
+            sensationFirstTickLabel.AutoSize = true;
+            sensationFirstTickLabel.Location = new Point(65, 49);
+            sensationFirstTickLabel.Name = "sensationFirstTickLabel";
+            sensationFirstTickLabel.Size = new Size(64, 15);
+            sensationFirstTickLabel.TabIndex = 8;
+            sensationFirstTickLabel.Text = "<firstTick>";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label23.Location = new Point(6, 49);
+            label23.Name = "label23";
+            label23.Size = new Size(60, 15);
+            label23.TabIndex = 7;
+            label23.Text = "First Tick:";
+            // 
+            // sensationLoopLabel
+            // 
+            sensationLoopLabel.AutoSize = true;
+            sensationLoopLabel.Location = new Point(65, 34);
+            sensationLoopLabel.Name = "sensationLoopLabel";
+            sensationLoopLabel.Size = new Size(50, 15);
+            sensationLoopLabel.TabIndex = 6;
+            sensationLoopLabel.Text = "<Loop>";
+            // 
+            // sensationNameLabel
+            // 
+            sensationNameLabel.AutoSize = true;
+            sensationNameLabel.Location = new Point(65, 19);
+            sensationNameLabel.Name = "sensationNameLabel";
+            sensationNameLabel.Size = new Size(55, 15);
+            sensationNameLabel.TabIndex = 5;
+            sensationNameLabel.Text = "<Name>";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label21.Location = new Point(6, 34);
+            label21.Name = "label21";
+            label21.Size = new Size(37, 15);
+            label21.TabIndex = 4;
+            label21.Text = "Loop:";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label20.Location = new Point(6, 19);
+            label20.Name = "label20";
+            label20.Size = new Size(43, 15);
+            label20.TabIndex = 3;
+            label20.Text = "Name:";
             // 
             // stopSelectedSensationLoopButton
             // 
@@ -988,6 +1054,21 @@
             activeSensationsListBox.TabIndex = 0;
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(label20);
+            groupBox1.Controls.Add(sensationFirstTickLabel);
+            groupBox1.Controls.Add(label21);
+            groupBox1.Controls.Add(label23);
+            groupBox1.Controls.Add(sensationNameLabel);
+            groupBox1.Controls.Add(sensationLoopLabel);
+            groupBox1.Location = new Point(194, 6);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(198, 72);
+            groupBox1.TabIndex = 9;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Sensation";
             // 
             // MainForm
             // 
@@ -1038,6 +1119,8 @@
             logPage.ResumeLayout(false);
             logPage.PerformLayout();
             sensationsPage.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1119,5 +1202,12 @@
         private ListBox activeSensationsListBox;
         private Button stopSelectedSensationNowButton;
         private Button stopSelectedSensationLoopButton;
+        private Label label20;
+        private Label label21;
+        private Label sensationNameLabel;
+        private Label sensationLoopLabel;
+        private Label sensationFirstTickLabel;
+        private Label label23;
+        private GroupBox groupBox1;
     }
 }
