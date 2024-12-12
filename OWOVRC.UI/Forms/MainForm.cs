@@ -47,28 +47,29 @@ namespace OWOVRC.UI
 
             logLevelSwitch = Logging.SetUpLogger(logBox);
 
-            // Call UpdateASMStatus every 0.1 Seconds
-            uiUpdateTimer = new();
-            uiUpdateTimer.Interval = 100;
-            uiUpdateTimer.Elapsed += HandleTimerTick;
-
-            // Call UpdateConnectionStatus on every ui update
-            Application.Idle += HandleApplicationIdle;
+            // Update UI every 0.1 Seconds
+            uiUpdateTimer = new()
+            {
+                Interval = 100
+            };
+            uiUpdateTimer.Elapsed += HandleTimerElapsed;
         }
 
-        private void HandleApplicationIdle(object? sender, EventArgs e)
+        private void HandleTimerElapsed(object? sender, EventArgs e)
         {
-            UpdateConnectionStatus();
-        }
+            if (WindowState == FormWindowState.Minimized)
+            {
+                return;
+            }
 
-        private void HandleTimerTick(object? sender, EventArgs e)
-        {
             if (InvokeRequired)
             {
+                this.Invoke(UpdateConnectionStatus);
                 this.Invoke(UpdateASMStatus);
             }
             else
             {
+                UpdateConnectionStatus();
                 UpdateASMStatus();
             }
         }
@@ -133,12 +134,18 @@ namespace OWOVRC.UI
         {
             StartOWO();
             UpdateControlAvailability();
+            uiUpdateTimer.Start();
         }
 
         private void StopButton_Click(object sender, EventArgs e)
         {
             StopOWO();
             UpdateControlAvailability();
+
+            uiUpdateTimer.Stop();
+
+            UpdateConnectionStatus();
+            UpdateASMStatus();
         }
 
         private void UpdateConnectionStatus()
@@ -399,8 +406,7 @@ namespace OWOVRC.UI
             Log.CloseAndFlush();
 
             // Remove events
-            Application.Idle -= HandleApplicationIdle;
-            uiUpdateTimer.Elapsed -= HandleTimerTick;
+            uiUpdateTimer.Elapsed -= HandleTimerElapsed;
 
             // Stop OWO
             StopOWO();
