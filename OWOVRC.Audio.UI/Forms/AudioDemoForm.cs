@@ -15,7 +15,7 @@ namespace OWOVRC.Audio.UI
             InitializeComponent();
             timer = new()
             {
-                Interval = 50
+                Interval = 10
             };
             timer.Elapsed += Timer_Elapsed;
         }

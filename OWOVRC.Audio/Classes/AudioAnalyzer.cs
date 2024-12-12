@@ -1,19 +1,20 @@
-﻿using NAudio.Dsp;
-using NAudio.Wave;
+﻿using NAudio.Wave;
+using System.Numerics;
 
 namespace OWOVRC.Audio.Classes
 {
     public class AudioAnalyzer: IDisposable
     {
         private readonly WasapiLoopbackCapture capture;
-        private const int M = 6; //TODO: Comment what this value does during FFT calculation!
 
-        private WaveBuffer? buffer;
+        private readonly Complex[] buffer;
 
         public AudioAnalyzer()
         {
             capture = new();
             capture.DataAvailable += OnDataAvailable;
+            int sampleRate = capture.WaveFormat.SampleRate;
+            buffer = new Complex[sampleRate / 2];
         }
 
         public void Start()
@@ -28,39 +29,82 @@ namespace OWOVRC.Audio.Classes
 
         private void OnDataAvailable(object? sender, WaveInEventArgs e)
         {
-            buffer = new(e.Buffer);
+            int bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
+            int bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
+            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, buffer.Length);
+
+            WaveFormatEncoding waveEncoding = capture.WaveFormat.Encoding;
+
+            if (waveEncoding == WaveFormatEncoding.Pcm)
+            {
+                if (bytesPerSampleChannel == 2)
+                {
+                    // 16-bit PCM
+                    for (int i = 0; i < sampleCount; i++)
+                    {
+                        buffer[i] = BitConverter.ToInt16(e.Buffer, i * bytesPerSample);
+                    }
+                }
+                else if (bytesPerSampleChannel == 4)
+                {
+                    // 32-bit PCM
+                    for (int i = 0; i < sampleCount; i++)
+                    {
+                        buffer[i] = BitConverter.ToInt32(e.Buffer, i * bytesPerSample);
+                    }
+                }
+                else
+                {
+                    // Not supported!
+                    throw new Exception("Unsupported PCM format!");
+                }
+            }
+            else if (waveEncoding == WaveFormatEncoding.IeeeFloat)
+            {
+                if (bytesPerSampleChannel == 4)
+                {
+                    // 32-bit IEEE float
+                    for (int i = 0; i < sampleCount; i++)
+                    {
+                        buffer[i] = BitConverter.ToSingle(e.Buffer, i * bytesPerSample);
+                    }
+                }
+                else
+                {
+                    // Not supported!
+                    throw new Exception("Unsupported IEEE format!");
+                }
+            }
+            else
+            {
+                // Not supported!
+                throw new Exception("Unsupported encoding!");
+            }
         }
 
         public AnalyzedAudioFrame? AnalyzeAudio()
         {
-            if (buffer == null)
+            Complex[] paddedBuffer = FftSharp.Pad.ZeroPad(buffer);
+            FftSharp.FFT.Forward(paddedBuffer);
+            double[] fftMagnitude = FftSharp.FFT.Magnitude(paddedBuffer);
+
+            // find the frequency peak
+            int peakIndex = 0;
+            for (int i = 0; i < fftMagnitude.Length; i++)
             {
-                return null;
+                if (fftMagnitude[i] > fftMagnitude[peakIndex])
+                    peakIndex = i;
             }
+            double fftPeriod = FftSharp.FFT.FrequencyResolution(fftMagnitude.Length, capture.WaveFormat.SampleRate);
+            double peakFrequency = fftPeriod * peakIndex;
 
-            int bufferLength = buffer.FloatBuffer.Length / 8;
-
-            // Perform FFT
-            Complex[] fftBuffer = new Complex[bufferLength];
-            for (int i = 0; i < bufferLength; i++)
-            {
-                float bufferVar = buffer.FloatBuffer[i];
-                fftBuffer[i] = new()
-                {
-                    Y = 0,
-                    X = bufferVar
-                };
-            }
-
-            FastFourierTransform.FFT(true, M, fftBuffer);
-
-            int subBassLevel    = GetFrequencyRange(fftBuffer, bufferLength, 16, 60);
-            int bassLevel       = GetFrequencyRange(fftBuffer, bufferLength, 60, 250);
-            int lowMidLevel     = GetFrequencyRange(fftBuffer, bufferLength, 250, 500);
-            int midLevel        = GetFrequencyRange(fftBuffer, bufferLength, 500, 2000);
-            int highMidLevel    = GetFrequencyRange(fftBuffer, bufferLength, 2000, 4000);
-            int presenceLevel   = GetFrequencyRange(fftBuffer, bufferLength, 4000, 6000);
-            int brillianceLevel = GetFrequencyRange(fftBuffer, bufferLength, 6000, 20_000);
+            int subBassLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 16, 60);
+            int bassLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 60, 250);
+            int lowMidLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 250, 500);
+            int midLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 500, 2000);
+            int highMidLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 2000, 4000);
+            int presenceLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 4000, 6000);
+            int brillianceLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 6000, 20_000);
 
             return new(
                 subBassLevel,
@@ -73,58 +117,19 @@ namespace OWOVRC.Audio.Classes
             );
         }
 
-        private int GetFrequencyRange(Complex[] fftBuffer, int bufferLength, int start, int end)
+        private int GetFrequencyRange(double[] fftBuffer, double period, int start, int end)
         {
-            int sampleRate = capture.WaveFormat.SampleRate;
+            int actualStart = (int) (start / period);
+            int actualEnd = (int) (end / period);
 
-            int startIndex = (int)((float) start / sampleRate * bufferLength);
-            int endIndex = (int)((float) end / sampleRate * bufferLength);
-            float level = 0;
-
-            for (int i = startIndex; i <= endIndex; i++)
+            double highest = 0;
+            for (int i = actualStart; i <= actualEnd; i++)
             {
-                level += (float)Math.Sqrt(fftBuffer[i].X * fftBuffer[i].X + fftBuffer[i].Y * fftBuffer[i].Y);
+                highest = Math.Max(fftBuffer[i], highest);
             }
 
-            // Maximum level
-            //TODO: Clarify how we calculate this!
-            float maxLevel = (end - start) / M;
-
-            // Convert to percentage value
-            float percentage = (level / maxLevel) * 100;
-
-            //TODO: Is this a percentage or how should we interpret this value?
-            return (int) Math.Min(percentage, 100);
-        }
-
-        public float GetVolume()
-        {
-            if (buffer == null)
-            {
-                return 0;
-            }
-            float volume = 0;
-            for (int i = 0; i < buffer.FloatBuffer.Length; i++)
-            {
-                volume += Math.Abs(buffer.FloatBuffer[i]);
-            }
-            return volume;
-        }
-
-        public float GetFrequencyRange(Complex[] buffer, int start, int end)
-        {
-            int sampleRate = capture.WaveFormat.SampleRate;
-
-            int startIndex = (int) (start / (double) (sampleRate * buffer.Length));
-            int endIndex = (int) (end / (double) (sampleRate * buffer.Length));
-
-            float frequencyLevel = 0;
-            for (int i = startIndex; i <= endIndex; i++)
-            {
-                frequencyLevel += (float) Math.Abs(buffer[i].X);
-            }
-
-            return frequencyLevel;
+            int length = end - start;
+            return Math.Min((int)(highest * 5000), 100);
         }
 
         public void Dispose()
