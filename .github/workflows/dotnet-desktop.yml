@@ -42,9 +42,9 @@ jobs:
 
     # Build the app
     - name: Publish OWOVRC.UI
-      run: dotnet publish "OWOVRC.UI/OWOVRC.UI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=false
+      run: dotnet publish "OWOVRC.UI/OWOVRC.UI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=false --self-contained false
     - name: Publish OWOVRC.CLI
-      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:PublishAOT=true
+      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:PublishAOT=true --self-contained false
 
     # Upload the EXE https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
