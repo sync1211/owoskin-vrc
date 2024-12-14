@@ -203,7 +203,7 @@ namespace OWOVRC.UI.Forms
                 musclesWithIntensity[i] = muscle.WithIntensity(intensity);
             }
 
-            Sensation sensation = testSensation.WithMuscles([.. muscles]);
+            Sensation sensation = testSensation.WithMuscles([.. musclesWithIntensity]);
             OWO.Send(sensation);
         }
 
