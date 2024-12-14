@@ -35,18 +35,18 @@ namespace OWOVRC.UI.Forms
             showFrontButton = new Button();
             muscleGroupsTabControl = new TabControl();
             frontMusclesPage = new TabPage();
-            abdominalLMuscle = new SelectableMuscle();
             abdominalRMuscle = new SelectableMuscle();
-            armLMuscle = new SelectableMuscle();
-            pectoralLMuscle = new SelectableMuscle();
-            pectoralRMuscle = new SelectableMuscle();
+            abdominalLMuscle = new SelectableMuscle();
             armRMuscle = new SelectableMuscle();
+            pectoralRMuscle = new SelectableMuscle();
+            pectoralLMuscle = new SelectableMuscle();
+            armLMuscle = new SelectableMuscle();
             frontMusclesImg = new PictureBox();
             backMusclesPage = new TabPage();
-            lumbarLMuscle = new SelectableMuscle();
             lumbarRMuscle = new SelectableMuscle();
-            dorsalLMuscle = new SelectableMuscle();
+            lumbarLMuscle = new SelectableMuscle();
             dorsalRMuscle = new SelectableMuscle();
+            dorsalLMuscle = new SelectableMuscle();
             backMusclesImg = new PictureBox();
             showBackButton = new Button();
             muscleIntensityTrackBar = new TrackBar();
@@ -67,18 +67,18 @@ namespace OWOVRC.UI.Forms
             helpToolTip = new ToolTip(components);
             muscleGroupsTabControl.SuspendLayout();
             frontMusclesPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)abdominalRMuscle).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)armLMuscle).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pectoralLMuscle).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pectoralRMuscle).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)armRMuscle).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pectoralRMuscle).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pectoralLMuscle).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)armLMuscle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)frontMusclesImg).BeginInit();
             backMusclesPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)lumbarLMuscle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lumbarRMuscle).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dorsalLMuscle).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lumbarLMuscle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dorsalRMuscle).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dorsalLMuscle).BeginInit();
             ((System.ComponentModel.ISupportInitialize)backMusclesImg).BeginInit();
             ((System.ComponentModel.ISupportInitialize)muscleIntensityTrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)intensityValueInput).BeginInit();
@@ -110,12 +110,12 @@ namespace OWOVRC.UI.Forms
             // 
             // frontMusclesPage
             // 
-            frontMusclesPage.Controls.Add(abdominalLMuscle);
             frontMusclesPage.Controls.Add(abdominalRMuscle);
-            frontMusclesPage.Controls.Add(armLMuscle);
-            frontMusclesPage.Controls.Add(pectoralLMuscle);
-            frontMusclesPage.Controls.Add(pectoralRMuscle);
+            frontMusclesPage.Controls.Add(abdominalLMuscle);
             frontMusclesPage.Controls.Add(armRMuscle);
+            frontMusclesPage.Controls.Add(pectoralRMuscle);
+            frontMusclesPage.Controls.Add(pectoralLMuscle);
+            frontMusclesPage.Controls.Add(armLMuscle);
             frontMusclesPage.Controls.Add(frontMusclesImg);
             frontMusclesPage.Location = new Point(4, 27);
             frontMusclesPage.Name = "frontMusclesPage";
@@ -125,95 +125,95 @@ namespace OWOVRC.UI.Forms
             frontMusclesPage.Text = "Front";
             frontMusclesPage.UseVisualStyleBackColor = true;
             // 
-            // abdominalLMuscle
-            // 
-            abdominalLMuscle.Active = false;
-            abdominalLMuscle.ActiveImage = Properties.Resources.muscleAbdominalL_Active;
-            abdominalLMuscle.BackgroundImage = Properties.Resources.muscleAbdominalL_Inactive;
-            abdominalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            abdominalLMuscle.InactiveImage = Properties.Resources.muscleAbdominalL_Inactive;
-            abdominalLMuscle.Location = new Point(358, 269);
-            abdominalLMuscle.Muscle = MusclesEnum.Abdominal_L;
-            abdominalLMuscle.Name = "abdominalLMuscle";
-            abdominalLMuscle.Size = new Size(65, 142);
-            abdominalLMuscle.TabIndex = 6;
-            abdominalLMuscle.TabStop = false;
-            helpToolTip.SetToolTip(abdominalLMuscle, "Left Abdominal");
-            // 
             // abdominalRMuscle
             // 
             abdominalRMuscle.Active = false;
-            abdominalRMuscle.ActiveImage = Properties.Resources.muscleAbdominalR_Active;
-            abdominalRMuscle.BackgroundImage = Properties.Resources.muscleAbdominalR_Inactive;
+            abdominalRMuscle.ActiveImage = Properties.Resources.muscleAbdominalL_Active;
+            abdominalRMuscle.BackgroundImage = Properties.Resources.muscleAbdominalL_Inactive;
             abdominalRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            abdominalRMuscle.InactiveImage = Properties.Resources.muscleAbdominalR_Inactive;
-            abdominalRMuscle.Location = new Point(248, 269);
+            abdominalRMuscle.InactiveImage = Properties.Resources.muscleAbdominalL_Inactive;
+            abdominalRMuscle.Location = new Point(358, 269);
             abdominalRMuscle.Muscle = MusclesEnum.Abdominal_R;
             abdominalRMuscle.Name = "abdominalRMuscle";
             abdominalRMuscle.Size = new Size(65, 142);
-            abdominalRMuscle.TabIndex = 3;
+            abdominalRMuscle.TabIndex = 6;
             abdominalRMuscle.TabStop = false;
-            helpToolTip.SetToolTip(abdominalRMuscle, "Right Abdominal");
+            helpToolTip.SetToolTip(abdominalRMuscle, "Left Abdominal");
             // 
-            // armLMuscle
+            // abdominalLMuscle
             // 
-            armLMuscle.Active = false;
-            armLMuscle.ActiveImage = Properties.Resources.muscleArmL_Active;
-            armLMuscle.BackgroundImage = Properties.Resources.muscleArmL_Inactive;
-            armLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            armLMuscle.InactiveImage = Properties.Resources.muscleArmL_Inactive;
-            armLMuscle.Location = new Point(456, 169);
-            armLMuscle.Muscle = MusclesEnum.Arm_L;
-            armLMuscle.Name = "armLMuscle";
-            armLMuscle.Size = new Size(85, 96);
-            armLMuscle.TabIndex = 5;
-            armLMuscle.TabStop = false;
-            helpToolTip.SetToolTip(armLMuscle, "Right Arm");
-            // 
-            // pectoralLMuscle
-            // 
-            pectoralLMuscle.Active = false;
-            pectoralLMuscle.ActiveImage = Properties.Resources.musclePectoralL_Active;
-            pectoralLMuscle.BackgroundImage = Properties.Resources.musclePectoralL_Inactive;
-            pectoralLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            pectoralLMuscle.InactiveImage = Properties.Resources.musclePectoralL_Inactive;
-            pectoralLMuscle.Location = new Point(337, 121);
-            pectoralLMuscle.Muscle = MusclesEnum.Pectoral_L;
-            pectoralLMuscle.Name = "pectoralLMuscle";
-            pectoralLMuscle.Size = new Size(112, 58);
-            pectoralLMuscle.TabIndex = 4;
-            pectoralLMuscle.TabStop = false;
-            helpToolTip.SetToolTip(pectoralLMuscle, "Left Pectoral");
-            // 
-            // pectoralRMuscle
-            // 
-            pectoralRMuscle.Active = false;
-            pectoralRMuscle.ActiveImage = Properties.Resources.musclePectoralR_Active;
-            pectoralRMuscle.BackgroundImage = Properties.Resources.musclePectoralR_Inactive;
-            pectoralRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            pectoralRMuscle.InactiveImage = Properties.Resources.musclePectoralR_Inactive;
-            pectoralRMuscle.Location = new Point(224, 120);
-            pectoralRMuscle.Muscle = MusclesEnum.Pectoral_R;
-            pectoralRMuscle.Name = "pectoralRMuscle";
-            pectoralRMuscle.Size = new Size(112, 58);
-            pectoralRMuscle.TabIndex = 3;
-            pectoralRMuscle.TabStop = false;
-            helpToolTip.SetToolTip(pectoralRMuscle, "Right Pectoral");
+            abdominalLMuscle.Active = false;
+            abdominalLMuscle.ActiveImage = Properties.Resources.muscleAbdominalR_Active;
+            abdominalLMuscle.BackgroundImage = Properties.Resources.muscleAbdominalR_Inactive;
+            abdominalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
+            abdominalLMuscle.InactiveImage = Properties.Resources.muscleAbdominalR_Inactive;
+            abdominalLMuscle.Location = new Point(248, 269);
+            abdominalLMuscle.Muscle = MusclesEnum.Abdominal_L;
+            abdominalLMuscle.Name = "abdominalLMuscle";
+            abdominalLMuscle.Size = new Size(65, 142);
+            abdominalLMuscle.TabIndex = 3;
+            abdominalLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(abdominalLMuscle, "Right Abdominal");
             // 
             // armRMuscle
             // 
             armRMuscle.Active = false;
-            armRMuscle.ActiveImage = Properties.Resources.muscleArmR_Active;
-            armRMuscle.BackgroundImage = Properties.Resources.muscleArmR_Inactive;
+            armRMuscle.ActiveImage = Properties.Resources.muscleArmL_Active;
+            armRMuscle.BackgroundImage = Properties.Resources.muscleArmL_Inactive;
             armRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            armRMuscle.InactiveImage = Properties.Resources.muscleArmR_Inactive;
-            armRMuscle.Location = new Point(130, 173);
+            armRMuscle.InactiveImage = Properties.Resources.muscleArmL_Inactive;
+            armRMuscle.Location = new Point(456, 169);
             armRMuscle.Muscle = MusclesEnum.Arm_R;
             armRMuscle.Name = "armRMuscle";
             armRMuscle.Size = new Size(85, 96);
-            armRMuscle.TabIndex = 3;
+            armRMuscle.TabIndex = 5;
             armRMuscle.TabStop = false;
             helpToolTip.SetToolTip(armRMuscle, "Right Arm");
+            // 
+            // pectoralRMuscle
+            // 
+            pectoralRMuscle.Active = false;
+            pectoralRMuscle.ActiveImage = Properties.Resources.musclePectoralL_Active;
+            pectoralRMuscle.BackgroundImage = Properties.Resources.musclePectoralL_Inactive;
+            pectoralRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
+            pectoralRMuscle.InactiveImage = Properties.Resources.musclePectoralL_Inactive;
+            pectoralRMuscle.Location = new Point(337, 121);
+            pectoralRMuscle.Muscle = MusclesEnum.Pectoral_R;
+            pectoralRMuscle.Name = "pectoralRMuscle";
+            pectoralRMuscle.Size = new Size(112, 58);
+            pectoralRMuscle.TabIndex = 4;
+            pectoralRMuscle.TabStop = false;
+            helpToolTip.SetToolTip(pectoralRMuscle, "Left Pectoral");
+            // 
+            // pectoralLMuscle
+            // 
+            pectoralLMuscle.Active = false;
+            pectoralLMuscle.ActiveImage = Properties.Resources.musclePectoralR_Active;
+            pectoralLMuscle.BackgroundImage = Properties.Resources.musclePectoralR_Inactive;
+            pectoralLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
+            pectoralLMuscle.InactiveImage = Properties.Resources.musclePectoralR_Inactive;
+            pectoralLMuscle.Location = new Point(224, 120);
+            pectoralLMuscle.Muscle = MusclesEnum.Pectoral_L;
+            pectoralLMuscle.Name = "pectoralLMuscle";
+            pectoralLMuscle.Size = new Size(112, 58);
+            pectoralLMuscle.TabIndex = 3;
+            pectoralLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(pectoralLMuscle, "Right Pectoral");
+            // 
+            // armLMuscle
+            // 
+            armLMuscle.Active = false;
+            armLMuscle.ActiveImage = Properties.Resources.muscleArmR_Active;
+            armLMuscle.BackgroundImage = Properties.Resources.muscleArmR_Inactive;
+            armLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
+            armLMuscle.InactiveImage = Properties.Resources.muscleArmR_Inactive;
+            armLMuscle.Location = new Point(130, 173);
+            armLMuscle.Muscle = MusclesEnum.Arm_L;
+            armLMuscle.Name = "armLMuscle";
+            armLMuscle.Size = new Size(85, 96);
+            armLMuscle.TabIndex = 3;
+            armLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(armLMuscle, "Right Arm");
             // 
             // frontMusclesImg
             // 
@@ -227,10 +227,10 @@ namespace OWOVRC.UI.Forms
             // 
             // backMusclesPage
             // 
-            backMusclesPage.Controls.Add(lumbarLMuscle);
             backMusclesPage.Controls.Add(lumbarRMuscle);
-            backMusclesPage.Controls.Add(dorsalLMuscle);
+            backMusclesPage.Controls.Add(lumbarLMuscle);
             backMusclesPage.Controls.Add(dorsalRMuscle);
+            backMusclesPage.Controls.Add(dorsalLMuscle);
             backMusclesPage.Controls.Add(backMusclesImg);
             backMusclesPage.Location = new Point(4, 27);
             backMusclesPage.Name = "backMusclesPage";
@@ -240,65 +240,65 @@ namespace OWOVRC.UI.Forms
             backMusclesPage.Text = "Back";
             backMusclesPage.UseVisualStyleBackColor = true;
             // 
-            // lumbarLMuscle
-            // 
-            lumbarLMuscle.Active = false;
-            lumbarLMuscle.ActiveImage = Properties.Resources.muscleLumbarL_Active;
-            lumbarLMuscle.BackgroundImage = Properties.Resources.muscleLumbarL_Inactive;
-            lumbarLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            lumbarLMuscle.InactiveImage = Properties.Resources.muscleLumbarL_Inactive;
-            lumbarLMuscle.Location = new Point(348, 300);
-            lumbarLMuscle.Muscle = MusclesEnum.Lumbar_L;
-            lumbarLMuscle.Name = "lumbarLMuscle";
-            lumbarLMuscle.Size = new Size(68, 68);
-            lumbarLMuscle.TabIndex = 6;
-            lumbarLMuscle.TabStop = false;
-            helpToolTip.SetToolTip(lumbarLMuscle, "Left Lumbar");
-            // 
             // lumbarRMuscle
             // 
             lumbarRMuscle.Active = false;
-            lumbarRMuscle.ActiveImage = Properties.Resources.muscleLumbarR_Active;
-            lumbarRMuscle.BackgroundImage = Properties.Resources.muscleLumbarR_Inactive;
+            lumbarRMuscle.ActiveImage = Properties.Resources.muscleLumbarL_Active;
+            lumbarRMuscle.BackgroundImage = Properties.Resources.muscleLumbarL_Inactive;
             lumbarRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            lumbarRMuscle.InactiveImage = Properties.Resources.muscleLumbarR_Inactive;
-            lumbarRMuscle.Location = new Point(258, 300);
+            lumbarRMuscle.InactiveImage = Properties.Resources.muscleLumbarL_Inactive;
+            lumbarRMuscle.Location = new Point(348, 300);
             lumbarRMuscle.Muscle = MusclesEnum.Lumbar_R;
             lumbarRMuscle.Name = "lumbarRMuscle";
             lumbarRMuscle.Size = new Size(68, 68);
-            lumbarRMuscle.TabIndex = 4;
+            lumbarRMuscle.TabIndex = 6;
             lumbarRMuscle.TabStop = false;
-            helpToolTip.SetToolTip(lumbarRMuscle, "Right Lumbar");
+            helpToolTip.SetToolTip(lumbarRMuscle, "Left Lumbar");
             // 
-            // dorsalLMuscle
+            // lumbarLMuscle
             // 
-            dorsalLMuscle.Active = false;
-            dorsalLMuscle.ActiveImage = Properties.Resources.muscleDorsalL_Active;
-            dorsalLMuscle.BackgroundImage = Properties.Resources.muscleDorsalL_Inactive;
-            dorsalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            dorsalLMuscle.InactiveImage = Properties.Resources.muscleDorsalL_Inactive;
-            dorsalLMuscle.Location = new Point(345, 192);
-            dorsalLMuscle.Muscle = MusclesEnum.Dorsal_L;
-            dorsalLMuscle.Name = "dorsalLMuscle";
-            dorsalLMuscle.Size = new Size(74, 108);
-            dorsalLMuscle.TabIndex = 5;
-            dorsalLMuscle.TabStop = false;
-            helpToolTip.SetToolTip(dorsalLMuscle, "Left Dorsal");
+            lumbarLMuscle.Active = false;
+            lumbarLMuscle.ActiveImage = Properties.Resources.muscleLumbarR_Active;
+            lumbarLMuscle.BackgroundImage = Properties.Resources.muscleLumbarR_Inactive;
+            lumbarLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
+            lumbarLMuscle.InactiveImage = Properties.Resources.muscleLumbarR_Inactive;
+            lumbarLMuscle.Location = new Point(258, 300);
+            lumbarLMuscle.Muscle = MusclesEnum.Lumbar_L;
+            lumbarLMuscle.Name = "lumbarLMuscle";
+            lumbarLMuscle.Size = new Size(68, 68);
+            lumbarLMuscle.TabIndex = 4;
+            lumbarLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(lumbarLMuscle, "Right Lumbar");
             // 
             // dorsalRMuscle
             // 
             dorsalRMuscle.Active = false;
-            dorsalRMuscle.ActiveImage = Properties.Resources.muscleDorsalR_Active;
-            dorsalRMuscle.BackgroundImage = Properties.Resources.muscleDorsalR_Inactive;
+            dorsalRMuscle.ActiveImage = Properties.Resources.muscleDorsalL_Active;
+            dorsalRMuscle.BackgroundImage = Properties.Resources.muscleDorsalL_Inactive;
             dorsalRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
-            dorsalRMuscle.InactiveImage = Properties.Resources.muscleDorsalR_Inactive;
-            dorsalRMuscle.Location = new Point(253, 192);
+            dorsalRMuscle.InactiveImage = Properties.Resources.muscleDorsalL_Inactive;
+            dorsalRMuscle.Location = new Point(345, 192);
             dorsalRMuscle.Muscle = MusclesEnum.Dorsal_R;
             dorsalRMuscle.Name = "dorsalRMuscle";
             dorsalRMuscle.Size = new Size(74, 108);
-            dorsalRMuscle.TabIndex = 4;
+            dorsalRMuscle.TabIndex = 5;
             dorsalRMuscle.TabStop = false;
-            helpToolTip.SetToolTip(dorsalRMuscle, "Right Dorsal");
+            helpToolTip.SetToolTip(dorsalRMuscle, "Left Dorsal");
+            // 
+            // dorsalLMuscle
+            // 
+            dorsalLMuscle.Active = false;
+            dorsalLMuscle.ActiveImage = Properties.Resources.muscleDorsalR_Active;
+            dorsalLMuscle.BackgroundImage = Properties.Resources.muscleDorsalR_Inactive;
+            dorsalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
+            dorsalLMuscle.InactiveImage = Properties.Resources.muscleDorsalR_Inactive;
+            dorsalLMuscle.Location = new Point(253, 192);
+            dorsalLMuscle.Muscle = MusclesEnum.Dorsal_L;
+            dorsalLMuscle.Name = "dorsalLMuscle";
+            dorsalLMuscle.Size = new Size(74, 108);
+            dorsalLMuscle.TabIndex = 4;
+            dorsalLMuscle.TabStop = false;
+            helpToolTip.SetToolTip(dorsalLMuscle, "Right Dorsal");
             // 
             // backMusclesImg
             // 
@@ -329,7 +329,7 @@ namespace OWOVRC.UI.Forms
             muscleIntensityTrackBar.Maximum = 200;
             muscleIntensityTrackBar.Name = "muscleIntensityTrackBar";
             muscleIntensityTrackBar.Size = new Size(673, 45);
-            muscleIntensityTrackBar.SmallChange = 25;
+            muscleIntensityTrackBar.SmallChange = 5;
             muscleIntensityTrackBar.TabIndex = 3;
             muscleIntensityTrackBar.Value = 100;
             muscleIntensityTrackBar.Scroll += MuscleIntensityTrackBar_Scroll;
@@ -510,18 +510,18 @@ namespace OWOVRC.UI.Forms
             Shown += MuscleIntensityForm_Shown;
             muscleGroupsTabControl.ResumeLayout(false);
             frontMusclesPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).EndInit();
             ((System.ComponentModel.ISupportInitialize)abdominalRMuscle).EndInit();
-            ((System.ComponentModel.ISupportInitialize)armLMuscle).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pectoralLMuscle).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pectoralRMuscle).EndInit();
+            ((System.ComponentModel.ISupportInitialize)abdominalLMuscle).EndInit();
             ((System.ComponentModel.ISupportInitialize)armRMuscle).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pectoralRMuscle).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pectoralLMuscle).EndInit();
+            ((System.ComponentModel.ISupportInitialize)armLMuscle).EndInit();
             ((System.ComponentModel.ISupportInitialize)frontMusclesImg).EndInit();
             backMusclesPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)lumbarLMuscle).EndInit();
             ((System.ComponentModel.ISupportInitialize)lumbarRMuscle).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dorsalLMuscle).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lumbarLMuscle).EndInit();
             ((System.ComponentModel.ISupportInitialize)dorsalRMuscle).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dorsalLMuscle).EndInit();
             ((System.ComponentModel.ISupportInitialize)backMusclesImg).EndInit();
             ((System.ComponentModel.ISupportInitialize)muscleIntensityTrackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)intensityValueInput).EndInit();
@@ -540,17 +540,17 @@ namespace OWOVRC.UI.Forms
         private Button showBackButton;
         private PictureBox frontMusclesImg;
         private PictureBox backMusclesImg;
-        private SelectableMuscle armRMuscle;
-        private SelectableMuscle pectoralRMuscle;
-        private SelectableMuscle pectoralLMuscle;
         private SelectableMuscle armLMuscle;
-        private SelectableMuscle abdominalRMuscle;
+        private SelectableMuscle pectoralLMuscle;
+        private SelectableMuscle pectoralRMuscle;
+        private SelectableMuscle armRMuscle;
         private SelectableMuscle abdominalLMuscle;
+        private SelectableMuscle abdominalRMuscle;
         private TrackBar muscleIntensityTrackBar;
-        private SelectableMuscle dorsalRMuscle;
         private SelectableMuscle dorsalLMuscle;
-        private SelectableMuscle lumbarRMuscle;
+        private SelectableMuscle dorsalRMuscle;
         private SelectableMuscle lumbarLMuscle;
+        private SelectableMuscle lumbarRMuscle;
         private NumericUpDown intensityValueInput;
         private Label label1;
         private Label label2;

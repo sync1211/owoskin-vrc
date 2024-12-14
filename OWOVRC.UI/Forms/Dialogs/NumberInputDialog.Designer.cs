@@ -38,25 +38,27 @@
             // okButton
             // 
             okButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            okButton.DialogResult = DialogResult.OK;
             okButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             okButton.Location = new Point(186, 63);
             okButton.Name = "okButton";
             okButton.Size = new Size(75, 23);
-            okButton.TabIndex = 0;
+            okButton.TabIndex = 2;
             okButton.Text = "Ok";
             okButton.UseVisualStyleBackColor = true;
-            okButton.Click += OkButton_Click;
+            okButton.Click += ControlButton_Click;
             // 
             // cancelButton
             // 
             cancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            cancelButton.DialogResult = DialogResult.Cancel;
             cancelButton.Location = new Point(105, 63);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(75, 23);
-            cancelButton.TabIndex = 1;
+            cancelButton.TabIndex = 3;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += CancelButton_Click;
+            cancelButton.Click += ControlButton_Click;
             // 
             // inputBox
             // 
@@ -64,7 +66,8 @@
             inputBox.Location = new Point(12, 34);
             inputBox.Name = "inputBox";
             inputBox.Size = new Size(249, 23);
-            inputBox.TabIndex = 2;
+            inputBox.TabIndex = 1;
+            inputBox.KeyDown += InputBox_KeyDown;
             // 
             // descriptionLabel
             // 
@@ -90,6 +93,7 @@
             Name = "NumberInputDialog";
             ShowIcon = false;
             Text = "Input";
+            Shown += NumberInputDialog_Shown;
             ((System.ComponentModel.ISupportInitialize)inputBox).EndInit();
             ResumeLayout(false);
             PerformLayout();

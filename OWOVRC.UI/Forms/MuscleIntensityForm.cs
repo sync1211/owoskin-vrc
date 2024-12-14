@@ -31,16 +31,16 @@ namespace OWOVRC.UI.Forms
             this.owoHelper = owoHelper;
 
             selectableMuscles = [
-                pectoralRMuscle,
                 pectoralLMuscle,
-                armRMuscle,
+                pectoralRMuscle,
                 armLMuscle,
-                abdominalRMuscle,
+                armRMuscle,
                 abdominalLMuscle,
-                dorsalRMuscle,
+                abdominalRMuscle,
                 dorsalLMuscle,
-                lumbarLMuscle,
-                lumbarRMuscle
+                dorsalRMuscle,
+                lumbarRMuscle,
+                lumbarLMuscle
             ];
 
             // Hide header of TabControl
