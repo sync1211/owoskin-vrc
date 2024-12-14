@@ -213,16 +213,14 @@ namespace OWOVRC.UI.Forms
                 musclesWithIntensity[i] = muscle.WithIntensity(intensity);
             }
 
-            Muscle[] musclesArray = [.. muscles];
-
             // Play sensation (use owoHelper if we can)
             if (owoHelper == null)
             {
-                OWO.Send(testSensation, musclesArray);
+                OWO.Send(testSensation, musclesWithIntensity);
                 return;
             }
 
-            owoHelper.AddSensation(testSensation, musclesArray, SENSATION_NAME);
+            owoHelper.AddSensation(testSensation, musclesWithIntensity, SENSATION_NAME);
         }
 
         private void MuscleIntensityForm_Shown(object sender, EventArgs e)
