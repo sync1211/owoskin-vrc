@@ -143,7 +143,8 @@ namespace OWOVRC.Classes.Effects
 
                 if (stopVelocity >= Settings.StopVelocityThreshold)
                 {
-                    owo.StopAllSensations();
+                    owo.StopLoopedSensation(WindSensation._Name);
+
                     Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
                     ImpactSensation stopSensation = CreateStopSensation(velocityPercent);
                     stopSensation.Play(owo, Settings.Priority);
@@ -173,7 +174,6 @@ namespace OWOVRC.Classes.Effects
             // Speed too low
             if (Speed < Settings.Threshold)
             {
-                owo.StopLoopedSensation(WindSensation._Name);
                 //Log.Debug("Speed below threshold: {speed} < {threshold}", Speed, Threshold);
 
                 // Stop sensations
@@ -184,7 +184,7 @@ namespace OWOVRC.Classes.Effects
                     lastVelY = 0;
                     lastVelZ = 0;
                     LastSpeedPacket = DateTime.MinValue;
-                    owo.StopAllSensations();
+                    owo.StopLoopedSensation(WindSensation._Name);
                 }
                 return;
             }

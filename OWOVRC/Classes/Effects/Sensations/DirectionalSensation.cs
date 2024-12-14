@@ -112,18 +112,21 @@ namespace OWOVRC.Classes.Effects.Sensations
             Log.Verbose("Playing wind sensation at {0}%", Intensity);
             Sensation sensation = CreateSensation(intensity).WithPriority(priority);
 
-            if (IsLoop)
+            if (!IsLoop)
             {
                 owo.AddSensation(sensation, musclesScaled, Name);
             }
-            // Run or update sensation
-            else if (owo.GetRunningSensations().ContainsKey(Name))
-            {
-                owo.UpdateLoopedSensation(Name, sensation, musclesScaled);
-            }
             else
             {
-                owo.AddLoopedSensation(Name, sensation, musclesScaled);
+                // Run or update sensation loop
+                if (owo.GetRunningSensations().ContainsKey(Name))
+                {
+                    owo.UpdateLoopedSensation(Name, sensation, musclesScaled);
+                }
+                else
+                {
+                    owo.AddLoopedSensation(Name, sensation, musclesScaled);
+                }
             }
         }
 
