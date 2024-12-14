@@ -16,16 +16,33 @@
             Text = title;
         }
 
-        private void CancelButton_Click(object sender, EventArgs e)
+        private void ControlButton_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
             Close();
         }
 
-        private void OkButton_Click(object sender, EventArgs e)
+        private void NumberInputDialog_Shown(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
-            Close();
+            inputBox.Focus();
+            inputBox.Select(0, inputBox.Text.Length);
+        }
+
+        private void InputBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyData == Keys.Enter)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+                return;
+            }
+
+            if (e.KeyData == Keys.Escape)
+            {
+                DialogResult = DialogResult.Cancel;
+                Close();
+                return;
+            }
         }
     }
 }
