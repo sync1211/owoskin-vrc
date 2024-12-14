@@ -329,7 +329,7 @@ namespace OWOVRC.UI.Forms
             muscleIntensityTrackBar.Maximum = 200;
             muscleIntensityTrackBar.Name = "muscleIntensityTrackBar";
             muscleIntensityTrackBar.Size = new Size(673, 45);
-            muscleIntensityTrackBar.SmallChange = 25;
+            muscleIntensityTrackBar.SmallChange = 5;
             muscleIntensityTrackBar.TabIndex = 3;
             muscleIntensityTrackBar.Value = 100;
             muscleIntensityTrackBar.Scroll += MuscleIntensityTrackBar_Scroll;
