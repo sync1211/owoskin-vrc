@@ -7,14 +7,16 @@ namespace OWOVRC.Audio.Classes
     {
         private readonly WasapiLoopbackCapture capture;
 
-        private readonly Complex[] buffer;
+        private readonly Complex[] leftBuffer;
+        private readonly Complex[] rightBuffer;
 
         public AudioAnalyzer()
         {
             capture = new();
             capture.DataAvailable += OnDataAvailable;
             int sampleRate = capture.WaveFormat.SampleRate;
-            buffer = new Complex[sampleRate / 2];
+            leftBuffer = new Complex[sampleRate / 2];
+            rightBuffer = new Complex[sampleRate / 2];
         }
 
         public void Start()
@@ -31,7 +33,7 @@ namespace OWOVRC.Audio.Classes
         {
             int bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             int bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
-            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, buffer.Length);
+            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, leftBuffer.Length);
 
             WaveFormatEncoding waveEncoding = capture.WaveFormat.Encoding;
 
@@ -42,7 +44,8 @@ namespace OWOVRC.Audio.Classes
                     // 16-bit PCM
                     for (int i = 0; i < sampleCount; i++)
                     {
-                        buffer[i] = BitConverter.ToInt16(e.Buffer, i * bytesPerSample);
+                        leftBuffer[i] = BitConverter.ToInt16(e.Buffer, i * bytesPerSample);
+                        rightBuffer[i] = BitConverter.ToInt16(e.Buffer, i * bytesPerSample + bytesPerSampleChannel);
                     }
                 }
                 else if (bytesPerSampleChannel == 4)
@@ -50,7 +53,8 @@ namespace OWOVRC.Audio.Classes
                     // 32-bit PCM
                     for (int i = 0; i < sampleCount; i++)
                     {
-                        buffer[i] = BitConverter.ToInt32(e.Buffer, i * bytesPerSample);
+                        leftBuffer[i] = BitConverter.ToInt32(e.Buffer, i * bytesPerSample);
+                        rightBuffer[i] = BitConverter.ToInt32(e.Buffer, i * bytesPerSample + bytesPerSampleChannel);
                     }
                 }
                 else
@@ -66,7 +70,8 @@ namespace OWOVRC.Audio.Classes
                     // 32-bit IEEE float
                     for (int i = 0; i < sampleCount; i++)
                     {
-                        buffer[i] = BitConverter.ToSingle(e.Buffer, i * bytesPerSample);
+                        leftBuffer[i] = BitConverter.ToSingle(e.Buffer, i * bytesPerSample);
+                        rightBuffer[i] = BitConverter.ToSingle(e.Buffer, i * bytesPerSample + bytesPerSampleChannel);
                     }
                 }
                 else
@@ -82,7 +87,15 @@ namespace OWOVRC.Audio.Classes
             }
         }
 
-        public AnalyzedAudioFrame? AnalyzeAudio()
+        public Tuple<AnalyzedAudioFrame?, AnalyzedAudioFrame?> AnalyzeAudioStereo()
+        {
+            return Tuple.Create(
+                AnalyzeAudio(leftBuffer),
+                AnalyzeAudio(rightBuffer)
+            );
+        }
+
+        private AnalyzedAudioFrame? AnalyzeAudio(Complex[] buffer)
         {
             Complex[] paddedBuffer = FftSharp.Pad.ZeroPad(buffer);
             FftSharp.FFT.Forward(paddedBuffer);
@@ -96,46 +109,16 @@ namespace OWOVRC.Audio.Classes
                     peakIndex = i;
             }
             double fftPeriod = FftSharp.FFT.FrequencyResolution(fftMagnitude.Length, capture.WaveFormat.SampleRate);
-            double peakFrequency = fftPeriod * peakIndex;
+            //double peakFrequency = fftPeriod * peakIndex;
 
-            int subBassLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 16, 60);
-            int bassLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 60, 250);
-            int lowMidLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 250, 500);
-            int midLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 500, 2000);
-            int highMidLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 2000, 4000);
-            int presenceLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 4000, 6000);
-            int brillianceLevel = GetFrequencyRange(fftMagnitude, fftPeriod, 6000, 20_000);
-
-            return new(
-                subBassLevel,
-                bassLevel,
-                lowMidLevel,
-                midLevel,
-                highMidLevel,
-                presenceLevel,
-                brillianceLevel
-            );
-        }
-
-        private int GetFrequencyRange(double[] fftBuffer, double period, int start, int end)
-        {
-            int actualStart = (int) (start / period);
-            int actualEnd = (int) (end / period);
-
-            double highest = 0;
-            for (int i = actualStart; i <= actualEnd; i++)
-            {
-                highest = Math.Max(fftBuffer[i], highest);
-            }
-
-            int length = end - start;
-            return Math.Min((int)(highest * 5000), 100);
+            return new(fftMagnitude, fftPeriod);
         }
 
         public void Dispose()
         {
             capture.DataAvailable -= OnDataAvailable;
             capture.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

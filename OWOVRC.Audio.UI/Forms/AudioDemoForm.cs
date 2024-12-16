@@ -1,5 +1,4 @@
-﻿using NAudio.Dsp;
-using OWOVRC.Audio.Classes;
+﻿using OWOVRC.Audio.Classes;
 
 namespace OWOVRC.Audio.UI
 {
@@ -8,7 +7,8 @@ namespace OWOVRC.Audio.UI
         private readonly AudioAnalyzer analyzer = new();
         private readonly System.Timers.Timer timer;
 
-        private AnalyzedAudioFrame? lastFrame;
+        private AnalyzedAudioFrame? lastFrameR;
+        private AnalyzedAudioFrame? lastFrameL;
 
         public AudioDemoForm()
         {
@@ -22,31 +22,31 @@ namespace OWOVRC.Audio.UI
 
         private void Timer_Elapsed(object? sender, EventArgs args)
         {
-            AnalyzedAudioFrame? frame = analyzer.AnalyzeAudio();
-            if (frame == null)
-            {
-                return;
-            }
+            Tuple<AnalyzedAudioFrame?, AnalyzedAudioFrame?> frames = analyzer.AnalyzeAudioStereo();
 
-            lastFrame = frame;
+            lastFrameL = frames.Item1;
+            lastFrameR = frames.Item2;
 
             Invoke(UpdateTrackBars);
         }
 
         private void UpdateTrackBars()
         {
-            if (lastFrame == null)
-            {
-                return;
-            }
+            subBassIndicatorLeft.Value = lastFrameL?.SubBass ?? 0;
+            bassIndicatorLeft.Value = lastFrameL?.Bass ?? 0;
+            lowMidIndicatorLeft.Value = lastFrameL?.LowMid ?? 0;
+            midIndicatorLeft.Value = lastFrameL?.Mid ?? 0;
+            highMidIndicatorLeft.Value = lastFrameL?.HighMid ?? 0;
+            presenceIndicatorLeft.Value = lastFrameL?.Presence ?? 0;
+            brillianceIndicatorLeft.Value = lastFrameL?.Brilliance ?? 0;
 
-            subBassIndicator.Value    = lastFrame.SubBass;
-            bassIndicator.Value       = lastFrame.Bass;
-            lowMidIndicator.Value     = lastFrame.LowMid;
-            midIndicator.Value        = lastFrame.Mid;
-            highMidIndicator.Value    = lastFrame.HighMid;
-            presenceIndicator.Value   = lastFrame.Presence;
-            brillianceIndicator.Value = lastFrame.Brilliance;
+            subBassIndicatorRight.Value = lastFrameR?.SubBass ?? 0;
+            bassIndicatorRight.Value = lastFrameR?.Bass ?? 0;
+            lowMidIndicatorRight.Value = lastFrameR?.LowMid ?? 0;
+            midIndicatorRight.Value = lastFrameR?.Mid ?? 0;
+            highMidIndicatorRight.Value = lastFrameR?.HighMid ?? 0;
+            presenceIndicatorRight.Value = lastFrameR?.Presence ?? 0;
+            brillianceIndicatorRight.Value = lastFrameR?.Brilliance ?? 0;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
