@@ -81,6 +81,20 @@
             oscPresetsEnabledCheckbox = new CheckBox();
             openOscPresetsFormButton = new Button();
             applyOscPresetsSettingsButton = new Button();
+            audioResponsePage = new TabPage();
+            audioMaxIntensityInput = new NumericUpDown();
+            label24 = new Label();
+            label23 = new Label();
+            audioMaxBassInput = new NumericUpDown();
+            audioMonitorButton = new Button();
+            label22 = new Label();
+            audioMinBassInput = new NumericUpDown();
+            groupBox4 = new GroupBox();
+            label20 = new Label();
+            label21 = new Label();
+            audioPriorityInput = new NumericUpDown();
+            audioEnabledCheckbox = new CheckBox();
+            applyAudioSettingsButton = new Button();
             logLevelComboBox = new ComboBox();
             label3 = new Label();
             logBox = new RichTextBox();
@@ -120,6 +134,12 @@
             ((System.ComponentModel.ISupportInitialize)owiPriorityInput).BeginInit();
             oscPresetsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)oscPresetsPriorityInput).BeginInit();
+            audioResponsePage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)audioMaxIntensityInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)audioMaxBassInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)audioMinBassInput).BeginInit();
+            groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)audioPriorityInput).BeginInit();
             connectionGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)oscPortInput).BeginInit();
             groupBox1.SuspendLayout();
@@ -131,6 +151,7 @@
             tabControl1.Controls.Add(velocitySettingsPage);
             tabControl1.Controls.Add(owiSettingsPage);
             tabControl1.Controls.Add(oscPresetsPage);
+            tabControl1.Controls.Add(audioResponsePage);
             tabControl1.Location = new Point(12, 118);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -700,6 +721,154 @@
             applyOscPresetsSettingsButton.UseVisualStyleBackColor = true;
             applyOscPresetsSettingsButton.Click += ApplyOscPresetsSettingsButton_Click;
             // 
+            // audioResponsePage
+            // 
+            audioResponsePage.Controls.Add(audioMaxIntensityInput);
+            audioResponsePage.Controls.Add(label24);
+            audioResponsePage.Controls.Add(label23);
+            audioResponsePage.Controls.Add(audioMaxBassInput);
+            audioResponsePage.Controls.Add(audioMonitorButton);
+            audioResponsePage.Controls.Add(label22);
+            audioResponsePage.Controls.Add(audioMinBassInput);
+            audioResponsePage.Controls.Add(groupBox4);
+            audioResponsePage.Controls.Add(label21);
+            audioResponsePage.Controls.Add(audioPriorityInput);
+            audioResponsePage.Controls.Add(audioEnabledCheckbox);
+            audioResponsePage.Controls.Add(applyAudioSettingsButton);
+            audioResponsePage.Location = new Point(4, 24);
+            audioResponsePage.Name = "audioResponsePage";
+            audioResponsePage.Size = new Size(360, 275);
+            audioResponsePage.TabIndex = 4;
+            audioResponsePage.Text = "Audio";
+            audioResponsePage.UseVisualStyleBackColor = true;
+            // 
+            // audioMaxIntensityInput
+            // 
+            audioMaxIntensityInput.Location = new Point(262, 113);
+            audioMaxIntensityInput.Name = "audioMaxIntensityInput";
+            audioMaxIntensityInput.Size = new Size(89, 23);
+            audioMaxIntensityInput.TabIndex = 33;
+            helpToolTip.SetToolTip(audioMaxIntensityInput, "Specifies the maximum intensity of this effect");
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(6, 117);
+            label24.Name = "label24";
+            label24.Size = new Size(73, 15);
+            label24.TabIndex = 32;
+            label24.Text = "Intensity (%)";
+            helpToolTip.SetToolTip(label24, "Specifies the maximum intensity of this effect");
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(6, 88);
+            label23.Name = "label23";
+            label23.Size = new Size(81, 15);
+            label23.TabIndex = 31;
+            label23.Text = "Max Bass (db)";
+            helpToolTip.SetToolTip(label23, "Specifies the maximum db for bass effects.");
+            // 
+            // audioMaxBassInput
+            // 
+            audioMaxBassInput.Location = new Point(262, 84);
+            audioMaxBassInput.Name = "audioMaxBassInput";
+            audioMaxBassInput.Size = new Size(89, 23);
+            audioMaxBassInput.TabIndex = 30;
+            helpToolTip.SetToolTip(audioMaxBassInput, "Specifies the maximum db for bass effects.\r\nThis value is mostly used for intensity scaling.");
+            // 
+            // audioMonitorButton
+            // 
+            audioMonitorButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            audioMonitorButton.Location = new Point(6, 246);
+            audioMonitorButton.Name = "audioMonitorButton";
+            audioMonitorButton.Size = new Size(89, 23);
+            audioMonitorButton.TabIndex = 29;
+            audioMonitorButton.Text = "Monitor";
+            audioMonitorButton.UseVisualStyleBackColor = true;
+            audioMonitorButton.Click += AudioMonitorButton_Click;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Location = new Point(6, 59);
+            label22.Name = "label22";
+            label22.Size = new Size(79, 15);
+            label22.TabIndex = 28;
+            label22.Text = "Min Bass (db)";
+            helpToolTip.SetToolTip(label22, "Specifies the minimum db threshold for bass effects.");
+            // 
+            // audioMinBassInput
+            // 
+            audioMinBassInput.Location = new Point(262, 55);
+            audioMinBassInput.Name = "audioMinBassInput";
+            audioMinBassInput.Size = new Size(89, 23);
+            audioMinBassInput.TabIndex = 27;
+            helpToolTip.SetToolTip(audioMinBassInput, "Specifies the minimum db threshold for bass effects.\r\nBass levels below this threshold will not trigger any sensations.");
+            // 
+            // groupBox4
+            // 
+            groupBox4.Controls.Add(label20);
+            groupBox4.Location = new Point(6, 173);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(348, 63);
+            groupBox4.TabIndex = 26;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Information";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.FlatStyle = FlatStyle.Popup;
+            label20.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label20.ForeColor = SystemColors.ControlDarkDark;
+            label20.Location = new Point(16, 19);
+            label20.Name = "label20";
+            label20.Size = new Size(308, 34);
+            label20.TabIndex = 20;
+            label20.Text = "This effect attempts to create sensations based on the \r\nbass level of the system's audio output.\r\n";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(6, 30);
+            label21.Name = "label21";
+            label21.Size = new Size(45, 15);
+            label21.TabIndex = 25;
+            label21.Text = "Priority";
+            helpToolTip.SetToolTip(label21, "Speicifies the priority of this effect (0 = lowest)");
+            // 
+            // audioPriorityInput
+            // 
+            audioPriorityInput.Location = new Point(262, 26);
+            audioPriorityInput.Name = "audioPriorityInput";
+            audioPriorityInput.Size = new Size(89, 23);
+            audioPriorityInput.TabIndex = 24;
+            helpToolTip.SetToolTip(audioPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
+            // 
+            // audioEnabledCheckbox
+            // 
+            audioEnabledCheckbox.AutoSize = true;
+            audioEnabledCheckbox.Location = new Point(6, 6);
+            audioEnabledCheckbox.Name = "audioEnabledCheckbox";
+            audioEnabledCheckbox.Size = new Size(68, 19);
+            audioEnabledCheckbox.TabIndex = 23;
+            audioEnabledCheckbox.Text = "Enabled";
+            audioEnabledCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // applyAudioSettingsButton
+            // 
+            applyAudioSettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            applyAudioSettingsButton.Location = new Point(279, 246);
+            applyAudioSettingsButton.Name = "applyAudioSettingsButton";
+            applyAudioSettingsButton.Size = new Size(75, 23);
+            applyAudioSettingsButton.TabIndex = 22;
+            applyAudioSettingsButton.Text = "Apply";
+            helpToolTip.SetToolTip(applyAudioSettingsButton, "Save and apply settings");
+            applyAudioSettingsButton.UseVisualStyleBackColor = true;
+            applyAudioSettingsButton.Click += ApplyAudioSettingsButton_Click;
+            // 
             // logLevelComboBox
             // 
             logLevelComboBox.FormattingEnabled = true;
@@ -964,6 +1133,14 @@
             oscPresetsPage.ResumeLayout(false);
             oscPresetsPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)oscPresetsPriorityInput).EndInit();
+            audioResponsePage.ResumeLayout(false);
+            audioResponsePage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)audioMaxIntensityInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)audioMaxBassInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)audioMinBassInput).EndInit();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)audioPriorityInput).EndInit();
             connectionGroup.ResumeLayout(false);
             connectionGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)oscPortInput).EndInit();
@@ -1045,5 +1222,19 @@
         private Label notVeryHelpfulLabel;
         private Button configureCollidersIntensityButton;
         private Button openDiscoveryButton;
+        private TabPage audioResponsePage;
+        private GroupBox groupBox4;
+        private Label label20;
+        private Label label21;
+        private NumericUpDown audioPriorityInput;
+        private CheckBox audioEnabledCheckbox;
+        private Button applyAudioSettingsButton;
+        private Label label22;
+        private NumericUpDown audioMinBassInput;
+        private Button audioMonitorButton;
+        private Label label23;
+        private NumericUpDown audioMaxBassInput;
+        private NumericUpDown audioMaxIntensityInput;
+        private Label label24;
     }
 }

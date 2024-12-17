@@ -7,8 +7,10 @@ namespace OWOVRC.Audio.UI
         private readonly AudioAnalyzer analyzer = new();
         //private readonly System.Timers.Timer timer;
 
-        private AnalyzedAudioFrame? lastFrameR;
-        private AnalyzedAudioFrame? lastFrameL;
+        private AnalyzedAudioSample? lastSampleR;
+        private AnalyzedAudioSample? lastSampleL;
+
+        private readonly ScalingHelper scalingHelper = new(20);
 
         public AudioDemoForm()
         {
@@ -22,41 +24,33 @@ namespace OWOVRC.Audio.UI
             analyzer.OnSampleRead += Analyzer_OnSampleRead;
         }
 
-        void Analyzer_OnSampleRead(object? sender, Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame> frames)
+        void Analyzer_OnSampleRead(object? sender, Tuple<AnalyzedAudioSample, AnalyzedAudioSample> samples)
         {
-            lastFrameL = frames.Item1;
-            lastFrameR = frames.Item2;
-
-            Invoke(UpdateTrackBars);
-        }
-
-        private void Timer_Elapsed(object? sender, EventArgs args)
-        {
-            Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame> frames = analyzer.AnalyzeAudioStereo();
-
-            lastFrameL = frames.Item1;
-            lastFrameR = frames.Item2;
+            lastSampleL = samples.Item1;
+            lastSampleR = samples.Item2;
 
             Invoke(UpdateTrackBars);
         }
 
         private void UpdateTrackBars()
         {
-            subBassIndicatorLeft.Value = lastFrameL?.SubBass ?? 0;
-            bassIndicatorLeft.Value = lastFrameL?.Bass ?? 0;
-            lowMidIndicatorLeft.Value = lastFrameL?.LowMid ?? 0;
-            midIndicatorLeft.Value = lastFrameL?.Mid ?? 0;
-            highMidIndicatorLeft.Value = lastFrameL?.HighMid ?? 0;
-            presenceIndicatorLeft.Value = lastFrameL?.Presence ?? 0;
-            brillianceIndicatorLeft.Value = lastFrameL?.Brilliance ?? 0;
+            subBassIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.SubBass ?? 0);
+            bassIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.Bass ?? 0);
+            lowMidIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.LowMid ?? 0);
+            midIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.Mid ?? 0);
+            highMidIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.HighMid ?? 0);
+            presenceIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.Presence ?? 0);
+            brillianceIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.Brilliance ?? 0);
 
-            subBassIndicatorRight.Value = lastFrameR?.SubBass ?? 0;
-            bassIndicatorRight.Value = lastFrameR?.Bass ?? 0;
-            lowMidIndicatorRight.Value = lastFrameR?.LowMid ?? 0;
-            midIndicatorRight.Value = lastFrameR?.Mid ?? 0;
-            highMidIndicatorRight.Value = lastFrameR?.HighMid ?? 0;
-            presenceIndicatorRight.Value = lastFrameR?.Presence ?? 0;
-            brillianceIndicatorRight.Value = lastFrameR?.Brilliance ?? 0;
+            subBassIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.SubBass ?? 0);
+            bassIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Bass ?? 0);
+            lowMidIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.LowMid ?? 0);
+            midIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Mid ?? 0);
+            highMidIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.HighMid ?? 0);
+            presenceIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Presence ?? 0);
+            brillianceIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Brilliance ?? 0);
+
+            maxAmplitudeLabel.Text = scalingHelper.MaxAmplitude.ToString();
         }
 
         private void StartButton_Click(object sender, EventArgs e)

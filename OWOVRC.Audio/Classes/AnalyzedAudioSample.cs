@@ -1,50 +1,51 @@
 ﻿namespace OWOVRC.Audio.Classes
 {
-    public class AnalyzedAudioFrame
+    public class AnalyzedAudioSample
     {
-        public int SubBass
+        private readonly int Amplification;
+        public float SubBass
         {
             get
             {
                 return GetFrequencyRange(16, 60);
             }
         }
-        public int Bass
+        public float Bass
         {
             get
             {
                 return GetFrequencyRange(60, 250);
             }
         }
-        public int LowMid
+        public float LowMid
         {
             get
             {
                 return GetFrequencyRange(250, 500);
             }
         }
-        public int Mid
+        public float Mid
         {
             get
             {
                 return GetFrequencyRange(500, 2000);
             }
         }
-        public int HighMid
+        public float HighMid
         {
             get
             {
                 return GetFrequencyRange(2000, 4000);
             }
         }
-        public int Presence
+        public float Presence
         {
             get
             {
                 return GetFrequencyRange(4000, 6000);
             }
         }
-        public int Brilliance
+        public float Brilliance
         {
             get
             {
@@ -55,19 +56,20 @@
         private readonly double[] fftBuffer;
         private readonly double period;
 
-        public AnalyzedAudioFrame(double[] fftBuffer, double period)
+        public AnalyzedAudioSample(double[] fftBuffer, double period, int amplification = 1_000)
         {
             this.fftBuffer = fftBuffer;
             this.period = period;
+            Amplification = amplification;
         }
 
-        public int GetFrequency(int frequency)
+        public float GetFrequency(int frequency)
         {
             int actualFrequency = (int) (frequency / period);
-            return Math.Min((int)(fftBuffer[actualFrequency] * 5000), 100);
+            return (float) (fftBuffer[actualFrequency] * Amplification);
         }
 
-        public int GetFrequencyRange(int start, int end)
+        public float GetFrequencyRange(int start, int end)
         {
             int actualStart = (int)(start / period);
             int actualEnd = (int)(end / period);
@@ -79,7 +81,7 @@
             }
 
             //int length = end - start;
-            return Math.Min((int)(highest * 5000), 100);
+            return (float)(highest * Amplification);
         }
     }
 }

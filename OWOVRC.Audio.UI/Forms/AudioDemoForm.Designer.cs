@@ -35,25 +35,18 @@ namespace OWOVRC.Audio.UI
             subBassIndicatorLeft = new BarIndicator();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
-            label21 = new Label();
             label7 = new Label();
             brillianceIndicatorLeft = new BarIndicator();
-            label20 = new Label();
             label6 = new Label();
             presenceIndicatorLeft = new BarIndicator();
-            label19 = new Label();
             label5 = new Label();
             highMidIndicatorLeft = new BarIndicator();
-            label18 = new Label();
             label4 = new Label();
             midIndicatorLeft = new BarIndicator();
-            label17 = new Label();
             label3 = new Label();
             lowMidIndicatorLeft = new BarIndicator();
-            label16 = new Label();
             label1 = new Label();
             bassIndicatorLeft = new BarIndicator();
-            label15 = new Label();
             label2 = new Label();
             groupBox3 = new GroupBox();
             label8 = new Label();
@@ -70,6 +63,8 @@ namespace OWOVRC.Audio.UI
             bassIndicatorRight = new BarIndicator();
             label14 = new Label();
             subBassIndicatorRight = new BarIndicator();
+            label15 = new Label();
+            maxAmplitudeLabel = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -123,25 +118,18 @@ namespace OWOVRC.Audio.UI
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(label21);
             groupBox2.Controls.Add(label7);
             groupBox2.Controls.Add(brillianceIndicatorLeft);
-            groupBox2.Controls.Add(label20);
             groupBox2.Controls.Add(label6);
             groupBox2.Controls.Add(presenceIndicatorLeft);
-            groupBox2.Controls.Add(label19);
             groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(highMidIndicatorLeft);
-            groupBox2.Controls.Add(label18);
             groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(midIndicatorLeft);
-            groupBox2.Controls.Add(label17);
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(lowMidIndicatorLeft);
-            groupBox2.Controls.Add(label16);
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(bassIndicatorLeft);
-            groupBox2.Controls.Add(label15);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(subBassIndicatorLeft);
             groupBox2.Location = new Point(12, 12);
@@ -150,16 +138,6 @@ namespace OWOVRC.Audio.UI
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Text = "Left";
-            // 
-            // label21
-            // 
-            label21.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label21.Location = new Point(416, 206);
-            label21.Name = "label21";
-            label21.Size = new Size(62, 15);
-            label21.TabIndex = 26;
-            label21.Text = "Brilliance";
-            label21.TextAlign = ContentAlignment.TopCenter;
             // 
             // label7
             // 
@@ -183,16 +161,6 @@ namespace OWOVRC.Audio.UI
             brillianceIndicatorLeft.TabIndex = 25;
             brillianceIndicatorLeft.Value = 0;
             // 
-            // label20
-            // 
-            label20.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label20.Location = new Point(348, 206);
-            label20.Name = "label20";
-            label20.Size = new Size(62, 15);
-            label20.TabIndex = 24;
-            label20.Text = "Presence";
-            label20.TextAlign = ContentAlignment.TopCenter;
-            // 
             // label6
             // 
             label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
@@ -214,16 +182,6 @@ namespace OWOVRC.Audio.UI
             presenceIndicatorLeft.Size = new Size(45, 181);
             presenceIndicatorLeft.TabIndex = 23;
             presenceIndicatorLeft.Value = 0;
-            // 
-            // label19
-            // 
-            label19.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label19.Location = new Point(280, 206);
-            label19.Name = "label19";
-            label19.Size = new Size(62, 15);
-            label19.TabIndex = 22;
-            label19.Text = "High-Mid";
-            label19.TextAlign = ContentAlignment.TopCenter;
             // 
             // label5
             // 
@@ -247,16 +205,6 @@ namespace OWOVRC.Audio.UI
             highMidIndicatorLeft.TabIndex = 21;
             highMidIndicatorLeft.Value = 0;
             // 
-            // label18
-            // 
-            label18.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label18.Location = new Point(212, 206);
-            label18.Name = "label18";
-            label18.Size = new Size(62, 15);
-            label18.TabIndex = 20;
-            label18.Text = "Midrange";
-            label18.TextAlign = ContentAlignment.TopCenter;
-            // 
             // label4
             // 
             label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
@@ -278,16 +226,6 @@ namespace OWOVRC.Audio.UI
             midIndicatorLeft.Size = new Size(45, 181);
             midIndicatorLeft.TabIndex = 19;
             midIndicatorLeft.Value = 0;
-            // 
-            // label17
-            // 
-            label17.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label17.Location = new Point(144, 206);
-            label17.Name = "label17";
-            label17.Size = new Size(62, 15);
-            label17.TabIndex = 18;
-            label17.Text = "Low-Mid";
-            label17.TextAlign = ContentAlignment.TopCenter;
             // 
             // label3
             // 
@@ -311,16 +249,6 @@ namespace OWOVRC.Audio.UI
             lowMidIndicatorLeft.TabIndex = 17;
             lowMidIndicatorLeft.Value = 0;
             // 
-            // label16
-            // 
-            label16.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label16.Location = new Point(76, 206);
-            label16.Name = "label16";
-            label16.Size = new Size(62, 15);
-            label16.TabIndex = 16;
-            label16.Text = "Bass";
-            label16.TextAlign = ContentAlignment.TopCenter;
-            // 
             // label1
             // 
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
@@ -342,16 +270,6 @@ namespace OWOVRC.Audio.UI
             bassIndicatorLeft.Size = new Size(45, 181);
             bassIndicatorLeft.TabIndex = 15;
             bassIndicatorLeft.Value = 0;
-            // 
-            // label15
-            // 
-            label15.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label15.Location = new Point(8, 206);
-            label15.Name = "label15";
-            label15.Size = new Size(62, 15);
-            label15.TabIndex = 14;
-            label15.Text = "Sub-Bass";
-            label15.TextAlign = ContentAlignment.TopCenter;
             // 
             // label2
             // 
@@ -540,11 +458,32 @@ namespace OWOVRC.Audio.UI
             subBassIndicatorRight.TabIndex = 4;
             subBassIndicatorRight.Value = 0;
             // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label15.Location = new Point(509, 97);
+            label15.Name = "label15";
+            label15.Size = new Size(92, 15);
+            label15.TabIndex = 8;
+            label15.Text = "Max Amplitude";
+            // 
+            // maxAmplitudeLabel
+            // 
+            maxAmplitudeLabel.Location = new Point(515, 112);
+            maxAmplitudeLabel.Name = "maxAmplitudeLabel";
+            maxAmplitudeLabel.Size = new Size(75, 23);
+            maxAmplitudeLabel.TabIndex = 9;
+            maxAmplitudeLabel.Text = "0";
+            maxAmplitudeLabel.TextAlign = ContentAlignment.TopCenter;
+            // 
             // AudioDemoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1107, 245);
+            Controls.Add(maxAmplitudeLabel);
+            Controls.Add(label15);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
@@ -557,6 +496,7 @@ namespace OWOVRC.Audio.UI
             groupBox2.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -565,7 +505,6 @@ namespace OWOVRC.Audio.UI
         private Button stopButton;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
-        private Label label7;
         private Label label6;
         private Label label5;
         private Label label4;
@@ -594,12 +533,8 @@ namespace OWOVRC.Audio.UI
         private BarIndicator lowMidIndicatorRight;
         private BarIndicator bassIndicatorRight;
         private BarIndicator subBassIndicatorRight;
-        private Label label21;
-        private Label label20;
-        private Label label19;
-        private Label label18;
-        private Label label17;
-        private Label label16;
+        private Label label7;
         private Label label15;
+        private Label maxAmplitudeLabel;
     }
 }

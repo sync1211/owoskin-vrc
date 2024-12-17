@@ -1,16 +1,29 @@
-﻿using NAudio.Wave;
+﻿using FftSharp.Windows;
+using NAudio.CoreAudioApi;
+using NAudio.Wave;
+using Serilog;
 using System.Numerics;
 
 namespace OWOVRC.Audio.Classes
 {
     public partial class AudioAnalyzer: IDisposable
     {
-        public EventHandler<Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame>>? OnSampleRead;
+        public EventHandler<Tuple<AnalyzedAudioSample, AnalyzedAudioSample>>? OnSampleRead;
+        public bool IsListening
+        {
+            get
+            {
+                return capture.CaptureState == CaptureState.Capturing;
+            }
+        }
 
         private readonly WasapiLoopbackCapture capture;
 
         private readonly Complex[] leftBuffer;
         private readonly Complex[] rightBuffer;
+
+        private readonly int bytesPerSampleChannel;
+        private readonly int bytesPerSample;
 
         public AudioAnalyzer()
         {
@@ -19,22 +32,25 @@ namespace OWOVRC.Audio.Classes
             int sampleRate = capture.WaveFormat.SampleRate;
             leftBuffer = new Complex[sampleRate / 2];
             rightBuffer = new Complex[sampleRate / 2];
+
+            bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
+            bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
         }
 
         public void Start()
         {
             capture.StartRecording();
+            Log.Information("Audio capture started!");
         }
 
         public void Stop()
         {
             capture.StopRecording();
+            Log.Information("Audio capture stopped!");
         }
 
         private void OnDataAvailable(object? sender, WaveInEventArgs e)
         {
-            int bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
-            int bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
             int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, leftBuffer.Length);
 
             WaveFormatEncoding waveEncoding = capture.WaveFormat.Encoding;
@@ -91,7 +107,7 @@ namespace OWOVRC.Audio.Classes
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
-        public Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame> AnalyzeAudioStereo()
+        public Tuple<AnalyzedAudioSample, AnalyzedAudioSample> AnalyzeAudioStereo()
         {
             return Tuple.Create(
                 AnalyzeAudio(leftBuffer),
@@ -99,7 +115,7 @@ namespace OWOVRC.Audio.Classes
             );
         }
 
-        private AnalyzedAudioFrame AnalyzeAudio(Complex[] buffer)
+        private AnalyzedAudioSample AnalyzeAudio(Complex[] buffer)
         {
             Complex[] paddedBuffer = FftSharp.Pad.ZeroPad(buffer);
             FftSharp.FFT.Forward(paddedBuffer);
