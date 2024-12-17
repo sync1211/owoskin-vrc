@@ -22,7 +22,7 @@ namespace OWOVRC.Audio.UI
 
         private void Timer_Elapsed(object? sender, EventArgs args)
         {
-            Tuple<AnalyzedAudioFrame?, AnalyzedAudioFrame?> frames = analyzer.AnalyzeAudioStereo();
+            Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame> frames = analyzer.AnalyzeAudioStereo();
 
             lastFrameL = frames.Item1;
             lastFrameR = frames.Item2;

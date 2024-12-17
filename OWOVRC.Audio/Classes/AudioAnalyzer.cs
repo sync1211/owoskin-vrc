@@ -87,7 +87,7 @@ namespace OWOVRC.Audio.Classes
             }
         }
 
-        public Tuple<AnalyzedAudioFrame?, AnalyzedAudioFrame?> AnalyzeAudioStereo()
+        public Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame> AnalyzeAudioStereo()
         {
             return Tuple.Create(
                 AnalyzeAudio(leftBuffer),
@@ -95,7 +95,7 @@ namespace OWOVRC.Audio.Classes
             );
         }
 
-        private AnalyzedAudioFrame? AnalyzeAudio(Complex[] buffer)
+        private AnalyzedAudioFrame AnalyzeAudio(Complex[] buffer)
         {
             Complex[] paddedBuffer = FftSharp.Pad.ZeroPad(buffer);
             FftSharp.FFT.Forward(paddedBuffer);
