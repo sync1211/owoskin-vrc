@@ -1,4 +1,4 @@
-﻿namespace OWOVRC.Audio.Classes
+﻿namespace OWOVRC.Audio.UI.Classes
 {
     public class ScalingHelper
     {

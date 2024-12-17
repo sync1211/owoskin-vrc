@@ -1,4 +1,5 @@
 ﻿using OWOVRC.Audio.Classes;
+using OWOVRC.Audio.UI.Classes;
 using OWOVRC.Classes.Effects;
 
 namespace OWOVRC.UI.Forms
