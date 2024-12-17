@@ -51,7 +51,7 @@ namespace OWOVRC.Audio.UI
             presenceIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Presence ?? 0);
             brillianceIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Brilliance ?? 0);
 
-            maxAmplitudeLabel.Text = scalingHelper.MaxAmplitude.ToString();
+            maxAmplitudeLabel.Text = $"{Math.Round(scalingHelper.MaxAmplitude, 2)}db";
         }
 
         private void StartButton_Click(object sender, EventArgs e)
