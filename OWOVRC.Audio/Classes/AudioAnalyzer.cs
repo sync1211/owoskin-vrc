@@ -1,5 +1,4 @@
-﻿using FftSharp.Windows;
-using NAudio.CoreAudioApi;
+﻿using NAudio.CoreAudioApi;
 using NAudio.Wave;
 using Serilog;
 using System.Numerics;
