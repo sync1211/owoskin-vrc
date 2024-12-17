@@ -16,7 +16,7 @@ namespace OWOVRC.Classes.Settings
         public float SensationSeconds { get; set; } = 0.1f;
 
         [JsonConstructor]
-        public AudioEffectSettings(int minBass, int maxBass, int maxIntensity, int frequency, int sensationSeconds, bool enabled = true, int priority = 1) : base(enabled, priority)
+        public AudioEffectSettings(int minBass, int maxBass, int maxIntensity, int frequency, float sensationSeconds, bool enabled = true, int priority = 1) : base(enabled, priority)
         {
             MinBass = minBass;
             MaxBass = maxBass;
