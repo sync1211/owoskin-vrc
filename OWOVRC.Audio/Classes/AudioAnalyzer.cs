@@ -24,17 +24,21 @@ namespace OWOVRC.Audio.Classes
 
         private readonly int bytesPerSampleChannel;
         private readonly int bytesPerSample;
+        private readonly WaveFormatEncoding waveEncoding;
+
 
         public AudioAnalyzer()
         {
             capture = new();
-            capture.DataAvailable += OnDataAvailable;
             int sampleRate = capture.WaveFormat.SampleRate;
             leftBuffer = new Complex[sampleRate / 2];
             rightBuffer = new Complex[sampleRate / 2];
 
             bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
+            waveEncoding = capture.WaveFormat.Encoding;
+
+            capture.DataAvailable += OnDataAvailable;
         }
 
         public void Start()
@@ -53,7 +57,7 @@ namespace OWOVRC.Audio.Classes
         {
             int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, leftBuffer.Length);
 
-            WaveFormatEncoding waveEncoding = capture.WaveFormat.Encoding;
+            ReadOnlySpan<byte> bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
 
             if (waveEncoding == WaveFormatEncoding.Pcm)
             {
@@ -62,8 +66,8 @@ namespace OWOVRC.Audio.Classes
                     // 16-bit PCM
                     for (int i = 0; i < sampleCount; i++)
                     {
-                        leftBuffer[i] = BitConverter.ToInt16(e.Buffer, i * bytesPerSample);
-                        rightBuffer[i] = BitConverter.ToInt16(e.Buffer, (i * bytesPerSample) + bytesPerSampleChannel);
+                        leftBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                        rightBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
                     }
                 }
                 else if (bytesPerSampleChannel == 4)
@@ -71,8 +75,8 @@ namespace OWOVRC.Audio.Classes
                     // 32-bit PCM
                     for (int i = 0; i < sampleCount; i++)
                     {
-                        leftBuffer[i] = BitConverter.ToInt32(e.Buffer, i * bytesPerSample);
-                        rightBuffer[i] = BitConverter.ToInt32(e.Buffer, (i * bytesPerSample) + bytesPerSampleChannel);
+                        leftBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                        rightBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
                     }
                 }
                 else
@@ -88,8 +92,8 @@ namespace OWOVRC.Audio.Classes
                     // 32-bit IEEE float
                     for (int i = 0; i < sampleCount; i++)
                     {
-                        leftBuffer[i] = BitConverter.ToSingle(e.Buffer, i * bytesPerSample);
-                        rightBuffer[i] = BitConverter.ToSingle(e.Buffer, (i * bytesPerSample) + bytesPerSampleChannel);
+                        leftBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                        rightBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
                     }
                 }
                 else
