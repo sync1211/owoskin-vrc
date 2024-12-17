@@ -3,8 +3,10 @@ using System.Numerics;
 
 namespace OWOVRC.Audio.Classes
 {
-    public class AudioAnalyzer: IDisposable
+    public partial class AudioAnalyzer: IDisposable
     {
+        public EventHandler<Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame>>? OnSampleRead;
+
         private readonly WasapiLoopbackCapture capture;
 
         private readonly Complex[] leftBuffer;
@@ -45,7 +47,7 @@ namespace OWOVRC.Audio.Classes
                     for (int i = 0; i < sampleCount; i++)
                     {
                         leftBuffer[i] = BitConverter.ToInt16(e.Buffer, i * bytesPerSample);
-                        rightBuffer[i] = BitConverter.ToInt16(e.Buffer, i * bytesPerSample + bytesPerSampleChannel);
+                        rightBuffer[i] = BitConverter.ToInt16(e.Buffer, (i * bytesPerSample) + bytesPerSampleChannel);
                     }
                 }
                 else if (bytesPerSampleChannel == 4)
@@ -54,7 +56,7 @@ namespace OWOVRC.Audio.Classes
                     for (int i = 0; i < sampleCount; i++)
                     {
                         leftBuffer[i] = BitConverter.ToInt32(e.Buffer, i * bytesPerSample);
-                        rightBuffer[i] = BitConverter.ToInt32(e.Buffer, i * bytesPerSample + bytesPerSampleChannel);
+                        rightBuffer[i] = BitConverter.ToInt32(e.Buffer, (i * bytesPerSample) + bytesPerSampleChannel);
                     }
                 }
                 else
@@ -71,7 +73,7 @@ namespace OWOVRC.Audio.Classes
                     for (int i = 0; i < sampleCount; i++)
                     {
                         leftBuffer[i] = BitConverter.ToSingle(e.Buffer, i * bytesPerSample);
-                        rightBuffer[i] = BitConverter.ToSingle(e.Buffer, i * bytesPerSample + bytesPerSampleChannel);
+                        rightBuffer[i] = BitConverter.ToSingle(e.Buffer, (i * bytesPerSample) + bytesPerSampleChannel);
                     }
                 }
                 else
@@ -85,6 +87,8 @@ namespace OWOVRC.Audio.Classes
                 // Not supported!
                 throw new Exception("Unsupported encoding!");
             }
+
+            OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
         public Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame> AnalyzeAudioStereo()

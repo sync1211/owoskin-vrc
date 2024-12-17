@@ -5,7 +5,7 @@ namespace OWOVRC.Audio.UI
     public partial class AudioDemoForm : Form
     {
         private readonly AudioAnalyzer analyzer = new();
-        private readonly System.Timers.Timer timer;
+        //private readonly System.Timers.Timer timer;
 
         private AnalyzedAudioFrame? lastFrameR;
         private AnalyzedAudioFrame? lastFrameL;
@@ -13,11 +13,21 @@ namespace OWOVRC.Audio.UI
         public AudioDemoForm()
         {
             InitializeComponent();
-            timer = new()
-            {
-                Interval = 10
-            };
-            timer.Elapsed += Timer_Elapsed;
+            //timer = new()
+            //{
+            //    Interval = 10
+            //};
+            //timer.Elapsed += Timer_Elapsed;
+
+            analyzer.OnSampleRead += Analyzer_OnSampleRead;
+        }
+
+        void Analyzer_OnSampleRead(object? sender, Tuple<AnalyzedAudioFrame, AnalyzedAudioFrame> frames)
+        {
+            lastFrameL = frames.Item1;
+            lastFrameR = frames.Item2;
+
+            Invoke(UpdateTrackBars);
         }
 
         private void Timer_Elapsed(object? sender, EventArgs args)
@@ -61,7 +71,7 @@ namespace OWOVRC.Audio.UI
 
         private void Stop()
         {
-            timer.Stop();
+            //timer.Stop();
             analyzer.Stop();
 
             stopButton.Enabled = false;
@@ -70,7 +80,7 @@ namespace OWOVRC.Audio.UI
 
         private void Start()
         {
-            timer.Start();
+            //timer.Start();
             analyzer.Start();
 
             stopButton.Enabled = true;
