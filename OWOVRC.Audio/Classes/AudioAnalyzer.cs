@@ -26,7 +26,6 @@ namespace OWOVRC.Audio.Classes
         private readonly int bytesPerSample;
         private readonly WaveFormatEncoding waveEncoding;
 
-
         public AudioAnalyzer()
         {
             capture = new();
@@ -38,7 +37,42 @@ namespace OWOVRC.Audio.Classes
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
             waveEncoding = capture.WaveFormat.Encoding;
 
-            capture.DataAvailable += OnDataAvailable;
+            RegisterDataAvaiableEvent();
+        }
+
+        private void RegisterDataAvaiableEvent()
+        {
+            if (waveEncoding == WaveFormatEncoding.Pcm)
+            {
+                if (bytesPerSampleChannel == 2)
+                {
+                    // 16-bit PCM
+                    Log.Debug("Audio mode: 16-bit PCM");
+                    capture.DataAvailable += OnDataAvailable_PCM16;
+                }
+                else if (bytesPerSampleChannel == 4)
+                {
+                    // 32-bit PCM
+                    Log.Debug("Audio mode: 32-bit PCM");
+                    capture.DataAvailable += OnDataAvailable_PCM32;
+                }
+                else
+                {
+                    // Not supported!
+                    throw new Exception("Unsupported PCM format!");
+                }
+            }
+            else if (waveEncoding == WaveFormatEncoding.IeeeFloat && (bytesPerSampleChannel == 4))
+            {
+                // 32-bit IEEE float
+                Log.Debug("Audio mode: 32-bit IEEE float");
+                capture.DataAvailable += OnDataAvailable_IeeeFloat32;
+            }
+            else
+            {
+                // Not supported!
+                throw new Exception("Unsupported encoding!");
+            }
         }
 
         public void Start()
@@ -53,59 +87,49 @@ namespace OWOVRC.Audio.Classes
             Log.Information("Audio capture stopped!");
         }
 
-        private void OnDataAvailable(object? sender, WaveInEventArgs e)
+        // 32-bit IEEE float
+        private void OnDataAvailable_IeeeFloat32(object? sender, WaveInEventArgs e)
         {
             int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, leftBuffer.Length);
 
             ReadOnlySpan<byte> bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
 
-            if (waveEncoding == WaveFormatEncoding.Pcm)
+            for (int i = 0; i < sampleCount; i++)
             {
-                if (bytesPerSampleChannel == 2)
-                {
-                    // 16-bit PCM
-                    for (int i = 0; i < sampleCount; i++)
-                    {
-                        leftBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                        rightBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
-                    }
-                }
-                else if (bytesPerSampleChannel == 4)
-                {
-                    // 32-bit PCM
-                    for (int i = 0; i < sampleCount; i++)
-                    {
-                        leftBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                        rightBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
-                    }
-                }
-                else
-                {
-                    // Not supported!
-                    throw new Exception("Unsupported PCM format!");
-                }
+                leftBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                rightBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
             }
-            else if (waveEncoding == WaveFormatEncoding.IeeeFloat)
+
+            OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
+        }
+
+        // 16-bit PCM
+        private void OnDataAvailable_PCM16(object? sender, WaveInEventArgs e)
+        {
+            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, leftBuffer.Length);
+
+            ReadOnlySpan<byte> bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
+
+            for (int i = 0; i < sampleCount; i++)
             {
-                if (bytesPerSampleChannel == 4)
-                {
-                    // 32-bit IEEE float
-                    for (int i = 0; i < sampleCount; i++)
-                    {
-                        leftBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                        rightBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
-                    }
-                }
-                else
-                {
-                    // Not supported!
-                    throw new Exception("Unsupported IEEE format!");
-                }
+                leftBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                rightBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
             }
-            else
+
+            OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
+        }
+
+        // 32-bit PCM
+        private void OnDataAvailable_PCM32(object? sender, WaveInEventArgs e)
+        {
+            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, leftBuffer.Length);
+
+            ReadOnlySpan<byte> bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
+
+            for (int i = 0; i < sampleCount; i++)
             {
-                // Not supported!
-                throw new Exception("Unsupported encoding!");
+                leftBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                rightBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
@@ -140,7 +164,10 @@ namespace OWOVRC.Audio.Classes
 
         public void Dispose()
         {
-            capture.DataAvailable -= OnDataAvailable;
+            capture.DataAvailable -= OnDataAvailable_PCM16;
+            capture.DataAvailable -= OnDataAvailable_PCM32;
+            capture.DataAvailable -= OnDataAvailable_IeeeFloat32;
+
             capture.Dispose();
             GC.SuppressFinalize(this);
         }
