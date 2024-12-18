@@ -25,9 +25,16 @@ namespace OWOVRC.Audio.Classes
         private readonly int bytesPerSample;
         private readonly WaveFormatEncoding waveEncoding;
 
-        public AudioAnalyzer()
+        public AudioAnalyzer(MMDevice? device = null)
         {
-            capture = new();
+            if (device != null)
+            {
+                capture = new(device);
+            }
+            else
+            {
+                capture = new();
+            }
             int sampleRate = capture.WaveFormat.SampleRate;
             leftBuffer = new Complex[sampleRate / 2];
             rightBuffer = new Complex[sampleRate / 2];
@@ -96,7 +103,7 @@ namespace OWOVRC.Audio.Classes
             for (int i = 0; i < sampleCount; i++)
             {
                 leftBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                rightBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
+                rightBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
@@ -112,7 +119,7 @@ namespace OWOVRC.Audio.Classes
             for (int i = 0; i < sampleCount; i++)
             {
                 leftBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                rightBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
+                rightBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
@@ -128,7 +135,7 @@ namespace OWOVRC.Audio.Classes
             for (int i = 0; i < sampleCount; i++)
             {
                 leftBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                rightBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample + bytesPerSampleChannel, bytesPerSampleChannel));
+                rightBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());

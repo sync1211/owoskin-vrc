@@ -1,3 +1,4 @@
+using NAudio.CoreAudioApi;
 using OWOGame;
 using OWOVRC.Classes;
 using OWOVRC.Classes.Effects;
@@ -6,6 +7,7 @@ using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
 using OWOVRC.UI.Forms;
+using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -114,6 +116,10 @@ namespace OWOVRC.UI
             openDiscoveryButton.Enabled = !IsRunning;
 
             openOscPresetsFormButton.Enabled = !IsRunning;
+
+            audioDeviceSelectButton.Enabled = !IsRunning;
+
+            stopSensationsButton.Enabled = IsRunning;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -518,14 +524,13 @@ namespace OWOVRC.UI
             }
         }
 
-
         private void ApplyAudioSettingsButton_Click(object sender, EventArgs e)
         {
             audioSettings.Enabled = audioEnabledCheckbox.Checked;
-            audioSettings.Priority = (int) audioPriorityInput.Value;
-            audioSettings.MinBass = (int) audioMinBassInput.Value;
-            audioSettings.MaxBass = (int) audioMaxBassInput.Value;
-            audioSettings.MaxIntensity = (int) audioMaxIntensityInput.Value;
+            audioSettings.Priority = (int)audioPriorityInput.Value;
+            audioSettings.MinBass = (int)audioMinBassInput.Value;
+            audioSettings.MaxBass = (int)audioMaxBassInput.Value;
+            audioSettings.MaxIntensity = (int)audioMaxIntensityInput.Value;
 
             SettingsHelper.SaveSettingsToFile(audioSettings, "audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
             EnableOrDisableAudio();
@@ -597,7 +602,6 @@ namespace OWOVRC.UI
             }
         }
 
-
         /// <summary>
         /// Enables or disables OWI based on settings while the program is running.
         /// This is done to preserve resources, as VRC can be very CPU intensive.
@@ -618,6 +622,38 @@ namespace OWOVRC.UI
             {
                 audioEffect.Start();
             }
+        }
+
+        private void AudioDeviceSelectButton_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            using (MMDeviceEnumerator enumerator = new())
+            {
+                Log.Information("Loading audio devices...");
+                MMDeviceCollection devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+                MMDevice[] deviceArray = [.. devices];
+
+                // Get index of default device
+                int selectedIndex;
+                Log.Debug("Getting default audio device...");
+                using (MMDevice defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
+                {
+                    selectedIndex = Array.FindIndex(deviceArray, d => d.ID == defaultDevice.ID);
+                }
+
+                using (SelectionDialog<MMDevice> dialog = new(deviceArray, "Select an audio device:", "Select audio device", selectedIndex))
+                {
+                    DialogResult result = dialog.ShowDialog();
+
+                    if (result == DialogResult.OK)
+                    {
+                        audioEffect = new(owo, audioSettings, dialog.Value);
+                        Log.Information("Audio device changed to {device}", dialog.Value);
+                    }
+                }
+            }
+
+            Cursor = Cursors.Default;
         }
     }
 }

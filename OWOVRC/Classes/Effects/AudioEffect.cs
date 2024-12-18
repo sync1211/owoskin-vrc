@@ -1,4 +1,5 @@
-﻿using OWOGame;
+﻿using NAudio.CoreAudioApi;
+using OWOGame;
 using OWOVRC.Audio.Classes;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
@@ -12,13 +13,15 @@ namespace OWOVRC.Classes.Effects
         public readonly AudioEffectSettings Settings;
         public EventHandler<Tuple<AnalyzedAudioSample, AnalyzedAudioSample>>? OnSampleRead;
 
-        private readonly AudioAnalyzer Analyzer = new();
+        private readonly AudioAnalyzer Analyzer;
         private readonly OWOHelper owo;
 
-        public AudioEffect(OWOHelper owo, AudioEffectSettings settings)
+        public AudioEffect(OWOHelper owo, AudioEffectSettings settings, MMDevice? device = null)
         {
             this.owo = owo;
             Settings = settings;
+
+            Analyzer = new(device);
             Analyzer.OnSampleRead += Analyzer_OnSampleRead;
         }
 

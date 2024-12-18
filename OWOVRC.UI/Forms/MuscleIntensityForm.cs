@@ -1,9 +1,6 @@
 ﻿using OWOGame;
-using OWOVRC.Classes.OWOSuit;
-using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Controls;
 using OWOVRC.UI.Forms.Dialogs;
-using Serilog;
 
 namespace OWOVRC.UI.Forms
 {

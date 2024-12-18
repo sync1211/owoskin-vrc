@@ -82,6 +82,8 @@
             openOscPresetsFormButton = new Button();
             applyOscPresetsSettingsButton = new Button();
             audioResponsePage = new TabPage();
+            audioDeviceSelectButton = new Button();
+            label25 = new Label();
             audioMaxIntensityInput = new NumericUpDown();
             label24 = new Label();
             label23 = new Label();
@@ -723,6 +725,8 @@
             // 
             // audioResponsePage
             // 
+            audioResponsePage.Controls.Add(audioDeviceSelectButton);
+            audioResponsePage.Controls.Add(label25);
             audioResponsePage.Controls.Add(audioMaxIntensityInput);
             audioResponsePage.Controls.Add(label24);
             audioResponsePage.Controls.Add(label23);
@@ -741,6 +745,27 @@
             audioResponsePage.TabIndex = 4;
             audioResponsePage.Text = "Audio";
             audioResponsePage.UseVisualStyleBackColor = true;
+            // 
+            // audioDeviceSelectButton
+            // 
+            audioDeviceSelectButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            audioDeviceSelectButton.Location = new Point(262, 144);
+            audioDeviceSelectButton.Name = "audioDeviceSelectButton";
+            audioDeviceSelectButton.Size = new Size(89, 23);
+            audioDeviceSelectButton.TabIndex = 36;
+            audioDeviceSelectButton.Text = "Configure";
+            audioDeviceSelectButton.UseVisualStyleBackColor = true;
+            audioDeviceSelectButton.Click += AudioDeviceSelectButton_Click;
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(6, 148);
+            label25.Name = "label25";
+            label25.Size = new Size(76, 15);
+            label25.TabIndex = 34;
+            label25.Text = "Audio device";
+            helpToolTip.SetToolTip(label25, "The audio device to monitor.");
             // 
             // audioMaxIntensityInput
             // 
@@ -955,6 +980,7 @@
             // 
             // stopSensationsButton
             // 
+            stopSensationsButton.Enabled = false;
             stopSensationsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             stopSensationsButton.Location = new Point(6, 71);
             stopSensationsButton.Name = "stopSensationsButton";
@@ -962,7 +988,6 @@
             stopSensationsButton.TabIndex = 10;
             stopSensationsButton.Text = "Stop all sensations";
             helpToolTip.SetToolTip(stopSensationsButton, "Force-stop all sensations.");
-            stopSensationsButton.UseVisualStyleBackColor = true;
             stopSensationsButton.Click += StopSensationsButton_Click;
             // 
             // oscPortInput
@@ -1236,5 +1261,7 @@
         private NumericUpDown audioMaxBassInput;
         private NumericUpDown audioMaxIntensityInput;
         private Label label24;
+        private Label label25;
+        private Button audioDeviceSelectButton;
     }
 }
