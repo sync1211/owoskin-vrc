@@ -60,11 +60,11 @@ namespace OWOVRC.CLI
 
             // Set up audio effects
             Log.Debug("Preparing audio effects...");
-            AudioEffect audio = new(owo, audioSettings);
-            if (audioSettings.Enabled)
-            {
-                audio.Start();
-            }
+            //AudioEffect audio = new(owo, audioSettings);
+            //if (audioSettings.Enabled)
+            //{
+            //    audio.Start();
+            //}
 
             // Start OSC listener
             Log.Information("Starting OSC receiver...");
@@ -85,13 +85,13 @@ namespace OWOVRC.CLI
 
                 // Stop everything
                 owi.Stop();
-                audio.Stop();
+                //audio.Stop();
 
                 // Clean up
                 receiver.Dispose();
                 owo.Dispose();
                 owi.Dispose();
-                audio.Dispose();
+                //audio.Dispose();
             }
         }
 
