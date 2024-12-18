@@ -1,15 +1,12 @@
 ﻿using OWOGame;
-using OWOVRC.Classes.OWOSuit;
-using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Controls;
 using OWOVRC.UI.Forms.Dialogs;
-using Serilog;
 
 namespace OWOVRC.UI.Forms
 {
     public partial class MuscleIntensityForm : Form
     {
-        private int currentMuscleID = 0;
+        private int currentMuscleID;
         private readonly Dictionary<int, int> muscleIntensities;
         private readonly SelectableMuscle[] selectableMuscles;
         private readonly Sensation? testSensation;

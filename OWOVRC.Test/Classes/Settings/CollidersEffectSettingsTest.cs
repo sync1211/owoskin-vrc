@@ -1,7 +1,6 @@
 ﻿using OWOGame;
 using OWOVRC.Classes.Settings;
 using System.Text.Json;
-using Windows.Media.Core;
 
 namespace OWOVRC.Test.Classes.Settings
 {
