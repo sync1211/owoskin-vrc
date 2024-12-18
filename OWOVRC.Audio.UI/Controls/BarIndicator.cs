@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace OWOVRC.Audio.UI.Controls
+namespace OWOVRC.Audio.WinForms.Controls
 {
     public partial class BarIndicator : Control
     {

@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioMonitorForm));
             closeButton = new Button();
             label16 = new Label();
-            bassIndicatorLeft = new Audio.UI.Controls.BarIndicator();
+            bassIndicatorLeft = new Audio.WinForms.Controls.BarIndicator();
             groupBox2 = new GroupBox();
             groupBox1 = new GroupBox();
             label1 = new Label();
-            bassIndicatorRight = new Audio.UI.Controls.BarIndicator();
+            bassIndicatorRight = new Audio.WinForms.Controls.BarIndicator();
             label2 = new Label();
             maxDBLabel = new Label();
             rightBassDBLabel = new Label();
@@ -191,11 +191,11 @@
 
         private Button closeButton;
         private Label label16;
-        private Audio.UI.Controls.BarIndicator bassIndicatorLeft;
+        private Audio.WinForms.Controls.BarIndicator bassIndicatorLeft;
         private GroupBox groupBox2;
         private GroupBox groupBox1;
         private Label label1;
-        private Audio.UI.Controls.BarIndicator bassIndicatorRight;
+        private Audio.WinForms.Controls.BarIndicator bassIndicatorRight;
         private Label label2;
         private Label maxDBLabel;
         private Label leftBassDBLabel;

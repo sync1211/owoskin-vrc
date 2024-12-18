@@ -1,4 +1,4 @@
-﻿namespace OWOVRC.Audio.UI.Controls
+﻿namespace OWOVRC.Audio.WinForms.Controls
 {
     partial class BarIndicator
     {
