@@ -35,8 +35,8 @@ namespace OWOVRC.CLI
                 .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings) ?? new();
             WorldIntegratorSettings owiSettings = SettingsHelper
                 .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings) ?? new();
-            AudioEffectSettings audioSettings = SettingsHelper
-                .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings) ?? new();
+            // AudioEffectSettings audioSettings = SettingsHelper
+            //    .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings) ?? new();
 
             // Prepare OWOHelper
             Log.Debug("Preparing OSC listener...");
