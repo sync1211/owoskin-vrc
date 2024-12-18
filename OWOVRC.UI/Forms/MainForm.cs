@@ -638,7 +638,7 @@ namespace OWOVRC.UI
                 Log.Debug("Getting default audio device...");
                 using (MMDevice defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
                 {
-                    selectedIndex = Array.FindIndex(deviceArray, d => d.ID == defaultDevice.ID);
+                    selectedIndex = Array.FindIndex(deviceArray, d => d.ID.Equals(defaultDevice.ID));
                 }
 
                 using (SelectionDialog<MMDevice> dialog = new(deviceArray, "Select an audio device:", "Select audio device", selectedIndex))

@@ -6,7 +6,7 @@ namespace OWOVRC.UI.Forms
 {
     public partial class MuscleIntensityForm : Form
     {
-        private int currentMuscleID = 0;
+        private int currentMuscleID;
         private readonly Dictionary<int, int> muscleIntensities;
         private readonly SelectableMuscle[] selectableMuscles;
         private readonly Sensation? testSensation;
