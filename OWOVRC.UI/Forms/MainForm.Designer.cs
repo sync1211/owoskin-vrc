@@ -754,6 +754,7 @@
             audioDeviceSelectButton.Size = new Size(89, 23);
             audioDeviceSelectButton.TabIndex = 36;
             audioDeviceSelectButton.Text = "Configure";
+            helpToolTip.SetToolTip(audioDeviceSelectButton, "Configure which audio device the effect uses.");
             audioDeviceSelectButton.UseVisualStyleBackColor = true;
             audioDeviceSelectButton.Click += AudioDeviceSelectButton_Click;
             // 
@@ -765,7 +766,7 @@
             label25.Size = new Size(76, 15);
             label25.TabIndex = 34;
             label25.Text = "Audio device";
-            helpToolTip.SetToolTip(label25, "The audio device to monitor.");
+            helpToolTip.SetToolTip(label25, "Configure which audio device the effect uses.");
             // 
             // audioMaxIntensityInput
             // 
