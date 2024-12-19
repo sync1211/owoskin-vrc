@@ -1,6 +1,8 @@
 ﻿using OWOGame;
 using Serilog;
 using OwoAdvancedSensationBuilder.manager;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationStreamInstance;
 
 namespace OWOVRC.Classes.OWOSuit
 {
@@ -14,7 +16,7 @@ namespace OWOVRC.Classes.OWOSuit
         private readonly AdvancedSensationManager sensationManager = AdvancedSensationManager.getInstance();
 
         // Events
-        public EventHandler<AdvancedSensationStreamInstance>? OnSensationChange;
+        public SensationStreamInstanceStateEvent? OnSensationChange;
 
         public OWOHelper(string ip = "127.0.0.1")
         {
@@ -55,41 +57,33 @@ namespace OWOVRC.Classes.OWOSuit
         public void AddSensation(Sensation sensation, Muscle[] muscles, string name)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), false);
-            //instance.LastCalculationOfCycle += HandleSensationEnd;
+            instance.AfterStateChanged += HandleSensationStateChange;
 
             sensationManager.play(instance);
-
-            //OnSensationChange?.Invoke(this, instance);
         }
 
         public void AddLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), true);
-            //instance.LastCalculationOfCycle += HandleSensationEnd;
+            instance.AfterStateChanged += HandleSensationStateChange;
 
             sensationManager.play(instance);
-
-            //OnSensationChange?.Invoke(this, instance);
         }
 
         public void UpdateLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
-            //instance.LastCalculationOfCycle += HandleSensationEnd;
+            instance.AfterStateChanged += HandleSensationStateChange;
 
             sensationManager.updateSensation(instance.sensation, name);
-
-            //OnSensationChange?.Invoke(this, instance);
         }
 
         public void AddSensation(Sensation sensation, string name)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation, false);
-            //instance.LastCalculationOfCycle += HandleSensationEnd;
+            instance.AfterStateChanged += HandleSensationStateChange;
 
             sensationManager.play(instance);
-
-            //OnSensationChange?.Invoke(this, instance);
         }
 
         public Dictionary<string, AdvancedSensationStreamInstance> GetRunningSensations()
@@ -120,10 +114,10 @@ namespace OWOVRC.Classes.OWOSuit
             Sensations.Clear();
         }
 
-        //private void HandleSensationEnd(AdvancedSensationStreamInstance instance)
-        //{
-        //    OnSensationChange?.Invoke(this, instance);
-        //}
+        private void HandleSensationStateChange(AdvancedSensationStreamInstance instance, ProcessState state)
+        {
+            OnSensationChange?.Invoke(instance, state);
+        }
 
         public void Dispose()
         {

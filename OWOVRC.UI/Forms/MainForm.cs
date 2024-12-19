@@ -13,6 +13,7 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.Net;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
 
 namespace OWOVRC.UI
 {
@@ -58,20 +59,27 @@ namespace OWOVRC.UI
             };
             uiUpdateTimer.Elapsed += HandleTimerElapsed;
 
-            //owo.OnSensationChange += HandleSensationChange;
+            owo.OnSensationChange += HandleSensationChange;
         }
 
-        //private void HandleSensationChange(object? sender, AdvancedSensationStreamInstance instance)
-        //{
-        //    if (InvokeRequired)
-        //    {
-        //        this.Invoke(UpdateASMStatus);
-        //    }
-        //    else
-        //    {
-        //        UpdateASMStatus();
-        //    }
-        //}
+        private void HandleSensationChange(AdvancedSensationStreamInstance instance, ProcessState state)
+        {
+            if (InvokeRequired)
+            {
+                try
+                {
+                    this.Invoke(UpdateASMStatus);
+                }
+                catch (ObjectDisposedException)
+                {
+                    Close();
+                }
+            }
+            else
+            {
+                UpdateASMStatus();
+            }
+        }
 
         private void HandleTimerElapsed(object? sender, EventArgs e)
         {
@@ -82,13 +90,18 @@ namespace OWOVRC.UI
 
             if (InvokeRequired)
             {
-                this.Invoke(UpdateASMStatus);
-                this.Invoke(UpdateConnectionStatus);
+                try
+                {
+                    this.Invoke(UpdateConnectionStatus);
+                }
+                catch (ObjectDisposedException)
+                {
+                    Close();
+                }
             }
             else
             {
                 UpdateConnectionStatus();
-                UpdateASMStatus();
             }
         }
 
@@ -175,7 +188,6 @@ namespace OWOVRC.UI
             uiUpdateTimer.Stop();
 
             UpdateConnectionStatus();
-            //UpdateASMStatus();
         }
 
         private void UpdateConnectionStatus()
@@ -465,7 +477,7 @@ namespace OWOVRC.UI
 
             // Remove events
             uiUpdateTimer.Elapsed -= HandleTimerElapsed;
-            //owo.OnSensationChange -= HandleSensationChange;
+            owo.OnSensationChange -= HandleSensationChange;
 
             // Stop OWO
             StopOWO();

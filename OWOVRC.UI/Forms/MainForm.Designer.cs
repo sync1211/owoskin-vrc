@@ -918,14 +918,12 @@
             label23.Size = new Size(60, 15);
             label23.TabIndex = 7;
             label23.Text = "First Tick:";
-            helpToolTip.SetToolTip(label23, "Specifies the maximum db for bass effects.");
             // 
             // label20
             // 
             label20.AutoSize = true;
             label20.FlatStyle = FlatStyle.Popup;
             label20.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label20.ForeColor = SystemColors.ControlDarkDark;
             label20.Location = new Point(6, 19);
             label20.Name = "label20";
             label20.Size = new Size(43, 15);
@@ -941,7 +939,6 @@
             label21.Size = new Size(37, 15);
             label21.TabIndex = 4;
             label21.Text = "Loop:";
-            helpToolTip.SetToolTip(label21, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // logLevelComboBox
             // 
