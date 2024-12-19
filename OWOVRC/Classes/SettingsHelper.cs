@@ -23,6 +23,8 @@ namespace OWOVRC.Classes
 
         [JsonSerializable(typeof(WorldIntegratorSettings))]
         public partial class WorldIntegratorSettingsContext : JsonSerializerContext;
+        [JsonSerializable(typeof(AudioEffectSettings))]
+        public partial class AudioEffectSettingsContext : JsonSerializerContext;
 
         // Settings directory
         public static readonly string settingsDir = Environment.CurrentDirectory;

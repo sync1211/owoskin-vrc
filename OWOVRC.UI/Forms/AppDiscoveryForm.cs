@@ -1,5 +1,4 @@
 ﻿using OWOGame;
-using System.ComponentModel;
 
 namespace OWOVRC.UI.Forms
 {
@@ -23,13 +22,20 @@ namespace OWOVRC.UI.Forms
 
         private void TimerElapsed(object? sender, EventArgs args)
         {
-            if (InvokeRequired)
+            try
             {
-                this.Invoke(RefreshItems);
+                if (InvokeRequired)
+                {
+                    this.Invoke(RefreshItems);
+                }
+                else
+                {
+                    RefreshItems();
+                }
             }
-            else
+            catch (ObjectDisposedException)
             {
-                RefreshItems();
+                timer.Stop();
             }
         }
 

@@ -35,6 +35,8 @@ namespace OWOVRC.CLI
                 .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings) ?? new();
             WorldIntegratorSettings owiSettings = SettingsHelper
                 .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings) ?? new();
+            // AudioEffectSettings audioSettings = SettingsHelper
+            //    .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings) ?? new();
 
             // Prepare OWOHelper
             Log.Debug("Preparing OSC listener...");
@@ -56,6 +58,14 @@ namespace OWOVRC.CLI
                 owi.Start();
             }
 
+            // Set up audio effects
+            Log.Debug("Preparing audio effects...");
+            //AudioEffect audio = new(owo, audioSettings);
+            //if (audioSettings.Enabled)
+            //{
+            //    audio.Start();
+            //}
+
             // Start OSC listener
             Log.Information("Starting OSC receiver...");
             OSCReceiver receiver = new(settings.OSCPort);
@@ -70,10 +80,18 @@ namespace OWOVRC.CLI
             }
             finally
             {
+                // Unregister osc effects
+                UnregisterEffects(effects, receiver);
+
+                // Stop everything
+                owi.Stop();
+                //audio.Stop();
+
                 // Clean up
                 receiver.Dispose();
                 owo.Dispose();
-                UnregisterEffects(effects, receiver);
+                owi.Dispose();
+                //audio.Dispose();
             }
         }
 

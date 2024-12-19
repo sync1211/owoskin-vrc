@@ -1,4 +1,5 @@
 using OwoAdvancedSensationBuilder.manager;
+using NAudio.CoreAudioApi;
 using OWOGame;
 using OWOVRC.Classes;
 using OWOVRC.Classes.Effects;
@@ -7,6 +8,7 @@ using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
 using OWOVRC.UI.Forms;
+using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -25,6 +27,7 @@ namespace OWOVRC.UI
         private CollidersEffectSettings collidersSettings = new();
         private WorldIntegratorSettings owiSettings = new();
         private OSCPresetsSettings oscPresetsSettings = new();
+        private AudioEffectSettings audioSettings = new();
 
         // OWO
         private readonly OWOHelper owo = new();
@@ -32,8 +35,9 @@ namespace OWOVRC.UI
         private const string UnnamedSensationName = "<Unnamed>";
 
         // Effects
-        private OSCEffectBase[] effects = [];
+        private OSCEffectBase[] oscEffects = [];
         private WorldIntegrator? owi;
+        private AudioEffect? audioEffect;
 
         // Status
         private bool IsRunning;
@@ -129,6 +133,14 @@ namespace OWOVRC.UI
             {
                 this.oscPresetsSettings = oscPresetsSettings;
             }
+
+            // Audio settings
+            AudioEffectSettings? audioSettings = SettingsHelper
+                .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
+            if (audioSettings != null)
+            {
+                this.audioSettings = audioSettings;
+            }
         }
 
         private void UpdateControlAvailability()
@@ -142,6 +154,10 @@ namespace OWOVRC.UI
             openDiscoveryButton.Enabled = !IsRunning;
 
             openOscPresetsFormButton.Enabled = !IsRunning;
+
+            audioDeviceSelectButton.Enabled = !IsRunning;
+
+            stopSensationsButton.Enabled = IsRunning;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -258,7 +274,7 @@ namespace OWOVRC.UI
 
             // Register effects
             owo.ClearBakedSensations();
-            foreach (OSCEffectBase effect in effects)
+            foreach (OSCEffectBase effect in oscEffects)
             {
                 receiver.OnMessageReceived += effect.OnOSCMessageReceived;
                 effect.RegisterSensations();
@@ -286,6 +302,18 @@ namespace OWOVRC.UI
                 }
             }
 
+            // Start Audio effects
+            if (audioEffect == null)
+            {
+                Log.Warning("Audio effect has not been initialized!");
+                SetUpAudio();
+            }
+
+            if (audioSettings.Enabled)
+            {
+                audioEffect!.Start();
+            }
+
             // Start OWO connection
             owo.Address = connectionSettings.OWOAddress;
             Task.Run(StartOWOHelper);
@@ -302,13 +330,16 @@ namespace OWOVRC.UI
         private void StopOWO()
         {
             // Unregister effects
-            foreach (OSCEffectBase effect in effects)
+            foreach (OSCEffectBase effect in oscEffects)
             {
                 receiver.OnMessageReceived -= effect.OnOSCMessageReceived;
             }
 
             // Stop OWI
             owi?.Stop();
+
+            // Stop audio effect
+            audioEffect?.Stop();
 
             // Stop osc receiver
             receiver.Dispose();
@@ -337,19 +368,27 @@ namespace OWOVRC.UI
             LoadSettings();
 
             // Set up effects
-            effects = [
+            oscEffects = [
                 new Colliders(owo, collidersSettings),
                 new Velocity(owo, velocitySettings),
-                new OSCPresetTrigger(owo, oscPresetsSettings)
+                new OSCPresetTrigger(owo, oscPresetsSettings),
             ];
 
             // Set up OWI
             SetUpOWI();
+
+            // Set up audio effect
+            SetUpAudio();
         }
 
         private void SetUpOWI()
         {
             owi = new(owiSettings, owo);
+        }
+
+        private void SetUpAudio()
+        {
+            audioEffect = new(owo, audioSettings);
         }
 
         private void UpdateConnectionSettings()
@@ -394,6 +433,15 @@ namespace OWOVRC.UI
             oscPresetsPriorityInput.Text = oscPresetsSettings.Priority.ToString();
         }
 
+        private void UpdateAudioSettings()
+        {
+            audioEnabledCheckbox.Checked = audioSettings.Enabled;
+            audioPriorityInput.Value = audioSettings.Priority;
+            audioMinBassInput.Value = audioSettings.MinBass;
+            audioMaxBassInput.Value = audioSettings.MaxBass;
+            audioMaxIntensityInput.Value = audioSettings.MaxIntensity;
+        }
+
         private void MainForm_Shown(object sender, EventArgs e)
         {
             owoIPInput.ValidatingType = typeof(System.Net.IPAddress);
@@ -405,6 +453,7 @@ namespace OWOVRC.UI
             UpdateOSCPrestsSettings();
 
             uiUpdateTimer.Start();
+            UpdateAudioSettings();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -464,7 +513,6 @@ namespace OWOVRC.UI
             // Speed multiplier
             collidersSettings.SpeedMultiplier = (float)collidersSpeedMultiplierInput.Value;
 
-            UpdateCollidersEffectSettings();
             SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
         }
 
@@ -487,7 +535,6 @@ namespace OWOVRC.UI
             // Speed cap
             velocitySettings.SpeedCap = (float)velocitySpeedCapInput.Value;
 
-            UpdateVelocityEffectSettings();
             SettingsHelper.SaveSettingsToFile(velocitySettings, "velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
         }
 
@@ -496,7 +543,7 @@ namespace OWOVRC.UI
             owo.StopAllSensations();
 
             // Reset all effects
-            foreach (OSCEffectBase effect in effects)
+            foreach (OSCEffectBase effect in oscEffects)
             {
                 effect.Reset();
             }
@@ -518,7 +565,6 @@ namespace OWOVRC.UI
             // Intensity
             owiSettings.Intensity = (int)owiIntensityInput.Value; //TODO: Replace with dialog
 
-            UpdateOWISettings();
             SettingsHelper.SaveSettingsToFile(owiSettings, "owi.json", "OWO World Integrator", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
             EnableOrDisableOWI();
         }
@@ -565,6 +611,18 @@ namespace OWOVRC.UI
                     SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
                 }
             }
+        }
+
+        private void ApplyAudioSettingsButton_Click(object sender, EventArgs e)
+        {
+            audioSettings.Enabled = audioEnabledCheckbox.Checked;
+            audioSettings.Priority = (int)audioPriorityInput.Value;
+            audioSettings.MinBass = (int)audioMinBassInput.Value;
+            audioSettings.MaxBass = (int)audioMaxBassInput.Value;
+            audioSettings.MaxIntensity = (int)audioMaxIntensityInput.Value;
+
+            SettingsHelper.SaveSettingsToFile(audioSettings, "audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
+            EnableOrDisableAudio();
         }
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -701,6 +759,84 @@ namespace OWOVRC.UI
             sensationNameLabel.Text = instance.name;
             sensationLoopLabel.Text = instance.loop ? "Yes" : "No";
             sensationFirstTickLabel.Text = instance.firstTick.ToString();
+        }
+
+        private void AudioMonitorButton_Click(object sender, EventArgs e)
+        {
+            if (audioEffect == null)
+            {
+                Log.Warning("Audio effect is not initialized!");
+                return;
+            }
+
+            if (!IsRunning)
+            {
+                audioEffect.Start();
+            }
+
+            using (AudioMonitorForm form = new(audioEffect))
+            {
+                form.ShowDialog();
+            }
+
+            if (!IsRunning)
+            {
+                audioEffect.Stop();
+            }
+        }
+
+        /// <summary>
+        /// Enables or disables OWI based on settings while the program is running.
+        /// This is done to preserve resources, as VRC can be very CPU intensive.
+        /// </summary>
+        private void EnableOrDisableAudio()
+        {
+            if (!IsRunning || audioEffect == null)
+            {
+                return;
+            }
+
+            if (audioEffect.IsRunning && !audioSettings.Enabled)
+            {
+                audioEffect.Stop();
+            }
+
+            if (!audioEffect.IsRunning && audioSettings.Enabled)
+            {
+                audioEffect.Start();
+            }
+        }
+
+        private void AudioDeviceSelectButton_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            using (MMDeviceEnumerator enumerator = new())
+            {
+                Log.Information("Loading audio devices...");
+                MMDeviceCollection devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+                MMDevice[] deviceArray = [.. devices];
+
+                // Get index of default device
+                int selectedIndex;
+                Log.Debug("Getting default audio device...");
+                using (MMDevice defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
+                {
+                    selectedIndex = Array.FindIndex(deviceArray, d => d.ID.Equals(defaultDevice.ID));
+                }
+
+                using (SelectionDialog<MMDevice> dialog = new(deviceArray, "Select an audio device:", "Select audio device", selectedIndex))
+                {
+                    DialogResult result = dialog.ShowDialog();
+
+                    if (result == DialogResult.OK)
+                    {
+                        audioEffect = new(owo, audioSettings, dialog.Value);
+                        Log.Information("Audio device changed to {device}", dialog.Value);
+                    }
+                }
+            }
+
+            Cursor = Cursors.Default;
         }
     }
 }
