@@ -6,7 +6,6 @@ namespace OWOVRC.Audio.WinForms
     public partial class AudioDemoForm : Form
     {
         private readonly AudioAnalyzer analyzer = new();
-        //private readonly System.Timers.Timer timer;
 
         private AnalyzedAudioSample? lastSampleR;
         private AnalyzedAudioSample? lastSampleL;
@@ -16,11 +15,6 @@ namespace OWOVRC.Audio.WinForms
         public AudioDemoForm()
         {
             InitializeComponent();
-            //timer = new()
-            //{
-            //    Interval = 10
-            //};
-            //timer.Elapsed += Timer_Elapsed;
 
             analyzer.OnSampleRead += Analyzer_OnSampleRead;
         }
@@ -66,7 +60,6 @@ namespace OWOVRC.Audio.WinForms
 
         private void Stop()
         {
-            //timer.Stop();
             analyzer.Stop();
 
             stopButton.Enabled = false;
@@ -75,7 +68,6 @@ namespace OWOVRC.Audio.WinForms
 
         private void Start()
         {
-            //timer.Start();
             analyzer.Start();
 
             stopButton.Enabled = true;
