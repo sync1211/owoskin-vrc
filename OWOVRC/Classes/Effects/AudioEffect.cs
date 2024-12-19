@@ -9,6 +9,7 @@ namespace OWOVRC.Classes.Effects
 {
     public partial class AudioEffect : IDisposable
     {
+        public const string SENSATION_NAME = "AudioEffect";
         public bool IsRunning => Analyzer.IsListening;
         public readonly AudioEffectSettings Settings;
         public EventHandler<Tuple<AnalyzedAudioSample, AnalyzedAudioSample>>? OnSampleRead;
@@ -69,7 +70,7 @@ namespace OWOVRC.Classes.Effects
                 Muscle.Abdominal_L.WithIntensity(leftIntensity)
             ];
 
-            owo.AddSensation(CreateSensation(), muscles);
+            owo.AddSensation(CreateSensation(), muscles, SENSATION_NAME);
             Log.Debug("Audio sensation created. Right {rightIntensity}% Left {leftIntensity}%", rightIntensity, leftIntensity);
         }
 
