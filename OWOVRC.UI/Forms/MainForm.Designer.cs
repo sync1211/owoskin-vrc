@@ -93,6 +93,7 @@
             audioMonitorButton = new Button();
             audioMinBassInput = new NumericUpDown();
             groupBox4 = new GroupBox();
+            label28 = new Label();
             audioPriorityInput = new NumericUpDown();
             audioEnabledCheckbox = new CheckBox();
             applyAudioSettingsButton = new Button();
@@ -128,7 +129,6 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
-            label28 = new Label();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
@@ -868,6 +868,17 @@
             groupBox4.TabStop = false;
             groupBox4.Text = "Information";
             // 
+            // label28
+            // 
+            label28.FlatStyle = FlatStyle.Popup;
+            label28.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label28.ForeColor = SystemColors.ControlDarkDark;
+            label28.Location = new Point(18, 19);
+            label28.Name = "label28";
+            label28.Size = new Size(311, 34);
+            label28.TabIndex = 21;
+            label28.Text = "This effect attempts to create sensations based on the \r\nbass level of the system's audio output.\r\n";
+            // 
             // audioPriorityInput
             // 
             audioPriorityInput.Location = new Point(262, 26);
@@ -1257,18 +1268,6 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.FlatStyle = FlatStyle.Popup;
-            label28.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label28.ForeColor = SystemColors.ControlDarkDark;
-            label28.Location = new Point(6, 19);
-            label28.Name = "label28";
-            label28.Size = new Size(308, 34);
-            label28.TabIndex = 21;
-            label28.Text = "This effect attempts to create sensations based on the \r\nbass level of the system's audio output.\r\n";
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1317,7 +1316,6 @@
             ((System.ComponentModel.ISupportInitialize)audioMaxBassInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)audioMinBassInput).EndInit();
             groupBox4.ResumeLayout(false);
-            groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)audioPriorityInput).EndInit();
             connectionGroup.ResumeLayout(false);
             connectionGroup.PerformLayout();
