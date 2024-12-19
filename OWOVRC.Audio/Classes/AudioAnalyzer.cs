@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace OWOVRC.Audio.Classes
 {
-    public partial class AudioAnalyzer: IDisposable
+    public partial class AudioAnalyzer : IDisposable
     {
         public EventHandler<Tuple<AnalyzedAudioSample, AnalyzedAudioSample>>? OnSampleRead;
         public bool IsListening
@@ -25,6 +25,8 @@ namespace OWOVRC.Audio.Classes
         private readonly int bytesPerSample;
         private readonly WaveFormatEncoding waveEncoding;
 
+        private readonly int bufferLength;
+
         public AudioAnalyzer(MMDevice? device = null)
         {
             if (device != null)
@@ -35,9 +37,12 @@ namespace OWOVRC.Audio.Classes
             {
                 capture = new();
             }
+
             int sampleRate = capture.WaveFormat.SampleRate;
-            leftBuffer = new Complex[sampleRate / 2];
-            rightBuffer = new Complex[sampleRate / 2];
+
+            bufferLength = sampleRate / 2;
+            leftBuffer = FftSharp.Pad.ZeroPad(new Complex[bufferLength]);
+            rightBuffer = FftSharp.Pad.ZeroPad(new Complex[bufferLength]);
 
             bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
@@ -106,6 +111,13 @@ namespace OWOVRC.Audio.Classes
                 rightBuffer[i] = BitConverter.ToSingle(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
 
+            // Set remaining values to 0
+            for (int i = sampleCount; i < leftBuffer.Length; i++)
+            {
+                leftBuffer[i] = Complex.Zero;
+                rightBuffer[i] = Complex.Zero;
+            }
+
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
@@ -120,6 +132,13 @@ namespace OWOVRC.Audio.Classes
             {
                 leftBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
                 rightBuffer[i] = BitConverter.ToInt16(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
+            }
+
+            // Set remaining values to 0
+            for (int i = sampleCount; i < leftBuffer.Length; i++)
+            {
+                leftBuffer[i] = Complex.Zero;
+                rightBuffer[i] = Complex.Zero;
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
@@ -138,6 +157,13 @@ namespace OWOVRC.Audio.Classes
                 rightBuffer[i] = BitConverter.ToInt32(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
 
+            // Set remaining values to 0
+            for (int i = sampleCount; i < leftBuffer.Length; i++)
+            {
+                leftBuffer[i] = Complex.Zero;
+                rightBuffer[i] = Complex.Zero;
+            }
+
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
@@ -151,19 +177,10 @@ namespace OWOVRC.Audio.Classes
 
         private AnalyzedAudioSample AnalyzeAudio(Complex[] buffer)
         {
-            Complex[] paddedBuffer = FftSharp.Pad.ZeroPad(buffer);
-            FftSharp.FFT.Forward(paddedBuffer);
-            double[] fftMagnitude = FftSharp.FFT.Magnitude(paddedBuffer);
+            FftSharp.FFT.Forward(buffer);
+            double[] fftMagnitude = FftSharp.FFT.Magnitude(buffer);
 
-            // find the frequency peak
-            int peakIndex = 0;
-            for (int i = 0; i < fftMagnitude.Length; i++)
-            {
-                if (fftMagnitude[i] > fftMagnitude[peakIndex])
-                    peakIndex = i;
-            }
             double fftPeriod = FftSharp.FFT.FrequencyResolution(fftMagnitude.Length, capture.WaveFormat.SampleRate);
-            //double peakFrequency = fftPeriod * peakIndex;
 
             return new(fftMagnitude, fftPeriod);
         }
