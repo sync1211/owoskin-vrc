@@ -759,7 +759,7 @@
             audioDeviceSelectButton.Size = new Size(89, 23);
             audioDeviceSelectButton.TabIndex = 36;
             audioDeviceSelectButton.Text = "Configure";
-            helpToolTip.SetToolTip(audioDeviceSelectButton, "Configure which audio device the effect uses.");
+            helpToolTip.SetToolTip(audioDeviceSelectButton, "Configure which audio device the effect uses.\r\nShift-Click to show all available audio devices (input and output).");
             audioDeviceSelectButton.UseVisualStyleBackColor = true;
             audioDeviceSelectButton.Click += AudioDeviceSelectButton_Click;
             // 
