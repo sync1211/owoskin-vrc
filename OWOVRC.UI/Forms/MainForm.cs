@@ -626,11 +626,17 @@ namespace OWOVRC.UI
 
         private void AudioDeviceSelectButton_Click(object sender, EventArgs e)
         {
+            DataFlow dataFlow = DataFlow.Render;
+            if (Control.ModifierKeys == Keys.Shift)
+            {
+                dataFlow = DataFlow.All;
+            }
+
             Cursor = Cursors.WaitCursor;
             using (MMDeviceEnumerator enumerator = new())
             {
                 Log.Information("Loading audio devices...");
-                MMDeviceCollection devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+                MMDeviceCollection devices = enumerator.EnumerateAudioEndPoints(dataFlow, DeviceState.Active);
                 MMDevice[] deviceArray = [.. devices];
 
                 // Get index of default device
