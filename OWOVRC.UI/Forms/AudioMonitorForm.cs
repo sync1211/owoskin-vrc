@@ -39,15 +39,27 @@ namespace OWOVRC.UI.Forms
 
         private void UpdateBars(AnalyzedAudioSample leftSample, AnalyzedAudioSample rightSample)
         {
+            // Sub-Bass
+            subBassIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.SubBass);
+            subBassIndicatorRight.Value = scalingHelper.ToPercentage(rightSample.SubBass);
+
+            double bassDbLeft = Math.Round(leftSample.Bass, 2);
+            double bassDBRight = Math.Round(rightSample.Bass, 2);
+
+            leftBassDBLabel.Text = $"{bassDbLeft}db";
+            rightBassDBLabel.Text = $"{bassDBRight}db";
+
+            // Bass
             bassIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.Bass);
             bassIndicatorRight.Value = scalingHelper.ToPercentage(rightSample.Bass);
 
-            double dbLeft = Math.Round(leftSample.Bass, 2);
-            double dbRight = Math.Round(rightSample.Bass, 2);
+            double subBassDbLeft = Math.Round(leftSample.SubBass, 2);
+            double subBassDBRight = Math.Round(rightSample.SubBass, 2);
 
-            leftBassDBLabel.Text = $"{dbLeft}db";
-            rightBassDBLabel.Text = $"{dbRight}db";
+            leftSubBassDBLabel.Text = $"{subBassDbLeft}db";
+            rightSubBassDBLabel.Text = $"{subBassDBRight}db";
 
+            // Max amplitude
             double maxAmplitude = Math.Round(scalingHelper.MaxAmplitude, 2);
             maxDBLabel.Text = $"{maxAmplitude}db";
         }
