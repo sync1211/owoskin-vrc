@@ -13,9 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.CLI", "OWOVRC.CLI\OW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio", "OWOVRC.Audio\OWOVRC.Audio.csproj", "{3967422C-271F-45C9-912B-4CCCBFDCD2C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio.WinForms", "OWOVRC.Audio.UI\OWOVRC.Audio.WinForms.csproj", "{5BF6B045-5C9B-4743-AC15-35B2084B8BDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio.WinForms", "OWOVRC.Audio.WinForms\OWOVRC.Audio.WinForms.csproj", "{5BF6B045-5C9B-4743-AC15-35B2084B8BDD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio.Demo", "OWOVRC.Audio.Demo\OWOVRC.Audio.Demo.csproj", "{C00C0AB5-CCFB-4837-9B88-CDA687A7A855}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E18FBA42-ADCE-4A8C-A412-E81FC43D0E39}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
