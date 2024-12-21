@@ -1,7 +1,7 @@
 ﻿using OWOVRC.Audio.Classes;
 using OWOVRC.Audio.WinForms.Classes;
 
-namespace OWOVRC.Audio.WinForms
+namespace OWOVRC.Audio.Demo
 {
     public partial class AudioDemoForm : Form
     {

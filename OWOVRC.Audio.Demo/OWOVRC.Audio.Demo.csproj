@@ -14,4 +14,10 @@
     <ProjectReference Include="..\OWOVRC.Audio.UI\OWOVRC.Audio.WinForms.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Forms\AudioDemoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

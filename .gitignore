@@ -3,3 +3,4 @@
 .vs/**
 .cr/**
 *.pubxml.user
+*.csproj.user

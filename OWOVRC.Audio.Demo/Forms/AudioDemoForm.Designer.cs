@@ -1,6 +1,6 @@
 ﻿using OWOVRC.Audio.WinForms.Controls;
 
-namespace OWOVRC.Audio.WinForms
+namespace OWOVRC.Audio.Demo
 {
     partial class AudioDemoForm
     {
