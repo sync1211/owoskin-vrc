@@ -7,49 +7,49 @@
         {
             get
             {
-                return GetFrequencyRange(16, 60);
+                return GetFrequencyRange(AudioSpectrum.SubBass.Start, AudioSpectrum.SubBass.End);
             }
         }
         public float Bass
         {
             get
             {
-                return GetFrequencyRange(60, 250);
+                return GetFrequencyRange(AudioSpectrum.Bass.Start, AudioSpectrum.Bass.End);
             }
         }
         public float LowMid
         {
             get
             {
-                return GetFrequencyRange(250, 500);
+                return GetFrequencyRange(AudioSpectrum.LowMid.Start, AudioSpectrum.LowMid.End);
             }
         }
         public float Mid
         {
             get
             {
-                return GetFrequencyRange(500, 2000);
+                return GetFrequencyRange(AudioSpectrum.Mid.Start, AudioSpectrum.Mid.End);
             }
         }
         public float HighMid
         {
             get
             {
-                return GetFrequencyRange(2000, 4000);
+                return GetFrequencyRange(AudioSpectrum.HighMid.Start, AudioSpectrum.HighMid.End);
             }
         }
         public float Presence
         {
             get
             {
-                return GetFrequencyRange(4000, 6000);
+                return GetFrequencyRange(AudioSpectrum.Presence.Start, AudioSpectrum.Presence.End);
             }
         }
         public float Brilliance
         {
             get
             {
-                return GetFrequencyRange(6000, 20_000);
+                return GetFrequencyRange(AudioSpectrum.Brilliance.Start, AudioSpectrum.Brilliance.End);
             }
         }
 
