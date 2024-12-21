@@ -23,7 +23,7 @@ namespace OWOVRC.Classes.Effects.OWI
         public float Rampdown { get; }
         [JsonPropertyName("exitdelay")]
         public float ExitDelay { get; }
-        [JsonPropertyName("muscles")]
+        [JsonPropertyName("Muscles")]
         public Dictionary<string, int> Muscles { get; }
 
         [JsonConstructor]
