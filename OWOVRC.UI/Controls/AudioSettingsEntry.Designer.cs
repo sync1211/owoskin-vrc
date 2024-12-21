@@ -37,6 +37,7 @@
             minInput = new NumericUpDown();
             maxLabel = new Label();
             maxInput = new NumericUpDown();
+            enabledCheckbox = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)priorityInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)minInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)maxInput).BeginInit();
@@ -53,7 +54,7 @@
             // 
             // priorityInput
             // 
-            priorityInput.Location = new Point(78, 29);
+            priorityInput.Location = new Point(96, 31);
             priorityInput.Name = "priorityInput";
             priorityInput.Size = new Size(48, 23);
             priorityInput.TabIndex = 1;
@@ -63,7 +64,7 @@
             // 
             configureButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             configureButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            configureButton.Location = new Point(240, 3);
+            configureButton.Location = new Point(259, 3);
             configureButton.Name = "configureButton";
             configureButton.Size = new Size(75, 51);
             configureButton.TabIndex = 4;
@@ -73,7 +74,7 @@
             // 
             // prioLabel
             // 
-            prioLabel.Location = new Point(78, 3);
+            prioLabel.Location = new Point(96, 5);
             prioLabel.Name = "prioLabel";
             prioLabel.Size = new Size(48, 23);
             prioLabel.TabIndex = 5;
@@ -84,7 +85,7 @@
             // 
             nameLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nameLabel.ForeColor = SystemColors.ControlDark;
-            nameLabel.Location = new Point(21, 3);
+            nameLabel.Location = new Point(39, 5);
             nameLabel.Name = "nameLabel";
             nameLabel.Size = new Size(51, 49);
             nameLabel.TabIndex = 6;
@@ -93,7 +94,7 @@
             // 
             // minLabel
             // 
-            minLabel.Location = new Point(132, 3);
+            minLabel.Location = new Point(150, 5);
             minLabel.Name = "minLabel";
             minLabel.Size = new Size(48, 23);
             minLabel.TabIndex = 8;
@@ -102,14 +103,15 @@
             // 
             // minInput
             // 
-            minInput.Location = new Point(132, 29);
+            minInput.DecimalPlaces = 2;
+            minInput.Location = new Point(150, 31);
             minInput.Name = "minInput";
             minInput.Size = new Size(48, 23);
             minInput.TabIndex = 2;
             // 
             // maxLabel
             // 
-            maxLabel.Location = new Point(186, 3);
+            maxLabel.Location = new Point(204, 5);
             maxLabel.Name = "maxLabel";
             maxLabel.Size = new Size(48, 23);
             maxLabel.TabIndex = 10;
@@ -118,16 +120,26 @@
             // 
             // maxInput
             // 
-            maxInput.Location = new Point(186, 29);
+            maxInput.DecimalPlaces = 2;
+            maxInput.Location = new Point(204, 31);
             maxInput.Name = "maxInput";
             maxInput.Size = new Size(48, 23);
             maxInput.TabIndex = 3;
+            // 
+            // enabledCheckbox
+            // 
+            enabledCheckbox.Location = new Point(21, 19);
+            enabledCheckbox.Name = "enabledCheckbox";
+            enabledCheckbox.Size = new Size(18, 24);
+            enabledCheckbox.TabIndex = 11;
+            enabledCheckbox.UseVisualStyleBackColor = true;
             // 
             // AudioSettingsEntry
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
+            Controls.Add(enabledCheckbox);
             Controls.Add(maxLabel);
             Controls.Add(maxInput);
             Controls.Add(minLabel);
@@ -138,7 +150,7 @@
             Controls.Add(priorityInput);
             Controls.Add(DragHandle1);
             Name = "AudioSettingsEntry";
-            Size = new Size(321, 57);
+            Size = new Size(337, 57);
             ((System.ComponentModel.ISupportInitialize)priorityInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)minInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)maxInput).EndInit();
@@ -156,5 +168,6 @@
         private NumericUpDown minInput;
         private Label maxLabel;
         private NumericUpDown maxInput;
+        private CheckBox enabledCheckbox;
     }
 }

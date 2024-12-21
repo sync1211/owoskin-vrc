@@ -48,9 +48,6 @@ namespace OWOVRC.UI
 
             // Call UpdateConnectionStatus on every ui update
             Application.Idle += OnApplicationIdle;
-
-            // Add audio settings
-            AddAudioSettingsEntries();
         }
 
         private void OnApplicationIdle(object? sender, EventArgs e)
@@ -358,10 +355,7 @@ namespace OWOVRC.UI
         private void UpdateAudioSettings()
         {
             audioEnabledCheckbox.Checked = audioSettings.Enabled;
-            audioPriorityInput.Value = audioSettings.Priority;
-            audioMinBassInput.Value = audioSettings.MinBass;
-            audioMaxBassInput.Value = audioSettings.MaxBass;
-            audioMaxIntensityInput.Value = audioSettings.MaxIntensity;
+            AddAudioSettingsEntries();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -531,10 +525,11 @@ namespace OWOVRC.UI
         private void ApplyAudioSettingsButton_Click(object sender, EventArgs e)
         {
             audioSettings.Enabled = audioEnabledCheckbox.Checked;
-            audioSettings.Priority = (int)audioPriorityInput.Value;
-            audioSettings.MinBass = (int)audioMinBassInput.Value;
-            audioSettings.MaxBass = (int)audioMaxBassInput.Value;
-            audioSettings.MaxIntensity = (int)audioMaxIntensityInput.Value;
+
+            foreach (AudioSettingsEntry entry in audioSettingsPriorityPanel1.Items)
+            {
+                entry.ApplyToSpectrumSettings();
+            }
 
             SettingsHelper.SaveSettingsToFile(audioSettings, "audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
             EnableOrDisableAudio();
@@ -557,8 +552,7 @@ namespace OWOVRC.UI
 
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
         {
-            Sensation testSensation = SensationsFactory.Create(collidersSettings.Frequency, collidersSettings.SensationSeconds, 100, 0, 0, 0);
-            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, testSensation))
+            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.CreateSensation()))
             {
                 intensityForm.ShowDialog();
                 SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
@@ -668,11 +662,14 @@ namespace OWOVRC.UI
 
         private void AddAudioSettingsEntries()
         {
-            AudioSettingsEntry entry1 = new("Bass", 1);
-            AudioSettingsEntry entry2 = new("Treble", 2);
+            if (audioSettings == null)
+            {
+                return;
+            }
 
-            audioSettingsPriorityPanel1.Items.Add(entry2);
-            audioSettingsPriorityPanel1.Items.Add(entry1);
+            audioSettingsPriorityPanel1.Items.Clear();
+            audioSettingsPriorityPanel1.Items.Add(AudioSettingsEntry.FromSpectrumSettings(audioSettings.BassSettings));
+            audioSettingsPriorityPanel1.Items.Add(AudioSettingsEntry.FromSpectrumSettings(audioSettings.SubBassSettings));
         }
     }
 }

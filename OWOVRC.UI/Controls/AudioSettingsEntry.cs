@@ -1,9 +1,22 @@
-﻿using OWOVRC.UI.Forms;
+﻿using OWOGame;
+using OWOVRC.Classes.Settings;
+using OWOVRC.UI.Forms;
 
 namespace OWOVRC.UI.Controls
 {
     public partial class AudioSettingsEntry : UserControl
     {
+        public bool IsEnabled
+        {
+            get
+            {
+                return enabledCheckbox.Checked;
+            }
+            set
+            {
+                enabledCheckbox.Checked = value;
+            }
+        }
         public int Priority
         {
             get
@@ -15,24 +28,34 @@ namespace OWOVRC.UI.Controls
                 priorityInput.Value = value;
             }
         }
-        public int Min
+        public float Min
         {
             get
             {
-                return (int)minInput.Value;
+                return (float) minInput.Value;
+            }
+            set
+            {
+                minInput.Value = (decimal) value;
             }
         }
-        public int Max
+        public float Max
         {
             get
             {
-                return (int)maxInput.Value;
+                return (float) maxInput.Value;
+            }
+            set
+            {
+                maxInput.Value = (decimal) value;
             }
         }
 
         public EventHandler<MouseEventArgs>? OnDragStart;
         public EventHandler<MouseEventArgs>? OnDragStop;
         public EventHandler? OnPriorityChanged;
+
+        public readonly AudioEffectSpectrumSettings? audioEffectSpectrumSettings;
 
         public readonly Dictionary<int, int> MuscleIntensities = [];
 
@@ -42,13 +65,17 @@ namespace OWOVRC.UI.Controls
             RegisterEvents();
         }
 
-        public AudioSettingsEntry(string name, int priority = 0)
+        public AudioSettingsEntry(string name, int priority = 0, AudioEffectSpectrumSettings? settings = null)
         {
             InitializeComponent();
             Name = name;
 
+            // Force newline on zero-width space (U+200B)
+            nameLabel.Text = Name.Replace("​", Environment.NewLine);
+
             priorityInput.Value = priority;
-            nameLabel.Text = Name;
+
+            audioEffectSpectrumSettings = settings;
 
             RegisterEvents();
         }
@@ -87,10 +114,51 @@ namespace OWOVRC.UI.Controls
 
         private void ConfigureButton_Click(object sender, EventArgs e)
         {
-            using (MuscleIntensityForm intensityForm = new(MuscleIntensities, null, $"Muscles affected by {Name}"))
+            Sensation? testSensation = null;
+            if (audioEffectSpectrumSettings != null)
+            {
+                testSensation = audioEffectSpectrumSettings.CreateSensation();
+            }
+
+            using (MuscleIntensityForm intensityForm = new(MuscleIntensities, testSensation, $"Muscles affected by {Name}"))
             {
                 intensityForm.ShowDialog();
             }
+        }
+
+        public void ApplyToSpectrumSettings()
+        {
+            if (audioEffectSpectrumSettings == null)
+            {
+                throw new ArgumentNullException("No spectrum settings to apply to.");
+            }
+
+            audioEffectSpectrumSettings.Enabled = IsEnabled;
+            audioEffectSpectrumSettings.Priority = Priority;
+            audioEffectSpectrumSettings.MinDB = Min;
+            audioEffectSpectrumSettings.MaxDB = Max;
+
+            foreach (KeyValuePair<int, int> intensity in MuscleIntensities)
+            {
+                audioEffectSpectrumSettings.Intensities[intensity.Key] = intensity.Value;
+            }
+        }
+
+        public static AudioSettingsEntry FromSpectrumSettings(AudioEffectSpectrumSettings settings)
+        {
+            AudioSettingsEntry entry = new(settings.Name, settings.Priority, settings)
+            {
+                IsEnabled = settings.Enabled,
+                Min = settings.MinDB,
+                Max = settings.MaxDB
+            };
+
+            foreach (KeyValuePair<int, int> intensity in settings.Intensities)
+            {
+                entry.MuscleIntensities[intensity.Key] = intensity.Value;
+            }
+
+            return entry;
         }
     }
 }

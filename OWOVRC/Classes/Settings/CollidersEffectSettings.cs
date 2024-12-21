@@ -50,5 +50,12 @@ namespace OWOVRC.Classes.Settings
                 }
             }
         }
+
+        public Sensation CreateSensation()
+        {
+            return SensationsFactory
+                .Create(Frequency, SensationSeconds, 100, 0, 0, 0)
+                .WithPriority(Priority);
+        }
     }
 }

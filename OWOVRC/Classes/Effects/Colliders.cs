@@ -26,7 +26,6 @@ namespace OWOVRC.Classes.Effects
         private readonly ConcurrentDictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
 
         // Settings
-        //TODO: Implement per-muscle intensity
         public readonly CollidersEffectSettings Settings;
 
         public Colliders(OWOHelper owo, CollidersEffectSettings settings): base(owo)
@@ -217,7 +216,7 @@ namespace OWOVRC.Classes.Effects
                 musclesScaled[i] = muscle.Value.WithIntensity(intensity);
             }
 
-            Sensation sensation = SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds, 100, 0, 0, 0).WithPriority(Settings.Priority);
+            Sensation sensation = Settings.CreateSensation();
             owo.AddSensation(sensation, musclesScaled);
         }
 

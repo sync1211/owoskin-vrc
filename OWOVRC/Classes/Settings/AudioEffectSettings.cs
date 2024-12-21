@@ -1,32 +1,27 @@
-﻿using System.Text.Json.Serialization;
+﻿using OWOGame;
+using OWOVRC.Audio.Classes;
+using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Settings
 {
-    public class AudioEffectSettings : EffectSettingsBase
+    //NOTE: Priority is not used as each spectrum (Bass, SubBass, etc) has their own priorities
+    public partial class AudioEffectSettings : EffectSettingsBase
     {
         [JsonInclude]
-        public int MinBass { get; set; } = 12;
-        [JsonInclude]
-        public int MaxBass { get; set; } = 20;
-        [JsonInclude]
-        public int MaxIntensity { get; set; } = 25;
-        [JsonInclude]
-        public int Frequency { get; set; } = 10;
-        [JsonInclude]
-        public float SensationSeconds { get; set; } = 0.1f;
+        public AudioEffectSpectrumSettings BassSettings { get; set; } =
+            new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, 25, 2, 12, 20, 10);
+
+        [JsonInclude] //NOTE: zero-width space (U+200B) is used to force a linebreak in the UI
+        public AudioEffectSpectrumSettings SubBassSettings { get; set; } =
+            new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 25, 5, 15, 25);
 
         [JsonConstructor]
-        public AudioEffectSettings(int minBass, int maxBass, int maxIntensity, int frequency, float sensationSeconds, bool enabled = true, int priority = 1) : base(enabled, priority)
+        public AudioEffectSettings(bool enabled, AudioEffectSpectrumSettings bassSettings, AudioEffectSpectrumSettings subBassSettings) : base(enabled, 0)
         {
-            MinBass = minBass;
-            MaxBass = maxBass;
-            MaxIntensity = maxIntensity;
-            Frequency = frequency;
-            SensationSeconds = sensationSeconds;
+            BassSettings = bassSettings;
+            SubBassSettings = subBassSettings;
         }
 
-        public AudioEffectSettings(bool enabled = true, int priority = 1) : base(enabled, priority)
-        {
-        }
+        public AudioEffectSettings(bool enabled = true) : base(enabled, 0) { }
     }
 }

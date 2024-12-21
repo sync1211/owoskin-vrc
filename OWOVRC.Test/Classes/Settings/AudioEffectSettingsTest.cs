@@ -12,13 +12,23 @@ namespace OWOVRC.Test.Classes.Settings
             AudioEffectSettings settings = new()
             {
                 Enabled = false,
-                Priority = 2,
-                MinBass = 90,
-                MaxBass = 120,
-                MaxIntensity = 30,
-                Frequency = 100,
-                SensationSeconds = 0.5f
+                Priority = 2
             };
+
+            settings.BassSettings.Priority = 3;
+            settings.SubBassSettings.Priority = 4;
+
+            settings.BassSettings.Enabled = false;
+            settings.BassSettings.MinDB = 13;
+            settings.BassSettings.MaxDB = 200;
+            settings.SubBassSettings.SensationFrequency = 30;
+            settings.SubBassSettings.SensationSeconds = 0.3f;
+
+            settings.SubBassSettings.Enabled = false;
+            settings.SubBassSettings.MinDB = 20;
+            settings.SubBassSettings.MaxDB = 400;
+            settings.SubBassSettings.SensationFrequency = 20;
+            settings.SubBassSettings.SensationSeconds = 0.2f;
 
             string json = JsonSerializer.Serialize(settings);
             Assert.AreNotEqual(0, json.Length);
@@ -28,11 +38,24 @@ namespace OWOVRC.Test.Classes.Settings
 
             Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
-            Assert.AreEqual(settings.MinBass, decodedSettings.MinBass);
-            Assert.AreEqual(settings.MaxBass, decodedSettings.MaxBass);
-            Assert.AreEqual(settings.MaxIntensity, decodedSettings.MaxIntensity);
-            Assert.AreEqual(settings.Frequency, decodedSettings.Frequency);
-            Assert.AreEqual(settings.SensationSeconds, decodedSettings.SensationSeconds);
+
+            Assert.AreEqual(settings.BassSettings.Name, decodedSettings.BassSettings.Name);
+            Assert.AreEqual(settings.BassSettings.Priority, decodedSettings.BassSettings.Priority);
+            Assert.AreEqual(settings.BassSettings.SensationFrequency, decodedSettings.BassSettings.SensationFrequency);
+            Assert.AreEqual(settings.BassSettings.SensationSeconds, decodedSettings.BassSettings.SensationSeconds);
+            Assert.AreEqual(settings.BassSettings.MinDB, decodedSettings.BassSettings.MinDB);
+            Assert.AreEqual(settings.BassSettings.MaxDB, decodedSettings.BassSettings.MaxDB);
+            Assert.AreEqual(settings.BassSettings.AudioFrequencyStart, decodedSettings.BassSettings.AudioFrequencyStart);
+            Assert.AreEqual(settings.BassSettings.AudioFrequencyEnd, decodedSettings.BassSettings.AudioFrequencyEnd);
+
+            Assert.AreEqual(settings.SubBassSettings.Name, decodedSettings.SubBassSettings.Name);
+            Assert.AreEqual(settings.SubBassSettings.Priority, decodedSettings.SubBassSettings.Priority);
+            Assert.AreEqual(settings.SubBassSettings.SensationFrequency, decodedSettings.SubBassSettings.SensationFrequency);
+            Assert.AreEqual(settings.SubBassSettings.SensationSeconds, decodedSettings.SubBassSettings.SensationSeconds);
+            Assert.AreEqual(settings.SubBassSettings.MinDB, decodedSettings.SubBassSettings.MinDB);
+            Assert.AreEqual(settings.SubBassSettings.MaxDB, decodedSettings.SubBassSettings.MaxDB);
+            Assert.AreEqual(settings.SubBassSettings.AudioFrequencyStart, decodedSettings.SubBassSettings.AudioFrequencyStart);
+            Assert.AreEqual(settings.SubBassSettings.AudioFrequencyEnd, decodedSettings.SubBassSettings.AudioFrequencyEnd);
         }
     }
 }
