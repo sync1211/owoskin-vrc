@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# IDE0063: Einfache using-Anweisung verwenden
+csharp_prefer_simple_using_statement = false
+
+# IDE0290: Primären Konstruktor verwenden
+csharp_style_prefer_primary_constructors = false
