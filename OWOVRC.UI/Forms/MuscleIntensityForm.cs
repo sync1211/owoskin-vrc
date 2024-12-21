@@ -11,11 +11,16 @@ namespace OWOVRC.UI.Forms
         private readonly SelectableMuscle[] selectableMuscles;
         private readonly Sensation? testSensation;
 
-        public MuscleIntensityForm(Dictionary<int, int> intensities, Sensation? sensationForTest = null)
+        public MuscleIntensityForm(Dictionary<int, int> intensities, Sensation? sensationForTest = null, string? title = null)
         {
             InitializeComponent();
             this.muscleIntensities = intensities;
             this.testSensation = sensationForTest;
+
+            if (title != null)
+            {
+                Text = title;
+            }
 
             selectableMuscles = [
                 pectoralLMuscle,

@@ -6,6 +6,7 @@ using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
+using OWOVRC.UI.Controls;
 using OWOVRC.UI.Forms;
 using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
@@ -47,6 +48,9 @@ namespace OWOVRC.UI
 
             // Call UpdateConnectionStatus on every ui update
             Application.Idle += OnApplicationIdle;
+
+            // Add audio settings
+            AddAudioSettingsEntries();
         }
 
         private void OnApplicationIdle(object? sender, EventArgs e)
@@ -654,6 +658,15 @@ namespace OWOVRC.UI
             }
 
             Cursor = Cursors.Default;
+        }
+
+        private void AddAudioSettingsEntries()
+        {
+            AudioSettingsEntry entry1 = new("Bass", 1);
+            AudioSettingsEntry entry2 = new("Treble", 2);
+
+            audioSettingsPriorityPanel1.Items.Add(entry2);
+            audioSettingsPriorityPanel1.Items.Add(entry1);
         }
     }
 }

@@ -117,6 +117,9 @@
             stopButton = new Button();
             groupBox1 = new GroupBox();
             helpToolTip = new ToolTip(components);
+            audioSettingsTestPage = new TabPage();
+            audioSettingsPriorityPanel1 = new Controls.AudioSettingsPriorityPanel();
+            checkBox1 = new CheckBox();
             tabControl1.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
@@ -145,6 +148,7 @@
             connectionGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)oscPortInput).BeginInit();
             groupBox1.SuspendLayout();
+            audioSettingsTestPage.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -154,6 +158,7 @@
             tabControl1.Controls.Add(owiSettingsPage);
             tabControl1.Controls.Add(oscPresetsPage);
             tabControl1.Controls.Add(audioResponsePage);
+            tabControl1.Controls.Add(audioSettingsTestPage);
             tabControl1.Location = new Point(12, 118);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -1117,6 +1122,35 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Log";
             // 
+            // audioSettingsTestPage
+            // 
+            audioSettingsTestPage.Controls.Add(checkBox1);
+            audioSettingsTestPage.Controls.Add(audioSettingsPriorityPanel1);
+            audioSettingsTestPage.Location = new Point(4, 24);
+            audioSettingsTestPage.Name = "audioSettingsTestPage";
+            audioSettingsTestPage.Size = new Size(360, 275);
+            audioSettingsTestPage.TabIndex = 5;
+            audioSettingsTestPage.Text = "Test";
+            audioSettingsTestPage.UseVisualStyleBackColor = true;
+            // 
+            // audioSettingsPriorityPanel1
+            // 
+            audioSettingsPriorityPanel1.BackColor = Color.DimGray;
+            audioSettingsPriorityPanel1.Location = new Point(5, 28);
+            audioSettingsPriorityPanel1.Name = "audioSettingsPriorityPanel1";
+            audioSettingsPriorityPanel1.Size = new Size(349, 241);
+            audioSettingsPriorityPanel1.TabIndex = 0;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(6, 3);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(83, 19);
+            checkBox1.TabIndex = 1;
+            checkBox1.Text = "checkBox1";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1172,6 +1206,8 @@
             ((System.ComponentModel.ISupportInitialize)oscPortInput).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            audioSettingsTestPage.ResumeLayout(false);
+            audioSettingsTestPage.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1264,5 +1300,8 @@
         private Label label24;
         private Label label25;
         private Button audioDeviceSelectButton;
+        private TabPage audioSettingsTestPage;
+        private CheckBox checkBox1;
+        private Controls.AudioSettingsPriorityPanel audioSettingsPriorityPanel1;
     }
 }
