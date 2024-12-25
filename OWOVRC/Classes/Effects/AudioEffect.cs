@@ -13,7 +13,7 @@ namespace OWOVRC.Classes.Effects
         public readonly AudioEffectSettings Settings;
         public EventHandler<AnalyzedAudioSample>? OnSampleRead;
 
-        private readonly AudioAnalyzer Analyzer;
+        private readonly AudioCapture Analyzer;
         private readonly OWOHelper owo;
 
         public AudioEffect(OWOHelper owo, AudioEffectSettings settings, MMDevice? device = null)

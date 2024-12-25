@@ -5,7 +5,7 @@ namespace OWOVRC.Audio.WinForms
 {
     public partial class AudioDemoForm : Form
     {
-        private readonly AudioAnalyzer analyzer = new();
+        private readonly AudioCapture analyzer = new();
 
         private AnalyzedAudioSample? lastSample;
 
