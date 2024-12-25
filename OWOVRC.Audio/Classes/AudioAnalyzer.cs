@@ -169,20 +169,21 @@ namespace OWOVRC.Audio.Classes
 
         public Tuple<AnalyzedAudioSample, AnalyzedAudioSample> AnalyzeAudioStereo()
         {
+            double[] fftMagnitudeLeft = GetFFTMagnitude(leftBuffer);
+            double[] fftMagnitudeRight = GetFFTMagnitude(rightBuffer);
+
+            double fftPeriod = FftSharp.FFT.FrequencyResolution(fftMagnitudeLeft.Length, capture.WaveFormat.SampleRate);
+
             return Tuple.Create(
-                AnalyzeAudio(leftBuffer),
-                AnalyzeAudio(rightBuffer)
+                new AnalyzedAudioSample(fftMagnitudeLeft, fftPeriod),
+                new AnalyzedAudioSample(fftMagnitudeRight, fftPeriod)
             );
         }
 
-        private AnalyzedAudioSample AnalyzeAudio(Complex[] buffer)
+        private static double[] GetFFTMagnitude(Complex[] buffer)
         {
             FftSharp.FFT.Forward(buffer);
-            double[] fftMagnitude = FftSharp.FFT.Magnitude(buffer);
-
-            double fftPeriod = FftSharp.FFT.FrequencyResolution(fftMagnitude.Length, capture.WaveFormat.SampleRate);
-
-            return new(fftMagnitude, fftPeriod);
+            return FftSharp.FFT.Magnitude(buffer);
         }
 
         public void Dispose()
