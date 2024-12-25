@@ -7,7 +7,7 @@ namespace OWOVRC.Audio.Classes
 {
     public partial class AudioAnalyzer : IDisposable
     {
-        public EventHandler<Tuple<AnalyzedAudioSample, AnalyzedAudioSample>>? OnSampleRead;
+        public EventHandler<AnalyzedAudioSample>? OnSampleRead;
         public bool IsListening
         {
             get
@@ -167,17 +167,14 @@ namespace OWOVRC.Audio.Classes
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
-        public Tuple<AnalyzedAudioSample, AnalyzedAudioSample> AnalyzeAudioStereo()
+        public AnalyzedAudioSample AnalyzeAudioStereo()
         {
             double[] fftMagnitudeLeft = GetFFTMagnitude(leftBuffer);
             double[] fftMagnitudeRight = GetFFTMagnitude(rightBuffer);
 
             double fftPeriod = FftSharp.FFT.FrequencyResolution(fftMagnitudeLeft.Length, capture.WaveFormat.SampleRate);
 
-            return Tuple.Create(
-                new AnalyzedAudioSample(fftMagnitudeLeft, fftPeriod),
-                new AnalyzedAudioSample(fftMagnitudeRight, fftPeriod)
-            );
+            return new(fftMagnitudeLeft, fftMagnitudeRight, fftPeriod);
         }
 
         private static double[] GetFFTMagnitude(Complex[] buffer)

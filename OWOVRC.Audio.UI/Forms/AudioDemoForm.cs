@@ -7,8 +7,7 @@ namespace OWOVRC.Audio.WinForms
     {
         private readonly AudioAnalyzer analyzer = new();
 
-        private AnalyzedAudioSample? lastSampleR;
-        private AnalyzedAudioSample? lastSampleL;
+        private AnalyzedAudioSample? lastSample;
 
         private readonly ScalingHelper scalingHelper = new(20);
 
@@ -19,31 +18,30 @@ namespace OWOVRC.Audio.WinForms
             analyzer.OnSampleRead += Analyzer_OnSampleRead;
         }
 
-        void Analyzer_OnSampleRead(object? sender, Tuple<AnalyzedAudioSample, AnalyzedAudioSample> samples)
+        void Analyzer_OnSampleRead(object? sender, AnalyzedAudioSample sample)
         {
-            lastSampleL = samples.Item1;
-            lastSampleR = samples.Item2;
+            lastSample = sample;
 
             Invoke(UpdateTrackBars);
         }
 
         private void UpdateTrackBars()
         {
-            subBassIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.SubBass ?? 0);
-            bassIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.Bass ?? 0);
-            lowMidIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.LowMid ?? 0);
-            midIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.Mid ?? 0);
-            highMidIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.HighMid ?? 0);
-            presenceIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.Presence ?? 0);
-            brillianceIndicatorLeft.Value = scalingHelper.ToPercentage(lastSampleL?.Brilliance ?? 0);
+            subBassIndicatorLeft.Value = scalingHelper.ToPercentage(lastSample?.Left.SubBass ?? 0);
+            bassIndicatorLeft.Value = scalingHelper.ToPercentage(lastSample?.Left.Bass ?? 0);
+            lowMidIndicatorLeft.Value = scalingHelper.ToPercentage(lastSample?.Left.LowMid ?? 0);
+            midIndicatorLeft.Value = scalingHelper.ToPercentage(lastSample?.Left.Mid ?? 0);
+            highMidIndicatorLeft.Value = scalingHelper.ToPercentage(lastSample?.Left.HighMid ?? 0);
+            presenceIndicatorLeft.Value = scalingHelper.ToPercentage(lastSample?.Left.Presence ?? 0);
+            brillianceIndicatorLeft.Value = scalingHelper.ToPercentage(lastSample?.Left.Brilliance ?? 0);
 
-            subBassIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.SubBass ?? 0);
-            bassIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Bass ?? 0);
-            lowMidIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.LowMid ?? 0);
-            midIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Mid ?? 0);
-            highMidIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.HighMid ?? 0);
-            presenceIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Presence ?? 0);
-            brillianceIndicatorRight.Value = scalingHelper.ToPercentage(lastSampleR?.Brilliance ?? 0);
+            subBassIndicatorRight.Value = scalingHelper.ToPercentage(lastSample?.Right.SubBass ?? 0);
+            bassIndicatorRight.Value = scalingHelper.ToPercentage(lastSample?.Right.Bass ?? 0);
+            lowMidIndicatorRight.Value = scalingHelper.ToPercentage(lastSample?.Right.LowMid ?? 0);
+            midIndicatorRight.Value = scalingHelper.ToPercentage(lastSample?.Right.Mid ?? 0);
+            highMidIndicatorRight.Value = scalingHelper.ToPercentage(lastSample?.Right.HighMid ?? 0);
+            presenceIndicatorRight.Value = scalingHelper.ToPercentage(lastSample?.Right.Presence ?? 0);
+            brillianceIndicatorRight.Value = scalingHelper.ToPercentage(lastSample?.Right.Brilliance ?? 0);
 
             maxAmplitudeLabel.Text = $"{Math.Round(scalingHelper.MaxAmplitude, 2)}db";
         }

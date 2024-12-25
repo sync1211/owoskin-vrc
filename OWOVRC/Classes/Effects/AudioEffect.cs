@@ -11,7 +11,7 @@ namespace OWOVRC.Classes.Effects
     {
         public bool IsRunning => Analyzer.IsListening;
         public readonly AudioEffectSettings Settings;
-        public EventHandler<Tuple<AnalyzedAudioSample, AnalyzedAudioSample>>? OnSampleRead;
+        public EventHandler<AnalyzedAudioSample>? OnSampleRead;
 
         private readonly AudioAnalyzer Analyzer;
         private readonly OWOHelper owo;
@@ -25,9 +25,9 @@ namespace OWOVRC.Classes.Effects
             Analyzer.OnSampleRead += Analyzer_OnSampleRead;
         }
 
-        public virtual void Analyzer_OnSampleRead(object? sender, Tuple<AnalyzedAudioSample, AnalyzedAudioSample> sample)
+        public virtual void Analyzer_OnSampleRead(object? sender, AnalyzedAudioSample sample)
         {
-            ProcessAudioSample(sample.Item1, sample.Item2);
+            ProcessAudioSample(sample.Left, sample.Right);
             OnSampleRead?.Invoke(this, sample);
         }
 
@@ -46,7 +46,7 @@ namespace OWOVRC.Classes.Effects
             return SensationsFactory.Create(Settings.Frequency, Settings.SensationSeconds);
         }
 
-        private void ProcessAudioSample(AnalyzedAudioSample leftSample, AnalyzedAudioSample rightSample)
+        private void ProcessAudioSample(AnalyzedAudioChannel leftSample, AnalyzedAudioChannel rightSample)
         {
             if (!Settings.Enabled)
             {
