@@ -1,4 +1,6 @@
-﻿namespace OWOVRC.Audio.Classes
+﻿using NAudio.Dsp;
+
+namespace OWOVRC.Audio.Classes
 {
     public class AnalyzedAudioChannel
     {
@@ -7,81 +9,60 @@
         {
             get
             {
-                return GetFrequencyRange(AudioSpectrum.SubBass.Start, AudioSpectrum.SubBass.End);
+                return AudioAnalyzer.GetFrequencyRange(fftBuffer, period, AudioSpectrum.SubBass.Start, AudioSpectrum.SubBass.End) * Amplification;
             }
         }
         public float Bass
         {
             get
             {
-                return GetFrequencyRange(AudioSpectrum.Bass.Start, AudioSpectrum.Bass.End);
+                return AudioAnalyzer.GetFrequencyRange(fftBuffer, period, AudioSpectrum.Bass.Start, AudioSpectrum.Bass.End) * Amplification;
             }
         }
         public float LowMid
         {
             get
             {
-                return GetFrequencyRange(AudioSpectrum.LowMid.Start, AudioSpectrum.LowMid.End);
+                return AudioAnalyzer.GetFrequencyRange(fftBuffer, period, AudioSpectrum.LowMid.Start, AudioSpectrum.LowMid.End) * Amplification;
             }
         }
         public float Mid
         {
             get
             {
-                return GetFrequencyRange(AudioSpectrum.Mid.Start, AudioSpectrum.Mid.End);
+                return AudioAnalyzer.GetFrequencyRange(fftBuffer, period, AudioSpectrum.Mid.Start, AudioSpectrum.Mid.End) * Amplification;
             }
         }
         public float HighMid
         {
             get
             {
-                return GetFrequencyRange(AudioSpectrum.HighMid.Start, AudioSpectrum.HighMid.End);
+                return AudioAnalyzer.GetFrequencyRange(fftBuffer, period, AudioSpectrum.HighMid.Start, AudioSpectrum.HighMid.End) * Amplification;
             }
         }
         public float Presence
         {
             get
             {
-                return GetFrequencyRange(AudioSpectrum.Presence.Start, AudioSpectrum.Presence.End);
+                return AudioAnalyzer.GetFrequencyRange(fftBuffer, period, AudioSpectrum.Presence.Start, AudioSpectrum.Presence.End) * Amplification;
             }
         }
         public float Brilliance
         {
             get
             {
-                return GetFrequencyRange(AudioSpectrum.Brilliance.Start, AudioSpectrum.Brilliance.End);
+                return AudioAnalyzer.GetFrequencyRange(fftBuffer, period, AudioSpectrum.Brilliance.Start, AudioSpectrum.Brilliance.End) * Amplification;
             }
         }
 
-        private readonly double[] fftBuffer;
+        private readonly Complex[] fftBuffer;
         private readonly double period;
 
-        public AnalyzedAudioChannel(double[] fftBuffer, double period, int amplification = 1_000)
+        public AnalyzedAudioChannel(Complex[] fftBuffer, double period, int amplification = 1_000)
         {
             this.fftBuffer = fftBuffer;
             this.period = period;
             Amplification = amplification;
-        }
-
-        public float GetFrequency(int frequency)
-        {
-            int actualFrequency = (int) (frequency / period);
-            return (float) (fftBuffer[actualFrequency] * Amplification);
-        }
-
-        public float GetFrequencyRange(int start, int end)
-        {
-            int actualStart = (int)(start / period);
-            int actualEnd = (int)(end / period);
-
-            double highest = 0;
-            for (int i = actualStart; i <= actualEnd; i++)
-            {
-                highest = Math.Max(fftBuffer[i], highest);
-            }
-
-            //int length = end - start;
-            return (float)(highest * Amplification);
         }
     }
 }
