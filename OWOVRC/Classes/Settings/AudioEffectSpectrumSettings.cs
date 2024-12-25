@@ -7,11 +7,24 @@ namespace OWOVRC.Classes.Settings
     public class AudioEffectSpectrumSettings
     {
         [JsonInclude]
+        public int Priority
+        {
+            get
+            {
+                return priority;
+            }
+            set
+            {
+                priority = value;
+                OnPriorityChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+        [JsonIgnore]
+        private int priority { get; set; } = 0;
+        [JsonInclude]
         public bool Enabled { get; set; } = true;
         [JsonInclude]
         public string Name { get; }
-        [JsonInclude]
-        public int Priority { get; set; } = 0;
         [JsonInclude]
         public float MinDB { get; set; } = 12;
         [JsonInclude]
@@ -27,6 +40,8 @@ namespace OWOVRC.Classes.Settings
         public float SensationSeconds { get; set; } = 0.1f;
         [JsonInclude]
         public Dictionary<int, int> Intensities { get; } = [];
+        [JsonIgnore]
+        public EventHandler? OnPriorityChanged;
 
         [JsonConstructor]
         public AudioEffectSpectrumSettings(bool enabled, string name, int priority, float minDB, float maxDB, int audioFrequencyStart, int audioFrequencyEnd, int sensationFrequency, float sensationSeconds, Dictionary<int, int>? intensities)

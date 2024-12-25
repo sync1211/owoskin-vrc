@@ -16,8 +16,6 @@ namespace OWOVRC.Classes.Effects
         private readonly AudioCapture Analyzer;
         private readonly OWOHelper owo;
 
-        private readonly AudioEffectSpectrumSettings[] availableSpectrums;
-
         public AudioEffect(OWOHelper owo, AudioEffectSettings settings, MMDevice? device = null)
         {
             this.owo = owo;
@@ -25,8 +23,6 @@ namespace OWOVRC.Classes.Effects
 
             Analyzer = new(device);
             Analyzer.OnSampleRead += Analyzer_OnSampleRead;
-
-            availableSpectrums = [Settings.BassSettings, Settings.SubBassSettings];
         }
 
         public virtual void Analyzer_OnSampleRead(object? sender, AnalyzedAudioSample sample)
@@ -52,12 +48,10 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            AudioEffectSpectrumSettings[] orderedSettings = [.. availableSpectrums.OrderByDescending(x => x.Priority)];
-
             // Attempt to create a sensation for each setting in order of priority
-            for (int i = 0; i < orderedSettings.Length; i++)
+            for (int i = 0; i < Settings.SpectrumSettings.Length; i++)
             {
-                AudioEffectSpectrumSettings spectrumSettings = orderedSettings[i];
+                AudioEffectSpectrumSettings spectrumSettings = Settings.SpectrumSettings[i];
                 Sensation? sensation = ProcessSpectrum(rightSample, leftSample, spectrumSettings);
 
                 // No sensation created -> Try next effect
