@@ -6,7 +6,7 @@ namespace OWOVRC.Classes.Settings
     public class OSCPresetsSettings: EffectSettingsBase
     {
         [JsonInclude]
-        public readonly Dictionary<string, OSCSensationPreset> Presets;
+        public Dictionary<string, OSCSensationPreset> Presets { get; }
 
         public OSCPresetsSettings(Dictionary<string, OSCSensationPreset>? presets=null) : base(true, 1)
         {
