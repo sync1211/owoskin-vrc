@@ -92,20 +92,20 @@
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
             audioStatusLabel = new Label();
-            label21 = new Label();
+            audioStatusTitle = new Label();
             openDiscoveryButton = new Button();
             owiStatusLabel = new Label();
-            label19 = new Label();
+            owiStatusTitle = new Label();
             stopSensationsButton = new Button();
             oscPortInput = new NumericUpDown();
             owoIPInput = new MaskedTextBox();
-            label5 = new Label();
-            label4 = new Label();
+            owoIPTitle = new Label();
+            oscPortTitle = new Label();
             startButton = new Button();
             oscStatusLabel = new Label();
-            label2 = new Label();
+            oscStatusTitle = new Label();
             connectionStatusLabel = new Label();
-            label1 = new Label();
+            owoStatusTitle = new Label();
             stopButton = new Button();
             groupBox1 = new GroupBox();
             helpToolTip = new ToolTip(components);
@@ -808,20 +808,20 @@
             // connectionGroup
             // 
             connectionGroup.Controls.Add(audioStatusLabel);
-            connectionGroup.Controls.Add(label21);
+            connectionGroup.Controls.Add(audioStatusTitle);
             connectionGroup.Controls.Add(openDiscoveryButton);
             connectionGroup.Controls.Add(owiStatusLabel);
-            connectionGroup.Controls.Add(label19);
+            connectionGroup.Controls.Add(owiStatusTitle);
             connectionGroup.Controls.Add(stopSensationsButton);
             connectionGroup.Controls.Add(oscPortInput);
             connectionGroup.Controls.Add(owoIPInput);
-            connectionGroup.Controls.Add(label5);
-            connectionGroup.Controls.Add(label4);
+            connectionGroup.Controls.Add(owoIPTitle);
+            connectionGroup.Controls.Add(oscPortTitle);
             connectionGroup.Controls.Add(startButton);
             connectionGroup.Controls.Add(oscStatusLabel);
-            connectionGroup.Controls.Add(label2);
+            connectionGroup.Controls.Add(oscStatusTitle);
             connectionGroup.Controls.Add(connectionStatusLabel);
-            connectionGroup.Controls.Add(label1);
+            connectionGroup.Controls.Add(owoStatusTitle);
             connectionGroup.Controls.Add(stopButton);
             connectionGroup.Location = new Point(12, 12);
             connectionGroup.Name = "connectionGroup";
@@ -842,16 +842,16 @@
             audioStatusLabel.Text = "Stopped";
             audioStatusLabel.Click += label20_Click;
             // 
-            // label21
+            // audioStatusTitle
             // 
-            label21.AutoSize = true;
-            label21.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label21.Location = new Point(644, 56);
-            label21.Name = "label21";
-            label21.Size = new Size(42, 15);
-            label21.TabIndex = 14;
-            label21.Text = "Audio:";
-            helpToolTip.SetToolTip(label21, "Status of the audio capture\r\n");
+            audioStatusTitle.AutoSize = true;
+            audioStatusTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            audioStatusTitle.Location = new Point(644, 56);
+            audioStatusTitle.Name = "audioStatusTitle";
+            audioStatusTitle.Size = new Size(42, 15);
+            audioStatusTitle.TabIndex = 14;
+            audioStatusTitle.Text = "Audio:";
+            helpToolTip.SetToolTip(audioStatusTitle, "Status of the audio capture\r\n");
             // 
             // openDiscoveryButton
             // 
@@ -875,16 +875,16 @@
             owiStatusLabel.TabIndex = 12;
             owiStatusLabel.Text = "Stopped";
             // 
-            // label19
+            // owiStatusTitle
             // 
-            label19.AutoSize = true;
-            label19.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label19.Location = new Point(644, 41);
-            label19.Name = "label19";
-            label19.Size = new Size(35, 15);
-            label19.TabIndex = 11;
-            label19.Text = "OWI:";
-            helpToolTip.SetToolTip(label19, "Status of the OWOWorldIntegration connector");
+            owiStatusTitle.AutoSize = true;
+            owiStatusTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            owiStatusTitle.Location = new Point(644, 41);
+            owiStatusTitle.Name = "owiStatusTitle";
+            owiStatusTitle.Size = new Size(35, 15);
+            owiStatusTitle.TabIndex = 11;
+            owiStatusTitle.Text = "OWI:";
+            helpToolTip.SetToolTip(owiStatusTitle, "Status of the OWOWorldIntegration connector");
             // 
             // stopSensationsButton
             // 
@@ -920,27 +920,27 @@
             helpToolTip.SetToolTip(owoIPInput, "IP of the OWO app to connect to");
             owoIPInput.Leave += OwoIPInput_Exit;
             // 
-            // label5
+            // owoIPTitle
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label5.Location = new Point(10, 19);
-            label5.Name = "label5";
-            label5.Size = new Size(51, 15);
-            label5.TabIndex = 7;
-            label5.Text = "OWO IP";
-            helpToolTip.SetToolTip(label5, "IP of the OWO app to connect to");
+            owoIPTitle.AutoSize = true;
+            owoIPTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            owoIPTitle.Location = new Point(10, 19);
+            owoIPTitle.Name = "owoIPTitle";
+            owoIPTitle.Size = new Size(51, 15);
+            owoIPTitle.TabIndex = 7;
+            owoIPTitle.Text = "OWO IP";
+            helpToolTip.SetToolTip(owoIPTitle, "IP of the OWO app to connect to");
             // 
-            // label4
+            // oscPortTitle
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            label4.Location = new Point(10, 45);
-            label4.Name = "label4";
-            label4.Size = new Size(57, 15);
-            label4.TabIndex = 6;
-            label4.Text = "OSC Port";
-            helpToolTip.SetToolTip(label4, "Port to listen for OSC messages from VRChat");
+            oscPortTitle.AutoSize = true;
+            oscPortTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            oscPortTitle.Location = new Point(10, 45);
+            oscPortTitle.Name = "oscPortTitle";
+            oscPortTitle.Size = new Size(57, 15);
+            oscPortTitle.TabIndex = 6;
+            oscPortTitle.Text = "OSC Port";
+            helpToolTip.SetToolTip(oscPortTitle, "Port to listen for OSC messages from VRChat");
             // 
             // startButton
             // 
@@ -965,16 +965,16 @@
             oscStatusLabel.TabIndex = 3;
             oscStatusLabel.Text = "Stopped";
             // 
-            // label2
+            // oscStatusTitle
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(644, 25);
-            label2.Name = "label2";
-            label2.Size = new Size(33, 15);
-            label2.TabIndex = 2;
-            label2.Text = "OSC:";
-            helpToolTip.SetToolTip(label2, "Status of the OSC listener");
+            oscStatusTitle.AutoSize = true;
+            oscStatusTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            oscStatusTitle.Location = new Point(644, 25);
+            oscStatusTitle.Name = "oscStatusTitle";
+            oscStatusTitle.Size = new Size(33, 15);
+            oscStatusTitle.TabIndex = 2;
+            oscStatusTitle.Text = "OSC:";
+            helpToolTip.SetToolTip(oscStatusTitle, "Status of the OSC listener");
             // 
             // connectionStatusLabel
             // 
@@ -987,16 +987,16 @@
             connectionStatusLabel.TabIndex = 1;
             connectionStatusLabel.Text = "Disconnected";
             // 
-            // label1
+            // owoStatusTitle
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(642, 10);
-            label1.Name = "label1";
-            label1.Size = new Size(40, 15);
-            label1.TabIndex = 0;
-            label1.Text = "OWO:";
-            helpToolTip.SetToolTip(label1, "Status of the OWO app");
+            owoStatusTitle.AutoSize = true;
+            owoStatusTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            owoStatusTitle.Location = new Point(642, 10);
+            owoStatusTitle.Name = "owoStatusTitle";
+            owoStatusTitle.Size = new Size(40, 15);
+            owoStatusTitle.TabIndex = 0;
+            owoStatusTitle.Text = "OWO:";
+            helpToolTip.SetToolTip(owoStatusTitle, "Status of the OWO app");
             // 
             // stopButton
             // 
@@ -1083,17 +1083,17 @@
         private RichTextBox logBox;
         private GroupBox connectionGroup;
         private Label oscStatusLabel;
-        private Label label2;
+        private Label oscStatusTitle;
         private Label connectionStatusLabel;
-        private Label label1;
+        private Label owoStatusTitle;
         private Button startButton;
         private Button stopButton;
         private ComboBox logLevelComboBox;
         private Label label3;
         private NumericUpDown oscPortInput;
         private MaskedTextBox owoIPInput;
-        private Label label5;
-        private Label label4;
+        private Label owoIPTitle;
+        private Label oscPortTitle;
         private GroupBox groupBox1;
         private TabPage collidersSettingsPage;
         private Button applyCollisionSettingsButton;
@@ -1136,7 +1136,7 @@
         private Label label17;
         private NumericUpDown owiIntensityInput;
         private Label owiStatusLabel;
-        private Label label19;
+        private Label owiStatusTitle;
         private TabPage oscPresetsPage;
         private Button applyOscPresetsSettingsButton;
         private Button openOscPresetsFormButton;
@@ -1156,6 +1156,6 @@
         private Controls.AudioSettingsPriorityPanel audioSettingsPriorityPanel1;
         private Button audioMonitorButton;
         private Label audioStatusLabel;
-        private Label label21;
+        private Label audioStatusTitle;
     }
 }
