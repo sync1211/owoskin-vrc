@@ -25,19 +25,19 @@ namespace OWOVRC.UI.Forms
             effect.OnSampleRead -= Analyzer_OnSampleRead;
         }
 
-        private void Analyzer_OnSampleRead(object? sender, Tuple<AnalyzedAudioSample, AnalyzedAudioSample> samples)
+        private void Analyzer_OnSampleRead(object? sender, AnalyzedAudioSample samples)
         {
             try
             {
-                Invoke(UpdateBars, [samples.Item1, samples.Item2]);
+                Invoke(UpdateBars, [samples.Left, samples.Right]);
             }
             catch (ObjectDisposedException)
             {
-                return; //TODO: Fix this properly!
+                this.Close();
             }
         }
 
-        private void UpdateBars(AnalyzedAudioSample leftSample, AnalyzedAudioSample rightSample)
+        private void UpdateBars(AnalyzedAudioChannel leftSample, AnalyzedAudioChannel rightSample)
         {
             // Sub-Bass
             subBassIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.SubBass);
