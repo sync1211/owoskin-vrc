@@ -8,11 +8,11 @@ namespace OWOVRC.Classes.Settings
     public partial class AudioEffectSettings : EffectSettingsBase
     {
         [JsonInclude]
-        public AudioEffectSpectrumSettings BassSettings { get; set; } =
+        public AudioEffectSpectrumSettings BassSettings { get; } =
             new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, 25, 2, 12, 20, 10);
 
         [JsonInclude] //NOTE: zero-width space (U+200B) is used to force a linebreak in the UI
-        public AudioEffectSpectrumSettings SubBassSettings { get; set; } =
+        public AudioEffectSpectrumSettings SubBassSettings { get; } =
             new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 25, 5, 15, 25);
 
         [JsonConstructor]

@@ -9,7 +9,7 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public bool Enabled { get; set; } = true;
         [JsonInclude]
-        public string Name { get; set; }
+        public string Name { get; }
         [JsonInclude]
         public int Priority { get; set; } = 0;
         [JsonInclude]
@@ -17,16 +17,16 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public float MaxDB { get; set; } = 20;
         [JsonInclude]
-        public int AudioFrequencyStart { get; set; }
+        public int AudioFrequencyStart { get; }
         [JsonInclude]
-        public int AudioFrequencyEnd { get; set; }
+        public int AudioFrequencyEnd { get; }
 
         [JsonInclude]
         public int SensationFrequency { get; set; } = 10;
         [JsonInclude]
         public float SensationSeconds { get; set; } = 0.1f;
         [JsonInclude]
-        public Dictionary<int, int> Intensities { get; set; } = [];
+        public Dictionary<int, int> Intensities { get; } = [];
 
         [JsonConstructor]
         public AudioEffectSpectrumSettings(bool enabled, string name, int priority, float minDB, float maxDB, int audioFrequencyStart, int audioFrequencyEnd, int sensationFrequency, float sensationSeconds, Dictionary<int, int>? intensities)
