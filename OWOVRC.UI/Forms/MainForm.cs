@@ -182,6 +182,28 @@ namespace OWOVRC.UI
                 owiStatusLabel.Text = "Stopped";
                 owiStatusLabel.ForeColor = Color.Red;
             }
+
+            // Audio effect
+            if (audioEffect == null)
+            {
+                audioStatusLabel.Text = "Not initialized";
+                audioStatusLabel.ForeColor = Color.Black;
+            }
+            else if (audioEffect.CaptureState == CaptureState.Starting)
+            {
+                audioStatusLabel.Text = "Starting";
+                audioStatusLabel.ForeColor = Color.Yellow;
+            }
+            else if (audioEffect.CaptureState == CaptureState.Capturing)
+            {
+                audioStatusLabel.Text = "Capturing";
+                audioStatusLabel.ForeColor = Color.Green;
+            }
+            else
+            {
+                audioStatusLabel.Text = "Stopped";
+                audioStatusLabel.ForeColor = Color.Red;
+            }
         }
 
         private void StartOWO()
@@ -664,6 +686,11 @@ namespace OWOVRC.UI
             audioSettingsPriorityPanel1.Items.Clear();
             audioSettingsPriorityPanel1.Items.Add(AudioSettingsEntry.FromSpectrumSettings(audioSettings.BassSettings));
             audioSettingsPriorityPanel1.Items.Add(AudioSettingsEntry.FromSpectrumSettings(audioSettings.SubBassSettings));
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

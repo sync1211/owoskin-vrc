@@ -10,6 +10,7 @@ namespace OWOVRC.Classes.Effects
     public partial class AudioEffect : IDisposable
     {
         public bool IsRunning => Analyzer.IsListening;
+        public CaptureState CaptureState => Analyzer.CaptureState;
         public readonly AudioEffectSettings Settings;
         public EventHandler<AnalyzedAudioSample>? OnSampleRead;
 

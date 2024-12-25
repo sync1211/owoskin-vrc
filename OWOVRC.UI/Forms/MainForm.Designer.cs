@@ -91,6 +91,8 @@
             label3 = new Label();
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
+            audioStatusLabel = new Label();
+            label21 = new Label();
             openDiscoveryButton = new Button();
             owiStatusLabel = new Label();
             label19 = new Label();
@@ -732,7 +734,7 @@
             audioDeviceSelectButton.Text = "Select Device";
             helpToolTip.SetToolTip(audioDeviceSelectButton, "Configure which audio device the effect uses.\r\nShift-Click to show all available audio devices (input and output).");
             audioDeviceSelectButton.UseVisualStyleBackColor = true;
-            audioDeviceSelectButton.Click += this.AudioDeviceSelectButton_Click;
+            audioDeviceSelectButton.Click += AudioDeviceSelectButton_Click;
             // 
             // audioMonitorButton
             // 
@@ -743,7 +745,7 @@
             audioMonitorButton.TabIndex = 31;
             audioMonitorButton.Text = "Monitor";
             audioMonitorButton.UseVisualStyleBackColor = true;
-            audioMonitorButton.Click += this.AudioMonitorButton_Click;
+            audioMonitorButton.Click += AudioMonitorButton_Click;
             // 
             // applyAudioSettingsButton
             // 
@@ -755,13 +757,13 @@
             applyAudioSettingsButton.Text = "Apply";
             helpToolTip.SetToolTip(applyAudioSettingsButton, "Save and apply settings");
             applyAudioSettingsButton.UseVisualStyleBackColor = true;
-            applyAudioSettingsButton.Click += this.ApplyAudioSettingsButton_Click;
+            applyAudioSettingsButton.Click += ApplyAudioSettingsButton_Click;
             // 
-            // audioEnabledCheckbox2
+            // audioEnabledCheckbox
             // 
             audioEnabledCheckbox.AutoSize = true;
             audioEnabledCheckbox.Location = new Point(6, 6);
-            audioEnabledCheckbox.Name = "audioEnabledCheckbox2";
+            audioEnabledCheckbox.Name = "audioEnabledCheckbox";
             audioEnabledCheckbox.Size = new Size(68, 19);
             audioEnabledCheckbox.TabIndex = 1;
             audioEnabledCheckbox.Text = "Enabled";
@@ -805,6 +807,8 @@
             // 
             // connectionGroup
             // 
+            connectionGroup.Controls.Add(audioStatusLabel);
+            connectionGroup.Controls.Add(label21);
             connectionGroup.Controls.Add(openDiscoveryButton);
             connectionGroup.Controls.Add(owiStatusLabel);
             connectionGroup.Controls.Add(label19);
@@ -826,6 +830,29 @@
             connectionGroup.TabStop = false;
             connectionGroup.Text = "Connection";
             // 
+            // audioStatusLabel
+            // 
+            audioStatusLabel.AutoSize = true;
+            audioStatusLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            audioStatusLabel.ForeColor = Color.Red;
+            audioStatusLabel.Location = new Point(687, 56);
+            audioStatusLabel.Name = "audioStatusLabel";
+            audioStatusLabel.Size = new Size(54, 15);
+            audioStatusLabel.TabIndex = 15;
+            audioStatusLabel.Text = "Stopped";
+            audioStatusLabel.Click += label20_Click;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label21.Location = new Point(644, 56);
+            label21.Name = "label21";
+            label21.Size = new Size(42, 15);
+            label21.TabIndex = 14;
+            label21.Text = "Audio:";
+            helpToolTip.SetToolTip(label21, "Status of the audio capture\r\n");
+            // 
             // openDiscoveryButton
             // 
             openDiscoveryButton.Image = Properties.Resources.Search;
@@ -842,7 +869,7 @@
             owiStatusLabel.AutoSize = true;
             owiStatusLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             owiStatusLabel.ForeColor = Color.Red;
-            owiStatusLabel.Location = new Point(687, 50);
+            owiStatusLabel.Location = new Point(687, 41);
             owiStatusLabel.Name = "owiStatusLabel";
             owiStatusLabel.Size = new Size(54, 15);
             owiStatusLabel.TabIndex = 12;
@@ -852,7 +879,7 @@
             // 
             label19.AutoSize = true;
             label19.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label19.Location = new Point(644, 50);
+            label19.Location = new Point(644, 41);
             label19.Name = "label19";
             label19.Size = new Size(35, 15);
             label19.TabIndex = 11;
@@ -932,7 +959,7 @@
             oscStatusLabel.AutoSize = true;
             oscStatusLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             oscStatusLabel.ForeColor = Color.Red;
-            oscStatusLabel.Location = new Point(687, 34);
+            oscStatusLabel.Location = new Point(687, 25);
             oscStatusLabel.Name = "oscStatusLabel";
             oscStatusLabel.Size = new Size(54, 15);
             oscStatusLabel.TabIndex = 3;
@@ -942,7 +969,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(644, 34);
+            label2.Location = new Point(644, 25);
             label2.Name = "label2";
             label2.Size = new Size(33, 15);
             label2.TabIndex = 2;
@@ -954,7 +981,7 @@
             connectionStatusLabel.AutoSize = true;
             connectionStatusLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             connectionStatusLabel.ForeColor = Color.Red;
-            connectionStatusLabel.Location = new Point(687, 19);
+            connectionStatusLabel.Location = new Point(687, 10);
             connectionStatusLabel.Name = "connectionStatusLabel";
             connectionStatusLabel.Size = new Size(83, 15);
             connectionStatusLabel.TabIndex = 1;
@@ -964,7 +991,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(642, 19);
+            label1.Location = new Point(642, 10);
             label1.Name = "label1";
             label1.Size = new Size(40, 15);
             label1.TabIndex = 0;
@@ -1128,5 +1155,7 @@
         private TabPage audioResponsePage;
         private Controls.AudioSettingsPriorityPanel audioSettingsPriorityPanel1;
         private Button audioMonitorButton;
+        private Label audioStatusLabel;
+        private Label label21;
     }
 }

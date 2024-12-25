@@ -15,6 +15,13 @@ namespace OWOVRC.Audio.Classes
                 return capture.CaptureState == CaptureState.Capturing;
             }
         }
+        public CaptureState CaptureState
+        {
+            get
+            {
+                return capture.CaptureState;
+            }
+        }
 
         private readonly WasapiLoopbackCapture capture;
 
