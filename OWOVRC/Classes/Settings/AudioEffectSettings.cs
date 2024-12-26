@@ -48,7 +48,7 @@ namespace OWOVRC.Classes.Settings
 
         public void SortSettings()
         {
-            Array.Sort(SpectrumSettings, (a, b) => a.Priority.CompareTo(b.Priority));
+            Array.Sort(SpectrumSettings, (a, b) => b.Priority.CompareTo(a.Priority));
         }
     }
 }
