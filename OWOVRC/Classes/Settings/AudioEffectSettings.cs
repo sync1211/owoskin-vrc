@@ -8,14 +8,13 @@ namespace OWOVRC.Classes.Settings
     {
         [JsonInclude]
         public AudioEffectSpectrumSettings BassSettings { get; } =
-            new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, 25, 2, 12, 20, 10);
+            new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, 55, 2, 12, 20, 15);
 
         [JsonInclude] //NOTE: zero-width space (U+200B) is used to force a linebreak in the UI
         public AudioEffectSpectrumSettings SubBassSettings { get; } =
-            new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 25, 5, 15, 25);
+            new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 40, 5, 15, 3);
         [JsonIgnore] //NOTE: This array is auto-sorted on priority changes via the OnPriorityChanged event
         public readonly AudioEffectSpectrumSettings[] SpectrumSettings;
-
 
         [JsonConstructor]
         public AudioEffectSettings(bool enabled, AudioEffectSpectrumSettings bassSettings, AudioEffectSpectrumSettings subBassSettings) : base(enabled, 0)
