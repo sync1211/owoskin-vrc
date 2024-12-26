@@ -36,7 +36,9 @@ namespace OWOVRC.UI.Controls
             }
             set
             {
+                minInput.ValueChanged -= MinInput_ValueChanged;
                 minInput.Value = (decimal)value;
+                minInput.ValueChanged += MinInput_ValueChanged;
             }
         }
         public float Max
@@ -47,7 +49,9 @@ namespace OWOVRC.UI.Controls
             }
             set
             {
+                maxInput.ValueChanged -= MaxInput_ValueChanged;
                 maxInput.Value = (decimal)value;
+                maxInput.ValueChanged += MaxInput_ValueChanged;
             }
         }
 
@@ -84,6 +88,9 @@ namespace OWOVRC.UI.Controls
         {
             DragHandle1.MouseDown += DragHandle1_MouseDown;
             DragHandle1.MouseUp += DragHandle1_MouseUp;
+
+            minInput.ValueChanged += MinInput_ValueChanged;
+            maxInput.ValueChanged += MaxInput_ValueChanged;
         }
 
         private void DragHandle1_MouseDown(object? sender, MouseEventArgs e)
@@ -159,6 +166,26 @@ namespace OWOVRC.UI.Controls
             }
 
             return entry;
+        }
+
+        private void MinInput_ValueChanged(object? sender, EventArgs e)
+        {
+            if (Min >= Max)
+            {
+                Min = 1;
+            }
+
+            MessageBox.Show("Min cannot be larger than Max!", "Invalid input!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void MaxInput_ValueChanged(object? sender, EventArgs e)
+        {
+            if (Min >= Max)
+            {
+                Max = Min + 1;
+            }
+
+            MessageBox.Show("Max cannot be small than Min!", "Invalid input!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }
