@@ -25,7 +25,9 @@ namespace OWOVRC.Classes.Settings
             }
         }
         [JsonIgnore]
+#pragma warning disable IDE1006 // Benennungsstile
         private int priority { get; set; } = 0;
+#pragma warning restore IDE1006 // Benennungsstile
         [JsonInclude]
         public bool Enabled { get; set; } = true;
         [JsonInclude]
