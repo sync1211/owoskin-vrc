@@ -684,13 +684,11 @@ namespace OWOVRC.UI
             }
 
             audioSettingsPriorityPanel1.Items.Clear();
-            audioSettingsPriorityPanel1.Items.Add(AudioSettingsEntry.FromSpectrumSettings(audioSettings.BassSettings));
-            audioSettingsPriorityPanel1.Items.Add(AudioSettingsEntry.FromSpectrumSettings(audioSettings.SubBassSettings));
-        }
-
-        private void label20_Click(object sender, EventArgs e)
-        {
-
+            foreach (AudioEffectSpectrumSettings settings in audioSettings.SpectrumSettings)
+            {
+                AudioSettingsEntry entry = AudioSettingsEntry.FromSpectrumSettings(settings);
+                audioSettingsPriorityPanel1.Items.Add(entry);
+            }
         }
     }
 }
