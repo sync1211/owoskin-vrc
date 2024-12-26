@@ -111,13 +111,6 @@ namespace OWOVRC.Audio.Classes
                 rightBuffer[i] = new Complex() { X = BitConverter.ToSingle(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel)), Y = 0 };
             }
 
-            // Set remaining values to 0
-            for (int i = sampleCount; i < leftBuffer.Length; i++)
-            {
-                leftBuffer[i] = new Complex();
-                rightBuffer[i] = new Complex();
-            }
-
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
@@ -134,13 +127,6 @@ namespace OWOVRC.Audio.Classes
                 rightBuffer[i] = new Complex() { X = BitConverter.ToInt16(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel)), Y = 0 };
             }
 
-            // Set remaining values to 0
-            for (int i = sampleCount; i < leftBuffer.Length; i++)
-            {
-                leftBuffer[i] = new Complex();
-                rightBuffer[i] = new Complex();
-            }
-
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
@@ -155,13 +141,6 @@ namespace OWOVRC.Audio.Classes
             {
                 leftBuffer[i] = new Complex() { X = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel)), Y = 0 };
                 rightBuffer[i] = new Complex() { X = BitConverter.ToInt32(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel)), Y = 0 };
-            }
-
-            // Set remaining values to 0
-            for (int i = sampleCount; i < leftBuffer.Length; i++)
-            {
-                leftBuffer[i] = new Complex();
-                rightBuffer[i] = new Complex();
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
