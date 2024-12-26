@@ -1,5 +1,6 @@
 ﻿using OWOVRC.Audio.Classes;
 using OWOVRC.Audio.WinForms.Classes;
+using System.Diagnostics;
 
 namespace OWOVRC.Audio.Demo
 {
@@ -22,7 +23,14 @@ namespace OWOVRC.Audio.Demo
         {
             lastSample = sample;
 
-            Invoke(UpdateTrackBars);
+            try
+            {
+                Invoke(UpdateTrackBars);
+            }
+            catch (ObjectDisposedException)
+            {
+                analyzer.OnSampleRead -= Analyzer_OnSampleRead;
+            }
         }
 
         private void UpdateTrackBars()
@@ -75,6 +83,9 @@ namespace OWOVRC.Audio.Demo
         private void AudioDemoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Stop();
+
+            analyzer.OnSampleRead -= Analyzer_OnSampleRead;
+
             analyzer.Dispose();
         }
     }

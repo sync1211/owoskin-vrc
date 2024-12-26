@@ -166,11 +166,36 @@ namespace OWOVRC.Audio.Classes
             return Analyzer;
         }
 
+        private async Task DisposeAsync()
+        {
+            // Wait for audio capture to stop without blocking the thread used by the audio capture.
+            while (capture.CaptureState == CaptureState.Stopping)
+            {
+                Log.Information("DISPOSE: Waiting for audio capture to stop...");
+                await Task.Delay(1000);
+            }
+
+            Dispose();
+        }
+
         public void Dispose()
         {
             capture.DataAvailable -= OnDataAvailable_PCM16;
             capture.DataAvailable -= OnDataAvailable_PCM32;
             capture.DataAvailable -= OnDataAvailable_IeeeFloat32;
+
+            if (capture.CaptureState != CaptureState.Stopped)
+            {
+                capture.StopRecording();
+            }
+
+            if (capture.CaptureState == CaptureState.Stopping)
+            {
+                // Wait asynchronously for audio capture to stop and call Dispose again.
+                // Can't be done via Thread.Sleep as it blocks the thread used by the audio capture.
+                Task.Run(DisposeAsync);
+                return;
+            }
 
             capture.Dispose();
             GC.SuppressFinalize(this);
