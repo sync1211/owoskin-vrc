@@ -12,7 +12,6 @@ namespace OWOVRC.UI.Controls
 
         private AudioSettingsEntry? pickedUpEntry;
         private int pickedUpEntryIndex;
-        private int pickedUpEntryStartIndex;
         private int mouseStartY;
 
         //TODO: Scrolling support
@@ -118,8 +117,6 @@ namespace OWOVRC.UI.Controls
             pickedUpEntry = entry;
             pickedUpEntry.BringToFront();
 
-            pickedUpEntryStartIndex = Items.IndexOf(entry);
-
             mouseStartY = e.Y;
             pickedUpEntryIndex = Items.IndexOf(pickedUpEntry);
             UpdateEntrySpacingForDragged();
@@ -135,7 +132,26 @@ namespace OWOVRC.UI.Controls
             if (pickedUpEntryIndex < Items.Count)
             {
                 AudioSettingsEntry entry = Items[pickedUpEntryIndex];
-                pickedUpEntry.Priority = entry.Priority + 1;
+                pickedUpEntry.Priority = entry.Priority;
+                entry.Priority--;
+
+                // Update the priority of all items below the replaced entry
+                int maxPriority = entry.Priority;
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    AudioSettingsEntry currentEntry = Items[i];
+                    if (currentEntry == pickedUpEntry || currentEntry == entry)
+                    {
+                        continue;
+                    }
+
+                    if (currentEntry.Priority < pickedUpEntry.Priority && currentEntry.Priority >= maxPriority)
+                    {
+                        maxPriority--;
+                        currentEntry.Priority = maxPriority;
+                    }
+                }
+
             }
             else
             {
@@ -166,9 +182,26 @@ namespace OWOVRC.UI.Controls
             }
 
             UpdatePriorities();
-            UpdateItemOrder();
-
             pickedUpEntry = null;
+
+            ResortItems();
+        }
+
+        private void ResortItems()
+        {
+            Items.ListChanged -= HandleListChanged;
+
+            AudioSettingsEntry[] newItems = Items.OrderByDescending((entry) => entry.Priority).ToArray();
+
+            Items.Clear();
+            foreach (AudioSettingsEntry item in newItems)
+            {
+                Items.Add(item);
+            }
+
+            Items.ListChanged += HandleListChanged;
+
+            HandleListChanged(this, EventArgs.Empty);
         }
 
         private void AudioSettingsPriorityPanel_MouseMove(object? sender, MouseEventArgs e)
