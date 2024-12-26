@@ -16,6 +16,8 @@ namespace OWOVRC.Audio.Classes
             }
         }
 
+        public readonly AnalyzedAudioSample Analyzer;
+
         private readonly WasapiLoopbackCapture capture;
 
         private readonly Complex[] leftBuffer;
@@ -47,6 +49,9 @@ namespace OWOVRC.Audio.Classes
             bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
             waveEncoding = capture.WaveFormat.Encoding;
+
+            double fftPeriod = (double)capture.WaveFormat.SampleRate / rightBuffer.Length;
+            Analyzer = new(leftBuffer, rightBuffer, fftPeriod);
 
             RegisterDataAvaiableEvent();
         }
@@ -151,9 +156,7 @@ namespace OWOVRC.Audio.Classes
             FastFourierTransform.FFT(true, (int)Math.Log2(leftBuffer.Length), leftBuffer);
             FastFourierTransform.FFT(true, (int)Math.Log2(rightBuffer.Length), rightBuffer);
 
-            double fftPeriod = (double)capture.WaveFormat.SampleRate / rightBuffer.Length;
-
-            return new(leftBuffer, rightBuffer, fftPeriod);
+            return Analyzer;
         }
 
         public void Dispose()
