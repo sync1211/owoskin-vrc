@@ -73,8 +73,8 @@ namespace OWOVRC.Classes.Effects
                 return null;
             }
 
-            float rightDB = AudioAnalyzer.GetFrequencyRange(rightSample.Buffer, rightSample.Period, spectrumSettings.AudioFrequencyStart, spectrumSettings.AudioFrequencyEnd);
-            float leftDB = AudioAnalyzer.GetFrequencyRange(leftSample.Buffer, leftSample.Period, spectrumSettings.AudioFrequencyStart, spectrumSettings.AudioFrequencyEnd);
+            float rightDB = rightSample.GetFrequencyRange(spectrumSettings.AudioFrequencyStart, spectrumSettings.AudioFrequencyEnd);
+            float leftDB = leftSample.GetFrequencyRange(spectrumSettings.AudioFrequencyStart, spectrumSettings.AudioFrequencyEnd);
 
             int leftIntensity = CalculateIntensityPercentage(rightDB, spectrumSettings);
             int rightIntensity = CalculateIntensityPercentage(leftDB, spectrumSettings);
