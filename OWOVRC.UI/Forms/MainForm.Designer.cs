@@ -34,13 +34,13 @@
             collidersSettingsPage = new TabPage();
             configureCollidersIntensityButton = new Button();
             collidersHelpLinkLabel = new LinkLabel();
-            label12 = new Label();
+            collidersPriorityLabel = new Label();
             collidersPriorityInput = new NumericUpDown();
-            label6 = new Label();
+            configureCollidersIntensityLabel = new Label();
             velocityBasedGroupBox = new GroupBox();
-            label9 = new Label();
+            collidersSpeedMultiplierLabel = new Label();
             collidersSpeedMultiplierInput = new NumericUpDown();
-            label8 = new Label();
+            collidersMinIntensityLabel = new Label();
             collidersMinIntensityInput = new NumericUpDown();
             collidersUseVelocityCheckbox = new CheckBox();
             collidersAllowContinuousCheckbox = new CheckBox();
@@ -48,35 +48,35 @@
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
             notVeryHelpfulLabel = new Label();
-            label11 = new Label();
-            label13 = new Label();
+            velocitySpeedCapLabel = new Label();
+            velocityPriorityLabel = new Label();
             velocitySpeedCapInput = new NumericUpDown();
             velocityPriorityInput = new NumericUpDown();
             velocityIgnoreWhenSeatedCheckbox = new CheckBox();
-            groupBox2 = new GroupBox();
-            label10 = new Label();
+            velocityImpactGroup = new GroupBox();
+            velocityMinImpactLabel = new Label();
             velocityImpactEnabledCheckbox = new CheckBox();
             velocityMinImpactInput = new NumericUpDown();
-            label7 = new Label();
+            velocityThresholdLabel = new Label();
             velocityThresholdInput = new NumericUpDown();
             velocityIgnoreWhenGroundedCheckbox = new CheckBox();
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             owiSettingsPage = new TabPage();
-            label17 = new Label();
+            owiIntensityLabel = new Label();
             owiIntensityInput = new NumericUpDown();
-            label16 = new Label();
+            owiUpdateIntervalLabel = new Label();
             owiUpdateIntervalInput = new NumericUpDown();
-            groupBox3 = new GroupBox();
-            label15 = new Label();
+            owiInformationGroup = new GroupBox();
+            owiInfoLabel = new Label();
             owiLinkLabel = new LinkLabel();
-            label14 = new Label();
+            owiPriorityLabel = new Label();
             owiPriorityInput = new NumericUpDown();
             owiEnabledCheckbox = new CheckBox();
             applyOwiSettingsButton = new Button();
             oscPresetsPage = new TabPage();
             presetsHelpLinkLabel = new LinkLabel();
-            label18 = new Label();
+            oscPresetsPriorityLabel = new Label();
             oscPresetsPriorityInput = new NumericUpDown();
             oscPresetsEnabledCheckbox = new CheckBox();
             openOscPresetsFormButton = new Button();
@@ -118,13 +118,13 @@
             velocitySettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)velocitySpeedCapInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).BeginInit();
-            groupBox2.SuspendLayout();
+            velocityImpactGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)velocityMinImpactInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).BeginInit();
             owiSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)owiIntensityInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).BeginInit();
-            groupBox3.SuspendLayout();
+            owiInformationGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)owiPriorityInput).BeginInit();
             oscPresetsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)oscPresetsPriorityInput).BeginInit();
@@ -152,9 +152,9 @@
             // 
             collidersSettingsPage.Controls.Add(configureCollidersIntensityButton);
             collidersSettingsPage.Controls.Add(collidersHelpLinkLabel);
-            collidersSettingsPage.Controls.Add(label12);
+            collidersSettingsPage.Controls.Add(collidersPriorityLabel);
             collidersSettingsPage.Controls.Add(collidersPriorityInput);
-            collidersSettingsPage.Controls.Add(label6);
+            collidersSettingsPage.Controls.Add(configureCollidersIntensityLabel);
             collidersSettingsPage.Controls.Add(velocityBasedGroupBox);
             collidersSettingsPage.Controls.Add(collidersEnabledCheckbox);
             collidersSettingsPage.Controls.Add(applyCollisionSettingsButton);
@@ -191,15 +191,15 @@
             helpToolTip.SetToolTip(collidersHelpLinkLabel, "Open the avatar setup wiki page");
             collidersHelpLinkLabel.LinkClicked += CollidersHelpLinkLabel_LinkClicked;
             // 
-            // label12
+            // collidersPriorityLabel
             // 
-            label12.AutoSize = true;
-            label12.Location = new Point(6, 30);
-            label12.Name = "label12";
-            label12.Size = new Size(45, 15);
-            label12.TabIndex = 9;
-            label12.Text = "Priority";
-            helpToolTip.SetToolTip(label12, "Speicifies the priority of this effect (0 = lowest)");
+            collidersPriorityLabel.AutoSize = true;
+            collidersPriorityLabel.Location = new Point(6, 30);
+            collidersPriorityLabel.Name = "collidersPriorityLabel";
+            collidersPriorityLabel.Size = new Size(45, 15);
+            collidersPriorityLabel.TabIndex = 9;
+            collidersPriorityLabel.Text = "Priority";
+            helpToolTip.SetToolTip(collidersPriorityLabel, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // collidersPriorityInput
             // 
@@ -209,21 +209,21 @@
             collidersPriorityInput.TabIndex = 8;
             helpToolTip.SetToolTip(collidersPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
             // 
-            // label6
+            // configureCollidersIntensityLabel
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(6, 59);
-            label6.Name = "label6";
-            label6.Size = new Size(73, 15);
-            label6.TabIndex = 7;
-            label6.Text = "Intensity (%)";
-            helpToolTip.SetToolTip(label6, "Specifies the intensity of this effect");
+            configureCollidersIntensityLabel.AutoSize = true;
+            configureCollidersIntensityLabel.Location = new Point(6, 59);
+            configureCollidersIntensityLabel.Name = "configureCollidersIntensityLabel";
+            configureCollidersIntensityLabel.Size = new Size(73, 15);
+            configureCollidersIntensityLabel.TabIndex = 7;
+            configureCollidersIntensityLabel.Text = "Intensity (%)";
+            helpToolTip.SetToolTip(configureCollidersIntensityLabel, "Specifies the intensity of this effect");
             // 
             // velocityBasedGroupBox
             // 
-            velocityBasedGroupBox.Controls.Add(label9);
+            velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierLabel);
             velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierInput);
-            velocityBasedGroupBox.Controls.Add(label8);
+            velocityBasedGroupBox.Controls.Add(collidersMinIntensityLabel);
             velocityBasedGroupBox.Controls.Add(collidersMinIntensityInput);
             velocityBasedGroupBox.Controls.Add(collidersUseVelocityCheckbox);
             velocityBasedGroupBox.Controls.Add(collidersAllowContinuousCheckbox);
@@ -234,15 +234,15 @@
             velocityBasedGroupBox.TabStop = false;
             velocityBasedGroupBox.Text = "Velocity-Based";
             // 
-            // label9
+            // collidersSpeedMultiplierLabel
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(6, 107);
-            label9.Name = "label9";
-            label9.Size = new Size(93, 15);
-            label9.TabIndex = 11;
-            label9.Text = "Speed multiplier";
-            helpToolTip.SetToolTip(label9, "Multiplier for velocity-based sensation scaling (Supports ");
+            collidersSpeedMultiplierLabel.AutoSize = true;
+            collidersSpeedMultiplierLabel.Location = new Point(6, 107);
+            collidersSpeedMultiplierLabel.Name = "collidersSpeedMultiplierLabel";
+            collidersSpeedMultiplierLabel.Size = new Size(93, 15);
+            collidersSpeedMultiplierLabel.TabIndex = 11;
+            collidersSpeedMultiplierLabel.Text = "Speed multiplier";
+            helpToolTip.SetToolTip(collidersSpeedMultiplierLabel, "Multiplier for velocity-based sensation scaling (Supports ");
             // 
             // collidersSpeedMultiplierInput
             // 
@@ -255,15 +255,15 @@
             collidersSpeedMultiplierInput.TabIndex = 10;
             helpToolTip.SetToolTip(collidersSpeedMultiplierInput, "Multiplier for velocity-based sensation scaling (Supports ");
             // 
-            // label8
+            // collidersMinIntensityLabel
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(6, 78);
-            label8.Name = "label8";
-            label8.Size = new Size(76, 15);
-            label8.TabIndex = 9;
-            label8.Text = "Min Intensity";
-            helpToolTip.SetToolTip(label8, "The base intensity for velocity-based collisions. (Idle intensity)");
+            collidersMinIntensityLabel.AutoSize = true;
+            collidersMinIntensityLabel.Location = new Point(6, 78);
+            collidersMinIntensityLabel.Name = "collidersMinIntensityLabel";
+            collidersMinIntensityLabel.Size = new Size(76, 15);
+            collidersMinIntensityLabel.TabIndex = 9;
+            collidersMinIntensityLabel.Text = "Min Intensity";
+            helpToolTip.SetToolTip(collidersMinIntensityLabel, "The base intensity for velocity-based collisions. (Idle intensity)");
             // 
             // collidersMinIntensityInput
             // 
@@ -321,13 +321,13 @@
             // velocitySettingsPage
             // 
             velocitySettingsPage.Controls.Add(notVeryHelpfulLabel);
-            velocitySettingsPage.Controls.Add(label11);
-            velocitySettingsPage.Controls.Add(label13);
+            velocitySettingsPage.Controls.Add(velocitySpeedCapLabel);
+            velocitySettingsPage.Controls.Add(velocityPriorityLabel);
             velocitySettingsPage.Controls.Add(velocitySpeedCapInput);
             velocitySettingsPage.Controls.Add(velocityPriorityInput);
             velocitySettingsPage.Controls.Add(velocityIgnoreWhenSeatedCheckbox);
-            velocitySettingsPage.Controls.Add(groupBox2);
-            velocitySettingsPage.Controls.Add(label7);
+            velocitySettingsPage.Controls.Add(velocityImpactGroup);
+            velocitySettingsPage.Controls.Add(velocityThresholdLabel);
             velocitySettingsPage.Controls.Add(velocityThresholdInput);
             velocitySettingsPage.Controls.Add(velocityIgnoreWhenGroundedCheckbox);
             velocitySettingsPage.Controls.Add(velocityEnabledCheckbox);
@@ -353,25 +353,25 @@
             notVeryHelpfulLabel.Text = "No exta setup required!";
             helpToolTip.SetToolTip(notVeryHelpfulLabel, "This effect uses built-in VRChat OSC messages.\r\nAs a result it will work with any Avatar without any setup. :)");
             // 
-            // label11
+            // velocitySpeedCapLabel
             // 
-            label11.AutoSize = true;
-            label11.Location = new Point(6, 83);
-            label11.Name = "label11";
-            label11.Size = new Size(96, 15);
-            label11.TabIndex = 11;
-            label11.Text = "Max speed (m/s)";
-            helpToolTip.SetToolTip(label11, "Maximum speed for wind effects (used for scaling)");
+            velocitySpeedCapLabel.AutoSize = true;
+            velocitySpeedCapLabel.Location = new Point(6, 83);
+            velocitySpeedCapLabel.Name = "velocitySpeedCapLabel";
+            velocitySpeedCapLabel.Size = new Size(96, 15);
+            velocitySpeedCapLabel.TabIndex = 11;
+            velocitySpeedCapLabel.Text = "Max speed (m/s)";
+            helpToolTip.SetToolTip(velocitySpeedCapLabel, "Maximum speed for wind effects (used for scaling)");
             // 
-            // label13
+            // velocityPriorityLabel
             // 
-            label13.AutoSize = true;
-            label13.Location = new Point(6, 30);
-            label13.Name = "label13";
-            label13.Size = new Size(45, 15);
-            label13.TabIndex = 15;
-            label13.Text = "Priority";
-            helpToolTip.SetToolTip(label13, "Speicifies the priority of this effect (0 = lowest)");
+            velocityPriorityLabel.AutoSize = true;
+            velocityPriorityLabel.Location = new Point(6, 30);
+            velocityPriorityLabel.Name = "velocityPriorityLabel";
+            velocityPriorityLabel.Size = new Size(45, 15);
+            velocityPriorityLabel.TabIndex = 15;
+            velocityPriorityLabel.Text = "Priority";
+            helpToolTip.SetToolTip(velocityPriorityLabel, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // velocitySpeedCapInput
             // 
@@ -401,27 +401,27 @@
             helpToolTip.SetToolTip(velocityIgnoreWhenSeatedCheckbox, "Disables velocity-based effects when the player is seated");
             velocityIgnoreWhenSeatedCheckbox.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // velocityImpactGroup
             // 
-            groupBox2.Controls.Add(label10);
-            groupBox2.Controls.Add(velocityImpactEnabledCheckbox);
-            groupBox2.Controls.Add(velocityMinImpactInput);
-            groupBox2.Location = new Point(6, 165);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(345, 75);
-            groupBox2.TabIndex = 12;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Impact";
+            velocityImpactGroup.Controls.Add(velocityMinImpactLabel);
+            velocityImpactGroup.Controls.Add(velocityImpactEnabledCheckbox);
+            velocityImpactGroup.Controls.Add(velocityMinImpactInput);
+            velocityImpactGroup.Location = new Point(6, 165);
+            velocityImpactGroup.Name = "velocityImpactGroup";
+            velocityImpactGroup.Size = new Size(345, 75);
+            velocityImpactGroup.TabIndex = 12;
+            velocityImpactGroup.TabStop = false;
+            velocityImpactGroup.Text = "Impact";
             // 
-            // label10
+            // velocityMinImpactLabel
             // 
-            label10.AutoSize = true;
-            label10.Location = new Point(6, 44);
-            label10.Name = "label10";
-            label10.Size = new Size(147, 15);
-            label10.TabIndex = 11;
-            label10.Text = "Min. impact velocity (m/s)";
-            helpToolTip.SetToolTip(label10, "Minimum velocity to reach to trigger the impact effect on deceleration");
+            velocityMinImpactLabel.AutoSize = true;
+            velocityMinImpactLabel.Location = new Point(6, 44);
+            velocityMinImpactLabel.Name = "velocityMinImpactLabel";
+            velocityMinImpactLabel.Size = new Size(147, 15);
+            velocityMinImpactLabel.TabIndex = 11;
+            velocityMinImpactLabel.Text = "Min. impact velocity (m/s)";
+            helpToolTip.SetToolTip(velocityMinImpactLabel, "Minimum velocity to reach to trigger the impact effect on deceleration");
             // 
             // velocityImpactEnabledCheckbox
             // 
@@ -443,15 +443,15 @@
             velocityMinImpactInput.TabIndex = 10;
             helpToolTip.SetToolTip(velocityMinImpactInput, "Minimum velocity to reach to trigger the impact effect on deceleration");
             // 
-            // label7
+            // velocityThresholdLabel
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(6, 58);
-            label7.Name = "label7";
-            label7.Size = new Size(107, 15);
-            label7.TabIndex = 9;
-            label7.Text = "Min. velocity (m/s)";
-            helpToolTip.SetToolTip(label7, "Minimum speed for triggering wind effects");
+            velocityThresholdLabel.AutoSize = true;
+            velocityThresholdLabel.Location = new Point(6, 58);
+            velocityThresholdLabel.Name = "velocityThresholdLabel";
+            velocityThresholdLabel.Size = new Size(107, 15);
+            velocityThresholdLabel.TabIndex = 9;
+            velocityThresholdLabel.Text = "Min. velocity (m/s)";
+            helpToolTip.SetToolTip(velocityThresholdLabel, "Minimum speed for triggering wind effects");
             // 
             // velocityThresholdInput
             // 
@@ -497,13 +497,13 @@
             // 
             // owiSettingsPage
             // 
-            owiSettingsPage.Controls.Add(label17);
+            owiSettingsPage.Controls.Add(owiIntensityLabel);
             owiSettingsPage.Controls.Add(owiIntensityInput);
-            owiSettingsPage.Controls.Add(label16);
+            owiSettingsPage.Controls.Add(owiUpdateIntervalLabel);
             owiSettingsPage.Controls.Add(owiUpdateIntervalInput);
-            owiSettingsPage.Controls.Add(groupBox3);
+            owiSettingsPage.Controls.Add(owiInformationGroup);
             owiSettingsPage.Controls.Add(owiLinkLabel);
-            owiSettingsPage.Controls.Add(label14);
+            owiSettingsPage.Controls.Add(owiPriorityLabel);
             owiSettingsPage.Controls.Add(owiPriorityInput);
             owiSettingsPage.Controls.Add(owiEnabledCheckbox);
             owiSettingsPage.Controls.Add(applyOwiSettingsButton);
@@ -515,15 +515,15 @@
             owiSettingsPage.ToolTipText = "OWOWorldIntegration connector";
             owiSettingsPage.UseVisualStyleBackColor = true;
             // 
-            // label17
+            // owiIntensityLabel
             // 
-            label17.AutoSize = true;
-            label17.Location = new Point(6, 89);
-            label17.Name = "label17";
-            label17.Size = new Size(73, 15);
-            label17.TabIndex = 25;
-            label17.Text = "Intensity (%)";
-            helpToolTip.SetToolTip(label17, "Specifies the intensity of this effect");
+            owiIntensityLabel.AutoSize = true;
+            owiIntensityLabel.Location = new Point(6, 89);
+            owiIntensityLabel.Name = "owiIntensityLabel";
+            owiIntensityLabel.Size = new Size(73, 15);
+            owiIntensityLabel.TabIndex = 25;
+            owiIntensityLabel.Text = "Intensity (%)";
+            helpToolTip.SetToolTip(owiIntensityLabel, "Specifies the intensity of this effect");
             // 
             // owiIntensityInput
             // 
@@ -533,15 +533,15 @@
             owiIntensityInput.TabIndex = 24;
             helpToolTip.SetToolTip(owiIntensityInput, "Specifies the intensity of this effect");
             // 
-            // label16
+            // owiUpdateIntervalLabel
             // 
-            label16.AutoSize = true;
-            label16.Location = new Point(6, 59);
-            label16.Name = "label16";
-            label16.Size = new Size(123, 15);
-            label16.TabIndex = 23;
-            label16.Text = "Log scan interval (ms)";
-            helpToolTip.SetToolTip(label16, "Time between checking the VRChat log for new sensations from OWI");
+            owiUpdateIntervalLabel.AutoSize = true;
+            owiUpdateIntervalLabel.Location = new Point(6, 59);
+            owiUpdateIntervalLabel.Name = "owiUpdateIntervalLabel";
+            owiUpdateIntervalLabel.Size = new Size(123, 15);
+            owiUpdateIntervalLabel.TabIndex = 23;
+            owiUpdateIntervalLabel.Text = "Log scan interval (ms)";
+            helpToolTip.SetToolTip(owiUpdateIntervalLabel, "Time between checking the VRChat log for new sensations from OWI");
             // 
             // owiUpdateIntervalInput
             // 
@@ -555,27 +555,27 @@
             helpToolTip.SetToolTip(owiUpdateIntervalInput, "Time between checking the VRChat log for new sensations from OWI");
             owiUpdateIntervalInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // groupBox3
+            // owiInformationGroup
             // 
-            groupBox3.Controls.Add(label15);
-            groupBox3.Location = new Point(6, 115);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(348, 121);
-            groupBox3.TabIndex = 21;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Information";
+            owiInformationGroup.Controls.Add(owiInfoLabel);
+            owiInformationGroup.Location = new Point(6, 115);
+            owiInformationGroup.Name = "owiInformationGroup";
+            owiInformationGroup.Size = new Size(348, 121);
+            owiInformationGroup.TabIndex = 21;
+            owiInformationGroup.TabStop = false;
+            owiInformationGroup.Text = "Information";
             // 
-            // label15
+            // owiInfoLabel
             // 
-            label15.AutoSize = true;
-            label15.FlatStyle = FlatStyle.Popup;
-            label15.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label15.ForeColor = SystemColors.ControlDarkDark;
-            label15.Location = new Point(21, 23);
-            label15.Name = "label15";
-            label15.Size = new Size(308, 85);
-            label15.TabIndex = 20;
-            label15.Text = "This effect receives data from worlds\r\nusing OWO World Integrator.\r\n\r\nTo use this effect, please enable debug logging in your\r\nVRChat client and visit a world that supports OWI.";
+            owiInfoLabel.AutoSize = true;
+            owiInfoLabel.FlatStyle = FlatStyle.Popup;
+            owiInfoLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            owiInfoLabel.ForeColor = SystemColors.ControlDarkDark;
+            owiInfoLabel.Location = new Point(21, 23);
+            owiInfoLabel.Name = "owiInfoLabel";
+            owiInfoLabel.Size = new Size(308, 85);
+            owiInfoLabel.TabIndex = 20;
+            owiInfoLabel.Text = "This effect receives data from worlds\r\nusing OWO World Integrator.\r\n\r\nTo use this effect, please enable debug logging in your\r\nVRChat client and visit a world that supports OWI.";
             // 
             // owiLinkLabel
             // 
@@ -589,15 +589,15 @@
             helpToolTip.SetToolTip(owiLinkLabel, "Open the OWOWorldIntegrator GitHub page");
             owiLinkLabel.LinkClicked += OwiLinkLabel_LinkClicked;
             // 
-            // label14
+            // owiPriorityLabel
             // 
-            label14.AutoSize = true;
-            label14.Location = new Point(6, 30);
-            label14.Name = "label14";
-            label14.Size = new Size(45, 15);
-            label14.TabIndex = 19;
-            label14.Text = "Priority";
-            helpToolTip.SetToolTip(label14, "Speicifies the priority of this effect (0 = lowest)");
+            owiPriorityLabel.AutoSize = true;
+            owiPriorityLabel.Location = new Point(6, 30);
+            owiPriorityLabel.Name = "owiPriorityLabel";
+            owiPriorityLabel.Size = new Size(45, 15);
+            owiPriorityLabel.TabIndex = 19;
+            owiPriorityLabel.Text = "Priority";
+            helpToolTip.SetToolTip(owiPriorityLabel, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // owiPriorityInput
             // 
@@ -632,7 +632,7 @@
             // oscPresetsPage
             // 
             oscPresetsPage.Controls.Add(presetsHelpLinkLabel);
-            oscPresetsPage.Controls.Add(label18);
+            oscPresetsPage.Controls.Add(oscPresetsPriorityLabel);
             oscPresetsPage.Controls.Add(oscPresetsPriorityInput);
             oscPresetsPage.Controls.Add(oscPresetsEnabledCheckbox);
             oscPresetsPage.Controls.Add(openOscPresetsFormButton);
@@ -658,15 +658,15 @@
             helpToolTip.SetToolTip(presetsHelpLinkLabel, "Open the avatar setup wiki page");
             presetsHelpLinkLabel.LinkClicked += PresetsHelpLinkLabel_LinkClicked;
             // 
-            // label18
+            // oscPresetsPriorityLabel
             // 
-            label18.AutoSize = true;
-            label18.Location = new Point(6, 30);
-            label18.Name = "label18";
-            label18.Size = new Size(45, 15);
-            label18.TabIndex = 22;
-            label18.Text = "Priority";
-            helpToolTip.SetToolTip(label18, "Speicifies the priority of this effect (0 = lowest)");
+            oscPresetsPriorityLabel.AutoSize = true;
+            oscPresetsPriorityLabel.Location = new Point(6, 30);
+            oscPresetsPriorityLabel.Name = "oscPresetsPriorityLabel";
+            oscPresetsPriorityLabel.Size = new Size(45, 15);
+            oscPresetsPriorityLabel.TabIndex = 22;
+            oscPresetsPriorityLabel.Text = "Priority";
+            helpToolTip.SetToolTip(oscPresetsPriorityLabel, "Speicifies the priority of this effect (0 = lowest)");
             // 
             // oscPresetsPriorityInput
             // 
@@ -840,7 +840,6 @@
             audioStatusLabel.Size = new Size(54, 15);
             audioStatusLabel.TabIndex = 15;
             audioStatusLabel.Text = "Stopped";
-            audioStatusLabel.Click += label20_Click;
             // 
             // audioStatusTitle
             // 
@@ -1052,16 +1051,16 @@
             velocitySettingsPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)velocitySpeedCapInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).EndInit();
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
+            velocityImpactGroup.ResumeLayout(false);
+            velocityImpactGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)velocityMinImpactInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).EndInit();
             owiSettingsPage.ResumeLayout(false);
             owiSettingsPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)owiIntensityInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).EndInit();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
+            owiInformationGroup.ResumeLayout(false);
+            owiInformationGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)owiPriorityInput).EndInit();
             oscPresetsPage.ResumeLayout(false);
             oscPresetsPage.PerformLayout();
@@ -1099,48 +1098,48 @@
         private Button applyCollisionSettingsButton;
         private Button applyVelocitySettingsButton;
         private CheckBox collidersEnabledCheckbox;
-        private Label label6;
+        private Label configureCollidersIntensityLabel;
         private GroupBox velocityBasedGroupBox;
         private CheckBox collidersUseVelocityCheckbox;
         private CheckBox collidersAllowContinuousCheckbox;
-        private Label label8;
+        private Label collidersMinIntensityLabel;
         private NumericUpDown collidersMinIntensityInput;
-        private Label label9;
+        private Label collidersSpeedMultiplierLabel;
         private NumericUpDown collidersSpeedMultiplierInput;
         private CheckBox velocityEnabledCheckbox;
-        private Label label7;
+        private Label velocityThresholdLabel;
         private NumericUpDown velocityThresholdInput;
-        private Label label10;
+        private Label velocityMinImpactLabel;
         private NumericUpDown velocityMinImpactInput;
-        private GroupBox groupBox2;
-        private Label label11;
+        private GroupBox velocityImpactGroup;
+        private Label velocitySpeedCapLabel;
         private NumericUpDown velocitySpeedCapInput;
         private CheckBox velocityImpactEnabledCheckbox;
         private CheckBox velocityIgnoreWhenGroundedCheckbox;
         private CheckBox velocityIgnoreWhenSeatedCheckbox;
         private Button stopSensationsButton;
-        private Label label12;
+        private Label collidersPriorityLabel;
         private NumericUpDown collidersPriorityInput;
-        private Label label13;
+        private Label velocityPriorityLabel;
         private NumericUpDown velocityPriorityInput;
         private TabPage owiSettingsPage;
         private LinkLabel owiLinkLabel;
-        private Label label14;
+        private Label owiPriorityLabel;
         private NumericUpDown owiPriorityInput;
         private CheckBox owiEnabledCheckbox;
         private Button applyOwiSettingsButton;
-        private Label label15;
-        private GroupBox groupBox3;
-        private Label label16;
+        private Label owiInfoLabel;
+        private GroupBox owiInformationGroup;
+        private Label owiUpdateIntervalLabel;
         private NumericUpDown owiUpdateIntervalInput;
-        private Label label17;
+        private Label owiIntensityLabel;
         private NumericUpDown owiIntensityInput;
         private Label owiStatusLabel;
         private Label owiStatusTitle;
         private TabPage oscPresetsPage;
         private Button applyOscPresetsSettingsButton;
         private Button openOscPresetsFormButton;
-        private Label label18;
+        private Label oscPresetsPriorityLabel;
         private NumericUpDown oscPresetsPriorityInput;
         private CheckBox oscPresetsEnabledCheckbox;
         private ToolTip helpToolTip;
@@ -1149,10 +1148,10 @@
         private Label notVeryHelpfulLabel;
         private Button configureCollidersIntensityButton;
         private Button openDiscoveryButton;
+        private TabPage audioResponsePage;
         private CheckBox audioEnabledCheckbox;
         private Button applyAudioSettingsButton;
         private Button audioDeviceSelectButton;
-        private TabPage audioResponsePage;
         private Controls.AudioSettingsPriorityPanel audioSettingsPriorityPanel1;
         private Button audioMonitorButton;
         private Label audioStatusLabel;

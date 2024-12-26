@@ -23,6 +23,8 @@ namespace OWOVRC.Audio.Classes
             }
         }
 
+        public readonly AnalyzedAudioSample Analyzer;
+
         private readonly WasapiLoopbackCapture capture;
 
         private readonly Complex[] leftBuffer;
@@ -54,6 +56,9 @@ namespace OWOVRC.Audio.Classes
             bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
             waveEncoding = capture.WaveFormat.Encoding;
+
+            double fftPeriod = (double)capture.WaveFormat.SampleRate / rightBuffer.Length;
+            Analyzer = new(leftBuffer, rightBuffer, fftPeriod);
 
             RegisterDataAvaiableEvent();
         }
@@ -118,13 +123,6 @@ namespace OWOVRC.Audio.Classes
                 rightBuffer[i] = new Complex() { X = BitConverter.ToSingle(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel)), Y = 0 };
             }
 
-            // Set remaining values to 0
-            for (int i = sampleCount; i < leftBuffer.Length; i++)
-            {
-                leftBuffer[i] = new Complex();
-                rightBuffer[i] = new Complex();
-            }
-
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
@@ -139,13 +137,6 @@ namespace OWOVRC.Audio.Classes
             {
                 leftBuffer[i] = new Complex() { X = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel)), Y = 0 };
                 rightBuffer[i] = new Complex() { X = BitConverter.ToInt16(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel)), Y = 0 };
-            }
-
-            // Set remaining values to 0
-            for (int i = sampleCount; i < leftBuffer.Length; i++)
-            {
-                leftBuffer[i] = new Complex();
-                rightBuffer[i] = new Complex();
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
@@ -164,13 +155,6 @@ namespace OWOVRC.Audio.Classes
                 rightBuffer[i] = new Complex() { X = BitConverter.ToInt32(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel)), Y = 0 };
             }
 
-            // Set remaining values to 0
-            for (int i = sampleCount; i < leftBuffer.Length; i++)
-            {
-                leftBuffer[i] = new Complex();
-                rightBuffer[i] = new Complex();
-            }
-
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
         }
 
@@ -179,9 +163,7 @@ namespace OWOVRC.Audio.Classes
             FastFourierTransform.FFT(true, (int)Math.Log2(leftBuffer.Length), leftBuffer);
             FastFourierTransform.FFT(true, (int)Math.Log2(rightBuffer.Length), rightBuffer);
 
-            double fftPeriod = (double)capture.WaveFormat.SampleRate / rightBuffer.Length;
-
-            return new(leftBuffer, rightBuffer, fftPeriod);
+            return Analyzer;
         }
 
         public void Dispose()
