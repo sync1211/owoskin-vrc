@@ -97,11 +97,11 @@
             audioPriorityInput = new NumericUpDown();
             audioEnabledCheckbox = new CheckBox();
             applyAudioSettingsButton = new Button();
-            label23 = new Label();
-            label20 = new Label();
-            label21 = new Label();
+            sensationFirstTickTitle = new Label();
+            sensationNameTitle = new Label();
+            sensationLoopTitle = new Label();
             logLevelComboBox = new ComboBox();
-            label3 = new Label();
+            logLevelTitle = new Label();
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
             openDiscoveryButton = new Button();
@@ -122,7 +122,7 @@
             statusTabControl = new TabControl();
             logPage = new TabPage();
             sensationsPage = new TabPage();
-            groupBox1 = new GroupBox();
+            sensationInfoGroup = new GroupBox();
             sensationFirstTickLabel = new Label();
             sensationNameLabel = new Label();
             sensationLoopLabel = new Label();
@@ -159,7 +159,7 @@
             statusTabControl.SuspendLayout();
             logPage.SuspendLayout();
             sensationsPage.SuspendLayout();
-            groupBox1.SuspendLayout();
+            sensationInfoGroup.SuspendLayout();
             SuspendLayout();
             // 
             // effectsTabControl
@@ -909,36 +909,36 @@
             applyAudioSettingsButton.UseVisualStyleBackColor = true;
             applyAudioSettingsButton.Click += ApplyAudioSettingsButton_Click;
             // 
-            // label23
+            // sensationFirstTickTitle
             // 
-            label23.AutoSize = true;
-            label23.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label23.Location = new Point(6, 49);
-            label23.Name = "label23";
-            label23.Size = new Size(60, 15);
-            label23.TabIndex = 7;
-            label23.Text = "First Tick:";
+            sensationFirstTickTitle.AutoSize = true;
+            sensationFirstTickTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationFirstTickTitle.Location = new Point(6, 49);
+            sensationFirstTickTitle.Name = "sensationFirstTickTitle";
+            sensationFirstTickTitle.Size = new Size(60, 15);
+            sensationFirstTickTitle.TabIndex = 7;
+            sensationFirstTickTitle.Text = "First Tick:";
             // 
-            // label20
+            // sensationNameTitle
             // 
-            label20.AutoSize = true;
-            label20.FlatStyle = FlatStyle.Popup;
-            label20.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label20.Location = new Point(6, 19);
-            label20.Name = "label20";
-            label20.Size = new Size(43, 15);
-            label20.TabIndex = 3;
-            label20.Text = "Name:";
+            sensationNameTitle.AutoSize = true;
+            sensationNameTitle.FlatStyle = FlatStyle.Popup;
+            sensationNameTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationNameTitle.Location = new Point(6, 19);
+            sensationNameTitle.Name = "sensationNameTitle";
+            sensationNameTitle.Size = new Size(43, 15);
+            sensationNameTitle.TabIndex = 3;
+            sensationNameTitle.Text = "Name:";
             // 
-            // label21
+            // sensationLoopTitle
             // 
-            label21.AutoSize = true;
-            label21.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label21.Location = new Point(6, 34);
-            label21.Name = "label21";
-            label21.Size = new Size(37, 15);
-            label21.TabIndex = 4;
-            label21.Text = "Loop:";
+            sensationLoopTitle.AutoSize = true;
+            sensationLoopTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationLoopTitle.Location = new Point(6, 34);
+            sensationLoopTitle.Name = "sensationLoopTitle";
+            sensationLoopTitle.Size = new Size(37, 15);
+            sensationLoopTitle.TabIndex = 4;
+            sensationLoopTitle.Text = "Loop:";
             // 
             // logLevelComboBox
             // 
@@ -949,15 +949,15 @@
             logLevelComboBox.TabIndex = 3;
             logLevelComboBox.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
             // 
-            // label3
+            // logLevelTitle
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(3, 8);
-            label3.Name = "label3";
-            label3.Size = new Size(60, 17);
-            label3.TabIndex = 2;
-            label3.Text = "Log level";
+            logLevelTitle.AutoSize = true;
+            logLevelTitle.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            logLevelTitle.Location = new Point(3, 8);
+            logLevelTitle.Name = "logLevelTitle";
+            logLevelTitle.Size = new Size(60, 17);
+            logLevelTitle.TabIndex = 2;
+            logLevelTitle.Text = "Log level";
             // 
             // logBox
             // 
@@ -1164,7 +1164,7 @@
             // 
             logPage.Controls.Add(logLevelComboBox);
             logPage.Controls.Add(logBox);
-            logPage.Controls.Add(label3);
+            logPage.Controls.Add(logLevelTitle);
             logPage.Location = new Point(4, 24);
             logPage.Name = "logPage";
             logPage.Padding = new Padding(3);
@@ -1175,7 +1175,7 @@
             // 
             // sensationsPage
             // 
-            sensationsPage.Controls.Add(groupBox1);
+            sensationsPage.Controls.Add(sensationInfoGroup);
             sensationsPage.Controls.Add(stopSelectedSensationLoopButton);
             sensationsPage.Controls.Add(stopSelectedSensationNowButton);
             sensationsPage.Controls.Add(activeSensationsListBox);
@@ -1188,20 +1188,20 @@
             sensationsPage.ToolTipText = "Active sensations";
             sensationsPage.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // sensationInfoGroup
             // 
-            groupBox1.Controls.Add(label20);
-            groupBox1.Controls.Add(sensationFirstTickLabel);
-            groupBox1.Controls.Add(label21);
-            groupBox1.Controls.Add(label23);
-            groupBox1.Controls.Add(sensationNameLabel);
-            groupBox1.Controls.Add(sensationLoopLabel);
-            groupBox1.Location = new Point(194, 6);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(198, 72);
-            groupBox1.TabIndex = 9;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Sensation";
+            sensationInfoGroup.Controls.Add(sensationNameTitle);
+            sensationInfoGroup.Controls.Add(sensationFirstTickLabel);
+            sensationInfoGroup.Controls.Add(sensationLoopTitle);
+            sensationInfoGroup.Controls.Add(sensationFirstTickTitle);
+            sensationInfoGroup.Controls.Add(sensationNameLabel);
+            sensationInfoGroup.Controls.Add(sensationLoopLabel);
+            sensationInfoGroup.Location = new Point(194, 6);
+            sensationInfoGroup.Name = "sensationInfoGroup";
+            sensationInfoGroup.Size = new Size(198, 72);
+            sensationInfoGroup.TabIndex = 9;
+            sensationInfoGroup.TabStop = false;
+            sensationInfoGroup.Text = "Sensation";
             // 
             // sensationFirstTickLabel
             // 
@@ -1321,8 +1321,8 @@
             logPage.ResumeLayout(false);
             logPage.PerformLayout();
             sensationsPage.ResumeLayout(false);
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            sensationInfoGroup.ResumeLayout(false);
+            sensationInfoGroup.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1339,7 +1339,7 @@
         private Button startButton;
         private Button stopButton;
         private ComboBox logLevelComboBox;
-        private Label label3;
+        private Label logLevelTitle;
         private NumericUpDown oscPortInput;
         private MaskedTextBox owoIPInput;
         private Label label5;
@@ -1400,14 +1400,14 @@
         private Button openDiscoveryButton;
         private TabPage audioResponsePage;
         private GroupBox groupBox4;
-        private Label label20;
-        private Label label21;
+        private Label sensationNameTitle;
+        private Label sensationLoopTitle;
         private NumericUpDown audioPriorityInput;
         private CheckBox audioEnabledCheckbox;
         private Button applyAudioSettingsButton;
         private NumericUpDown audioMinBassInput;
         private Button audioMonitorButton;
-        private Label label23;
+        private Label sensationFirstTickTitle;
         private NumericUpDown audioMaxBassInput;
         private NumericUpDown audioMaxIntensityInput;
         private Button audioDeviceSelectButton;
@@ -1420,7 +1420,7 @@
         private Label sensationNameLabel;
         private Label sensationLoopLabel;
         private Label sensationFirstTickLabel;
-        private GroupBox groupBox1;
+        private GroupBox sensationInfoGroup;
         private Label label25;
         private Label label24;
         private Label label22;
