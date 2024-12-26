@@ -43,21 +43,31 @@ namespace OWOVRC.UI.Forms
             subBassIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.SubBass);
             subBassIndicatorRight.Value = scalingHelper.ToPercentage(rightSample.SubBass);
 
-            double bassDbLeft = Math.Round(leftSample.Bass, 2);
+            double bassDBLeft = Math.Round(leftSample.Bass, 2);
             double bassDBRight = Math.Round(rightSample.Bass, 2);
 
-            leftBassDBLabel.Text = $"{bassDbLeft}db";
+            leftBassDBLabel.Text = $"{bassDBLeft}db";
             rightBassDBLabel.Text = $"{bassDBRight}db";
 
             // Bass
             bassIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.Bass);
             bassIndicatorRight.Value = scalingHelper.ToPercentage(rightSample.Bass);
 
-            double subBassDbLeft = Math.Round(leftSample.SubBass, 2);
+            double subBassDBLeft = Math.Round(leftSample.SubBass, 2);
             double subBassDBRight = Math.Round(rightSample.SubBass, 2);
 
-            leftSubBassDBLabel.Text = $"{subBassDbLeft}db";
+            leftSubBassDBLabel.Text = $"{subBassDBLeft}db";
             rightSubBassDBLabel.Text = $"{subBassDBRight}db";
+
+            // Treble
+            trebleIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.Brilliance);
+            trebleIndicatorRight.Value = scalingHelper.ToPercentage(rightSample.Brilliance);
+
+            double trebleDBLeft = Math.Round(leftSample.Brilliance, 2);
+            double trebleDBRight = Math.Round(rightSample.Brilliance, 2);
+
+            leftTrebleDBLabel.Text = $"{trebleDBLeft}db";
+            rightTrebleDBLabel.Text = $"{trebleDBRight}db";
 
             // Max amplitude
             double maxAmplitude = Math.Round(scalingHelper.MaxAmplitude, 2);
