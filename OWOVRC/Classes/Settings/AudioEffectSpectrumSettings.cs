@@ -103,7 +103,7 @@ namespace OWOVRC.Classes.Settings
 
             if (MaxDB < MinDB)
             {
-                throw new ArgumentException("MaxDB must be greater than or equal to MinDB");
+                throw new ArgumentException($"MaxDB must be greater than or equal to MinDB: {MinDB} < {MaxDB}");
             }
 
             foreach (Muscle muscle in muscles)
