@@ -15,6 +15,11 @@ namespace OWOVRC.Classes.Settings
             }
             set
             {
+                if (priority == value)
+                {
+                    return;
+                }
+
                 priority = value;
                 OnPriorityChanged?.Invoke(this, EventArgs.Empty);
             }
