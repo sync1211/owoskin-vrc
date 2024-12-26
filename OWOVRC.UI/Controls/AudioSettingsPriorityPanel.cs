@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Text.Json.Serialization.Metadata;
 
 namespace OWOVRC.UI.Controls
 {
@@ -13,6 +12,7 @@ namespace OWOVRC.UI.Controls
 
         private AudioSettingsEntry? pickedUpEntry;
         private int pickedUpEntryIndex;
+        private int pickedUpEntryStartIndex;
         private int mouseStartY;
 
         //TODO: Scrolling support
@@ -117,6 +117,8 @@ namespace OWOVRC.UI.Controls
             pickedUpEntry = entry;
             pickedUpEntry.BringToFront();
 
+            pickedUpEntryStartIndex = Items.IndexOf(entry);
+
             mouseStartY = e.Y;
             pickedUpEntryIndex = Items.IndexOf(pickedUpEntry);
             UpdateEntrySpacingForDragged();
@@ -176,8 +178,8 @@ namespace OWOVRC.UI.Controls
             }
 
             int offset = mouseStartY - e.Y;
+
             pickedUpEntry.Top = Math.Max(itemSpacing, pickedUpEntry.Top - offset);
-            //mouseStartY = e.Y;
 
             pickedUpEntry.Refresh();
 
@@ -213,6 +215,10 @@ namespace OWOVRC.UI.Controls
                 AudioSettingsEntry item = priorityArr[i];
                 if (item == pickedUpEntry)
                 {
+                    if (pickedUpEntryIndex == 0)
+                    {
+                        lastY += pickedUpEntry.Height + itemSpacing;
+                    }
                     continue;
                 }
 

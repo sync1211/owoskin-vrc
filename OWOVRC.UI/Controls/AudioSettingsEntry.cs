@@ -32,22 +32,22 @@ namespace OWOVRC.UI.Controls
         {
             get
             {
-                return (float) minInput.Value;
+                return (float)minInput.Value;
             }
             set
             {
-                minInput.Value = (decimal) value;
+                minInput.Value = (decimal)value;
             }
         }
         public float Max
         {
             get
             {
-                return (float) maxInput.Value;
+                return (float)maxInput.Value;
             }
             set
             {
-                maxInput.Value = (decimal) value;
+                maxInput.Value = (decimal)value;
             }
         }
 
