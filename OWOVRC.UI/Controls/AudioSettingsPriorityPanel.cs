@@ -91,6 +91,7 @@ namespace OWOVRC.UI.Controls
         {
             if (control is DragHandle)
             {
+                control.MouseMove -= AudioSettingsPriorityPanel_MouseMove;
                 control.MouseMove += AudioSettingsPriorityPanel_MouseMove;
             }
 
@@ -177,6 +178,9 @@ namespace OWOVRC.UI.Controls
                 return;
             }
 
+            // Suspend MouseMove events to prevent jitter
+            pickedUpEntry.DragHandle1.MouseMove -= AudioSettingsPriorityPanel_MouseMove;
+
             int offset = mouseStartY - e.Y;
 
             pickedUpEntry.Top = Math.Max(itemSpacing, pickedUpEntry.Top - offset);
@@ -185,6 +189,9 @@ namespace OWOVRC.UI.Controls
 
             UpdatePickedUpEntryIndex();
             UpdateEntrySpacingForDragged();
+
+            // Reactivate MouseMove events
+            pickedUpEntry.DragHandle1.MouseMove += AudioSettingsPriorityPanel_MouseMove;
         }
 
         private void UpdatePickedUpEntryIndex()
