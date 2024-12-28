@@ -952,7 +952,7 @@
             oscPortInput.TabIndex = 9;
             helpToolTip.SetToolTip(oscPortInput, "Port to listen for OSC messages from VRChat");
             oscPortInput.Value = new decimal(new int[] { 1024, 0, 0, 0 });
-            oscPortInput.Leave += OscPortInput_Exit;
+            oscPortInput.ValueChanged += OscPortInput_ValueChanged;
             // 
             // owoIPInput
             // 

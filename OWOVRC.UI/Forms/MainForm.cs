@@ -47,6 +47,10 @@ namespace OWOVRC.UI
         // Timer for UI updates
         private readonly System.Timers.Timer uiUpdateTimer;
 
+        // Skip next change event (we only want to fire ValueChanged on user interactions)
+        //NOTE: Set these to true when setting the value programmatically
+        private bool oscPortInput_SkipValueChanged;
+
         public MainForm()
         {
             InitializeComponent();
@@ -428,6 +432,7 @@ namespace OWOVRC.UI
 
         private void UpdateConnectionSettings()
         {
+            oscPortInput_SkipValueChanged = true;
             owoIPInput.Text = connectionSettings.OWOAddress;
             oscPortInput.Text = connectionSettings.OSCPort.ToString();
         }
@@ -523,8 +528,15 @@ namespace OWOVRC.UI
             SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
 
-        private void OscPortInput_Exit(object sender, EventArgs e)
+        private void OscPortInput_ValueChanged(object sender, EventArgs e)
         {
+            // Programmatic change -> Skip event
+            if (oscPortInput_SkipValueChanged)
+            {
+                oscPortInput_SkipValueChanged = false;
+                return;
+            }
+
             connectionSettings.OSCPort = (int)oscPortInput.Value;
 
             SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);

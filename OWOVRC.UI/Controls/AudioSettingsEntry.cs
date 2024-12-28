@@ -37,9 +37,8 @@ namespace OWOVRC.UI.Controls
             }
             set
             {
-                minInput.ValueChanged -= MinInput_ValueChanged;
+                minInput_SkipValueChanged = true;
                 minInput.Value = (decimal)value;
-                minInput.ValueChanged += MinInput_ValueChanged;
             }
         }
         public float Max
@@ -50,9 +49,8 @@ namespace OWOVRC.UI.Controls
             }
             set
             {
-                maxInput.ValueChanged -= MaxInput_ValueChanged;
+                maxInput_SkipValueChanged = true;
                 maxInput.Value = (decimal)value;
-                maxInput.ValueChanged += MaxInput_ValueChanged;
             }
         }
 
@@ -65,6 +63,11 @@ namespace OWOVRC.UI.Controls
         public readonly AudioEffectSpectrumSettings? audioEffectSpectrumSettings;
 
         public readonly Dictionary<int, int> MuscleIntensities = [];
+
+        // Skip next change event (we only want to fire ValueChanged on user interactions)
+        //NOTE: Set these to true when setting the value programmatically
+        private bool maxInput_SkipValueChanged;
+        private bool minInput_SkipValueChanged;
 
         public AudioSettingsEntry(OWOHelper? owoHelper = null)
         {
@@ -176,6 +179,13 @@ namespace OWOVRC.UI.Controls
 
         private void MinInput_ValueChanged(object? sender, EventArgs e)
         {
+            // Ignore programmatic changes
+            if (minInput_SkipValueChanged)
+            {
+                minInput_SkipValueChanged = false;
+                return;
+            }
+
             if (Min >= Max)
             {
                 Min = 1;
@@ -186,6 +196,13 @@ namespace OWOVRC.UI.Controls
 
         private void MaxInput_ValueChanged(object? sender, EventArgs e)
         {
+            // Ignore programmatic changes
+            if (maxInput_SkipValueChanged)
+            {
+                maxInput_SkipValueChanged = false;
+                return;
+            }
+
             if (Min >= Max)
             {
                 Max = Min + 1;
