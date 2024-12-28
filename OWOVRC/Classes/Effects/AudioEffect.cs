@@ -9,6 +9,7 @@ namespace OWOVRC.Classes.Effects
 {
     public partial class AudioEffect : IDisposable
     {
+        public const string SENSATION_NAME = "AudioEffect";
         public bool IsRunning => Analyzer.IsListening;
         public CaptureState CaptureState => Analyzer.CaptureState;
         public readonly AudioEffectSettings Settings;
@@ -61,7 +62,7 @@ namespace OWOVRC.Classes.Effects
                     continue;
                 }
 
-                owo.AddSensation(sensation);
+                owo.AddSensation(SENSATION_NAME, sensation);
                 break;
             }
         }

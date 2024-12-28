@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            tabControl1 = new TabControl();
+            effectsTabControl = new TabControl();
             collidersSettingsPage = new TabPage();
             configureCollidersIntensityButton = new Button();
             collidersHelpLinkLabel = new LinkLabel();
@@ -87,8 +87,11 @@
             applyAudioSettingsButton = new Button();
             audioEnabledCheckbox = new CheckBox();
             audioSettingsPriorityPanel1 = new Controls.AudioSettingsPriorityPanel();
+            sensationFirstTickTitle = new Label();
+            sensationNameTitle = new Label();
+            sensationLoopTitle = new Label();
             logLevelComboBox = new ComboBox();
-            label3 = new Label();
+            logLevelTitle = new Label();
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
             audioStatusLabel = new Label();
@@ -107,9 +110,18 @@
             connectionStatusLabel = new Label();
             owoStatusTitle = new Label();
             stopButton = new Button();
-            groupBox1 = new GroupBox();
             helpToolTip = new ToolTip(components);
-            tabControl1.SuspendLayout();
+            statusTabControl = new TabControl();
+            logPage = new TabPage();
+            sensationsPage = new TabPage();
+            groupBox1 = new GroupBox();
+            sensationFirstTickLabel = new Label();
+            sensationNameLabel = new Label();
+            sensationLoopLabel = new Label();
+            stopSelectedSensationLoopButton = new Button();
+            stopSelectedSensationNowButton = new Button();
+            activeSensationsListBox = new ListBox();
+            effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
             velocityBasedGroupBox.SuspendLayout();
@@ -131,22 +143,25 @@
             audioResponsePage.SuspendLayout();
             connectionGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)oscPortInput).BeginInit();
+            statusTabControl.SuspendLayout();
+            logPage.SuspendLayout();
+            sensationsPage.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
-            // tabControl1
+            // effectsTabControl
             // 
-            tabControl1.Controls.Add(collidersSettingsPage);
-            tabControl1.Controls.Add(velocitySettingsPage);
-            tabControl1.Controls.Add(owiSettingsPage);
-            tabControl1.Controls.Add(oscPresetsPage);
-            tabControl1.Controls.Add(audioResponsePage);
-            tabControl1.Location = new Point(12, 118);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(368, 303);
-            tabControl1.TabIndex = 0;
-            helpToolTip.SetToolTip(tabControl1, "Available effects");
+            effectsTabControl.Controls.Add(collidersSettingsPage);
+            effectsTabControl.Controls.Add(velocitySettingsPage);
+            effectsTabControl.Controls.Add(owiSettingsPage);
+            effectsTabControl.Controls.Add(oscPresetsPage);
+            effectsTabControl.Controls.Add(audioResponsePage);
+            effectsTabControl.Location = new Point(12, 118);
+            effectsTabControl.Name = "effectsTabControl";
+            effectsTabControl.SelectedIndex = 0;
+            effectsTabControl.Size = new Size(368, 303);
+            effectsTabControl.TabIndex = 0;
+            helpToolTip.SetToolTip(effectsTabControl, "Available effects");
             // 
             // collidersSettingsPage
             // 
@@ -745,7 +760,6 @@
             audioMonitorButton.TabIndex = 31;
             audioMonitorButton.Text = "Monitor";
             audioMonitorButton.UseVisualStyleBackColor = true;
-            audioMonitorButton.Click += AudioMonitorButton_Click;
             // 
             // applyAudioSettingsButton
             // 
@@ -777,31 +791,62 @@
             audioSettingsPriorityPanel1.Size = new Size(349, 212);
             audioSettingsPriorityPanel1.TabIndex = 0;
             // 
+            // sensationFirstTickTitle
+            // 
+            sensationFirstTickTitle.AutoSize = true;
+            sensationFirstTickTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationFirstTickTitle.Location = new Point(6, 49);
+            sensationFirstTickTitle.Name = "sensationFirstTickTitle";
+            sensationFirstTickTitle.Size = new Size(60, 15);
+            sensationFirstTickTitle.TabIndex = 7;
+            sensationFirstTickTitle.Text = "First Tick:";
+            // 
+            // sensationNameTitle
+            // 
+            sensationNameTitle.AutoSize = true;
+            sensationNameTitle.FlatStyle = FlatStyle.Popup;
+            sensationNameTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationNameTitle.Location = new Point(6, 19);
+            sensationNameTitle.Name = "sensationNameTitle";
+            sensationNameTitle.Size = new Size(43, 15);
+            sensationNameTitle.TabIndex = 3;
+            sensationNameTitle.Text = "Name:";
+            // 
+            // sensationLoopTitle
+            // 
+            sensationLoopTitle.AutoSize = true;
+            sensationLoopTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationLoopTitle.Location = new Point(6, 34);
+            sensationLoopTitle.Name = "sensationLoopTitle";
+            sensationLoopTitle.Size = new Size(37, 15);
+            sensationLoopTitle.TabIndex = 4;
+            sensationLoopTitle.Text = "Loop:";
+            // 
             // logLevelComboBox
             // 
             logLevelComboBox.FormattingEnabled = true;
-            logLevelComboBox.Location = new Point(72, 21);
+            logLevelComboBox.Location = new Point(69, 5);
             logLevelComboBox.Name = "logLevelComboBox";
             logLevelComboBox.Size = new Size(121, 23);
             logLevelComboBox.TabIndex = 3;
             logLevelComboBox.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
             // 
-            // label3
+            // logLevelTitle
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(6, 24);
-            label3.Name = "label3";
-            label3.Size = new Size(60, 17);
-            label3.TabIndex = 2;
-            label3.Text = "Log level";
+            logLevelTitle.AutoSize = true;
+            logLevelTitle.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            logLevelTitle.Location = new Point(3, 8);
+            logLevelTitle.Name = "logLevelTitle";
+            logLevelTitle.Size = new Size(60, 17);
+            logLevelTitle.TabIndex = 2;
+            logLevelTitle.Text = "Log level";
             // 
             // logBox
             // 
             logBox.BackColor = Color.Black;
-            logBox.Location = new Point(6, 51);
+            logBox.Location = new Point(3, 32);
             logBox.Name = "logBox";
-            logBox.Size = new Size(390, 246);
+            logBox.Size = new Size(390, 240);
             logBox.TabIndex = 1;
             logBox.Text = "";
             // 
@@ -1010,27 +1055,130 @@
             stopButton.Visible = false;
             stopButton.Click += StopButton_Click;
             // 
+            // statusTabControl
+            // 
+            statusTabControl.Controls.Add(logPage);
+            statusTabControl.Controls.Add(sensationsPage);
+            statusTabControl.Location = new Point(382, 118);
+            statusTabControl.Name = "statusTabControl";
+            statusTabControl.SelectedIndex = 0;
+            statusTabControl.Size = new Size(406, 303);
+            statusTabControl.TabIndex = 3;
+            helpToolTip.SetToolTip(statusTabControl, "Application log");
+            // 
+            // logPage
+            // 
+            logPage.Controls.Add(logLevelComboBox);
+            logPage.Controls.Add(logBox);
+            logPage.Controls.Add(logLevelTitle);
+            logPage.Location = new Point(4, 24);
+            logPage.Name = "logPage";
+            logPage.Padding = new Padding(3);
+            logPage.Size = new Size(398, 275);
+            logPage.TabIndex = 0;
+            logPage.Text = "Log";
+            logPage.UseVisualStyleBackColor = true;
+            // 
+            // sensationsPage
+            // 
+            sensationsPage.Controls.Add(groupBox1);
+            sensationsPage.Controls.Add(stopSelectedSensationLoopButton);
+            sensationsPage.Controls.Add(stopSelectedSensationNowButton);
+            sensationsPage.Controls.Add(activeSensationsListBox);
+            sensationsPage.Location = new Point(4, 24);
+            sensationsPage.Name = "sensationsPage";
+            sensationsPage.Padding = new Padding(3);
+            sensationsPage.Size = new Size(398, 275);
+            sensationsPage.TabIndex = 1;
+            sensationsPage.Text = "Sensations";
+            sensationsPage.ToolTipText = "Active sensations";
+            sensationsPage.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
-            groupBox1.BackColor = Color.White;
-            groupBox1.Controls.Add(logLevelComboBox);
-            groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(logBox);
-            groupBox1.Location = new Point(386, 118);
+            groupBox1.Controls.Add(sensationNameTitle);
+            groupBox1.Controls.Add(sensationFirstTickLabel);
+            groupBox1.Controls.Add(sensationLoopTitle);
+            groupBox1.Controls.Add(sensationFirstTickTitle);
+            groupBox1.Controls.Add(sensationNameLabel);
+            groupBox1.Controls.Add(sensationLoopLabel);
+            groupBox1.Location = new Point(194, 6);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(402, 303);
-            groupBox1.TabIndex = 2;
+            groupBox1.Size = new Size(198, 72);
+            groupBox1.TabIndex = 9;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Log";
+            groupBox1.Text = "Sensation";
+            // 
+            // sensationFirstTickLabel
+            // 
+            sensationFirstTickLabel.AutoSize = true;
+            sensationFirstTickLabel.Location = new Point(65, 49);
+            sensationFirstTickLabel.Name = "sensationFirstTickLabel";
+            sensationFirstTickLabel.Size = new Size(64, 15);
+            sensationFirstTickLabel.TabIndex = 8;
+            sensationFirstTickLabel.Text = "<firstTick>";
+            // 
+            // sensationNameLabel
+            // 
+            sensationNameLabel.AutoSize = true;
+            sensationNameLabel.Location = new Point(65, 19);
+            sensationNameLabel.Name = "sensationNameLabel";
+            sensationNameLabel.Size = new Size(55, 15);
+            sensationNameLabel.TabIndex = 5;
+            sensationNameLabel.Text = "<Name>";
+            // 
+            // sensationLoopLabel
+            // 
+            sensationLoopLabel.AutoSize = true;
+            sensationLoopLabel.Location = new Point(65, 34);
+            sensationLoopLabel.Name = "sensationLoopLabel";
+            sensationLoopLabel.Size = new Size(50, 15);
+            sensationLoopLabel.TabIndex = 6;
+            sensationLoopLabel.Text = "<Loop>";
+            // 
+            // stopSelectedSensationLoopButton
+            // 
+            stopSelectedSensationLoopButton.Enabled = false;
+            stopSelectedSensationLoopButton.Location = new Point(194, 242);
+            stopSelectedSensationLoopButton.Name = "stopSelectedSensationLoopButton";
+            stopSelectedSensationLoopButton.Size = new Size(198, 23);
+            stopSelectedSensationLoopButton.TabIndex = 2;
+            stopSelectedSensationLoopButton.Text = "Stop Sensation after finish";
+            helpToolTip.SetToolTip(stopSelectedSensationLoopButton, "Stop the selected looping sensation on the next restart.\r\n(Does nothing on non-looping sensations)");
+            stopSelectedSensationLoopButton.UseVisualStyleBackColor = true;
+            stopSelectedSensationLoopButton.Click += StopSelectedSensationLoopButton_Click;
+            // 
+            // stopSelectedSensationNowButton
+            // 
+            stopSelectedSensationNowButton.Enabled = false;
+            stopSelectedSensationNowButton.Location = new Point(194, 213);
+            stopSelectedSensationNowButton.Name = "stopSelectedSensationNowButton";
+            stopSelectedSensationNowButton.Size = new Size(198, 23);
+            stopSelectedSensationNowButton.TabIndex = 1;
+            stopSelectedSensationNowButton.Text = "Stop Sensation Now";
+            helpToolTip.SetToolTip(stopSelectedSensationNowButton, "Stop the selected sensation immediately");
+            stopSelectedSensationNowButton.UseVisualStyleBackColor = true;
+            stopSelectedSensationNowButton.Click += StopSelectedSensationNowButton_Click;
+            // 
+            // activeSensationsListBox
+            // 
+            activeSensationsListBox.FormattingEnabled = true;
+            activeSensationsListBox.ItemHeight = 15;
+            activeSensationsListBox.Location = new Point(6, 6);
+            activeSensationsListBox.Name = "activeSensationsListBox";
+            activeSensationsListBox.Size = new Size(182, 259);
+            activeSensationsListBox.TabIndex = 0;
+            helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
+            activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 423);
-            Controls.Add(groupBox1);
+            Controls.Add(statusTabControl);
             Controls.Add(connectionGroup);
-            Controls.Add(tabControl1);
+            Controls.Add(effectsTabControl);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
@@ -1039,7 +1187,7 @@
             FormClosing += MainForm_FormClosing;
             Load += MainForm_Load;
             Shown += MainForm_Shown;
-            tabControl1.ResumeLayout(false);
+            effectsTabControl.ResumeLayout(false);
             collidersSettingsPage.ResumeLayout(false);
             collidersSettingsPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).EndInit();
@@ -1070,6 +1218,10 @@
             connectionGroup.ResumeLayout(false);
             connectionGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)oscPortInput).EndInit();
+            statusTabControl.ResumeLayout(false);
+            logPage.ResumeLayout(false);
+            logPage.PerformLayout();
+            sensationsPage.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
@@ -1077,7 +1229,7 @@
 
         #endregion
 
-        private TabControl tabControl1;
+        private TabControl effectsTabControl;
         private TabPage velocitySettingsPage;
         private RichTextBox logBox;
         private GroupBox connectionGroup;
@@ -1088,7 +1240,7 @@
         private Button startButton;
         private Button stopButton;
         private ComboBox logLevelComboBox;
-        private Label label3;
+        private Label logLevelTitle;
         private NumericUpDown oscPortInput;
         private MaskedTextBox owoIPInput;
         private Label owoIPTitle;
@@ -1128,9 +1280,6 @@
         private NumericUpDown owiPriorityInput;
         private CheckBox owiEnabledCheckbox;
         private Button applyOwiSettingsButton;
-        private Label owiInfoLabel;
-        private GroupBox owiInformationGroup;
-        private Label owiUpdateIntervalLabel;
         private NumericUpDown owiUpdateIntervalInput;
         private Label owiIntensityLabel;
         private NumericUpDown owiIntensityInput;
@@ -1149,11 +1298,26 @@
         private Button configureCollidersIntensityButton;
         private Button openDiscoveryButton;
         private TabPage audioResponsePage;
+        private Label sensationNameTitle;
+        private Label sensationLoopTitle;
         private CheckBox audioEnabledCheckbox;
         private Button applyAudioSettingsButton;
-        private Button audioDeviceSelectButton;
         private Controls.AudioSettingsPriorityPanel audioSettingsPriorityPanel1;
         private Button audioMonitorButton;
+        private GroupBox owiInformationGroup;
+        private Label sensationFirstTickTitle;
+        private Button audioDeviceSelectButton;
+        private TabControl statusTabControl;
+        private TabPage logPage;
+        private TabPage sensationsPage;
+        private ListBox activeSensationsListBox;
+        private Button stopSelectedSensationNowButton;
+        private Button stopSelectedSensationLoopButton;
+        private Label sensationNameLabel;
+        private Label sensationLoopLabel;
+        private Label sensationFirstTickLabel;
+        private Label owiUpdateIntervalLabel;
+        private Label owiInfoLabel;
         private Label audioStatusLabel;
         private Label audioStatusTitle;
     }

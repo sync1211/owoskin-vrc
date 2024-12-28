@@ -1,5 +1,8 @@
 ﻿using OWOGame;
 using Serilog;
+using OwoAdvancedSensationBuilder.manager;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationStreamInstance;
 
 namespace OWOVRC.Classes.OWOSuit
 {
@@ -10,6 +13,11 @@ namespace OWOVRC.Classes.OWOSuit
         public string Address { get; set; }
         private readonly List<BakedSensation> Sensations = [];
 
+        private readonly AdvancedSensationManager sensationManager = AdvancedSensationManager.getInstance();
+
+        // Events
+        public SensationStreamInstanceStateEvent? OnSensationChange;
+
         public OWOHelper(string ip = "127.0.0.1")
         {
             Address = ip;
@@ -18,8 +26,6 @@ namespace OWOVRC.Classes.OWOSuit
         public async Task Connect()
         {
             Log.Information("Connecting to OWO...");
-
-            //NOTE: Baked sensations are registered in OWOSensations.cs!
 
             GameAuth auth = GameAuth.Create([.. Sensations]);
 
@@ -48,30 +54,53 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Information("Disconnected from OWO!");
         }
 
-        //void SendDynamicSensation() => OWO.Send(Sensation.Dagger);
-
-        //Task SendBakedSensation()
-        //{
-        //    OWO.Send("0"); //This ID belongs to the Ball sensation in the GameAuth
-        //    return Task.Delay(100); //We wait for the baked sensation to finish
-        //}
-
-        public void AddSensation(Sensation sensation, Muscle[] muscles)
+        public void AddSensation(Sensation sensation, Muscle[] muscles, string name)
         {
-            //TODO: Mixing system
-            OWO.Send(sensation, muscles);
+            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), false);
+            instance.AfterStateChanged += HandleSensationStateChange;
+
+            sensationManager.play(instance);
         }
 
-        public void AddSensation(Sensation sensation)
+        public void AddLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
-            //TODO: Mixing system
-            OWO.Send(sensation);
+            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), true);
+            instance.AfterStateChanged += HandleSensationStateChange;
+
+            sensationManager.play(instance);
+        }
+
+        public void UpdateLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
+        {
+            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
+            instance.AfterStateChanged += HandleSensationStateChange;
+
+            sensationManager.updateSensation(instance.sensation, name);
+        }
+
+        public void AddSensation(Sensation sensation, string name)
+        {
+            AdvancedSensationStreamInstance instance = new(name, sensation, false);
+            instance.AfterStateChanged += HandleSensationStateChange;
+
+            sensationManager.play(instance);
+        }
+
+        public Dictionary<string, AdvancedSensationStreamInstance> GetRunningSensations()
+        {
+            return sensationManager.getPlayingSensationInstances();
         }
 
         public void StopAllSensations()
         {
-            OWO.Stop();
+            sensationManager.stopAll();
             Log.Debug("All sensations stopped!");
+        }
+
+        public void StopLoopedSensation(string name)
+        {
+            sensationManager.stopSensation(name);
+            Log.Debug("Looped sensation {name} stopped!", name);
         }
 
         public void AddBakedSensation(BakedSensation sensation)
@@ -83,6 +112,11 @@ namespace OWOVRC.Classes.OWOSuit
         public void ClearBakedSensations()
         {
             Sensations.Clear();
+        }
+
+        private void HandleSensationStateChange(AdvancedSensationStreamInstance instance, ProcessState state)
+        {
+            OnSensationChange?.Invoke(instance, state);
         }
 
         public void Dispose()

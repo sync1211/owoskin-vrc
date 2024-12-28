@@ -1,15 +1,15 @@
 ﻿using OWOGame;
-using OWOVRC.Classes.OWOSuit;
 
 namespace OWOVRC.Classes.Effects.Sensations
 {
     public class ImpactSensation: DirectionalSensation
     {
         // Sensation parameters
+        private const string _Name = "ImpactSensation";
         private const int _frequency = 100;
         private const int _intensity = 100;
-        public ImpactSensation(float durationSeconds = 0.2f) : base(_frequency, _intensity, durationSeconds) { }
-        public ImpactSensation(Dictionary<Muscle, int> muscles, float durationSeconds = 0.2f) : base(muscles, _frequency, _intensity, durationSeconds)
+        public ImpactSensation(float durationSeconds = 0.2f) : base(_Name, _frequency, _intensity, durationSeconds) { }
+        public ImpactSensation(Dictionary<Muscle, int> muscles, float durationSeconds = 0.2f) : base(_Name, muscles, _frequency, _intensity, durationSeconds)
         {
             directions["down"] = [Muscle.Abdominal_L, Muscle.Abdominal_R, Muscle.Lumbar_L, Muscle.Lumbar_R];
         }

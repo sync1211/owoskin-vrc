@@ -1,4 +1,5 @@
 ﻿using OWOGame;
+using OWOVRC.Classes.OWOSuit;
 using OWOVRC.UI.Controls;
 using OWOVRC.UI.Forms.Dialogs;
 
@@ -10,12 +11,22 @@ namespace OWOVRC.UI.Forms
         private readonly Dictionary<int, int> muscleIntensities;
         private readonly SelectableMuscle[] selectableMuscles;
         private readonly Sensation? testSensation;
+        private readonly OWOHelper? owoHelper;
 
-        public MuscleIntensityForm(Dictionary<int, int> intensities, Sensation? sensationForTest = null, string? title = null)
+        private const string SENSATION_NAME = "IntensityTest";
+
+        /// <summary>
+        /// Creates a new instance of the form.
+        /// </summary>
+        /// <param name="intensities">A dictionary of muscleIDs and intensities to be modified by the user.</param>
+        /// <param name="sensationForTest">(optional) An example sensation for previewing intensities</param>
+        /// <param name="owoHelper">(optional) An instance of OWOHelper. If not specified, preview sensations will be sent via the OWOGame SDK directly.</param>
+        public MuscleIntensityForm(Dictionary<int, int> intensities, Sensation? sensationForTest = null, string? title = null, OWOHelper? owoHelper = null)
         {
             InitializeComponent();
             this.muscleIntensities = intensities;
             this.testSensation = sensationForTest;
+            this.owoHelper = owoHelper;
 
             if (title != null)
             {
@@ -205,8 +216,14 @@ namespace OWOVRC.UI.Forms
                 musclesWithIntensity[i] = muscle.WithIntensity(intensity);
             }
 
-            Sensation sensation = testSensation.WithMuscles([.. musclesWithIntensity]);
-            OWO.Send(sensation);
+            // Play sensation (use owoHelper if we can)
+            if (owoHelper == null)
+            {
+                OWO.Send(testSensation, musclesWithIntensity);
+                return;
+            }
+
+            owoHelper.AddSensation(testSensation, musclesWithIntensity, SENSATION_NAME);
         }
 
         private void MuscleIntensityForm_Shown(object sender, EventArgs e)

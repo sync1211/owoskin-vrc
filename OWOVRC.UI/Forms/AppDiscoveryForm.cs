@@ -24,7 +24,14 @@ namespace OWOVRC.UI.Forms
         {
             try
             {
-                this.Invoke(RefreshItems);
+                if (InvokeRequired)
+                {
+                    this.Invoke(RefreshItems);
+                }
+                else
+                {
+                    RefreshItems();
+                }
             }
             catch (ObjectDisposedException)
             {

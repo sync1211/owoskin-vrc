@@ -1,3 +1,4 @@
+using OwoAdvancedSensationBuilder.manager;
 using NAudio.CoreAudioApi;
 using OWOGame;
 using OWOVRC.Classes;
@@ -13,6 +14,7 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.Net;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
 
 namespace OWOVRC.UI
 {
@@ -32,13 +34,18 @@ namespace OWOVRC.UI
         // OWO
         private readonly OWOHelper owo = new();
         private OSCReceiver receiver = new();
+        private const string UnnamedSensationName = "<Unnamed>";
 
         // Effects
         private OSCEffectBase[] oscEffects = [];
         private WorldIntegrator? owi;
         private AudioEffect? audioEffect;
 
+        // Status
         private bool IsRunning;
+
+        // Timer for UI updates
+        private readonly System.Timers.Timer uiUpdateTimer;
 
         public MainForm()
         {
@@ -46,13 +53,57 @@ namespace OWOVRC.UI
 
             logLevelSwitch = Logging.SetUpLogger(logBox);
 
-            // Call UpdateConnectionStatus on every ui update
-            Application.Idle += OnApplicationIdle;
+            // Update UI every 0.1 Seconds
+            uiUpdateTimer = new()
+            {
+                Interval = 100
+            };
+            uiUpdateTimer.Elapsed += HandleTimerElapsed;
+
+            owo.OnSensationChange += HandleSensationChange;
         }
 
-        private void OnApplicationIdle(object? sender, EventArgs e)
+        private void HandleSensationChange(AdvancedSensationStreamInstance instance, ProcessState state)
         {
-            UpdateConnectionStatus();
+            if (InvokeRequired)
+            {
+                try
+                {
+                    this.Invoke(UpdateASMStatus);
+                }
+                catch (ObjectDisposedException)
+                {
+                    Close();
+                }
+            }
+            else
+            {
+                UpdateASMStatus();
+            }
+        }
+
+        private void HandleTimerElapsed(object? sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                return;
+            }
+
+            if (InvokeRequired)
+            {
+                try
+                {
+                    this.Invoke(UpdateConnectionStatus);
+                }
+                catch (ObjectDisposedException)
+                {
+                    Close();
+                }
+            }
+            else
+            {
+                UpdateConnectionStatus();
+            }
         }
 
         private void LoadSettings()
@@ -127,12 +178,17 @@ namespace OWOVRC.UI
         {
             StartOWO();
             UpdateControlAvailability();
+            uiUpdateTimer.Start();
         }
 
         private void StopButton_Click(object sender, EventArgs e)
         {
             StopOWO();
             UpdateControlAvailability();
+
+            uiUpdateTimer.Stop();
+
+            UpdateConnectionStatus();
         }
 
         private void UpdateConnectionStatus()
@@ -204,6 +260,45 @@ namespace OWOVRC.UI
                 audioStatusLabel.Text = "Stopped";
                 audioStatusLabel.ForeColor = Color.Red;
             }
+        }
+
+        private void UpdateASMStatus()
+        {
+            string[] activeSensations = owo.GetRunningSensations().Keys.ToArray();
+            for (int i = 0; i < activeSensations.Length; i++)
+            {
+                string sensationName = activeSensations[i];
+                if (string.IsNullOrEmpty(sensationName))
+                {
+                    activeSensations[i] = UnnamedSensationName;
+                }
+            }
+
+            int selectedItemIndex = activeSensationsListBox.SelectedIndex;
+            activeSensationsListBox.DataSource = activeSensations;
+
+            if (selectedItemIndex >= 0 && selectedItemIndex < activeSensations.Length)
+            {
+                activeSensationsListBox.SelectedIndex = selectedItemIndex;
+            }
+
+            UpdateSensationControls();
+
+            // Clear details if no item is selected
+            if (activeSensationsListBox.SelectedItem == null)
+            {
+                sensationNameLabel.Text = String.Empty;
+                sensationLoopLabel.Text = String.Empty;
+                sensationFirstTickLabel.Text = String.Empty;
+            }
+        }
+
+        private void UpdateSensationControls()
+        {
+            // Update buttons
+            bool itemSelected = activeSensationsListBox.SelectedItem != null;
+            stopSelectedSensationNowButton.Enabled = itemSelected;
+            stopSelectedSensationLoopButton.Enabled = itemSelected;
         }
 
         private void StartOWO()
@@ -284,7 +379,6 @@ namespace OWOVRC.UI
             // Stop osc receiver
             receiver.Dispose();
 
-            owo.StopAllSensations();
             owo.Disconnect();
             Log.Information("Stopped OWOVRC");
 
@@ -389,15 +483,21 @@ namespace OWOVRC.UI
             UpdateVelocityEffectSettings();
             UpdateOWISettings();
             UpdateOSCPrestsSettings();
+
+            uiUpdateTimer.Start();
             UpdateAudioSettings();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            uiUpdateTimer.Stop();
+
             // Stop logging
             Log.CloseAndFlush();
 
-            Application.Idle -= OnApplicationIdle;
+            // Remove events
+            uiUpdateTimer.Elapsed -= HandleTimerElapsed;
+            owo.OnSensationChange -= HandleSensationChange;
 
             // Stop OWO
             StopOWO();
@@ -481,6 +581,7 @@ namespace OWOVRC.UI
             }
 
             Log.Information("Stopped all running sensations!");
+            //UpdateASMStatus();
         }
 
         private void ApplyOwiSettingsButton_Click(object sender, EventArgs e)
@@ -574,7 +675,7 @@ namespace OWOVRC.UI
 
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
         {
-            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.CreateSensation()))
+            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.CreateSensation(), null, owo))
             {
                 intensityForm.ShowDialog();
                 SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
@@ -596,6 +697,100 @@ namespace OWOVRC.UI
                 connectionSettings.OWOAddress = discoveryForm.SelectedApp;
                 SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
             }
+        }
+
+        private void StopSelectedSensationNowButton_Click(object sender, EventArgs e)
+        {
+            if (activeSensationsListBox.SelectedItem is not string sensationName)
+            {
+                return;
+            }
+
+            if (sensationName.Equals(UnnamedSensationName))
+            {
+                sensationName = String.Empty;
+            }
+
+            Dictionary<string, AdvancedSensationStreamInstance> sensations = owo.GetRunningSensations();
+
+            AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(sensationName);
+            if (selectedSensation == null)
+            {
+                Log.Warning("The sensation {0} could not be found!", sensationName);
+                return;
+            }
+
+            StopSensationInstance(selectedSensation);
+        }
+
+        private void StopSelectedSensationLoopButton_Click(object sender, EventArgs e)
+        {
+            if (activeSensationsListBox.SelectedItem is not string sensationName)
+            {
+                return;
+            }
+
+            if (sensationName.Equals(UnnamedSensationName))
+            {
+                sensationName = String.Empty;
+            }
+
+            Dictionary<string, AdvancedSensationStreamInstance> sensations = owo.GetRunningSensations();
+
+            AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(sensationName);
+            if (selectedSensation == null)
+            {
+                Log.Warning("The sensation {0} could not be found!", sensationName);
+                //UpdateASMStatus();
+                return;
+            }
+
+            selectedSensation.LastCalculationOfCycle += StopSensationInstance;
+
+            Log.Information("Marked sensation {0} to stop on the next loop", sensationName);
+        }
+
+        private void StopSensationInstance(AdvancedSensationStreamInstance instance)
+        {
+            owo.StopLoopedSensation(instance.name);
+
+            Log.Information("Stopped sensation {0}", instance.name);
+            //UpdateASMStatus();
+        }
+
+        private void ActiveSensationsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSensationControls();
+
+            if (activeSensationsListBox.SelectedItem is not string sensationName)
+            {
+                return;
+            }
+
+            if (sensationName.Equals(UnnamedSensationName))
+            {
+                sensationName = String.Empty;
+            }
+
+            Dictionary<string, AdvancedSensationStreamInstance> sensations = owo.GetRunningSensations();
+
+            AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(sensationName);
+            if (selectedSensation == null)
+            {
+                Log.Warning("Selected sensation {0} could not be found!", sensationName);
+                //UpdateASMStatus();
+                return;
+            }
+
+            // Update sensation details
+            UpdateSensationDetails(selectedSensation);
+        }
+
+        public void UpdateSensationDetails(AdvancedSensationStreamInstance instance)
+        {
+            sensationNameLabel.Text = instance.name;
+            sensationLoopLabel.Text = instance.loop ? "Yes" : "No";
+            sensationFirstTickLabel.Text = instance.firstTick.ToString();
         }
 
         private void AudioMonitorButton_Click(object sender, EventArgs e)

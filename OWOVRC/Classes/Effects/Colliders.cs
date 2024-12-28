@@ -25,6 +25,9 @@ namespace OWOVRC.Classes.Effects
         // Dictionary to keep track of active haptic effects
         private readonly ConcurrentDictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
 
+        // Name for looping sensation
+        public const string SENSATION_NAME = "Colliders";
+
         // Settings
         public readonly CollidersEffectSettings Settings;
 
@@ -34,7 +37,7 @@ namespace OWOVRC.Classes.Effects
 
             timer = new System.Timers.Timer()
             {
-                Interval = (Settings.SensationSeconds * 1000) - 50, // Subtract 50ms to reduce "gaps" between sensations
+                Interval = (Settings.SensationSeconds * 1000) - 100, // Subtract 100ms to reduce "gaps" between sensations
                 AutoReset = true
             };
             timer.Elapsed += OnTimerElapsed;
@@ -129,6 +132,7 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.IsEmpty)
             {
                 Log.Debug("No sensations playing, timer stopped.");
+                owo.StopLoopedSensation(SENSATION_NAME);
                 timer.Stop();
             }
         }
@@ -141,7 +145,7 @@ namespace OWOVRC.Classes.Effects
             }
             catch (InvalidOperationException)
             {
-                Log.Warning("No valid float value received in message for {address}, trying int...", message.Address);
+                Log.Debug("No valid float value received in message for {address}, trying int...", message.Address);
             }
 
             try
@@ -150,7 +154,16 @@ namespace OWOVRC.Classes.Effects
             }
             catch (InvalidOperationException)
             {
-                Log.Error("No int value received in message for {address}!", message.Address);
+                Log.Debug("No int or float value received in message for {address}!", message.Address);
+            }
+
+            try
+            {
+                return message.Values.ReadBooleanElement(0) ? 1 : 0;
+            }
+            catch (InvalidOperationException)
+            {
+                Log.Warning("No int, float or boolean value received in message for {address}!", message.Address);
             }
 
             return 0;
@@ -171,6 +184,7 @@ namespace OWOVRC.Classes.Effects
 
             if (activeMuscles.IsEmpty)
             {
+                owo.StopLoopedSensation(SENSATION_NAME);
                 return;
             }
 
@@ -217,7 +231,16 @@ namespace OWOVRC.Classes.Effects
             }
 
             Sensation sensation = Settings.CreateSensation();
-            owo.AddSensation(sensation, musclesScaled);
+
+            // Run or update sensation
+            if (owo.GetRunningSensations().ContainsKey(SENSATION_NAME))
+            {
+                owo.UpdateLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
+            }
+            else
+            {
+                owo.AddLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
+            }
         }
 
         public void OnTimerElapsed(object? sender, ElapsedEventArgs e)

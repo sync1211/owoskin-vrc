@@ -1,7 +1,6 @@
 ﻿using OWOGame;
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
-using Windows.Security.Cryptography.Core;
 
 namespace OWOVRC.Classes.Effects.Sensations
 {
@@ -24,6 +23,8 @@ namespace OWOVRC.Classes.Effects.Sensations
         public readonly float RampUp;
         public readonly float RampDown;
         public readonly float ExitDelay;
+        public readonly bool IsLoop;
+        public readonly string Name;
         public readonly Dictionary<Muscle, int> Muscles;
 
         // Muscles to apply the sensation
@@ -51,14 +52,16 @@ namespace OWOVRC.Classes.Effects.Sensations
             Abdominal_R  Abdominal_L          Lumbar_R  Lumbar_L
         */
 
-        protected DirectionalSensation(int frequency, int intensity, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0)
+        protected DirectionalSensation(string name, int frequency, int intensity, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0, bool loop = false)
         {
+            Name = name;
             Frequency = frequency;
             Intensity = intensity;
             Duration = durationSeconds;
             RampUp = rampUp;
             RampDown = rampDown;
             ExitDelay = exitDelay;
+            IsLoop = loop;
 
             // No direction specified -> front
             Muscles = [];
@@ -71,8 +74,9 @@ namespace OWOVRC.Classes.Effects.Sensations
             }
         }
 
-        protected DirectionalSensation(Dictionary<Muscle, int> muscles, int frequency, int intensity, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0)
+        protected DirectionalSensation(string name, Dictionary<Muscle, int> muscles, int frequency, int intensity, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0, bool loop = false)
         {
+            Name = name;
             Muscles = muscles;
             Frequency = frequency;
             Intensity = intensity;
@@ -80,6 +84,7 @@ namespace OWOVRC.Classes.Effects.Sensations
             RampUp = rampUp;
             RampDown = rampDown;
             ExitDelay = exitDelay;
+            IsLoop = loop;
         }
 
         private MicroSensation CreateSensation(int intensity)
@@ -103,9 +108,26 @@ namespace OWOVRC.Classes.Effects.Sensations
                 }
             }
 
+            // Play sensation
             Log.Verbose("Playing wind sensation at {0}%", Intensity);
             Sensation sensation = CreateSensation(intensity).WithPriority(priority);
-            owo.AddSensation(sensation, musclesScaled);
+
+            if (!IsLoop)
+            {
+                owo.AddSensation(sensation, musclesScaled, Name);
+            }
+            else
+            {
+                // Run or update sensation loop
+                if (owo.GetRunningSensations().ContainsKey(Name))
+                {
+                    owo.UpdateLoopedSensation(Name, sensation, musclesScaled);
+                }
+                else
+                {
+                    owo.AddLoopedSensation(Name, sensation, musclesScaled);
+                }
+            }
         }
 
         /// <summary>
@@ -116,7 +138,6 @@ namespace OWOVRC.Classes.Effects.Sensations
         /// </summary>
         protected static Dictionary<Muscle, int> GetMuscleValues(float velocityX, float velocityY, float velocityZ)
         {
-
             // Generate affected muscles dynamically based on direction
             // 1. Assign a weight to every direction based on their % of the maximum
             // 2. Create a dictionary of each muscle and their value (starting at 0)

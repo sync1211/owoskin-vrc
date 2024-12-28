@@ -42,20 +42,11 @@ namespace OWOVRC.Classes.Effects
         // Settings
         public readonly VelocityEffectSettings Settings;
 
-        // Timer
-        private readonly System.Timers.Timer timer;
-
         public Velocity(OWOHelper owo, VelocityEffectSettings Settings): base(owo)
         {
             RegisterSensations();
 
             this.Settings = Settings;
-            timer = new System.Timers.Timer
-            {
-                Interval = SensationDuration * 1000
-            };
-            timer.Elapsed += OnTimerElapsed;
-            timer.Start();
         }
 
         public override void RegisterSensations()
@@ -63,17 +54,7 @@ namespace OWOVRC.Classes.Effects
             // Nothing to register
         }
 
-        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
-        {
-            ProcessSensations();
-        }
-
         public override void OnOSCMessageReceived(object? sender, OSCMessage message)
-        {
-            ProcessMessage(message);
-        }
-
-        private void ProcessMessage(OSCMessage message)
         {
             if (!Settings.Enabled)
             {
@@ -87,32 +68,41 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
+            // Process OSC message
+            if (ProcessMessage(message))
+            {
+                ProcessSensations();
+            }
+        }
+
+        private bool ProcessMessage(OSCMessage message)
+        {
             // Grounded
             if (message.Address.Equals(ADDRESS_GROUNDED))
             {
                 IsGrounded = message.Values.ReadBooleanElement(0);
-                return;
+                return true;
             }
 
             // Seated
             if (message.Address.Equals(ADDRESS_SEATED))
             {
                 IsSeated = message.Values.ReadBooleanElement(0);
-                return;
+                return true;
             }
 
             // Angular Velocity
             if (message.Address.StartsWith("Angular"))
             {
                 //Log.Verbose("Ignoring Angular velocity: This feature is not yet implemented!");
-                return;
+                return true;
             }
 
             // Velocity
             if (!message.Address.StartsWith("Velocity"))
             {
                 Log.Verbose("Ignoring non-velocity message: {message}", message.Address);
-                return;
+                return false;
             }
 
             float value = message.Values.ReadFloatElement(0);
@@ -141,7 +131,7 @@ namespace OWOVRC.Classes.Effects
 
             if (!message.Address.Equals(ADDRESS_VEL_SPEED))
             {
-                return;
+                return true;
             }
 
             // Sudden stop effect (e.g. hitting the ground after falling)
@@ -153,18 +143,21 @@ namespace OWOVRC.Classes.Effects
 
                 if (stopVelocity >= Settings.StopVelocityThreshold)
                 {
-                    owo.StopAllSensations();
+                    owo.StopLoopedSensation(WindSensation._Name);
+
                     Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
                     ImpactSensation stopSensation = CreateStopSensation(velocityPercent);
                     stopSensation.Play(owo, Settings.Priority);
 
                     LastSpeedPacket = DateTime.MinValue;
-                    return;
+                    return true;
                 }
             }
 
             LastSpeedPacket = DateTime.Now;
             SpeedLast = Speed;
+
+            return true;
         }
 
         private void ProcessSensations()
@@ -191,7 +184,7 @@ namespace OWOVRC.Classes.Effects
                     lastVelY = 0;
                     lastVelZ = 0;
                     LastSpeedPacket = DateTime.MinValue;
-                    owo.StopAllSensations();
+                    owo.StopLoopedSensation(WindSensation._Name);
                 }
                 return;
             }
