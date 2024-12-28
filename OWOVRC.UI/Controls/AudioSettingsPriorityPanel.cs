@@ -151,7 +151,6 @@ namespace OWOVRC.UI.Controls
                         currentEntry.Priority = maxPriority;
                     }
                 }
-
             }
             else
             {

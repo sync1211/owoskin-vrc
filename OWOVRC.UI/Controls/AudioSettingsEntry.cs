@@ -1,4 +1,5 @@
 ﻿using OWOGame;
+using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Forms;
 
@@ -59,20 +60,25 @@ namespace OWOVRC.UI.Controls
         public EventHandler<MouseEventArgs>? OnDragStop;
         public EventHandler? OnPriorityChanged;
 
+        private readonly OWOHelper? owoHelper;
+
         public readonly AudioEffectSpectrumSettings? audioEffectSpectrumSettings;
 
         public readonly Dictionary<int, int> MuscleIntensities = [];
 
-        public AudioSettingsEntry()
+        public AudioSettingsEntry(OWOHelper? owoHelper = null)
         {
+            this.owoHelper = owoHelper;
             InitializeComponent();
             RegisterEvents();
         }
 
-        public AudioSettingsEntry(string name, int priority = 0, AudioEffectSpectrumSettings? settings = null)
+        public AudioSettingsEntry(string name, int priority = 0, AudioEffectSpectrumSettings? settings = null, OWOHelper? owoHelper = null)
         {
             InitializeComponent();
             Name = name;
+
+            this.owoHelper = owoHelper;
 
             // Force newline on zero-width space (U+200B)
             nameLabel.Text = Name.Replace("​", Environment.NewLine);
@@ -127,7 +133,7 @@ namespace OWOVRC.UI.Controls
                 testSensation = audioEffectSpectrumSettings.CreateSensation();
             }
 
-            using (MuscleIntensityForm intensityForm = new(MuscleIntensities, testSensation, $"Muscles affected by {Name}"))
+            using (MuscleIntensityForm intensityForm = new(MuscleIntensities, testSensation, $"Muscles affected by {Name}", owoHelper))
             {
                 intensityForm.ShowDialog();
             }
@@ -151,9 +157,9 @@ namespace OWOVRC.UI.Controls
             }
         }
 
-        public static AudioSettingsEntry FromSpectrumSettings(AudioEffectSpectrumSettings settings)
+        public static AudioSettingsEntry FromSpectrumSettings(AudioEffectSpectrumSettings settings, OWOHelper? owoHelper = null)
         {
-            AudioSettingsEntry entry = new(settings.Name, settings.Priority, settings)
+            AudioSettingsEntry entry = new(settings.Name, settings.Priority, settings, owoHelper)
             {
                 IsEnabled = settings.Enabled,
                 Min = settings.MinDB,
