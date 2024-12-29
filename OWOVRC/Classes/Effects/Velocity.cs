@@ -146,8 +146,8 @@ namespace OWOVRC.Classes.Effects
                     owo.StopLoopedSensation(WindSensation._Name);
 
                     Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
-                    ImpactSensation stopSensation = CreateStopSensation(velocityPercent);
-                    stopSensation.Play(owo, Settings.Priority);
+                    ImpactSensation impactSensation = CreateStopSensation(velocityPercent);
+                    impactSensation.Play(owo, Settings.Priority);
 
                     LastSpeedPacket = DateTime.MinValue;
                     return true;

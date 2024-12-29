@@ -102,10 +102,7 @@ namespace OWOVRC.Classes.Effects.Sensations
                 Muscle muscle = muscleData.Key;
                 int muscleIntensity = muscleData.Value;
 
-                if (muscleIntensity > 0)
-                {
-                    musclesScaled[i] = muscle.WithIntensity(muscleIntensity);
-                }
+                musclesScaled[i] = muscle.WithIntensity(muscleIntensity);
             }
 
             // Play sensation
