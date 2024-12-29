@@ -304,9 +304,7 @@ namespace OWOVRC.UI
             // Clear details if no item is selected
             if (activeSensationsListBox.SelectedItem == null)
             {
-                sensationNameLabel.Text = String.Empty;
-                sensationLoopLabel.Text = String.Empty;
-                sensationFirstTickLabel.Text = String.Empty;
+                ClearSensationDetails();
             }
         }
 
@@ -809,6 +807,14 @@ namespace OWOVRC.UI
 
             // Update sensation details
             UpdateSensationDetails(selectedSensation);
+        }
+
+        public void ClearSensationDetails()
+        {
+            sensationNameLabel.Text = String.Empty;
+            sensationLoopLabel.Text = String.Empty;
+            sensationDurationLabel.Text = String.Empty;
+            sensationFirstTickLabel.Text = String.Empty;
         }
 
         public void UpdateSensationDetails(AdvancedSensationStreamInstance instance)
