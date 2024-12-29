@@ -121,6 +121,8 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
+            sensationDurationLabel = new Label();
+            sensationDurationTitle = new Label();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
@@ -796,7 +798,7 @@
             // 
             sensationFirstTickTitle.AutoSize = true;
             sensationFirstTickTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            sensationFirstTickTitle.Location = new Point(6, 49);
+            sensationFirstTickTitle.Location = new Point(6, 64);
             sensationFirstTickTitle.Name = "sensationFirstTickTitle";
             sensationFirstTickTitle.Size = new Size(60, 15);
             sensationFirstTickTitle.TabIndex = 7;
@@ -1097,6 +1099,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(sensationDurationLabel);
+            groupBox1.Controls.Add(sensationDurationTitle);
             groupBox1.Controls.Add(sensationNameTitle);
             groupBox1.Controls.Add(sensationFirstTickLabel);
             groupBox1.Controls.Add(sensationLoopTitle);
@@ -1105,7 +1109,7 @@
             groupBox1.Controls.Add(sensationLoopLabel);
             groupBox1.Location = new Point(194, 6);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(198, 72);
+            groupBox1.Size = new Size(198, 85);
             groupBox1.TabIndex = 9;
             groupBox1.TabStop = false;
             groupBox1.Text = "Sensation";
@@ -1113,7 +1117,7 @@
             // sensationFirstTickLabel
             // 
             sensationFirstTickLabel.AutoSize = true;
-            sensationFirstTickLabel.Location = new Point(65, 49);
+            sensationFirstTickLabel.Location = new Point(65, 64);
             sensationFirstTickLabel.Name = "sensationFirstTickLabel";
             sensationFirstTickLabel.Size = new Size(66, 15);
             sensationFirstTickLabel.TabIndex = 8;
@@ -1171,6 +1175,25 @@
             activeSensationsListBox.TabIndex = 0;
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
+            // 
+            // sensationDurationLabel
+            // 
+            sensationDurationLabel.AutoSize = true;
+            sensationDurationLabel.Location = new Point(65, 49);
+            sensationDurationLabel.Name = "sensationDurationLabel";
+            sensationDurationLabel.Size = new Size(69, 15);
+            sensationDurationLabel.TabIndex = 10;
+            sensationDurationLabel.Text = "<Duration>";
+            // 
+            // sensationDurationTitle
+            // 
+            sensationDurationTitle.AutoSize = true;
+            sensationDurationTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationDurationTitle.Location = new Point(6, 49);
+            sensationDurationTitle.Name = "sensationDurationTitle";
+            sensationDurationTitle.Size = new Size(56, 15);
+            sensationDurationTitle.TabIndex = 9;
+            sensationDurationTitle.Text = "Duration";
             // 
             // MainForm
             // 
@@ -1321,5 +1344,7 @@
         private Label owiInfoLabel;
         private Label audioStatusLabel;
         private Label audioStatusTitle;
+        private Label sensationDurationLabel;
+        private Label sensationDurationTitle;
     }
 }
