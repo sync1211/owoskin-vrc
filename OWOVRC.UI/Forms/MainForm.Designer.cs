@@ -1115,9 +1115,9 @@
             sensationFirstTickLabel.AutoSize = true;
             sensationFirstTickLabel.Location = new Point(65, 49);
             sensationFirstTickLabel.Name = "sensationFirstTickLabel";
-            sensationFirstTickLabel.Size = new Size(64, 15);
+            sensationFirstTickLabel.Size = new Size(66, 15);
             sensationFirstTickLabel.TabIndex = 8;
-            sensationFirstTickLabel.Text = "<firstTick>";
+            sensationFirstTickLabel.Text = "<FirstTick>";
             // 
             // sensationNameLabel
             // 

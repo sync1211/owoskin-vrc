@@ -51,6 +51,9 @@ namespace OWOVRC.UI
         //NOTE: Set these to true when setting the value programmatically
         private bool oscPortInput_SkipValueChanged;
 
+        // Indicates that the sensations display needs to be updated on the next UI update
+        private bool sensationsChanged;
+
         public MainForm()
         {
             InitializeComponent();
@@ -69,21 +72,7 @@ namespace OWOVRC.UI
 
         private void HandleSensationChange(AdvancedSensationStreamInstance instance, ProcessState state)
         {
-            if (InvokeRequired)
-            {
-                try
-                {
-                    this.Invoke(UpdateASMStatus);
-                }
-                catch (ObjectDisposedException)
-                {
-                    Close();
-                }
-            }
-            else
-            {
-                UpdateASMStatus();
-            }
+            sensationsChanged = true;
         }
 
         private void HandleTimerElapsed(object? sender, EventArgs e)
@@ -93,6 +82,7 @@ namespace OWOVRC.UI
                 return;
             }
 
+            // Update status panel
             if (InvokeRequired)
             {
                 try
@@ -108,6 +98,29 @@ namespace OWOVRC.UI
             {
                 UpdateConnectionStatus();
             }
+
+            // Update sensations panel
+            if (sensationsChanged)
+            {
+                if (InvokeRequired)
+                {
+                    try
+                    {
+                        this.Invoke(UpdateASMStatus);
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        Close();
+                    }
+                }
+                else
+                {
+                    UpdateASMStatus();
+                }
+
+                sensationsChanged = false;
+            }
+
         }
 
         private void LoadSettings()
@@ -767,7 +780,7 @@ namespace OWOVRC.UI
             owo.StopLoopedSensation(instance.name);
 
             Log.Information("Stopped sensation {0}", instance.name);
-            //UpdateASMStatus();
+            UpdateASMStatus();
         }
 
         private void ActiveSensationsListBox_SelectedIndexChanged(object sender, EventArgs e)
