@@ -760,6 +760,7 @@
             audioMonitorButton.TabIndex = 31;
             audioMonitorButton.Text = "Monitor";
             audioMonitorButton.UseVisualStyleBackColor = true;
+            audioMonitorButton.Click += AudioMonitorButton_Click;
             // 
             // applyAudioSettingsButton
             // 
