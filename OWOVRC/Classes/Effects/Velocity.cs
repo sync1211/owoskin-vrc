@@ -49,7 +49,7 @@ namespace OWOVRC.Classes.Effects
 
             this.Settings = Settings;
             windSensation = new WindSensation(0.3f);
-            impactSensation = new ImpactSensation(0.2f);
+            impactSensation = new ImpactSensation(0.1f);
         }
 
         public override void RegisterSensations()
