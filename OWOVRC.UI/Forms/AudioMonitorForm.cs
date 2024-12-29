@@ -1,5 +1,6 @@
 ﻿using OWOVRC.Audio.Classes;
 using OWOVRC.Audio.WinForms.Classes;
+using OWOVRC.Audio.WinForms.Controls;
 using OWOVRC.Classes.Effects;
 
 namespace OWOVRC.UI.Forms
@@ -8,10 +9,21 @@ namespace OWOVRC.UI.Forms
     {
         private readonly AudioEffect effect;
         private readonly ScalingHelper scalingHelper = new(0);
+        private readonly float subBassThreshold;
+        private readonly float bassThreshold;
+        private readonly float trebleThreshold;
 
-        public AudioMonitorForm(AudioEffect effect)
+        private readonly Font regularFont = new("Segoe UI", 9F, FontStyle.Regular);
+        private readonly Font boldFont = new("Segoe UI", 9F, FontStyle.Bold);
+
+        public AudioMonitorForm(AudioEffect effect, float subBassThreshold = -1, float bassThreshold = -1, float trebleThreshold = -1)
         {
             this.effect = effect;
+
+            this.subBassThreshold = subBassThreshold;
+            this.bassThreshold = bassThreshold;
+            this.trebleThreshold = trebleThreshold;
+
             InitializeComponent();
         }
 
@@ -29,7 +41,7 @@ namespace OWOVRC.UI.Forms
         {
             try
             {
-                Invoke(UpdateBars, [samples.Left, samples.Right]);
+                Invoke(UpdateBars, samples);
             }
             catch (ObjectDisposedException)
             {
@@ -37,37 +49,62 @@ namespace OWOVRC.UI.Forms
             }
         }
 
-        private void UpdateBars(AnalyzedAudioChannel leftSample, AnalyzedAudioChannel rightSample)
+        private void UpdateBar(float dbLeft, float dbRight, BarIndicator leftBar, BarIndicator rightBar, Label leftLabel, Label rightLabel, float threshold)
         {
             // Sub-Bass
-            subBassIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.SubBass);
-            subBassIndicatorRight.Value = scalingHelper.ToPercentage(rightSample.SubBass);
+            leftBar.Value = scalingHelper.ToPercentage(dbLeft);
+            rightBar.Value = scalingHelper.ToPercentage(dbRight);
 
-            double bassDBLeft = Math.Round(leftSample.Bass, 2);
-            double bassDBRight = Math.Round(rightSample.Bass, 2);
+            double dbLeftRound = Math.Round(dbLeft, 2);
+            double dbRightRound = Math.Round(dbRight, 2);
 
-            leftBassDBLabel.Text = $"{bassDBLeft}db";
-            rightBassDBLabel.Text = $"{bassDBRight}db";
+            leftLabel.Text = $"{dbLeftRound}db";
+            rightLabel.Text = $"{dbRightRound}db";
+
+            if (threshold != -1)
+            {
+                leftLabel.Font = dbLeftRound >= threshold ? boldFont : regularFont;
+                rightLabel.Font = dbRightRound >= threshold ? boldFont : regularFont;
+            }
+        }
+
+        private void UpdateBars(AnalyzedAudioSample sample)
+        {
+            AnalyzedAudioChannel leftSample = sample.Left;
+            AnalyzedAudioChannel rightSample = sample.Right;
+
+            // Sub-Bass
+            UpdateBar(
+                leftSample.SubBass,
+                rightSample.SubBass,
+                subBassIndicatorLeft,
+                subBassIndicatorRight,
+                leftSubBassDBLabel,
+                rightSubBassDBLabel,
+                subBassThreshold
+            );
 
             // Bass
-            bassIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.Bass);
-            bassIndicatorRight.Value = scalingHelper.ToPercentage(rightSample.Bass);
-
-            double subBassDBLeft = Math.Round(leftSample.SubBass, 2);
-            double subBassDBRight = Math.Round(rightSample.SubBass, 2);
-
-            leftSubBassDBLabel.Text = $"{subBassDBLeft}db";
-            rightSubBassDBLabel.Text = $"{subBassDBRight}db";
+            UpdateBar(
+                leftSample.Bass,
+                rightSample.Bass,
+                bassIndicatorLeft,
+                bassIndicatorRight,
+                leftBassDBLabel,
+                rightBassDBLabel,
+                bassThreshold
+            );
 
             // Treble
-            trebleIndicatorLeft.Value = scalingHelper.ToPercentage(leftSample.Brilliance);
-            trebleIndicatorRight.Value = scalingHelper.ToPercentage(rightSample.Brilliance);
-
-            double trebleDBLeft = Math.Round(leftSample.Brilliance, 2);
-            double trebleDBRight = Math.Round(rightSample.Brilliance, 2);
-
-            leftTrebleDBLabel.Text = $"{trebleDBLeft}db";
-            rightTrebleDBLabel.Text = $"{trebleDBRight}db";
+            UpdateBar(
+                leftSample.Brilliance,
+                rightSample.Brilliance,
+                trebleIndicatorLeft,
+                trebleIndicatorRight,
+                leftTrebleDBLabel,
+                rightTrebleDBLabel,
+                trebleThreshold
+            );
 
             // Max amplitude
             double maxAmplitude = Math.Round(scalingHelper.MaxAmplitude, 2);

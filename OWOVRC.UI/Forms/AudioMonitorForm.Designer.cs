@@ -110,6 +110,7 @@
             // 
             // leftTrebleDBLabel
             // 
+            leftTrebleDBLabel.Font = new Font("Segoe UI", 9F);
             leftTrebleDBLabel.Location = new Point(156, 221);
             leftTrebleDBLabel.Name = "leftTrebleDBLabel";
             leftTrebleDBLabel.Size = new Size(63, 18);
@@ -141,6 +142,7 @@
             // 
             // leftBassDBLabel
             // 
+            leftBassDBLabel.Font = new Font("Segoe UI", 9F);
             leftBassDBLabel.Location = new Point(87, 221);
             leftBassDBLabel.Name = "leftBassDBLabel";
             leftBassDBLabel.Size = new Size(63, 18);
@@ -200,6 +202,7 @@
             // 
             // rightTrebleDBLabel
             // 
+            rightTrebleDBLabel.Font = new Font("Segoe UI", 9F);
             rightTrebleDBLabel.Location = new Point(153, 221);
             rightTrebleDBLabel.Name = "rightTrebleDBLabel";
             rightTrebleDBLabel.Size = new Size(63, 18);
@@ -209,6 +212,7 @@
             // 
             // rightBassDBLabel
             // 
+            rightBassDBLabel.Font = new Font("Segoe UI", 9F);
             rightBassDBLabel.Location = new Point(84, 221);
             rightBassDBLabel.Name = "rightBassDBLabel";
             rightBassDBLabel.Size = new Size(63, 18);
@@ -262,6 +266,7 @@
             // 
             // rightSubBassDBLabel
             // 
+            rightSubBassDBLabel.Font = new Font("Segoe UI", 9F);
             rightSubBassDBLabel.Location = new Point(16, 221);
             rightSubBassDBLabel.Name = "rightSubBassDBLabel";
             rightSubBassDBLabel.Size = new Size(62, 18);
@@ -308,7 +313,7 @@
             maxDBLabel.AutoSize = true;
             maxDBLabel.Location = new Point(48, 269);
             maxDBLabel.Name = "maxDBLabel";
-            maxDBLabel.Size = new Size(27, 15);
+            maxDBLabel.Size = new Size(28, 15);
             maxDBLabel.TabIndex = 19;
             maxDBLabel.Text = "0db";
             // 
@@ -322,6 +327,7 @@
             Controls.Add(bandsBoxRight);
             Controls.Add(bandsBoxLeft);
             Controls.Add(closeButton);
+            Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;

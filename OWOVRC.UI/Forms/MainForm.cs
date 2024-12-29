@@ -818,7 +818,11 @@ namespace OWOVRC.UI
                 audioEffect.Start();
             }
 
-            using (AudioMonitorForm form = new(audioEffect))
+            float subBassThreshold = audioSettings.SubBassSettings.MinDB;
+            float bassThreshold = audioSettings.BassSettings.MinDB;
+            float trebleThreshold = audioSettings.TrebleSettings.MinDB;
+
+            using (AudioMonitorForm form = new(audioEffect, subBassThreshold, bassThreshold, trebleThreshold))
             {
                 form.ShowDialog();
             }
