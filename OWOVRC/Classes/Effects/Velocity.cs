@@ -184,8 +184,8 @@ namespace OWOVRC.Classes.Effects
                     lastVelY = 0;
                     lastVelZ = 0;
                     LastSpeedPacket = DateTime.MinValue;
-                    owo.StopLoopedSensation(WindSensation._Name);
                 }
+                owo.StopLoopedSensation(WindSensation._Name);
                 return;
             }
 
