@@ -36,8 +36,9 @@ namespace OWOVRC.Classes.Effects
         private double SpeedLast;
         private DateTime LastSpeedPacket;
 
-        // Sensation
-        public float SensationDuration = 0.3f;
+        // Sensations
+        private readonly WindSensation windSensation;
+        private readonly ImpactSensation impactSensation;
 
         // Settings
         public readonly VelocityEffectSettings Settings;
@@ -47,6 +48,8 @@ namespace OWOVRC.Classes.Effects
             RegisterSensations();
 
             this.Settings = Settings;
+            windSensation = new WindSensation(0.3f);
+            impactSensation = new ImpactSensation(0.2f);
         }
 
         public override void RegisterSensations()
@@ -146,8 +149,7 @@ namespace OWOVRC.Classes.Effects
                     owo.StopLoopedSensation(WindSensation._Name);
 
                     Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
-                    ImpactSensation impactSensation = CreateStopSensation(velocityPercent);
-                    impactSensation.Play(owo, Settings.Priority);
+                    PlayStopSensation(velocityPercent);
 
                     LastSpeedPacket = DateTime.MinValue;
                     return true;
@@ -200,31 +202,36 @@ namespace OWOVRC.Classes.Effects
             int speedPercent = (int)(100 * (speedCapped / Settings.SpeedCap));
             Log.Debug("Movement speed: {speed} (max {speedCap}) => {intensity}%", Speed, Settings.SpeedCap, speedPercent);
 
-            // Send senstations to vest
-            WindSensation windSensation = CreateWindSensation();
-            windSensation.Intensity = speedPercent;
-            windSensation.Play(owo, Settings.Priority);
+            // Send sensation to vest
+            PlayWindSensation(speedPercent);
 
             LastSpeedPacket = DateTime.Now;
             SpeedLast = Speed;
         }
 
-        private WindSensation CreateWindSensation()
+        private void PlayWindSensation(int intensity)
         {
             float windVelX = VelX * -1;
             float windVelY = VelY * -1;
             float windVelZ = VelZ * -1;
-            return WindSensation.CreateFromVelocity(windVelX, windVelY, windVelZ, SensationDuration);
+
+            windSensation.UpdateDirection(windVelX, windVelY, windVelZ);
+
+            windSensation.Intensity = intensity;
+            windSensation.Play(owo, Settings.Priority);
         }
 
-        private ImpactSensation CreateStopSensation(int power)
+        private void PlayStopSensation(int power)
         {
             float hitVelX = lastVelX * -1;
             float hitVelY = lastVelY * -1;
             float hitVelZ = lastVelZ * -1;
-            ImpactSensation impact = ImpactSensation.CreateFromVelocity(hitVelX, hitVelY, hitVelZ, 0.1f);
-            impact.Intensity = power;
-            return impact;
+
+            impactSensation.UpdateDirection(hitVelX, hitVelY, hitVelZ);
+            impactSensation.Intensity = power;
+
+            impactSensation.Play(owo, Settings.Priority);
+
         }
 
         public override void Reset()

@@ -20,9 +20,10 @@ namespace OWOVRC.Classes.Effects.Sensations
             }
         }
 
-        public WindSensation(float durationSeconds = 0.2f): base(_Name, _frequency, _intensity, durationSeconds, 0, 0, 0, true) { }
-
-        public WindSensation(Dictionary<Muscle, int> muscles, float durationSeconds = 0.2f): base(_Name, muscles, _frequency, _intensity / 4, durationSeconds, 0, 0, 0, true) { }
+        public WindSensation(float durationSeconds = 0.2f): base(_Name, _frequency, _intensity / 4, durationSeconds, 0, 0, 0, true)
+        {
+            directions["down"] = [.. Muscle.Front, .. Muscle.Back];
+        }
 
         /// <summary>
         /// Creates a sensation from the wind velocity.
@@ -34,7 +35,9 @@ namespace OWOVRC.Classes.Effects.Sensations
         /// </summary>
         public static WindSensation CreateFromVelocity(float velocityX, float velocityY, float velocityZ, float durationSeconds = 0.2f)
         {
-            return new WindSensation(GetMuscleValues(velocityX, velocityY, velocityZ), durationSeconds);
+            WindSensation sensation = new(durationSeconds);
+            sensation.UpdateDirection(velocityX, velocityY, velocityZ);
+            return sensation;
         }
     }
 }

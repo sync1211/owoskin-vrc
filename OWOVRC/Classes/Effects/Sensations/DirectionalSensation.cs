@@ -19,13 +19,14 @@ namespace OWOVRC.Classes.Effects.Sensations
             }
         }
         public readonly int Frequency;
-        public readonly float Duration;
+        public float Duration;
         public readonly float RampUp;
         public readonly float RampDown;
         public readonly float ExitDelay;
         public readonly bool IsLoop;
         public readonly string Name;
-        public readonly Dictionary<Muscle, int> Muscles;
+        public readonly Dictionary<Muscle, int> MuscleIntensities;
+        private readonly Muscle[] musclesScaled = new Muscle[Muscle.All.Length];
 
         // Muscles to apply the sensation
         protected static readonly Dictionary<string, Muscle[]> directions = new()
@@ -35,7 +36,7 @@ namespace OWOVRC.Classes.Effects.Sensations
             { "left", OWOHelper.MuscleGroups["leftMuscles"] },
             { "right", OWOHelper.MuscleGroups["rightMuscles"] },
             { "up", [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Dorsal_L, Muscle.Dorsal_L] },
-            { "down", [.. Muscle.Front, ..Muscle.Back] }
+            { "down", [Muscle.Abdominal_L, Muscle.Abdominal_R, Muscle.Lumbar_L, Muscle.Lumbar_R] }
         };
         /*
             (For reference)
@@ -64,20 +65,20 @@ namespace OWOVRC.Classes.Effects.Sensations
             IsLoop = loop;
 
             // No direction specified -> front
-            Muscles = [];
+            MuscleIntensities = [];
             Muscle[] frontMuscles = Muscle.Front;
 
             for (int i = 0; i < frontMuscles.Length; i++)
             {
                 Muscle muscle = frontMuscles[i];
-                Muscles[muscle] = 100;
+                MuscleIntensities[muscle] = 100;
             }
         }
 
         protected DirectionalSensation(string name, Dictionary<Muscle, int> muscles, int frequency, int intensity, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0, bool loop = false)
         {
             Name = name;
-            Muscles = muscles;
+            MuscleIntensities = muscles;
             Frequency = frequency;
             Intensity = intensity;
             Duration = durationSeconds;
@@ -92,19 +93,21 @@ namespace OWOVRC.Classes.Effects.Sensations
             return SensationsFactory.Create(Frequency, Duration, intensity, 0, 0, 0);
         }
 
-        public void Play(OWOHelper owo, int priority = 0)
+        public void ApplyMuscleIntensities()
         {
             // Apply intensities
-            Muscle[] musclesScaled = new Muscle[Muscles.Count];
-            for (int i = 0; i < Muscles.Count; i++)
+            for (int i = 0; i < MuscleIntensities.Count; i++)
             {
-                KeyValuePair<Muscle, int> muscleData = Muscles.ElementAt(i);
+                KeyValuePair<Muscle, int> muscleData = MuscleIntensities.ElementAt(i);
                 Muscle muscle = muscleData.Key;
                 int muscleIntensity = muscleData.Value;
 
                 musclesScaled[i] = muscle.WithIntensity(muscleIntensity);
             }
+        }
 
+        public void Play(OWOHelper owo, int priority = 0)
+        {
             // Play sensation
             Log.Verbose("Playing wind sensation at {0}%", Intensity);
             Sensation sensation = CreateSensation(intensity).WithPriority(priority);
@@ -128,12 +131,12 @@ namespace OWOVRC.Classes.Effects.Sensations
         }
 
         /// <summary>
-        /// Prepares an array of muscles from a velocity vector and calculates their intensity.
+        /// Updates the direction of the sensation.
         /// <param name="velocityX">left/right</param>
         /// <param name="velocityY">down/up</param>
         /// <param name="velocityZ">back/front</param></param>
         /// </summary>
-        protected static Dictionary<Muscle, int> GetMuscleValues(float velocityX, float velocityY, float velocityZ)
+        public void UpdateDirection(float velocityX, float velocityY, float velocityZ)
         {
             // Generate affected muscles dynamically based on direction
             // 1. Assign a weight to every direction based on their % of the maximum
@@ -153,17 +156,17 @@ namespace OWOVRC.Classes.Effects.Sensations
             float maxVelocity = velocities.Max();
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
-            Dictionary<Muscle, int> muscleValues = [];
-            for (int i = 0; i < OWOHelper.Muscles.Count; i++)
+            Dictionary<Muscle, int> muscleIntensityScore = [];
+            for (int i = 0; i < Muscle.All.Length; i++)
             {
-                Muscle muscle = OWOHelper.Muscles.Values.ElementAt(i);
-                muscleValues.Add(muscle, 0);
+                Muscle muscle = Muscle.All[i];
+                muscleIntensityScore.Add(muscle, 0);
             }
 
             if (maxVelocity == 0)
             {
                 Log.Debug("maxVelocity is 0! {x} {y} {z}", velocityX, velocityY, velocityZ);
-                return muscleValues;
+                return;
             }
 
             // 2. Assign a weight to every direction based on their % of the maximum
@@ -175,26 +178,27 @@ namespace OWOVRC.Classes.Effects.Sensations
             int downWeight = (int)(downVelocity / maxVelocity) * 100;
 
             // 3. For each direction, add its weight to the muscles affected by it
-            AddMuscleWeights(muscleValues, "front", frontWeight);
-            AddMuscleWeights(muscleValues, "back", backWeight);
-            AddMuscleWeights(muscleValues, "left", leftWeight);
-            AddMuscleWeights(muscleValues, "right", rightWeight);
-            AddMuscleWeights(muscleValues, "up", upWeight);
-            AddMuscleWeights(muscleValues, "down", downWeight);
+            AddMuscleWeights(muscleIntensityScore, "front", frontWeight);
+            AddMuscleWeights(muscleIntensityScore, "back", backWeight);
+            AddMuscleWeights(muscleIntensityScore, "left", leftWeight);
+            AddMuscleWeights(muscleIntensityScore, "right", rightWeight);
+            AddMuscleWeights(muscleIntensityScore, "up", upWeight);
+            AddMuscleWeights(muscleIntensityScore, "down", downWeight);
 
             // 4. Convert the muscle values to a % value of the maximum
-            int maxMuscleValue = muscleValues.Values.Max();
+            int maxMuscleValue = muscleIntensityScore.Values.Max();
             for (int i = 0; i < OWOHelper.Muscles.Count; i++)
             {
-                KeyValuePair<Muscle, int> muscleData = muscleValues.ElementAt(i);
+                KeyValuePair<Muscle, int> muscleData = muscleIntensityScore.ElementAt(i);
 
                 Muscle muscle = muscleData.Key;
                 int muscleValue = muscleData.Value;
 
-                muscleValues[muscle] = (int)((float)muscleValue / (float)maxMuscleValue) * 100;
+                MuscleIntensities[muscle] = (int)((float)muscleValue / (float)maxMuscleValue) * 100;
             }
 
-            return muscleValues;
+            // Apply intensity to muscles
+            ApplyMuscleIntensities();
         }
 
         private static void AddMuscleWeights(Dictionary<Muscle, int> muscles, string directionName, int weight)
