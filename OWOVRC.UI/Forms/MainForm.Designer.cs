@@ -114,15 +114,15 @@
             statusTabControl = new TabControl();
             logPage = new TabPage();
             sensationsPage = new TabPage();
-            groupBox1 = new GroupBox();
+            sensationInfoGroup = new GroupBox();
+            sensationDurationLabel = new Label();
+            sensationDurationTitle = new Label();
             sensationFirstTickLabel = new Label();
             sensationNameLabel = new Label();
             sensationLoopLabel = new Label();
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
-            sensationDurationLabel = new Label();
-            sensationDurationTitle = new Label();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
@@ -148,7 +148,7 @@
             statusTabControl.SuspendLayout();
             logPage.SuspendLayout();
             sensationsPage.SuspendLayout();
-            groupBox1.SuspendLayout();
+            sensationInfoGroup.SuspendLayout();
             SuspendLayout();
             // 
             // effectsTabControl
@@ -788,6 +788,7 @@
             // 
             // audioSettingsPriorityPanel1
             // 
+            audioSettingsPriorityPanel1.AutoScroll = true;
             audioSettingsPriorityPanel1.BackColor = Color.DimGray;
             audioSettingsPriorityPanel1.Location = new Point(5, 28);
             audioSettingsPriorityPanel1.Name = "audioSettingsPriorityPanel1";
@@ -1084,7 +1085,7 @@
             // 
             // sensationsPage
             // 
-            sensationsPage.Controls.Add(groupBox1);
+            sensationsPage.Controls.Add(sensationInfoGroup);
             sensationsPage.Controls.Add(stopSelectedSensationLoopButton);
             sensationsPage.Controls.Add(stopSelectedSensationNowButton);
             sensationsPage.Controls.Add(activeSensationsListBox);
@@ -1097,22 +1098,41 @@
             sensationsPage.ToolTipText = "Active sensations";
             sensationsPage.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // sensationInfoGroup
             // 
-            groupBox1.Controls.Add(sensationDurationLabel);
-            groupBox1.Controls.Add(sensationDurationTitle);
-            groupBox1.Controls.Add(sensationNameTitle);
-            groupBox1.Controls.Add(sensationFirstTickLabel);
-            groupBox1.Controls.Add(sensationLoopTitle);
-            groupBox1.Controls.Add(sensationFirstTickTitle);
-            groupBox1.Controls.Add(sensationNameLabel);
-            groupBox1.Controls.Add(sensationLoopLabel);
-            groupBox1.Location = new Point(194, 6);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(198, 85);
-            groupBox1.TabIndex = 9;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Sensation";
+            sensationInfoGroup.Controls.Add(sensationDurationLabel);
+            sensationInfoGroup.Controls.Add(sensationDurationTitle);
+            sensationInfoGroup.Controls.Add(sensationNameTitle);
+            sensationInfoGroup.Controls.Add(sensationFirstTickLabel);
+            sensationInfoGroup.Controls.Add(sensationLoopTitle);
+            sensationInfoGroup.Controls.Add(sensationFirstTickTitle);
+            sensationInfoGroup.Controls.Add(sensationNameLabel);
+            sensationInfoGroup.Controls.Add(sensationLoopLabel);
+            sensationInfoGroup.Location = new Point(194, 6);
+            sensationInfoGroup.Name = "sensationInfoGroup";
+            sensationInfoGroup.Size = new Size(198, 85);
+            sensationInfoGroup.TabIndex = 9;
+            sensationInfoGroup.TabStop = false;
+            sensationInfoGroup.Text = "Sensation";
+            // 
+            // sensationDurationLabel
+            // 
+            sensationDurationLabel.AutoSize = true;
+            sensationDurationLabel.Location = new Point(65, 49);
+            sensationDurationLabel.Name = "sensationDurationLabel";
+            sensationDurationLabel.Size = new Size(69, 15);
+            sensationDurationLabel.TabIndex = 10;
+            sensationDurationLabel.Text = "<Duration>";
+            // 
+            // sensationDurationTitle
+            // 
+            sensationDurationTitle.AutoSize = true;
+            sensationDurationTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationDurationTitle.Location = new Point(6, 49);
+            sensationDurationTitle.Name = "sensationDurationTitle";
+            sensationDurationTitle.Size = new Size(56, 15);
+            sensationDurationTitle.TabIndex = 9;
+            sensationDurationTitle.Text = "Duration";
             // 
             // sensationFirstTickLabel
             // 
@@ -1176,25 +1196,6 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
-            // sensationDurationLabel
-            // 
-            sensationDurationLabel.AutoSize = true;
-            sensationDurationLabel.Location = new Point(65, 49);
-            sensationDurationLabel.Name = "sensationDurationLabel";
-            sensationDurationLabel.Size = new Size(69, 15);
-            sensationDurationLabel.TabIndex = 10;
-            sensationDurationLabel.Text = "<Duration>";
-            // 
-            // sensationDurationTitle
-            // 
-            sensationDurationTitle.AutoSize = true;
-            sensationDurationTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            sensationDurationTitle.Location = new Point(6, 49);
-            sensationDurationTitle.Name = "sensationDurationTitle";
-            sensationDurationTitle.Size = new Size(56, 15);
-            sensationDurationTitle.TabIndex = 9;
-            sensationDurationTitle.Text = "Duration";
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1246,8 +1247,8 @@
             logPage.ResumeLayout(false);
             logPage.PerformLayout();
             sensationsPage.ResumeLayout(false);
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            sensationInfoGroup.ResumeLayout(false);
+            sensationInfoGroup.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1269,7 +1270,7 @@
         private MaskedTextBox owoIPInput;
         private Label owoIPTitle;
         private Label oscPortTitle;
-        private GroupBox groupBox1;
+        private GroupBox sensationInfoGroup;
         private TabPage collidersSettingsPage;
         private Button applyCollisionSettingsButton;
         private Button applyVelocitySettingsButton;
