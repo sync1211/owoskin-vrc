@@ -821,7 +821,7 @@ namespace OWOVRC.UI
         {
             sensationNameLabel.Text = instance.name;
             sensationLoopLabel.Text = instance.loop ? "Yes" : "No";
-            sensationDurationLabel.Text = instance.sensation.Duration.ToString("{0:0.00}");
+            sensationDurationLabel.Text = instance.sensation.Duration.ToString("0.00s");
             sensationFirstTickLabel.Text = instance.firstTick.ToString();
         }
 
