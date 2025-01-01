@@ -1,10 +1,13 @@
 name: .NET Core Desktop
+permissions:
+  contents: read
+  actions: write
 
 on:
   push:
-    branches: [ "master", "AdvancedSensationBuilder" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "master", "AdvancedSensationBuilder" ]
+    branches: [ "master" ]
 
 jobs:
 
