@@ -456,6 +456,7 @@ namespace OWOVRC.UI
             collidersAllowContinuousCheckbox.Checked = collidersSettings.AllowContinuous;
             collidersMinIntensityInput.Text = collidersSettings.MinIntensity.ToString();
             collidersSpeedMultiplierInput.Text = collidersSettings.SpeedMultiplier.ToString();
+            collidersFrequencyInput.Text = collidersSettings.Frequency.ToString();
         }
 
         private void UpdateVelocityEffectSettings()
@@ -567,6 +568,9 @@ namespace OWOVRC.UI
 
             // Speed multiplier
             collidersSettings.SpeedMultiplier = (float)collidersSpeedMultiplierInput.Value;
+
+            // Frequency
+            collidersSettings.Frequency = (int) collidersFrequencyInput.Value;
 
             SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
         }

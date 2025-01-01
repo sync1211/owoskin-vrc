@@ -123,6 +123,8 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
+            collidersFrequencyTitle = new Label();
+            collidersFrequencyInput = new NumericUpDown();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
@@ -149,6 +151,7 @@
             logPage.SuspendLayout();
             sensationsPage.SuspendLayout();
             sensationInfoGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
             SuspendLayout();
             // 
             // effectsTabControl
@@ -167,6 +170,8 @@
             // 
             // collidersSettingsPage
             // 
+            collidersSettingsPage.Controls.Add(collidersFrequencyTitle);
+            collidersSettingsPage.Controls.Add(collidersFrequencyInput);
             collidersSettingsPage.Controls.Add(configureCollidersIntensityButton);
             collidersSettingsPage.Controls.Add(collidersHelpLinkLabel);
             collidersSettingsPage.Controls.Add(collidersPriorityLabel);
@@ -244,9 +249,9 @@
             velocityBasedGroupBox.Controls.Add(collidersMinIntensityInput);
             velocityBasedGroupBox.Controls.Add(collidersUseVelocityCheckbox);
             velocityBasedGroupBox.Controls.Add(collidersAllowContinuousCheckbox);
-            velocityBasedGroupBox.Location = new Point(6, 85);
+            velocityBasedGroupBox.Location = new Point(6, 109);
             velocityBasedGroupBox.Name = "velocityBasedGroupBox";
-            velocityBasedGroupBox.Size = new Size(348, 135);
+            velocityBasedGroupBox.Size = new Size(348, 131);
             velocityBasedGroupBox.TabIndex = 5;
             velocityBasedGroupBox.TabStop = false;
             velocityBasedGroupBox.Text = "Velocity-Based";
@@ -254,7 +259,7 @@
             // collidersSpeedMultiplierLabel
             // 
             collidersSpeedMultiplierLabel.AutoSize = true;
-            collidersSpeedMultiplierLabel.Location = new Point(6, 107);
+            collidersSpeedMultiplierLabel.Location = new Point(6, 104);
             collidersSpeedMultiplierLabel.Name = "collidersSpeedMultiplierLabel";
             collidersSpeedMultiplierLabel.Size = new Size(93, 15);
             collidersSpeedMultiplierLabel.TabIndex = 11;
@@ -265,7 +270,7 @@
             // 
             collidersSpeedMultiplierInput.DecimalPlaces = 2;
             collidersSpeedMultiplierInput.Increment = new decimal(new int[] { 5, 0, 0, 65536 });
-            collidersSpeedMultiplierInput.Location = new Point(247, 104);
+            collidersSpeedMultiplierInput.Location = new Point(247, 101);
             collidersSpeedMultiplierInput.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             collidersSpeedMultiplierInput.Name = "collidersSpeedMultiplierInput";
             collidersSpeedMultiplierInput.Size = new Size(89, 23);
@@ -275,7 +280,7 @@
             // collidersMinIntensityLabel
             // 
             collidersMinIntensityLabel.AutoSize = true;
-            collidersMinIntensityLabel.Location = new Point(6, 78);
+            collidersMinIntensityLabel.Location = new Point(6, 75);
             collidersMinIntensityLabel.Name = "collidersMinIntensityLabel";
             collidersMinIntensityLabel.Size = new Size(76, 15);
             collidersMinIntensityLabel.TabIndex = 9;
@@ -284,7 +289,7 @@
             // 
             // collidersMinIntensityInput
             // 
-            collidersMinIntensityInput.Location = new Point(247, 75);
+            collidersMinIntensityInput.Location = new Point(247, 72);
             collidersMinIntensityInput.Name = "collidersMinIntensityInput";
             collidersMinIntensityInput.Size = new Size(89, 23);
             collidersMinIntensityInput.TabIndex = 8;
@@ -293,7 +298,7 @@
             // collidersUseVelocityCheckbox
             // 
             collidersUseVelocityCheckbox.AutoSize = true;
-            collidersUseVelocityCheckbox.Location = new Point(6, 22);
+            collidersUseVelocityCheckbox.Location = new Point(6, 19);
             collidersUseVelocityCheckbox.Name = "collidersUseVelocityCheckbox";
             collidersUseVelocityCheckbox.Size = new Size(68, 19);
             collidersUseVelocityCheckbox.TabIndex = 3;
@@ -304,7 +309,7 @@
             // collidersAllowContinuousCheckbox
             // 
             collidersAllowContinuousCheckbox.AutoSize = true;
-            collidersAllowContinuousCheckbox.Location = new Point(6, 47);
+            collidersAllowContinuousCheckbox.Location = new Point(6, 44);
             collidersAllowContinuousCheckbox.Name = "collidersAllowContinuousCheckbox";
             collidersAllowContinuousCheckbox.Size = new Size(195, 19);
             collidersAllowContinuousCheckbox.TabIndex = 4;
@@ -1196,6 +1201,26 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
+            // collidersFrequencyTitle
+            // 
+            collidersFrequencyTitle.AutoSize = true;
+            collidersFrequencyTitle.Location = new Point(6, 88);
+            collidersFrequencyTitle.Name = "collidersFrequencyTitle";
+            collidersFrequencyTitle.Size = new Size(62, 15);
+            collidersFrequencyTitle.TabIndex = 13;
+            collidersFrequencyTitle.Text = "Frequency";
+            helpToolTip.SetToolTip(collidersFrequencyTitle, "Speicifies the frequency of the collision sensation.");
+            // 
+            // collidersFrequencyInput
+            // 
+            collidersFrequencyInput.Location = new Point(262, 84);
+            collidersFrequencyInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            collidersFrequencyInput.Name = "collidersFrequencyInput";
+            collidersFrequencyInput.Size = new Size(89, 23);
+            collidersFrequencyInput.TabIndex = 12;
+            helpToolTip.SetToolTip(collidersFrequencyInput, "Speicifies the frequency of the collision sensation.");
+            collidersFrequencyInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1249,6 +1274,7 @@
             sensationsPage.ResumeLayout(false);
             sensationInfoGroup.ResumeLayout(false);
             sensationInfoGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).EndInit();
             ResumeLayout(false);
         }
 
@@ -1347,5 +1373,7 @@
         private Label sensationDurationTitle;
         private Label sensationBlockLowerPrioLabel;
         private Label sensationBlockLowerPrioTitle;
+        private Label collidersFrequencyTitle;
+        private NumericUpDown collidersFrequencyInput;
     }
 }
