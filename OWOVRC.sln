@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\dotnet-desktop.yml = .github\workflows\dotnet-desktop.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio.Test", "OWOVRC.Audio.Test\OWOVRC.Audio.Test.csproj", "{99CC345C-59AD-4664-A71F-7BE316C29C67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,18 @@ Global
 		{C00C0AB5-CCFB-4837-9B88-CDA687A7A855}.Release|x64.Build.0 = Release|Any CPU
 		{C00C0AB5-CCFB-4837-9B88-CDA687A7A855}.Release|x86.ActiveCfg = Release|Any CPU
 		{C00C0AB5-CCFB-4837-9B88-CDA687A7A855}.Release|x86.Build.0 = Release|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Debug|x64.Build.0 = Debug|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Debug|x86.Build.0 = Debug|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Release|x64.ActiveCfg = Release|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Release|x64.Build.0 = Release|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Release|x86.ActiveCfg = Release|Any CPU
+		{99CC345C-59AD-4664-A71F-7BE316C29C67}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

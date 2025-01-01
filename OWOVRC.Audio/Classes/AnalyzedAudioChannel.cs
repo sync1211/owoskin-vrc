@@ -1,4 +1,5 @@
 ﻿using NAudio.Dsp;
+using static OWOVRC.Audio.Classes.AnalyzedAudioSample;
 
 namespace OWOVRC.Audio.Classes
 {
@@ -57,18 +58,25 @@ namespace OWOVRC.Audio.Classes
 
         public readonly Complex[] Buffer;
         public readonly double Period;
+        public readonly AudioChannel ChannelIndentifier;
 
-        public AnalyzedAudioChannel(Complex[] fftBuffer, double period, int amplification = 1_000)
+        public AnalyzedAudioChannel(Complex[] fftBuffer, double period, AudioChannel channel, int amplification = 1_000)
         {
             this.Buffer = fftBuffer;
             this.Period = period;
             Amplification = amplification;
+            ChannelIndentifier = channel;
         }
 
         public float GetFrequency(int frequency)
         {
             int actualFrequency = (int)(frequency / Period);
-            return Buffer[actualFrequency].X * Amplification;
+            if (ChannelIndentifier == AudioChannel.Left)
+            {
+                return Buffer[actualFrequency].X * Amplification;
+            }
+
+            return Buffer[actualFrequency].Y * Amplification;
         }
 
         public float GetFrequencyRange(int start, int end)
@@ -79,7 +87,14 @@ namespace OWOVRC.Audio.Classes
             double highest = 0;
             for (int i = actualStart; i <= actualEnd; i++)
             {
-                highest = Math.Max(Buffer[i].X, highest);
+                if (ChannelIndentifier == AudioChannel.Left)
+                {
+                    highest = Math.Max(Buffer[i].X, highest);
+                }
+                else
+                {
+                    highest = Math.Max(Buffer[i].Y, highest);
+                }
             }
 
             return (float)highest * Amplification;
