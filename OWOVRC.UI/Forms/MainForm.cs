@@ -57,6 +57,7 @@ namespace OWOVRC.UI
         public MainForm()
         {
             InitializeComponent();
+            ClearSensationDetails();
 
             logLevelSwitch = Logging.SetUpLogger(logBox);
 
@@ -814,7 +815,7 @@ namespace OWOVRC.UI
             sensationNameLabel.Text = String.Empty;
             sensationLoopLabel.Text = String.Empty;
             sensationDurationLabel.Text = String.Empty;
-            sensationFirstTickLabel.Text = String.Empty;
+            sensationBlockLowerPrioLabel.Text = String.Empty;
         }
 
         public void UpdateSensationDetails(AdvancedSensationStreamInstance instance)
@@ -822,7 +823,8 @@ namespace OWOVRC.UI
             sensationNameLabel.Text = instance.name;
             sensationLoopLabel.Text = instance.loop ? "Yes" : "No";
             sensationDurationLabel.Text = instance.sensation.Duration.ToString("0.00s");
-            sensationFirstTickLabel.Text = instance.firstTick.ToString();
+            sensationBlockLowerPrioLabel.Text = instance.blockLowerPrio ? "Yes" : "No";
+
         }
 
         private void AudioMonitorButton_Click(object sender, EventArgs e)

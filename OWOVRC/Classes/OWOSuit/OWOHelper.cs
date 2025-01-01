@@ -56,7 +56,7 @@ namespace OWOVRC.Classes.OWOSuit
 
         public void AddSensation(Sensation sensation, Muscle[] muscles, string name)
         {
-            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), false);
+            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
             instance.AfterStateChanged += HandleSensationStateChange;
 
             sensationManager.play(instance);
@@ -64,7 +64,8 @@ namespace OWOVRC.Classes.OWOSuit
 
         public void AddLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
-            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles), true);
+            AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
+            instance.setLoop(true);
             instance.AfterStateChanged += HandleSensationStateChange;
 
             sensationManager.play(instance);
@@ -80,7 +81,7 @@ namespace OWOVRC.Classes.OWOSuit
 
         public void AddSensation(Sensation sensation, string name)
         {
-            AdvancedSensationStreamInstance instance = new(name, sensation, false);
+            AdvancedSensationStreamInstance instance = new(name, sensation);
             instance.AfterStateChanged += HandleSensationStateChange;
 
             sensationManager.play(instance);

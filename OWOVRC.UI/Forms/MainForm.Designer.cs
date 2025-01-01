@@ -87,7 +87,6 @@
             applyAudioSettingsButton = new Button();
             audioEnabledCheckbox = new CheckBox();
             audioSettingsPriorityPanel1 = new Controls.AudioSettingsPriorityPanel();
-            sensationFirstTickTitle = new Label();
             sensationNameTitle = new Label();
             sensationLoopTitle = new Label();
             logLevelComboBox = new ComboBox();
@@ -115,9 +114,10 @@
             logPage = new TabPage();
             sensationsPage = new TabPage();
             sensationInfoGroup = new GroupBox();
+            sensationBlockLowerPrioLabel = new Label();
+            sensationBlockLowerPrioTitle = new Label();
             sensationDurationLabel = new Label();
             sensationDurationTitle = new Label();
-            sensationFirstTickLabel = new Label();
             sensationNameLabel = new Label();
             sensationLoopLabel = new Label();
             stopSelectedSensationLoopButton = new Button();
@@ -795,16 +795,6 @@
             audioSettingsPriorityPanel1.Size = new Size(349, 212);
             audioSettingsPriorityPanel1.TabIndex = 0;
             // 
-            // sensationFirstTickTitle
-            // 
-            sensationFirstTickTitle.AutoSize = true;
-            sensationFirstTickTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            sensationFirstTickTitle.Location = new Point(6, 64);
-            sensationFirstTickTitle.Name = "sensationFirstTickTitle";
-            sensationFirstTickTitle.Size = new Size(60, 15);
-            sensationFirstTickTitle.TabIndex = 7;
-            sensationFirstTickTitle.Text = "First Tick:";
-            // 
             // sensationNameTitle
             // 
             sensationNameTitle.AutoSize = true;
@@ -1100,25 +1090,44 @@
             // 
             // sensationInfoGroup
             // 
+            sensationInfoGroup.Controls.Add(sensationBlockLowerPrioLabel);
+            sensationInfoGroup.Controls.Add(sensationBlockLowerPrioTitle);
             sensationInfoGroup.Controls.Add(sensationDurationLabel);
             sensationInfoGroup.Controls.Add(sensationDurationTitle);
             sensationInfoGroup.Controls.Add(sensationNameTitle);
-            sensationInfoGroup.Controls.Add(sensationFirstTickLabel);
             sensationInfoGroup.Controls.Add(sensationLoopTitle);
-            sensationInfoGroup.Controls.Add(sensationFirstTickTitle);
             sensationInfoGroup.Controls.Add(sensationNameLabel);
             sensationInfoGroup.Controls.Add(sensationLoopLabel);
             sensationInfoGroup.Location = new Point(194, 6);
             sensationInfoGroup.Name = "sensationInfoGroup";
-            sensationInfoGroup.Size = new Size(198, 85);
+            sensationInfoGroup.Size = new Size(198, 88);
             sensationInfoGroup.TabIndex = 9;
             sensationInfoGroup.TabStop = false;
             sensationInfoGroup.Text = "Sensation";
             // 
+            // sensationBlockLowerPrioLabel
+            // 
+            sensationBlockLowerPrioLabel.AutoSize = true;
+            sensationBlockLowerPrioLabel.Location = new Point(105, 64);
+            sensationBlockLowerPrioLabel.Name = "sensationBlockLowerPrioLabel";
+            sensationBlockLowerPrioLabel.Size = new Size(84, 15);
+            sensationBlockLowerPrioLabel.TabIndex = 12;
+            sensationBlockLowerPrioLabel.Text = "<Block lower>";
+            // 
+            // sensationBlockLowerPrioTitle
+            // 
+            sensationBlockLowerPrioTitle.AutoSize = true;
+            sensationBlockLowerPrioTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationBlockLowerPrioTitle.Location = new Point(6, 64);
+            sensationBlockLowerPrioTitle.Name = "sensationBlockLowerPrioTitle";
+            sensationBlockLowerPrioTitle.Size = new Size(101, 15);
+            sensationBlockLowerPrioTitle.TabIndex = 11;
+            sensationBlockLowerPrioTitle.Text = "Block lower prio:";
+            // 
             // sensationDurationLabel
             // 
             sensationDurationLabel.AutoSize = true;
-            sensationDurationLabel.Location = new Point(65, 49);
+            sensationDurationLabel.Location = new Point(105, 49);
             sensationDurationLabel.Name = "sensationDurationLabel";
             sensationDurationLabel.Size = new Size(69, 15);
             sensationDurationLabel.TabIndex = 10;
@@ -1134,19 +1143,10 @@
             sensationDurationTitle.TabIndex = 9;
             sensationDurationTitle.Text = "Duration";
             // 
-            // sensationFirstTickLabel
-            // 
-            sensationFirstTickLabel.AutoSize = true;
-            sensationFirstTickLabel.Location = new Point(65, 64);
-            sensationFirstTickLabel.Name = "sensationFirstTickLabel";
-            sensationFirstTickLabel.Size = new Size(66, 15);
-            sensationFirstTickLabel.TabIndex = 8;
-            sensationFirstTickLabel.Text = "<FirstTick>";
-            // 
             // sensationNameLabel
             // 
             sensationNameLabel.AutoSize = true;
-            sensationNameLabel.Location = new Point(65, 19);
+            sensationNameLabel.Location = new Point(105, 19);
             sensationNameLabel.Name = "sensationNameLabel";
             sensationNameLabel.Size = new Size(55, 15);
             sensationNameLabel.TabIndex = 5;
@@ -1155,7 +1155,7 @@
             // sensationLoopLabel
             // 
             sensationLoopLabel.AutoSize = true;
-            sensationLoopLabel.Location = new Point(65, 34);
+            sensationLoopLabel.Location = new Point(105, 34);
             sensationLoopLabel.Name = "sensationLoopLabel";
             sensationLoopLabel.Size = new Size(50, 15);
             sensationLoopLabel.TabIndex = 6;
@@ -1330,7 +1330,6 @@
         private Controls.AudioSettingsPriorityPanel audioSettingsPriorityPanel1;
         private Button audioMonitorButton;
         private GroupBox owiInformationGroup;
-        private Label sensationFirstTickTitle;
         private Button audioDeviceSelectButton;
         private TabControl statusTabControl;
         private TabPage logPage;
@@ -1340,12 +1339,13 @@
         private Button stopSelectedSensationLoopButton;
         private Label sensationNameLabel;
         private Label sensationLoopLabel;
-        private Label sensationFirstTickLabel;
         private Label owiUpdateIntervalLabel;
         private Label owiInfoLabel;
         private Label audioStatusLabel;
         private Label audioStatusTitle;
         private Label sensationDurationLabel;
         private Label sensationDurationTitle;
+        private Label sensationBlockLowerPrioLabel;
+        private Label sensationBlockLowerPrioTitle;
     }
 }
