@@ -22,7 +22,7 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public Dictionary<int, int> MuscleIntensities { get; } = [];
 
-        public CollidersEffectSettings(bool enabled = true, int priority = 1) : base(enabled, priority)
+        public CollidersEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority)
         {
             foreach (Muscle muscle in Muscle.All)
             {

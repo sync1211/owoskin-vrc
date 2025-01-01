@@ -9,9 +9,9 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public int Intensity { get; set; } = 100;
 
-        public WorldIntegratorSettings() : base(true, 1) { }
+        public WorldIntegratorSettings() : base(true, 10) { }
 
         [JsonConstructor]
-        public WorldIntegratorSettings(bool enabled, int priority) : base(enabled, priority) { }
+        public WorldIntegratorSettings(bool enabled, int priority = 10) : base(enabled, priority) { }
     }
 }

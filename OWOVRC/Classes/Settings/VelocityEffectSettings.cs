@@ -21,7 +21,7 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public TimeSpan StopVelocityTime { get; set; } = TimeSpan.FromSeconds(1);
 
-        public VelocityEffectSettings(bool enabled = true, int priority = 1) : base(enabled, priority) { }
+        public VelocityEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority) { }
 
         [JsonConstructor]
         public VelocityEffectSettings(bool enabled, int priority, float threshold, bool impactEnabled, int stopPriority, float stopVelocityThreshold, float speedCap, bool ignoreWhenGrounded, bool ignoreWhenSeated, TimeSpan stopVelocityTime) : base(enabled, priority)
