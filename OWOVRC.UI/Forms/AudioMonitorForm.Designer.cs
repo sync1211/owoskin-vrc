@@ -321,6 +321,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = closeButton;
             ClientSize = new Size(502, 300);
             Controls.Add(maxDBLabel);
             Controls.Add(label2);

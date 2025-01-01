@@ -113,9 +113,9 @@ namespace OWOVRC.UI.Forms
             muscleNameLabel.Text = String.Empty;
             foreach (SelectableMuscle muscle in selectableMuscles)
             {
-                muscle.Active = muscle.MuscleID == currentMuscleID;
+                muscle.IsActive = muscle.MuscleID == currentMuscleID;
 
-                if (muscle.Active)
+                if (muscle.IsActive)
                 {
                     muscleNameLabel.Text = muscle.Muscle.ToString();
                 }

@@ -77,8 +77,10 @@
             // 
             // SelectionDialog
             // 
+            AcceptButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = cancelButton;
             ClientSize = new Size(273, 98);
             Controls.Add(comboBox1);
             Controls.Add(descriptionLabel);

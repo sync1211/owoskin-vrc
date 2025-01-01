@@ -41,14 +41,14 @@ namespace OWOVRC.UI.Forms
 
         private void RefreshItems()
         {
-            int selectedIndex = listBox1.SelectedIndex;
+            int selectedIndex = appListBox.SelectedIndex;
 
-            listBox1.Items.Clear();
-            listBox1.Items.AddRange(OWO.DiscoveredApps);
+            appListBox.Items.Clear();
+            appListBox.Items.AddRange(OWO.DiscoveredApps);
 
-            if (selectedIndex >= 0 && selectedIndex < listBox1.Items.Count)
+            if (selectedIndex >= 0 && selectedIndex < appListBox.Items.Count)
             {
-                listBox1.SelectedIndex = selectedIndex;
+                appListBox.SelectedIndex = selectedIndex;
             }
         }
 
@@ -60,7 +60,7 @@ namespace OWOVRC.UI.Forms
 
         private void SelectEntryButton_Click(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem is not string slectedApp)
+            if (appListBox.SelectedItem is not string slectedApp)
             {
                 return;
             }
@@ -72,7 +72,7 @@ namespace OWOVRC.UI.Forms
 
         private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            selectEntryButton.Enabled = listBox1.SelectedItem is not null;
+            selectEntryButton.Enabled = appListBox.SelectedItem is not null;
         }
 
         private void AppDiscoveryForm_FormClosing(object sender, FormClosingEventArgs e)

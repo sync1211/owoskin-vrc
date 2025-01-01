@@ -9,7 +9,7 @@ namespace OWOVRC.UI.Controls
         public MusclesEnum Muscle { get; set; }
 
         public int MuscleID => (int)Muscle;
-        public bool Active
+        public bool IsActive
         {
             get
             {
@@ -21,6 +21,10 @@ namespace OWOVRC.UI.Controls
                 UpdateImage();
             }
         }
+        // Aliases for accessibility
+        public bool Checked => IsActive;
+        public bool Value => IsActive;
+
         [Localizable(true)]
         [Description("The image shown when the element is inactive"), Category("Appearance")]
         public Image? InactiveImage
@@ -50,16 +54,18 @@ namespace OWOVRC.UI.Controls
             MouseClick += HandleClicked;
             BackgroundImage = InactiveImage;
             BackgroundImageLayout = ImageLayout.Zoom;
+            AccessibleRole = AccessibleRole.CheckButton;
         }
 
         private void HandleClicked(object? sender, EventArgs e)
         {
-            Active = true;
+            IsActive = true;
         }
 
         public void UpdateImage()
         {
             BackgroundImage = active ? ActiveImage : InactiveImage;
+            AccessibilityNotifyClients(AccessibleEvents.StateChange, -1);
         }
     }
 }

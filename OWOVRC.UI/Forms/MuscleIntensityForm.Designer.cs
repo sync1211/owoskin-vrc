@@ -127,7 +127,8 @@ namespace OWOVRC.UI.Forms
             // 
             // abdominalRMuscle
             // 
-            abdominalRMuscle.Active = false;
+            abdominalRMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            abdominalRMuscle.IsActive = false;
             abdominalRMuscle.ActiveImage = Properties.Resources.muscleAbdominalL_Active;
             abdominalRMuscle.BackgroundImage = Properties.Resources.muscleAbdominalL_Inactive;
             abdominalRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -142,7 +143,8 @@ namespace OWOVRC.UI.Forms
             // 
             // abdominalLMuscle
             // 
-            abdominalLMuscle.Active = false;
+            abdominalLMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            abdominalLMuscle.IsActive = false;
             abdominalLMuscle.ActiveImage = Properties.Resources.muscleAbdominalR_Active;
             abdominalLMuscle.BackgroundImage = Properties.Resources.muscleAbdominalR_Inactive;
             abdominalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -157,7 +159,8 @@ namespace OWOVRC.UI.Forms
             // 
             // armRMuscle
             // 
-            armRMuscle.Active = false;
+            armRMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            armRMuscle.IsActive = false;
             armRMuscle.ActiveImage = Properties.Resources.muscleArmL_Active;
             armRMuscle.BackgroundImage = Properties.Resources.muscleArmL_Inactive;
             armRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -172,7 +175,8 @@ namespace OWOVRC.UI.Forms
             // 
             // pectoralRMuscle
             // 
-            pectoralRMuscle.Active = false;
+            pectoralRMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            pectoralRMuscle.IsActive = false;
             pectoralRMuscle.ActiveImage = Properties.Resources.musclePectoralL_Active;
             pectoralRMuscle.BackgroundImage = Properties.Resources.musclePectoralL_Inactive;
             pectoralRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -187,7 +191,8 @@ namespace OWOVRC.UI.Forms
             // 
             // pectoralLMuscle
             // 
-            pectoralLMuscle.Active = false;
+            pectoralLMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            pectoralLMuscle.IsActive = false;
             pectoralLMuscle.ActiveImage = Properties.Resources.musclePectoralR_Active;
             pectoralLMuscle.BackgroundImage = Properties.Resources.musclePectoralR_Inactive;
             pectoralLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -202,7 +207,8 @@ namespace OWOVRC.UI.Forms
             // 
             // armLMuscle
             // 
-            armLMuscle.Active = false;
+            armLMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            armLMuscle.IsActive = false;
             armLMuscle.ActiveImage = Properties.Resources.muscleArmR_Active;
             armLMuscle.BackgroundImage = Properties.Resources.muscleArmR_Inactive;
             armLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -242,7 +248,8 @@ namespace OWOVRC.UI.Forms
             // 
             // lumbarRMuscle
             // 
-            lumbarRMuscle.Active = false;
+            lumbarRMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            lumbarRMuscle.IsActive = false;
             lumbarRMuscle.ActiveImage = Properties.Resources.muscleLumbarL_Active;
             lumbarRMuscle.BackgroundImage = Properties.Resources.muscleLumbarL_Inactive;
             lumbarRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -257,7 +264,8 @@ namespace OWOVRC.UI.Forms
             // 
             // lumbarLMuscle
             // 
-            lumbarLMuscle.Active = false;
+            lumbarLMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            lumbarLMuscle.IsActive = false;
             lumbarLMuscle.ActiveImage = Properties.Resources.muscleLumbarR_Active;
             lumbarLMuscle.BackgroundImage = Properties.Resources.muscleLumbarR_Inactive;
             lumbarLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -272,7 +280,8 @@ namespace OWOVRC.UI.Forms
             // 
             // dorsalRMuscle
             // 
-            dorsalRMuscle.Active = false;
+            dorsalRMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            dorsalRMuscle.IsActive = false;
             dorsalRMuscle.ActiveImage = Properties.Resources.muscleDorsalL_Active;
             dorsalRMuscle.BackgroundImage = Properties.Resources.muscleDorsalL_Inactive;
             dorsalRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -287,7 +296,8 @@ namespace OWOVRC.UI.Forms
             // 
             // dorsalLMuscle
             // 
-            dorsalLMuscle.Active = false;
+            dorsalLMuscle.AccessibleRole = AccessibleRole.RadioButton;
+            dorsalLMuscle.IsActive = false;
             dorsalLMuscle.ActiveImage = Properties.Resources.muscleDorsalR_Active;
             dorsalLMuscle.BackgroundImage = Properties.Resources.muscleDorsalR_Inactive;
             dorsalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
@@ -323,6 +333,7 @@ namespace OWOVRC.UI.Forms
             // 
             // muscleIntensityTrackBar
             // 
+            muscleIntensityTrackBar.AccessibleName = "Sensation intensity slider";
             muscleIntensityTrackBar.AutoSize = false;
             muscleIntensityTrackBar.LargeChange = 25;
             muscleIntensityTrackBar.Location = new Point(4, 494);
@@ -336,6 +347,7 @@ namespace OWOVRC.UI.Forms
             // 
             // intensityValueInput
             // 
+            intensityValueInput.AccessibleName = "Sensation intensity input";
             intensityValueInput.Increment = new decimal(new int[] { 5, 0, 0, 0 });
             intensityValueInput.Location = new Point(346, 471);
             intensityValueInput.Maximum = new decimal(new int[] { 200, 0, 0, 0 });
@@ -472,6 +484,7 @@ namespace OWOVRC.UI.Forms
             // 
             // testSensationButton
             // 
+            testSensationButton.AccessibleName = "Sensation preview button";
             testSensationButton.Image = Properties.Resources.Play;
             testSensationButton.Location = new Point(408, 471);
             testSensationButton.Name = "testSensationButton";
@@ -485,6 +498,7 @@ namespace OWOVRC.UI.Forms
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = closeButton;
             ClientSize = new Size(681, 590);
             Controls.Add(testSensationButton);
             Controls.Add(label5);

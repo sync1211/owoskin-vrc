@@ -121,7 +121,6 @@ namespace OWOVRC.UI
 
                 sensationsChanged = false;
             }
-
         }
 
         private void LoadSettings()
@@ -282,7 +281,7 @@ namespace OWOVRC.UI
 
         private void UpdateASMStatus()
         {
-            string[] activeSensations = owo.GetRunningSensations().Keys.ToArray();
+            string[] activeSensations = [.. owo.GetRunningSensations().Keys];
             for (int i = 0; i < activeSensations.Length; i++)
             {
                 string sensationName = activeSensations[i];
@@ -824,7 +823,6 @@ namespace OWOVRC.UI
             sensationLoopLabel.Text = instance.loop ? "Yes" : "No";
             sensationDurationLabel.Text = instance.sensation.Duration.ToString("0.00s");
             sensationBlockLowerPrioLabel.Text = instance.blockLowerPrio ? "Yes" : "No";
-
         }
 
         private void AudioMonitorButton_Click(object sender, EventArgs e)
