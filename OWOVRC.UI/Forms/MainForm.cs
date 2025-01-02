@@ -15,6 +15,7 @@ using Serilog.Core;
 using Serilog.Events;
 using System.Net;
 using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
+using System.ComponentModel;
 
 namespace OWOVRC.UI
 {
@@ -54,6 +55,9 @@ namespace OWOVRC.UI
         // Indicates that the sensations display needs to be updated on the next UI update
         private bool sensationsChanged;
 
+        // DataSource for activeSensationListBox
+        private readonly BindingList<string> activeSensationList = [];
+
         public MainForm()
         {
             InitializeComponent();
@@ -68,6 +72,7 @@ namespace OWOVRC.UI
             };
             uiUpdateTimer.Elapsed += HandleTimerElapsed;
 
+            activeSensationsListBox.DataSource = activeSensationList;
             owo.OnSensationChange += HandleSensationChange;
         }
 
@@ -281,20 +286,28 @@ namespace OWOVRC.UI
 
         private void UpdateASMStatus()
         {
-            string[] activeSensations = [.. owo.GetRunningSensations().Keys];
-            for (int i = 0; i < activeSensations.Length; i++)
+            int selectedItemIndex = activeSensationsListBox.SelectedIndex;
+
+            activeSensationsListBox.BeginUpdate();
+
+            // Update entries
+            string[] activeSensationKeys = [.. owo.GetRunningSensations().Keys];
+            activeSensationList.Clear();
+            for (int i = 0; i < activeSensationKeys.Length; i++)
             {
-                string sensationName = activeSensations[i];
+                string sensationName = activeSensationKeys[i];
                 if (string.IsNullOrEmpty(sensationName))
                 {
-                    activeSensations[i] = UnnamedSensationName;
+                    sensationName = UnnamedSensationName;
                 }
+
+                activeSensationList.Add(sensationName);
             }
 
-            int selectedItemIndex = activeSensationsListBox.SelectedIndex;
-            activeSensationsListBox.DataSource = activeSensations;
+            activeSensationsListBox.EndUpdate();
 
-            if (selectedItemIndex >= 0 && selectedItemIndex < activeSensations.Length)
+            // Select previously selected item
+            if (selectedItemIndex >= 0 && selectedItemIndex < activeSensationsListBox.Items.Count)
             {
                 activeSensationsListBox.SelectedIndex = selectedItemIndex;
             }
