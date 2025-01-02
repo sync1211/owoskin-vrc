@@ -13,6 +13,19 @@ namespace OWOVRC.CLI
     {
         static void Main()
         {
+            // Check if running as admin
+            //NOTE: The point of the CLI version is to run unattended / as part of a script, so waiting
+            //      for user input is counter-productive. Though so is running as admin, so show this annoying
+            //      warning to, hopefully, make the user see reason.
+            //      (If they *really* need to run as admin, they should know how to get around this confirmation)
+            if (true || AdminDetection.IsRunningAsAdmin())
+            {
+                Console.WriteLine("/!\\ This application is not intended to be run as administrator! /!\\");
+                Console.WriteLine("If you encounter permission errors, please file an issue on GitHub instead!");
+                Console.WriteLine($"{Environment.NewLine}Please re-launch this application as unprivileged user or press ENTER to proceed...");
+                Console.ReadLine();
+            }
+
             // Logger
             LoggingLevelSwitch logLevel = Logging.SetUpLogger();
 #if DEBUG
