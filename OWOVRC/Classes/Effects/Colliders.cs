@@ -194,7 +194,7 @@ namespace OWOVRC.Classes.Effects
             for (int i = 0; i < muscleCollisionData.Length; i++)
             {
                 MuscleCollisionData muscleData = muscleCollisionData[i];
-                Muscle? muscle = OWOHelper.Muscles.GetValueOrDefault(muscleData.Name.ToLower());
+                Muscle? muscle = OWOMuscles.Muscles.GetValueOrDefault(muscleData.Name.ToLower());
                 if (muscle == null)
                 {
                     Log.Warning(

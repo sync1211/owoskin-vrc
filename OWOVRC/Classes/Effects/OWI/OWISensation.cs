@@ -58,13 +58,13 @@ namespace OWOVRC.Classes.Effects.OWI
                 string muscleKey = $"owo_suit_{muscleName.ToLower()}";
 
                 // Single muscle
-                if (OWOHelper.Muscles.TryGetValue(muscleKey, out Muscle muscle))
+                if (OWOMuscles.Muscles.TryGetValue(muscleKey, out Muscle muscle))
                 {
                     musclesScaled.Add(muscle.WithIntensity(intensity));
                 }
 
                 // Muscle group
-                else if (OWOHelper.MuscleGroups.TryGetValue(muscleName, out Muscle[]? muscles))
+                else if (OWOMuscles.MuscleGroups.TryGetValue(muscleName, out Muscle[]? muscles))
                 {
                     for (int j = 0; j < muscles.Length; j++)
                     {

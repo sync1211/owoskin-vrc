@@ -26,15 +26,15 @@ namespace OWOVRC.Classes.Effects.Sensations
         public readonly bool IsLoop;
         public readonly string Name;
         public readonly Dictionary<Muscle, int> MuscleIntensities;
-        private readonly Muscle[] musclesScaled = new Muscle[Muscle.All.Length];
+        private readonly Muscle[] musclesScaled = new Muscle[OWOMuscles.MusclesCount];
 
         // Muscles to apply the sensation
         protected static readonly Dictionary<string, Muscle[]> directions = new()
         {
             { "front", Muscle.Front },
             { "back", Muscle.Back },
-            { "left", OWOHelper.MuscleGroups["leftMuscles"] },
-            { "right", OWOHelper.MuscleGroups["rightMuscles"] },
+            { "left", OWOMuscles.MuscleGroups["leftMuscles"] },
+            { "right", OWOMuscles.MuscleGroups["rightMuscles"] },
             { "up", [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Dorsal_L, Muscle.Dorsal_L] },
             { "down", [Muscle.Abdominal_L, Muscle.Abdominal_R, Muscle.Lumbar_L, Muscle.Lumbar_R] }
         };
@@ -156,10 +156,11 @@ namespace OWOVRC.Classes.Effects.Sensations
             float maxVelocity = velocities.Max();
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
+            Muscle[] muscles = Muscle.All;
             Dictionary<Muscle, int> muscleIntensityScore = [];
-            for (int i = 0; i < Muscle.All.Length; i++)
+            for (int i = 0; i < OWOMuscles.MusclesCount; i++)
             {
-                Muscle muscle = Muscle.All[i];
+                Muscle muscle = muscles[i];
                 muscleIntensityScore.Add(muscle, 0);
             }
 
@@ -187,7 +188,7 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             // 4. Convert the muscle values to a % value of the maximum
             int maxMuscleValue = muscleIntensityScore.Values.Max();
-            for (int i = 0; i < OWOHelper.Muscles.Count; i++)
+            for (int i = 0; i < OWOMuscles.Muscles.Count; i++)
             {
                 KeyValuePair<Muscle, int> muscleData = muscleIntensityScore.ElementAt(i);
 
