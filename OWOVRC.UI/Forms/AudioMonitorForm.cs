@@ -8,7 +8,7 @@ namespace OWOVRC.UI.Forms
     public partial class AudioMonitorForm : Form
     {
         private readonly AudioEffect effect;
-        private readonly ScalingHelper scalingHelper = new(0);
+        private readonly ScalingHelper scalingHelper;
         private readonly float subBassThreshold;
         private readonly float bassThreshold;
         private readonly float trebleThreshold;
@@ -24,7 +24,19 @@ namespace OWOVRC.UI.Forms
             this.bassThreshold = bassThreshold;
             this.trebleThreshold = trebleThreshold;
 
+            float maxThreshold = GetMaxThreshold();
+            scalingHelper = new(maxThreshold);
+
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Get the maximum threshold value
+        /// </summary>
+        private float GetMaxThreshold()
+        {
+            float[] floats = [0, bassThreshold, subBassThreshold, trebleThreshold];
+            return floats.Max();
         }
 
         private void AudioMonitorForm_Shown(object sender, EventArgs e)
