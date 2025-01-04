@@ -291,7 +291,8 @@ namespace OWOVRC.UI
             activeSensationsListBox.BeginUpdate();
 
             // Update entries
-            string[] activeSensationKeys = [.. owo.GetRunningSensations().Keys];
+            Dictionary<string, AdvancedSensationStreamInstance> runningSensations = owo.GetRunningSensations();
+            string[] activeSensationKeys = [.. runningSensations.Keys];
             activeSensationList.Clear();
             for (int i = 0; i < activeSensationKeys.Length; i++)
             {
@@ -318,6 +319,11 @@ namespace OWOVRC.UI
             if (activeSensationsListBox.SelectedItem == null)
             {
                 ClearSensationDetails();
+            }
+            else
+            {
+                AdvancedSensationStreamInstance? selectedSensation = runningSensations.Values.ToArray()[activeSensationsListBox.SelectedIndex];
+                UpdateSensationDetails(selectedSensation);
             }
         }
 
@@ -830,6 +836,7 @@ namespace OWOVRC.UI
         {
             sensationNameLabel.Text = String.Empty;
             sensationLoopLabel.Text = String.Empty;
+            sensationPriorityLabel.Text = String.Empty;
             sensationDurationLabel.Text = String.Empty;
             sensationBlockLowerPrioLabel.Text = String.Empty;
         }
@@ -838,6 +845,7 @@ namespace OWOVRC.UI
         {
             sensationNameLabel.Text = instance.name;
             sensationLoopLabel.Text = instance.loop ? "Yes" : "No";
+            sensationPriorityLabel.Text = instance.sensation.Priority.ToString();
             sensationDurationLabel.Text = instance.sensation.Duration.ToString("0.00s");
             sensationBlockLowerPrioLabel.Text = instance.blockLowerPrio ? "Yes" : "No";
         }

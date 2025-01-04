@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             effectsTabControl = new TabControl();
             collidersSettingsPage = new TabPage();
+            collidersFrequencyTitle = new Label();
+            collidersFrequencyInput = new NumericUpDown();
             configureCollidersIntensityButton = new Button();
             collidersHelpLinkLabel = new LinkLabel();
             collidersPriorityLabel = new Label();
@@ -114,6 +116,8 @@
             logPage = new TabPage();
             sensationsPage = new TabPage();
             sensationInfoGroup = new GroupBox();
+            sensationPriorityTitle = new Label();
+            sensationPriorityLabel = new Label();
             sensationBlockLowerPrioLabel = new Label();
             sensationBlockLowerPrioTitle = new Label();
             sensationDurationLabel = new Label();
@@ -123,10 +127,9 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
-            collidersFrequencyTitle = new Label();
-            collidersFrequencyInput = new NumericUpDown();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).BeginInit();
             velocityBasedGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersSpeedMultiplierInput).BeginInit();
@@ -151,7 +154,6 @@
             logPage.SuspendLayout();
             sensationsPage.SuspendLayout();
             sensationInfoGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
             SuspendLayout();
             // 
             // effectsTabControl
@@ -188,6 +190,26 @@
             collidersSettingsPage.Text = "Colliders";
             collidersSettingsPage.ToolTipText = "Avatar collider effects";
             collidersSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // collidersFrequencyTitle
+            // 
+            collidersFrequencyTitle.AutoSize = true;
+            collidersFrequencyTitle.Location = new Point(6, 88);
+            collidersFrequencyTitle.Name = "collidersFrequencyTitle";
+            collidersFrequencyTitle.Size = new Size(62, 15);
+            collidersFrequencyTitle.TabIndex = 13;
+            collidersFrequencyTitle.Text = "Frequency";
+            helpToolTip.SetToolTip(collidersFrequencyTitle, "Speicifies the frequency of the collision sensation.");
+            // 
+            // collidersFrequencyInput
+            // 
+            collidersFrequencyInput.Location = new Point(262, 84);
+            collidersFrequencyInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            collidersFrequencyInput.Name = "collidersFrequencyInput";
+            collidersFrequencyInput.Size = new Size(89, 23);
+            collidersFrequencyInput.TabIndex = 12;
+            helpToolTip.SetToolTip(collidersFrequencyInput, "Speicifies the frequency of the collision sensation.");
+            collidersFrequencyInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // configureCollidersIntensityButton
             // 
@@ -815,7 +837,7 @@
             // 
             sensationLoopTitle.AutoSize = true;
             sensationLoopTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            sensationLoopTitle.Location = new Point(6, 34);
+            sensationLoopTitle.Location = new Point(6, 49);
             sensationLoopTitle.Name = "sensationLoopTitle";
             sensationLoopTitle.Size = new Size(37, 15);
             sensationLoopTitle.TabIndex = 4;
@@ -1095,6 +1117,8 @@
             // 
             // sensationInfoGroup
             // 
+            sensationInfoGroup.Controls.Add(sensationPriorityTitle);
+            sensationInfoGroup.Controls.Add(sensationPriorityLabel);
             sensationInfoGroup.Controls.Add(sensationBlockLowerPrioLabel);
             sensationInfoGroup.Controls.Add(sensationBlockLowerPrioTitle);
             sensationInfoGroup.Controls.Add(sensationDurationLabel);
@@ -1105,15 +1129,35 @@
             sensationInfoGroup.Controls.Add(sensationLoopLabel);
             sensationInfoGroup.Location = new Point(194, 6);
             sensationInfoGroup.Name = "sensationInfoGroup";
-            sensationInfoGroup.Size = new Size(198, 88);
+            sensationInfoGroup.Size = new Size(198, 101);
             sensationInfoGroup.TabIndex = 9;
             sensationInfoGroup.TabStop = false;
             sensationInfoGroup.Text = "Sensation";
             // 
+            // sensationPriorityTitle
+            // 
+            sensationPriorityTitle.AutoSize = true;
+            sensationPriorityTitle.FlatStyle = FlatStyle.Popup;
+            sensationPriorityTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sensationPriorityTitle.Location = new Point(6, 34);
+            sensationPriorityTitle.Name = "sensationPriorityTitle";
+            sensationPriorityTitle.Size = new Size(51, 15);
+            sensationPriorityTitle.TabIndex = 13;
+            sensationPriorityTitle.Text = "Priority:";
+            // 
+            // sensationPriorityLabel
+            // 
+            sensationPriorityLabel.AutoSize = true;
+            sensationPriorityLabel.Location = new Point(105, 34);
+            sensationPriorityLabel.Name = "sensationPriorityLabel";
+            sensationPriorityLabel.Size = new Size(61, 15);
+            sensationPriorityLabel.TabIndex = 14;
+            sensationPriorityLabel.Text = "<Priority>";
+            // 
             // sensationBlockLowerPrioLabel
             // 
             sensationBlockLowerPrioLabel.AutoSize = true;
-            sensationBlockLowerPrioLabel.Location = new Point(105, 64);
+            sensationBlockLowerPrioLabel.Location = new Point(105, 79);
             sensationBlockLowerPrioLabel.Name = "sensationBlockLowerPrioLabel";
             sensationBlockLowerPrioLabel.Size = new Size(84, 15);
             sensationBlockLowerPrioLabel.TabIndex = 12;
@@ -1123,7 +1167,7 @@
             // 
             sensationBlockLowerPrioTitle.AutoSize = true;
             sensationBlockLowerPrioTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            sensationBlockLowerPrioTitle.Location = new Point(6, 64);
+            sensationBlockLowerPrioTitle.Location = new Point(6, 79);
             sensationBlockLowerPrioTitle.Name = "sensationBlockLowerPrioTitle";
             sensationBlockLowerPrioTitle.Size = new Size(101, 15);
             sensationBlockLowerPrioTitle.TabIndex = 11;
@@ -1132,7 +1176,7 @@
             // sensationDurationLabel
             // 
             sensationDurationLabel.AutoSize = true;
-            sensationDurationLabel.Location = new Point(105, 49);
+            sensationDurationLabel.Location = new Point(105, 64);
             sensationDurationLabel.Name = "sensationDurationLabel";
             sensationDurationLabel.Size = new Size(69, 15);
             sensationDurationLabel.TabIndex = 10;
@@ -1142,7 +1186,7 @@
             // 
             sensationDurationTitle.AutoSize = true;
             sensationDurationTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            sensationDurationTitle.Location = new Point(6, 49);
+            sensationDurationTitle.Location = new Point(6, 64);
             sensationDurationTitle.Name = "sensationDurationTitle";
             sensationDurationTitle.Size = new Size(56, 15);
             sensationDurationTitle.TabIndex = 9;
@@ -1160,7 +1204,7 @@
             // sensationLoopLabel
             // 
             sensationLoopLabel.AutoSize = true;
-            sensationLoopLabel.Location = new Point(105, 34);
+            sensationLoopLabel.Location = new Point(105, 49);
             sensationLoopLabel.Name = "sensationLoopLabel";
             sensationLoopLabel.Size = new Size(50, 15);
             sensationLoopLabel.TabIndex = 6;
@@ -1201,26 +1245,6 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
-            // collidersFrequencyTitle
-            // 
-            collidersFrequencyTitle.AutoSize = true;
-            collidersFrequencyTitle.Location = new Point(6, 88);
-            collidersFrequencyTitle.Name = "collidersFrequencyTitle";
-            collidersFrequencyTitle.Size = new Size(62, 15);
-            collidersFrequencyTitle.TabIndex = 13;
-            collidersFrequencyTitle.Text = "Frequency";
-            helpToolTip.SetToolTip(collidersFrequencyTitle, "Speicifies the frequency of the collision sensation.");
-            // 
-            // collidersFrequencyInput
-            // 
-            collidersFrequencyInput.Location = new Point(262, 84);
-            collidersFrequencyInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            collidersFrequencyInput.Name = "collidersFrequencyInput";
-            collidersFrequencyInput.Size = new Size(89, 23);
-            collidersFrequencyInput.TabIndex = 12;
-            helpToolTip.SetToolTip(collidersFrequencyInput, "Speicifies the frequency of the collision sensation.");
-            collidersFrequencyInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1240,6 +1264,7 @@
             effectsTabControl.ResumeLayout(false);
             collidersSettingsPage.ResumeLayout(false);
             collidersSettingsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)collidersPriorityInput).EndInit();
             velocityBasedGroupBox.ResumeLayout(false);
             velocityBasedGroupBox.PerformLayout();
@@ -1274,7 +1299,6 @@
             sensationsPage.ResumeLayout(false);
             sensationInfoGroup.ResumeLayout(false);
             sensationInfoGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).EndInit();
             ResumeLayout(false);
         }
 
@@ -1375,5 +1399,7 @@
         private Label sensationBlockLowerPrioTitle;
         private Label collidersFrequencyTitle;
         private NumericUpDown collidersFrequencyInput;
+        private Label sensationPriorityTitle;
+        private Label sensationPriorityLabel;
     }
 }
