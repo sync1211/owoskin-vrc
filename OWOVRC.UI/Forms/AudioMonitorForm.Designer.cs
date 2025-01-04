@@ -82,13 +82,15 @@
             // 
             subBassIndicatorLeft.BarColor = Color.Firebrick;
             subBassIndicatorLeft.Enabled = false;
+            subBassIndicatorLeft.IndicatorColor = Color.Gray;
+            subBassIndicatorLeft.IndicatorValue = 75;
             subBassIndicatorLeft.Location = new Point(18, 37);
             subBassIndicatorLeft.Max = 100;
             subBassIndicatorLeft.Min = 0;
             subBassIndicatorLeft.Name = "subBassIndicatorLeft";
             subBassIndicatorLeft.Size = new Size(63, 181);
             subBassIndicatorLeft.TabIndex = 15;
-            subBassIndicatorLeft.Value = 0;
+            subBassIndicatorLeft.Value = 50;
             // 
             // bandsBoxLeft
             // 
@@ -132,13 +134,15 @@
             // 
             trebleIndicatorLeft.BarColor = Color.LightBlue;
             trebleIndicatorLeft.Enabled = false;
+            trebleIndicatorLeft.IndicatorColor = Color.Gray;
+            trebleIndicatorLeft.IndicatorValue = 75;
             trebleIndicatorLeft.Location = new Point(156, 37);
             trebleIndicatorLeft.Max = 100;
             trebleIndicatorLeft.Min = 0;
             trebleIndicatorLeft.Name = "trebleIndicatorLeft";
             trebleIndicatorLeft.Size = new Size(63, 181);
             trebleIndicatorLeft.TabIndex = 22;
-            trebleIndicatorLeft.Value = 0;
+            trebleIndicatorLeft.Value = 50;
             // 
             // leftBassDBLabel
             // 
@@ -164,13 +168,15 @@
             // 
             bassIndicatorLeft.BarColor = Color.DarkRed;
             bassIndicatorLeft.Enabled = false;
+            bassIndicatorLeft.IndicatorColor = Color.Gray;
+            bassIndicatorLeft.IndicatorValue = 75;
             bassIndicatorLeft.Location = new Point(87, 37);
             bassIndicatorLeft.Max = 100;
             bassIndicatorLeft.Min = 0;
             bassIndicatorLeft.Name = "bassIndicatorLeft";
             bassIndicatorLeft.Size = new Size(63, 181);
             bassIndicatorLeft.TabIndex = 19;
-            bassIndicatorLeft.Value = 0;
+            bassIndicatorLeft.Value = 50;
             // 
             // leftSubBassDBLabel
             // 
@@ -244,25 +250,29 @@
             // 
             trebleIndicatorRight.BarColor = Color.LightBlue;
             trebleIndicatorRight.Enabled = false;
+            trebleIndicatorRight.IndicatorColor = Color.Gray;
+            trebleIndicatorRight.IndicatorValue = 75;
             trebleIndicatorRight.Location = new Point(153, 37);
             trebleIndicatorRight.Max = 100;
             trebleIndicatorRight.Min = 0;
             trebleIndicatorRight.Name = "trebleIndicatorRight";
             trebleIndicatorRight.Size = new Size(63, 181);
             trebleIndicatorRight.TabIndex = 25;
-            trebleIndicatorRight.Value = 0;
+            trebleIndicatorRight.Value = 50;
             // 
             // bassIndicatorRight
             // 
             bassIndicatorRight.BarColor = Color.DarkRed;
             bassIndicatorRight.Enabled = false;
+            bassIndicatorRight.IndicatorColor = Color.Gray;
+            bassIndicatorRight.IndicatorValue = 75;
             bassIndicatorRight.Location = new Point(84, 37);
             bassIndicatorRight.Max = 100;
             bassIndicatorRight.Min = 0;
             bassIndicatorRight.Name = "bassIndicatorRight";
             bassIndicatorRight.Size = new Size(63, 181);
             bassIndicatorRight.TabIndex = 19;
-            bassIndicatorRight.Value = 0;
+            bassIndicatorRight.Value = 50;
             // 
             // rightSubBassDBLabel
             // 
@@ -288,13 +298,15 @@
             // 
             subBassIndicatorRight.BarColor = Color.Firebrick;
             subBassIndicatorRight.Enabled = false;
+            subBassIndicatorRight.IndicatorColor = Color.Gray;
+            subBassIndicatorRight.IndicatorValue = 75;
             subBassIndicatorRight.Location = new Point(16, 37);
             subBassIndicatorRight.Max = 100;
             subBassIndicatorRight.Min = 0;
             subBassIndicatorRight.Name = "subBassIndicatorRight";
             subBassIndicatorRight.Size = new Size(62, 181);
             subBassIndicatorRight.TabIndex = 15;
-            subBassIndicatorRight.Value = 0;
+            subBassIndicatorRight.Value = 50;
             // 
             // label2
             // 

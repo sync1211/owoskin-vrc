@@ -78,6 +78,9 @@ namespace OWOVRC.UI.Forms
                 leftLabel.Font = dbLeftRound >= threshold ? boldFont : regularFont;
                 rightLabel.Font = dbRightRound >= threshold ? boldFont : regularFont;
             }
+
+            leftBar.IndicatorValue = scalingHelper.ToPercentage(threshold);
+            rightBar.IndicatorValue = scalingHelper.ToPercentage(threshold);
         }
 
         private void UpdateBars(AnalyzedAudioSample sample)
