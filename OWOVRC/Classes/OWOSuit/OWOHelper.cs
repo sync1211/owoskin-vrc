@@ -45,6 +45,10 @@ namespace OWOVRC.Classes.OWOSuit
             {
                 Log.Information("Connected to OWO!");
             }
+            else
+            {
+                Log.Information("Connection to OWO failed!");
+            }
         }
 
         public void Disconnect()

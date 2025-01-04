@@ -176,12 +176,6 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            if (!OWOHelper.IsConnected)
-            {
-                Log.Information("OWO Suit not connected, skipping haptics update.");
-                return;
-            }
-
             if (activeMuscles.IsEmpty)
             {
                 owo.StopLoopedSensation(SENSATION_NAME);

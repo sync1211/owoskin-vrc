@@ -168,7 +168,7 @@ namespace OWOVRC.Classes.Effects
                 || (IsGrounded && !Settings.IgnoreWhenGrounded) // Is not flying (non-grounded setting disabled)
                 || (IsSeated && !Settings.IgnoreWhenSeated);    // Is sitting (non-seated setting disabled)
 
-            if (!OWOHelper.IsConnected || !Settings.Enabled)
+            if (!Settings.Enabled)
             {
                 return;
             }
