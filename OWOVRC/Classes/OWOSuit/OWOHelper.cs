@@ -16,7 +16,7 @@ namespace OWOVRC.Classes.OWOSuit
         private readonly AdvancedSensationManager sensationManager = AdvancedSensationManager.getInstance();
 
         // Events
-        public SensationStreamInstanceStateEvent? OnSensationChange;
+        public EventHandler<AdvancedSensationStreamInstance>? OnSensationChange;
 
         public OWOHelper(string ip = "127.0.0.1")
         {
@@ -61,7 +61,9 @@ namespace OWOVRC.Classes.OWOSuit
         public void AddSensation(Sensation sensation, Muscle[] muscles, string name)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
-            instance.AfterStateChanged += HandleSensationStateChange;
+            instance.AfterAdd += HandleSensationAdd;
+            instance.AfterUpdate += HandleSensationUpdate;
+            instance.AfterRemove += HandleSensationRemove;
 
             sensationManager.play(instance);
         }
@@ -70,7 +72,9 @@ namespace OWOVRC.Classes.OWOSuit
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
             instance.setLoop(true);
-            instance.AfterStateChanged += HandleSensationStateChange;
+            instance.AfterAdd += HandleSensationAdd;
+            instance.AfterUpdate += HandleSensationUpdate;
+            instance.AfterRemove += HandleSensationRemove;
 
             sensationManager.play(instance);
         }
@@ -78,7 +82,9 @@ namespace OWOVRC.Classes.OWOSuit
         public void UpdateLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
-            instance.AfterStateChanged += HandleSensationStateChange;
+            instance.AfterAdd += HandleSensationAdd;
+            instance.AfterUpdate += HandleSensationUpdate;
+            instance.AfterRemove += HandleSensationRemove;
 
             sensationManager.updateSensation(instance.sensation, name);
         }
@@ -86,7 +92,9 @@ namespace OWOVRC.Classes.OWOSuit
         public void AddSensation(Sensation sensation, string name)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation);
-            instance.AfterStateChanged += HandleSensationStateChange;
+            instance.AfterAdd += HandleSensationAdd;
+            instance.AfterUpdate += HandleSensationUpdate;
+            instance.AfterRemove += HandleSensationRemove;
 
             sensationManager.play(instance);
         }
@@ -119,9 +127,19 @@ namespace OWOVRC.Classes.OWOSuit
             Sensations.Clear();
         }
 
-        private void HandleSensationStateChange(AdvancedSensationStreamInstance instance, ProcessState state)
+        private void HandleSensationAdd(AdvancedSensationStreamInstance instance, AddInfo addInfo)
         {
-            OnSensationChange?.Invoke(instance, state);
+            OnSensationChange?.Invoke(this, instance);
+        }
+
+        private void HandleSensationUpdate(AdvancedSensationStreamInstance instance)
+        {
+            OnSensationChange?.Invoke(this, instance);
+        }
+
+        private void HandleSensationRemove(AdvancedSensationStreamInstance instance, RemoveInfo removeInfo)
+        {
+            OnSensationChange?.Invoke(this, instance);
         }
 
         public void Dispose()

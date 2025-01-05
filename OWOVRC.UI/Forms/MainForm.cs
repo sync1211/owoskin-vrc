@@ -76,7 +76,7 @@ namespace OWOVRC.UI
             owo.OnSensationChange += HandleSensationChange;
         }
 
-        private void HandleSensationChange(AdvancedSensationStreamInstance instance, ProcessState state)
+        private void HandleSensationChange(object? sender, AdvancedSensationStreamInstance instance)
         {
             sensationsChanged = true;
         }
