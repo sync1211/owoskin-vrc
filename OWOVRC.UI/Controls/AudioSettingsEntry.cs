@@ -91,6 +91,16 @@ namespace OWOVRC.UI.Controls
             RegisterEvents();
         }
 
+        private void Ctl_MouseWheel(object? sender, MouseEventArgs e)
+        {
+            if (e is not HandledMouseEventArgs handledEvent)
+            {
+                return;
+            }
+
+            handledEvent.Handled = true;
+        }
+
         public AudioSettingsEntry(string name, int priority = 0, AudioEffectSpectrumSettings? settings = null, OWOHelper? owoHelper = null)
         {
             InitializeComponent();
@@ -115,6 +125,10 @@ namespace OWOVRC.UI.Controls
 
             minInput.ValueChanged += MinInput_ValueChanged;
             maxInput.ValueChanged += MaxInput_ValueChanged;
+
+            minInput.MouseWheel += Ctl_MouseWheel;
+            maxInput.MouseWheel += Ctl_MouseWheel;
+            priorityInput.MouseWheel += Ctl_MouseWheel;
         }
 
         private void DragHandle1_MouseDown(object? sender, MouseEventArgs e)
