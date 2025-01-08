@@ -2,6 +2,7 @@
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Forms;
+using OWOVRC.UI.Forms.Dialogs;
 using System.ComponentModel;
 
 namespace OWOVRC.UI.Controls
@@ -75,7 +76,7 @@ namespace OWOVRC.UI.Controls
 
         private readonly OWOHelper? owoHelper;
 
-        public readonly AudioEffectSpectrumSettings? audioEffectSpectrumSettings;
+        public readonly AudioEffectSpectrumSettings audioEffectSpectrumSettings;
 
         public readonly Dictionary<int, int> MuscleIntensities = [];
 
@@ -83,13 +84,6 @@ namespace OWOVRC.UI.Controls
         //NOTE: Set these to true when setting the value programmatically
         private bool maxInput_SkipValueChanged;
         private bool minInput_SkipValueChanged;
-
-        public AudioSettingsEntry(OWOHelper? owoHelper = null)
-        {
-            this.owoHelper = owoHelper;
-            InitializeComponent();
-            RegisterEvents();
-        }
 
         private void Ctl_MouseWheel(object? sender, MouseEventArgs e)
         {
@@ -101,7 +95,7 @@ namespace OWOVRC.UI.Controls
             handledEvent.Handled = true;
         }
 
-        public AudioSettingsEntry(string name, int priority = 0, AudioEffectSpectrumSettings? settings = null, OWOHelper? owoHelper = null)
+        public AudioSettingsEntry(string name, int priority, AudioEffectSpectrumSettings settings, OWOHelper? owoHelper = null)
         {
             InitializeComponent();
             Name = name;
@@ -159,22 +153,11 @@ namespace OWOVRC.UI.Controls
 
         private void ConfigureButton_Click(object sender, EventArgs e)
         {
-            Sensation? testSensation = null;
-            int? frequency = null;
-            if (audioEffectSpectrumSettings != null)
-            {
-                testSensation = audioEffectSpectrumSettings.CreateSensation();
-                frequency = audioEffectSpectrumSettings.SensationFrequency;
-            }
+            Sensation? testSensation = audioEffectSpectrumSettings.CreateSensation();
 
-            using (MuscleIntensityForm intensityForm = new(MuscleIntensities, testSensation, $"Muscles affected by {Name}", owoHelper, frequency))
+            using (MuscleIntensityForm intensityForm = new(MuscleIntensities, testSensation, $"Muscles affected by {Name}", owoHelper))
             {
                 intensityForm.ShowDialog();
-
-                if (audioEffectSpectrumSettings != null)
-                {
-                    audioEffectSpectrumSettings.SensationFrequency = intensityForm.Frequency ?? audioEffectSpectrumSettings.SensationFrequency;
-                }
             }
         }
 
@@ -245,6 +228,21 @@ namespace OWOVRC.UI.Controls
             }
 
             MessageBox.Show("Max cannot be small than Min!", "Invalid input!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void ConfigureFrequencyButton_Click(object sender, EventArgs e)
+        {
+            using (NumberInputDialog frequencyDialog = new("Frequency:", "Edit sensation", 0, 100, audioEffectSpectrumSettings.SensationFrequency))
+            {
+                frequencyDialog.ShowDialog();
+
+                if (frequencyDialog.DialogResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+                audioEffectSpectrumSettings.SensationFrequency = frequencyDialog.Value;
+            }
         }
     }
 }

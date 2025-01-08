@@ -65,7 +65,6 @@ namespace OWOVRC.UI.Forms
             label7 = new Label();
             testSensationButton = new Button();
             helpToolTip = new ToolTip(components);
-            setSensationFrequencyButton = new Button();
             muscleGroupsTabControl.SuspendLayout();
             frontMusclesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)abdominalRMuscle).BeginInit();
@@ -495,24 +494,12 @@ namespace OWOVRC.UI.Forms
             testSensationButton.UseVisualStyleBackColor = true;
             testSensationButton.Click += TestSensationButton_Click;
             // 
-            // setSensationFrequencyButton
-            // 
-            setSensationFrequencyButton.Location = new Point(93, 555);
-            setSensationFrequencyButton.Name = "setSensationFrequencyButton";
-            setSensationFrequencyButton.Size = new Size(76, 23);
-            setSensationFrequencyButton.TabIndex = 16;
-            setSensationFrequencyButton.Text = "Frequency";
-            helpToolTip.SetToolTip(setSensationFrequencyButton, "Reset all muscles to 100%");
-            setSensationFrequencyButton.UseVisualStyleBackColor = true;
-            setSensationFrequencyButton.Click += SetSensationFrequencyButton_Click;
-            // 
             // MuscleIntensityForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = closeButton;
             ClientSize = new Size(681, 590);
-            Controls.Add(setSensationFrequencyButton);
             Controls.Add(testSensationButton);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -593,6 +580,5 @@ namespace OWOVRC.UI.Forms
         private Label label8;
         private Button testSensationButton;
         private ToolTip helpToolTip;
-        private Button setSensationFrequencyButton;
     }
 }

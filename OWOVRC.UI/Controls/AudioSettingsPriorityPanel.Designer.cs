@@ -48,7 +48,5 @@
         }
 
         #endregion
-
-        private AudioSettingsEntry audioSettingsEntry1;
     }
 }

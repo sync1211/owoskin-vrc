@@ -12,7 +12,6 @@ namespace OWOVRC.UI.Forms
         private readonly SelectableMuscle[] selectableMuscles;
         private readonly Sensation? testSensation;
         private readonly OWOHelper? owoHelper;
-        public int? Frequency;
 
         private const string SENSATION_NAME = "IntensityTest";
 
@@ -22,15 +21,12 @@ namespace OWOVRC.UI.Forms
         /// <param name="intensities">A dictionary of muscleIDs and intensities to be modified by the user.</param>
         /// <param name="sensationForTest">(optional) An example sensation for previewing intensities</param>
         /// <param name="owoHelper">(optional) An instance of OWOHelper. If not specified, preview sensations will be sent via the OWOGame SDK directly.</param>
-        public MuscleIntensityForm(Dictionary<int, int> intensities, Sensation? sensationForTest = null, string? title = null, OWOHelper? owoHelper = null, int? frequency = null)
+        public MuscleIntensityForm(Dictionary<int, int> intensities, Sensation? sensationForTest = null, string? title = null, OWOHelper? owoHelper = null)
         {
             InitializeComponent();
             this.muscleIntensities = intensities;
             this.testSensation = sensationForTest;
             this.owoHelper = owoHelper;
-
-            Frequency = frequency;
-            setSensationFrequencyButton.Visible = frequency != null;
 
             if (title != null)
             {
@@ -220,15 +216,6 @@ namespace OWOVRC.UI.Forms
                 musclesWithIntensity[i] = muscle.WithIntensity(intensity);
             }
 
-            // Custom frequency
-            Sensation sensation = testSensation;
-            if (Frequency != null)
-            {
-                sensation = SensationsFactory
-                    .Create(Frequency.Value, testSensation.Duration, 100)
-                    .WithPriority(testSensation.Priority);
-            }
-
             // Play sensation (use owoHelper if we can)
             if (owoHelper == null)
             {
@@ -243,26 +230,6 @@ namespace OWOVRC.UI.Forms
         {
             testSensationButton.Visible = testSensation != null;
             testSensationButton.Enabled = OWO.ConnectionState == ConnectionState.Connected;
-        }
-
-        private void SetSensationFrequencyButton_Click(object sender, EventArgs e)
-        {
-            if (Frequency == null)
-            {
-                return;
-            }
-
-            using (NumberInputDialog frequencyDialog = new("Frequency:", "Set sensation frequency", 0, 100, Frequency.Value))
-            {
-                frequencyDialog.ShowDialog();
-
-                if (frequencyDialog.DialogResult != DialogResult.OK)
-                {
-                    return;
-                }
-
-                Frequency = frequencyDialog.Value;
-            }
         }
     }
 }

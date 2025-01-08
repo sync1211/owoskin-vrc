@@ -30,7 +30,7 @@
         {
             DragHandle1 = new DragHandle();
             priorityInput = new NumericUpDown();
-            configureButton = new Button();
+            configureMusclesButton = new Button();
             prioLabel = new Label();
             nameLabel = new Label();
             minLabel = new Label();
@@ -38,6 +38,7 @@
             maxLabel = new Label();
             maxInput = new NumericUpDown();
             enabledCheckbox = new CheckBox();
+            configureFrequencyButton = new Button();
             ((System.ComponentModel.ISupportInitialize)priorityInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)minInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)maxInput).BeginInit();
@@ -60,17 +61,17 @@
             priorityInput.TabIndex = 1;
             priorityInput.Leave += PriorityInput_Leave;
             // 
-            // configureButton
+            // configureMusclesButton
             // 
-            configureButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            configureButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            configureButton.Location = new Point(255, 3);
-            configureButton.Name = "configureButton";
-            configureButton.Size = new Size(75, 51);
-            configureButton.TabIndex = 4;
-            configureButton.Text = "Configure";
-            configureButton.UseVisualStyleBackColor = true;
-            configureButton.Click += ConfigureButton_Click;
+            configureMusclesButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            configureMusclesButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            configureMusclesButton.Location = new Point(255, 3);
+            configureMusclesButton.Name = "configureMusclesButton";
+            configureMusclesButton.Size = new Size(75, 23);
+            configureMusclesButton.TabIndex = 4;
+            configureMusclesButton.Text = "Muscles";
+            configureMusclesButton.UseVisualStyleBackColor = true;
+            configureMusclesButton.Click += ConfigureButton_Click;
             // 
             // prioLabel
             // 
@@ -134,11 +135,24 @@
             enabledCheckbox.TabIndex = 11;
             enabledCheckbox.UseVisualStyleBackColor = true;
             // 
+            // configureFrequencyButton
+            // 
+            configureFrequencyButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            configureFrequencyButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            configureFrequencyButton.Location = new Point(255, 29);
+            configureFrequencyButton.Name = "configureFrequencyButton";
+            configureFrequencyButton.Size = new Size(75, 23);
+            configureFrequencyButton.TabIndex = 12;
+            configureFrequencyButton.Text = "Sensation";
+            configureFrequencyButton.UseVisualStyleBackColor = true;
+            configureFrequencyButton.Click += ConfigureFrequencyButton_Click;
+            // 
             // AudioSettingsEntry
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
+            Controls.Add(configureFrequencyButton);
             Controls.Add(enabledCheckbox);
             Controls.Add(maxLabel);
             Controls.Add(maxInput);
@@ -146,7 +160,7 @@
             Controls.Add(minInput);
             Controls.Add(nameLabel);
             Controls.Add(prioLabel);
-            Controls.Add(configureButton);
+            Controls.Add(configureMusclesButton);
             Controls.Add(priorityInput);
             Controls.Add(DragHandle1);
             Name = "AudioSettingsEntry";
@@ -161,7 +175,7 @@
 
         public DragHandle DragHandle1;
         private NumericUpDown priorityInput;
-        private Button configureButton;
+        private Button configureMusclesButton;
         private Label prioLabel;
         private Label nameLabel;
         private Label minLabel;
@@ -169,5 +183,6 @@
         private Label maxLabel;
         private NumericUpDown maxInput;
         private CheckBox enabledCheckbox;
+        private Button configureFrequencyButton;
     }
 }
