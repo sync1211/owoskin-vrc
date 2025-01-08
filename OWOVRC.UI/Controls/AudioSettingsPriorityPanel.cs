@@ -65,6 +65,8 @@ namespace OWOVRC.UI.Controls
             }
 
             Items.ListChanged += HandleListChanged;
+
+            HandleListChanged(this, EventArgs.Empty);
         }
 
         public void AddItems()
