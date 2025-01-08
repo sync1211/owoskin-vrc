@@ -54,7 +54,7 @@
             // 
             // priorityInput
             // 
-            priorityInput.Location = new Point(96, 31);
+            priorityInput.Location = new Point(89, 31);
             priorityInput.Name = "priorityInput";
             priorityInput.Size = new Size(48, 23);
             priorityInput.TabIndex = 1;
@@ -64,7 +64,7 @@
             // 
             configureButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             configureButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            configureButton.Location = new Point(259, 3);
+            configureButton.Location = new Point(255, 3);
             configureButton.Name = "configureButton";
             configureButton.Size = new Size(75, 51);
             configureButton.TabIndex = 4;
@@ -74,7 +74,7 @@
             // 
             // prioLabel
             // 
-            prioLabel.Location = new Point(96, 5);
+            prioLabel.Location = new Point(89, 5);
             prioLabel.Name = "prioLabel";
             prioLabel.Size = new Size(48, 23);
             prioLabel.TabIndex = 5;
@@ -87,14 +87,14 @@
             nameLabel.ForeColor = SystemColors.ControlDark;
             nameLabel.Location = new Point(39, 5);
             nameLabel.Name = "nameLabel";
-            nameLabel.Size = new Size(51, 49);
+            nameLabel.Size = new Size(44, 49);
             nameLabel.TabIndex = 6;
             nameLabel.Text = "Entry";
             nameLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // minLabel
             // 
-            minLabel.Location = new Point(150, 5);
+            minLabel.Location = new Point(143, 5);
             minLabel.Name = "minLabel";
             minLabel.Size = new Size(48, 23);
             minLabel.TabIndex = 8;
@@ -104,14 +104,14 @@
             // minInput
             // 
             minInput.DecimalPlaces = 2;
-            minInput.Location = new Point(150, 31);
+            minInput.Location = new Point(143, 31);
             minInput.Name = "minInput";
             minInput.Size = new Size(48, 23);
             minInput.TabIndex = 2;
             // 
             // maxLabel
             // 
-            maxLabel.Location = new Point(204, 5);
+            maxLabel.Location = new Point(197, 5);
             maxLabel.Name = "maxLabel";
             maxLabel.Size = new Size(48, 23);
             maxLabel.TabIndex = 10;
@@ -121,7 +121,7 @@
             // maxInput
             // 
             maxInput.DecimalPlaces = 2;
-            maxInput.Location = new Point(204, 31);
+            maxInput.Location = new Point(197, 31);
             maxInput.Name = "maxInput";
             maxInput.Size = new Size(48, 23);
             maxInput.TabIndex = 3;
@@ -150,7 +150,7 @@
             Controls.Add(priorityInput);
             Controls.Add(DragHandle1);
             Name = "AudioSettingsEntry";
-            Size = new Size(337, 57);
+            Size = new Size(333, 57);
             ((System.ComponentModel.ISupportInitialize)priorityInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)minInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)maxInput).EndInit();

@@ -91,7 +91,7 @@ namespace OWOVRC.Classes.Settings
             AudioFrequencyEnd = frequencyRange.End;
         }
 
-        public AudioEffectSpectrumSettings(string name, FrequencyRange frequencyRange, Muscle[] muscles, int baseIntensity, int priority = 1, float minDB = 12, float maxDB = 20, int sensationFrequency = 10)
+        public AudioEffectSpectrumSettings(string name, FrequencyRange frequencyRange, Muscle[] muscles, int baseIntensity, int priority = 1, float minDB = 12, float maxDB = 20, int sensationFrequency = 10, bool enabled = true)
         {
             Name = name;
             AudioFrequencyStart = frequencyRange.Start;
@@ -102,6 +102,8 @@ namespace OWOVRC.Classes.Settings
             MinDB = minDB;
             MaxDB = maxDB;
             Priority = priority;
+
+            Enabled = enabled;
 
             if (MaxDB < MinDB)
             {

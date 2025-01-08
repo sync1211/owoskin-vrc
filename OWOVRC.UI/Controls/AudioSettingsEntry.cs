@@ -160,14 +160,21 @@ namespace OWOVRC.UI.Controls
         private void ConfigureButton_Click(object sender, EventArgs e)
         {
             Sensation? testSensation = null;
+            int? frequency = null;
             if (audioEffectSpectrumSettings != null)
             {
                 testSensation = audioEffectSpectrumSettings.CreateSensation();
+                frequency = audioEffectSpectrumSettings.SensationFrequency;
             }
 
-            using (MuscleIntensityForm intensityForm = new(MuscleIntensities, testSensation, $"Muscles affected by {Name}", owoHelper))
+            using (MuscleIntensityForm intensityForm = new(MuscleIntensities, testSensation, $"Muscles affected by {Name}", owoHelper, frequency))
             {
                 intensityForm.ShowDialog();
+
+                if (audioEffectSpectrumSettings != null)
+                {
+                    audioEffectSpectrumSettings.SensationFrequency = intensityForm.Frequency ?? audioEffectSpectrumSettings.SensationFrequency;
+                }
             }
         }
 

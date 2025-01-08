@@ -65,6 +65,7 @@ namespace OWOVRC.UI.Forms
             label7 = new Label();
             testSensationButton = new Button();
             helpToolTip = new ToolTip(components);
+            setSensationFrequencyButton = new Button();
             muscleGroupsTabControl.SuspendLayout();
             frontMusclesPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)abdominalRMuscle).BeginInit();
@@ -128,11 +129,11 @@ namespace OWOVRC.UI.Forms
             // abdominalRMuscle
             // 
             abdominalRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            abdominalRMuscle.IsActive = false;
             abdominalRMuscle.ActiveImage = Properties.Resources.muscleAbdominalL_Active;
             abdominalRMuscle.BackgroundImage = Properties.Resources.muscleAbdominalL_Inactive;
             abdominalRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             abdominalRMuscle.InactiveImage = Properties.Resources.muscleAbdominalL_Inactive;
+            abdominalRMuscle.IsActive = false;
             abdominalRMuscle.Location = new Point(358, 269);
             abdominalRMuscle.Muscle = MusclesEnum.Abdominal_R;
             abdominalRMuscle.Name = "abdominalRMuscle";
@@ -144,11 +145,11 @@ namespace OWOVRC.UI.Forms
             // abdominalLMuscle
             // 
             abdominalLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            abdominalLMuscle.IsActive = false;
             abdominalLMuscle.ActiveImage = Properties.Resources.muscleAbdominalR_Active;
             abdominalLMuscle.BackgroundImage = Properties.Resources.muscleAbdominalR_Inactive;
             abdominalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             abdominalLMuscle.InactiveImage = Properties.Resources.muscleAbdominalR_Inactive;
+            abdominalLMuscle.IsActive = false;
             abdominalLMuscle.Location = new Point(248, 269);
             abdominalLMuscle.Muscle = MusclesEnum.Abdominal_L;
             abdominalLMuscle.Name = "abdominalLMuscle";
@@ -160,11 +161,11 @@ namespace OWOVRC.UI.Forms
             // armRMuscle
             // 
             armRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            armRMuscle.IsActive = false;
             armRMuscle.ActiveImage = Properties.Resources.muscleArmL_Active;
             armRMuscle.BackgroundImage = Properties.Resources.muscleArmL_Inactive;
             armRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             armRMuscle.InactiveImage = Properties.Resources.muscleArmL_Inactive;
+            armRMuscle.IsActive = false;
             armRMuscle.Location = new Point(456, 169);
             armRMuscle.Muscle = MusclesEnum.Arm_R;
             armRMuscle.Name = "armRMuscle";
@@ -176,11 +177,11 @@ namespace OWOVRC.UI.Forms
             // pectoralRMuscle
             // 
             pectoralRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            pectoralRMuscle.IsActive = false;
             pectoralRMuscle.ActiveImage = Properties.Resources.musclePectoralL_Active;
             pectoralRMuscle.BackgroundImage = Properties.Resources.musclePectoralL_Inactive;
             pectoralRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             pectoralRMuscle.InactiveImage = Properties.Resources.musclePectoralL_Inactive;
+            pectoralRMuscle.IsActive = false;
             pectoralRMuscle.Location = new Point(337, 121);
             pectoralRMuscle.Muscle = MusclesEnum.Pectoral_R;
             pectoralRMuscle.Name = "pectoralRMuscle";
@@ -192,11 +193,11 @@ namespace OWOVRC.UI.Forms
             // pectoralLMuscle
             // 
             pectoralLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            pectoralLMuscle.IsActive = false;
             pectoralLMuscle.ActiveImage = Properties.Resources.musclePectoralR_Active;
             pectoralLMuscle.BackgroundImage = Properties.Resources.musclePectoralR_Inactive;
             pectoralLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             pectoralLMuscle.InactiveImage = Properties.Resources.musclePectoralR_Inactive;
+            pectoralLMuscle.IsActive = false;
             pectoralLMuscle.Location = new Point(224, 120);
             pectoralLMuscle.Muscle = MusclesEnum.Pectoral_L;
             pectoralLMuscle.Name = "pectoralLMuscle";
@@ -208,11 +209,11 @@ namespace OWOVRC.UI.Forms
             // armLMuscle
             // 
             armLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            armLMuscle.IsActive = false;
             armLMuscle.ActiveImage = Properties.Resources.muscleArmR_Active;
             armLMuscle.BackgroundImage = Properties.Resources.muscleArmR_Inactive;
             armLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             armLMuscle.InactiveImage = Properties.Resources.muscleArmR_Inactive;
+            armLMuscle.IsActive = false;
             armLMuscle.Location = new Point(130, 173);
             armLMuscle.Muscle = MusclesEnum.Arm_L;
             armLMuscle.Name = "armLMuscle";
@@ -249,11 +250,11 @@ namespace OWOVRC.UI.Forms
             // lumbarRMuscle
             // 
             lumbarRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            lumbarRMuscle.IsActive = false;
             lumbarRMuscle.ActiveImage = Properties.Resources.muscleLumbarL_Active;
             lumbarRMuscle.BackgroundImage = Properties.Resources.muscleLumbarL_Inactive;
             lumbarRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             lumbarRMuscle.InactiveImage = Properties.Resources.muscleLumbarL_Inactive;
+            lumbarRMuscle.IsActive = false;
             lumbarRMuscle.Location = new Point(348, 300);
             lumbarRMuscle.Muscle = MusclesEnum.Lumbar_R;
             lumbarRMuscle.Name = "lumbarRMuscle";
@@ -265,11 +266,11 @@ namespace OWOVRC.UI.Forms
             // lumbarLMuscle
             // 
             lumbarLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            lumbarLMuscle.IsActive = false;
             lumbarLMuscle.ActiveImage = Properties.Resources.muscleLumbarR_Active;
             lumbarLMuscle.BackgroundImage = Properties.Resources.muscleLumbarR_Inactive;
             lumbarLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             lumbarLMuscle.InactiveImage = Properties.Resources.muscleLumbarR_Inactive;
+            lumbarLMuscle.IsActive = false;
             lumbarLMuscle.Location = new Point(258, 300);
             lumbarLMuscle.Muscle = MusclesEnum.Lumbar_L;
             lumbarLMuscle.Name = "lumbarLMuscle";
@@ -281,11 +282,11 @@ namespace OWOVRC.UI.Forms
             // dorsalRMuscle
             // 
             dorsalRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            dorsalRMuscle.IsActive = false;
             dorsalRMuscle.ActiveImage = Properties.Resources.muscleDorsalL_Active;
             dorsalRMuscle.BackgroundImage = Properties.Resources.muscleDorsalL_Inactive;
             dorsalRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             dorsalRMuscle.InactiveImage = Properties.Resources.muscleDorsalL_Inactive;
+            dorsalRMuscle.IsActive = false;
             dorsalRMuscle.Location = new Point(345, 192);
             dorsalRMuscle.Muscle = MusclesEnum.Dorsal_R;
             dorsalRMuscle.Name = "dorsalRMuscle";
@@ -297,11 +298,11 @@ namespace OWOVRC.UI.Forms
             // dorsalLMuscle
             // 
             dorsalLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            dorsalLMuscle.IsActive = false;
             dorsalLMuscle.ActiveImage = Properties.Resources.muscleDorsalR_Active;
             dorsalLMuscle.BackgroundImage = Properties.Resources.muscleDorsalR_Inactive;
             dorsalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             dorsalLMuscle.InactiveImage = Properties.Resources.muscleDorsalR_Inactive;
+            dorsalLMuscle.IsActive = false;
             dorsalLMuscle.Location = new Point(253, 192);
             dorsalLMuscle.Muscle = MusclesEnum.Dorsal_L;
             dorsalLMuscle.Name = "dorsalLMuscle";
@@ -494,12 +495,24 @@ namespace OWOVRC.UI.Forms
             testSensationButton.UseVisualStyleBackColor = true;
             testSensationButton.Click += TestSensationButton_Click;
             // 
+            // setSensationFrequencyButton
+            // 
+            setSensationFrequencyButton.Location = new Point(93, 555);
+            setSensationFrequencyButton.Name = "setSensationFrequencyButton";
+            setSensationFrequencyButton.Size = new Size(76, 23);
+            setSensationFrequencyButton.TabIndex = 16;
+            setSensationFrequencyButton.Text = "Frequency";
+            helpToolTip.SetToolTip(setSensationFrequencyButton, "Reset all muscles to 100%");
+            setSensationFrequencyButton.UseVisualStyleBackColor = true;
+            setSensationFrequencyButton.Click += SetSensationFrequencyButton_Click;
+            // 
             // MuscleIntensityForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = closeButton;
             ClientSize = new Size(681, 590);
+            Controls.Add(setSensationFrequencyButton);
             Controls.Add(testSensationButton);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -580,5 +593,6 @@ namespace OWOVRC.UI.Forms
         private Label label8;
         private Button testSensationButton;
         private ToolTip helpToolTip;
+        private Button setSensationFrequencyButton;
     }
 }
