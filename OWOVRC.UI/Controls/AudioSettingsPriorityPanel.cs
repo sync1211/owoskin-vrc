@@ -1,9 +1,6 @@
-﻿using OWOGame;
-using OWOVRC.Classes.OWOSuit;
+﻿using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
-using System.Windows.Forms.VisualStyles;
 
 namespace OWOVRC.UI.Controls
 {
@@ -27,7 +24,6 @@ namespace OWOVRC.UI.Controls
         {
             InitializeComponent();
             Items.ListChanged += HandleListChanged;
-            AddItems();
         }
 
         private void HandleListChanged(object? sender, EventArgs e)
@@ -65,6 +61,8 @@ namespace OWOVRC.UI.Controls
             }
 
             Items.ListChanged += HandleListChanged;
+
+            HandleListChanged(this, EventArgs.Empty);
         }
 
         public void AddItems()
@@ -83,12 +81,15 @@ namespace OWOVRC.UI.Controls
                 item.OnPriorityChanged += HandlePriorityChanged;
 
                 Controls.Add(item);
+
+                item.MaximumSize = new(Width - 21, item.Height);
             }
 
             AddMouseMoveHandler(this);
             ResumeLayout(true);
 
             UpdateItemOrder();
+            SetupScrollbars();
         }
 
         public void UpdateItemOrder()
@@ -109,7 +110,15 @@ namespace OWOVRC.UI.Controls
             Refresh();
         }
 
-        public void AddMouseMoveHandler(Control control)
+        private void SetupScrollbars()
+        {
+            AutoScroll = false;
+            HorizontalScroll.Maximum = 0;
+            VerticalScroll.Visible = true;
+            AutoScroll = true;
+        }
+
+        private void AddMouseMoveHandler(Control control)
         {
             if (control is DragHandle)
             {

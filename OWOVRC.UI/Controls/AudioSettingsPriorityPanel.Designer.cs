@@ -36,27 +36,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            audioSettingsEntry1 = new AudioSettingsEntry();
             SuspendLayout();
-            // 
-            // audioSettingsEntry1
-            // 
-            audioSettingsEntry1.BackColor = SystemColors.Control;
-            audioSettingsEntry1.Location = new Point(3, 3);
-            audioSettingsEntry1.MinimumSize = new Size(464, 31);
-            audioSettingsEntry1.Name = "audioSettingsEntry1";
-            audioSettingsEntry1.Priority = 0;
-            audioSettingsEntry1.Size = new Size(464, 31);
-            audioSettingsEntry1.TabIndex = 0;
             // 
             // AudioSettingsPriorityPanel
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = Color.White;
-            Controls.Add(audioSettingsEntry1);
             Name = "AudioSettingsPriorityPanel";
-            Size = new Size(470, 217);
+            Size = new Size(466, 192);
             ResumeLayout(false);
         }
 
