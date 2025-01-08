@@ -1,4 +1,9 @@
-﻿using System.ComponentModel;
+﻿using OWOGame;
+using OWOVRC.Classes.OWOSuit;
+using OWOVRC.Classes.Settings;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Windows.Forms.VisualStyles;
 
 namespace OWOVRC.UI.Controls
 {
@@ -47,6 +52,19 @@ namespace OWOVRC.UI.Controls
             {
                 UpdateItemOrder();
             }
+        }
+
+        public void ImportSettings(AudioEffectSpectrumSettings[] spectrumSettings, OWOHelper owo)
+        {
+            Items.ListChanged -= HandleListChanged;
+
+            foreach (AudioEffectSpectrumSettings settings in spectrumSettings)
+            {
+                AudioSettingsEntry entry = AudioSettingsEntry.FromSpectrumSettings(settings, owo);
+                Items.Add(entry);
+            }
+
+            Items.ListChanged += HandleListChanged;
         }
 
         public void AddItems()

@@ -940,11 +940,7 @@ namespace OWOVRC.UI
             }
 
             audioSettingsPriorityPanel1.Items.Clear();
-            foreach (AudioEffectSpectrumSettings settings in audioSettings.SpectrumSettings)
-            {
-                AudioSettingsEntry entry = AudioSettingsEntry.FromSpectrumSettings(settings, owo);
-                audioSettingsPriorityPanel1.Items.Add(entry);
-            }
+            audioSettingsPriorityPanel1.ImportSettings(audioSettings.SpectrumSettings, owo);
         }
     }
 }
