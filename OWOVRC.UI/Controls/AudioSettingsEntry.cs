@@ -2,11 +2,26 @@
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Forms;
+using System.ComponentModel;
 
 namespace OWOVRC.UI.Controls
 {
     public partial class AudioSettingsEntry : UserControl
     {
+        [Localizable(true)]
+        [Description("If the elements should support reordering drag&drop"), Category("Data")]
+        public bool AllowDrag
+        {
+            get
+            {
+                return DragHandle1.Enabled;
+            }
+            set
+            {
+                DragHandle1.SetEnabled(value);
+            }
+        }
+
         public bool IsEnabled
         {
             get

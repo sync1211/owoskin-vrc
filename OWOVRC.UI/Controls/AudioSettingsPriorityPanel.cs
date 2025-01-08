@@ -7,6 +7,9 @@ namespace OWOVRC.UI.Controls
         [Localizable(true)]
         [Description("The spacing between entries"), Category("Data")]
         public int itemSpacing = 2;
+        [Localizable(true)]
+        [Description("If the elements should support reordering drag&drop"), Category("Data")]
+        public bool DragReordering;
 
         public readonly BindingList<AudioSettingsEntry> Items = [];
 
@@ -76,6 +79,8 @@ namespace OWOVRC.UI.Controls
 
             foreach (AudioSettingsEntry item in Items.OrderByDescending((entry) => entry.Priority))
             {
+                item.AllowDrag = DragReordering;
+
                 item.Top = lastY;
                 item.Left = itemSpacing;
                 item.Width = Width - (itemSpacing * 2);
@@ -102,7 +107,7 @@ namespace OWOVRC.UI.Controls
 
         public void HandleItemDragStart(object? sender, MouseEventArgs e)
         {
-            if (sender is not AudioSettingsEntry entry)
+            if (sender is not AudioSettingsEntry entry || !DragReordering)
             {
                 return;
             }
@@ -183,10 +188,10 @@ namespace OWOVRC.UI.Controls
             UpdatePriorities();
             pickedUpEntry = null;
 
-            ResortItems();
+            SortItems();
         }
 
-        private void ResortItems()
+        private void SortItems()
         {
             Items.ListChanged -= HandleListChanged;
 
@@ -195,6 +200,7 @@ namespace OWOVRC.UI.Controls
             Items.Clear();
             foreach (AudioSettingsEntry item in newItems)
             {
+                item.AllowDrag = DragReordering;
                 Items.Add(item);
             }
 

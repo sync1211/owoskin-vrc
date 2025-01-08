@@ -10,6 +10,15 @@
             InitializeComponent();
         }
 
+        public void SetEnabled(bool enabled)
+        {
+            Enabled = enabled;
+            if (!enabled)
+            {
+                Cursor = enabled ? Cursors.NoMoveVert : Cursors.No;
+            }
+        }
+
         protected override void OnCreateControl()
         {
             base.CreateControl();
