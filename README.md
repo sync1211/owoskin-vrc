@@ -11,9 +11,9 @@ Yet another VRChat integration for the [OWO Skin](https://owogame.com/).
 * Support for OWO enabled worlds ([OWO World Integrator](https://github.com/RevoForge/Vrchat-OWO-Integration))
 * Custom sensations triggered via OSC
 
-## Avatar setup
+## Usage
 
-For detailed avatar setup instructions and features, check out the [Avatar Setup Guide](https://github.com/sync1211/owoskin-vrc/wiki/VRChat-Avatar-Setup).
+Please refer to the [Wiki](https://github.com/sync1211/owoskin-vrc/wiki) for a quickstart guide and setup instructions.
 
 ## Credits
 
