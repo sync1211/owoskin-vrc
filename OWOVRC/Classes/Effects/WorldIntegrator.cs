@@ -146,8 +146,6 @@ namespace OWOVRC.Classes.Effects
 
         private void PlaySensations(OWISensation[] sensations)
         {
-            float intensityMultiplier = ((float)Settings.Intensity / 100.0f);
-
             for (int i = 0; i < sensations.Length; i++)
             {
                 OWISensation owiSensation = sensations[i];
@@ -158,9 +156,9 @@ namespace OWOVRC.Classes.Effects
                     return;
                 }
 
-                Muscle[] muscles = owiSensation.GetMusclesWithIntensity();
-                Sensation sensation = owiSensation.AsSensation()
-                    .MultiplyIntensityBy((Multiplier)intensityMultiplier);
+                // Get Sensation
+                Muscle[] muscles = owiSensation.GetMusclesWithIntensity(Settings.Intensity / 100f);
+                Sensation sensation = owiSensation.AsSensation();
 
                 owo.AddSensation(sensation, muscles, owiSensation.Sensation);
             }

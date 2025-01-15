@@ -45,7 +45,7 @@ namespace OWOVRC.Classes.Effects.OWI
             return SensationsFactory.Create(Frequency, Duration, Intensity, Rampup, Rampdown, ExitDelay);
         }
 
-        public Muscle[] GetMusclesWithIntensity()
+        public Muscle[] GetMusclesWithIntensity(float multiplier = 1)
         {
             List<Muscle> musclesScaled = [];
 
@@ -54,16 +54,18 @@ namespace OWOVRC.Classes.Effects.OWI
             {
                 KeyValuePair<string, int> muscleData = Muscles.ElementAt(i);
                 string muscleName = muscleData.Key;
-                int intensity = muscleData.Value;
                 string muscleKey = $"owo_suit_{muscleName.ToLower()}";
 
-                // Single muscle
+                // Calculate intensity
+                int intensity = (int) (muscleData.Value * multiplier);
+
+                // Get Single muscle
                 if (OWOMuscles.Muscles.TryGetValue(muscleKey, out Muscle muscle))
                 {
                     musclesScaled.Add(muscle.WithIntensity(intensity));
                 }
 
-                // Muscle group
+                // Get Muscle group
                 else if (OWOMuscles.MuscleGroups.TryGetValue(muscleName, out Muscle[]? muscles))
                 {
                     for (int j = 0; j < muscles.Length; j++)
