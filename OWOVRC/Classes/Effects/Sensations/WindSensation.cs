@@ -20,10 +20,7 @@ namespace OWOVRC.Classes.Effects.Sensations
             }
         }
 
-        public WindSensation(float durationSeconds = 0.2f): base(_Name, _frequency, _intensity / 4, durationSeconds, 0, 0, 0, true)
-        {
-            directions["down"] = [.. Muscle.Front, .. Muscle.Back];
-        }
+        public WindSensation(float durationSeconds = 0.2f): base(_Name, _frequency, _intensity / 4, durationSeconds, 0, 0, 0, true, new MuscleDirectionGroups(front: [.. Muscle.Front, .. Muscle.Back])) { }
 
         /// <summary>
         /// Creates a sensation from the wind velocity.

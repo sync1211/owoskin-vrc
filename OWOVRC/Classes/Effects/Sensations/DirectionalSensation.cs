@@ -29,31 +29,9 @@ namespace OWOVRC.Classes.Effects.Sensations
         private readonly Muscle[] musclesScaled = new Muscle[OWOMuscles.MusclesCount];
 
         // Muscles to apply the sensation
-        protected static readonly Dictionary<string, Muscle[]> directions = new()
-        {
-            { "front", Muscle.Front },
-            { "back", Muscle.Back },
-            { "left", OWOMuscles.MuscleGroups["leftMuscles"] },
-            { "right", OWOMuscles.MuscleGroups["rightMuscles"] },
-            { "up", [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Dorsal_L, Muscle.Dorsal_L] },
-            { "down", [Muscle.Abdominal_L, Muscle.Abdominal_R, Muscle.Lumbar_L, Muscle.Lumbar_R] }
-        };
-        /*
-            (For reference)
+        protected readonly MuscleDirectionGroups directions = new();
 
-            
-                    Front                            Back
-           ------------------------         ------------------------
-              Arm_R        Arm_L               
-
-
-            Pectoral_R  Pectoral_L            Dorsal_R  Dorsal_L
-                                              
-                                              
-            Abdominal_R  Abdominal_L          Lumbar_R  Lumbar_L
-        */
-
-        protected DirectionalSensation(string name, int frequency, int intensity, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0, bool loop = false)
+        protected DirectionalSensation(string name, int frequency, int intensity, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0, bool loop = false, MuscleDirectionGroups? directions = null)
         {
             Name = name;
             Frequency = frequency;
@@ -63,6 +41,8 @@ namespace OWOVRC.Classes.Effects.Sensations
             RampDown = rampDown;
             ExitDelay = exitDelay;
             IsLoop = loop;
+
+            this.directions = directions ?? this.directions;
 
             // No direction specified -> front
             MuscleIntensities = [];
@@ -156,12 +136,12 @@ namespace OWOVRC.Classes.Effects.Sensations
             float maxVelocity = velocities.Max();
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
-            Muscle[] muscles = Muscle.All;
             Dictionary<Muscle, int> muscleIntensityScore = [];
-            for (int i = 0; i < OWOMuscles.MusclesCount; i++)
+
+            Muscle[] muscles = Muscle.All;
+            for (int i = 0; i < muscles.Length; i++)
             {
-                Muscle muscle = muscles[i];
-                muscleIntensityScore.Add(muscle, 0);
+                muscleIntensityScore.Add(muscles[i], 0);
             }
 
             if (maxVelocity == 0)
@@ -179,12 +159,12 @@ namespace OWOVRC.Classes.Effects.Sensations
             int downWeight = (int)(downVelocity / maxVelocity) * 100;
 
             // 3. For each direction, add its weight to the muscles affected by it
-            AddMuscleWeights(muscleIntensityScore, "front", frontWeight);
-            AddMuscleWeights(muscleIntensityScore, "back", backWeight);
-            AddMuscleWeights(muscleIntensityScore, "left", leftWeight);
-            AddMuscleWeights(muscleIntensityScore, "right", rightWeight);
-            AddMuscleWeights(muscleIntensityScore, "up", upWeight);
-            AddMuscleWeights(muscleIntensityScore, "down", downWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Front, frontWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Back, backWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Left, leftWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Right, rightWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Up, upWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Down, downWeight);
 
             // 4. Convert the muscle values to a % value of the maximum
             int maxMuscleValue = muscleIntensityScore.Values.Max();
@@ -202,9 +182,8 @@ namespace OWOVRC.Classes.Effects.Sensations
             ApplyMuscleIntensities();
         }
 
-        private static void AddMuscleWeights(Dictionary<Muscle, int> muscles, string directionName, int weight)
+        private static void AddMuscleWeights(Dictionary<Muscle, int> muscles, Muscle[] directionMuscles, int weight)
         {
-            Muscle[] directionMuscles = directions[directionName];
             for (int i = 0; i < directionMuscles.Length; i++)
             {
                 Muscle muscle = directionMuscles[i];
