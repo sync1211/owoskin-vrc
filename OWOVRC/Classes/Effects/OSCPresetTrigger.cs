@@ -48,34 +48,6 @@ namespace OWOVRC.Classes.Effects
             ProcessMessage(message);
         }
 
-        private static float GetIntensityFromMessage(OSCMessage message)
-        {
-            // Float
-            try
-            {
-                return message.Values.ReadFloatElement(0);
-            }
-            catch (InvalidOperationException)
-            {
-                Log.Debug("Unable to parse OSC message as float value!");
-            }
-
-            // Bool
-            try
-            {
-                if (message.Values.ReadBooleanElement(0))
-                {
-                    return 1;
-                }
-            }
-            catch (InvalidOperationException)
-            {
-                Log.Error("Unable to parse OSC message at {address} as boolean value!", message.Address);
-            }
-
-            return 0;
-        }
-
         public OSCSensationPreset? GetPresetFromMessage(OSCMessage message, out Muscle[] muscles)
         {
             muscles = [];
@@ -128,7 +100,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Get intensity
-            float oscIntensity = GetIntensityFromMessage(message);
+            float oscIntensity = OSCHelpers.GetFloatValueFromMessage(message);
             if (oscIntensity == 0)
             {
                 return;

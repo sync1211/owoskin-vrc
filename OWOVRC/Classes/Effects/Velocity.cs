@@ -108,7 +108,7 @@ namespace OWOVRC.Classes.Effects
                 return false;
             }
 
-            float value = message.Values.ReadFloatElement(0);
+            float value = OSCHelpers.GetFloatValueFromMessage(message);
 
             switch (message.Address)
             {

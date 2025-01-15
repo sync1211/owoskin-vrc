@@ -67,7 +67,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             string muscle = message.Address;
-            float proximity = GetFloatFromMessage(message);
+            float proximity = OSCHelpers.GetFloatValueFromMessage(message);
 
             if (proximity > 0)
             {
@@ -135,38 +135,6 @@ namespace OWOVRC.Classes.Effects
                 owo.StopLoopedSensation(SENSATION_NAME);
                 timer.Stop();
             }
-        }
-
-        private static float GetFloatFromMessage(OSCMessage message)
-        {
-            try
-            {
-                return message.Values.ReadFloatElement(0);
-            }
-            catch (InvalidOperationException)
-            {
-                Log.Debug("No valid float value received in message for {address}, trying int...", message.Address);
-            }
-
-            try
-            {
-                return message.Values.ReadIntElement(0);
-            }
-            catch (InvalidOperationException)
-            {
-                Log.Debug("No int or float value received in message for {address}!", message.Address);
-            }
-
-            try
-            {
-                return message.Values.ReadBooleanElement(0) ? 1 : 0;
-            }
-            catch (InvalidOperationException)
-            {
-                Log.Warning("No int, float or boolean value received in message for {address}!", message.Address);
-            }
-
-            return 0;
         }
 
         private void UpdateHaptics()
