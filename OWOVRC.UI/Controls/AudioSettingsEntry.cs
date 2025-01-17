@@ -215,11 +215,12 @@ namespace OWOVRC.UI.Controls
                 return;
             }
 
-            if (Min >= Max)
+            if (Min < Max)
             {
-                Min = 1;
+                return;
             }
 
+            Min = 1;
             MessageBox.Show("Min cannot be larger than Max!", "Invalid input!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
@@ -232,11 +233,12 @@ namespace OWOVRC.UI.Controls
                 return;
             }
 
-            if (Min >= Max)
+            if (Min < Max)
             {
-                Max = Min + 1;
+                return;
             }
 
+            Max = Min + 1;
             MessageBox.Show("Max cannot be small than Min!", "Invalid input!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
