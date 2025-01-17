@@ -211,7 +211,7 @@ namespace OWOVRC.Classes.Effects
 
         private void PlayWindSensation(int intensity)
         {
-            float windVelX = VelX * -1;
+            float windVelX = VelX;
             float windVelY = VelY * -1;
             float windVelZ = VelZ * -1;
 
