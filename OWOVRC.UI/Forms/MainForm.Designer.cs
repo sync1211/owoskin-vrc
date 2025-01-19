@@ -921,7 +921,7 @@
             // openDiscoveryButton
             // 
             openDiscoveryButton.Image = Properties.Resources.Search;
-            openDiscoveryButton.Location = new Point(150, 16);
+            openDiscoveryButton.Location = new Point(165, 16);
             openDiscoveryButton.Name = "openDiscoveryButton";
             openDiscoveryButton.Size = new Size(23, 23);
             openDiscoveryButton.TabIndex = 13;
@@ -969,7 +969,7 @@
             oscPortInput.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
             oscPortInput.Minimum = new decimal(new int[] { 1024, 0, 0, 0 });
             oscPortInput.Name = "oscPortInput";
-            oscPortInput.Size = new Size(100, 23);
+            oscPortInput.Size = new Size(115, 23);
             oscPortInput.TabIndex = 9;
             helpToolTip.SetToolTip(oscPortInput, "Port to listen for OSC messages from VRChat");
             oscPortInput.Value = new decimal(new int[] { 1024, 0, 0, 0 });
@@ -979,7 +979,7 @@
             // 
             owoIPInput.Location = new Point(74, 16);
             owoIPInput.Name = "owoIPInput";
-            owoIPInput.Size = new Size(76, 23);
+            owoIPInput.Size = new Size(91, 23);
             owoIPInput.TabIndex = 8;
             owoIPInput.Text = "127.0.0.1";
             helpToolTip.SetToolTip(owoIPInput, "IP of the OWO app to connect to");

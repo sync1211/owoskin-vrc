@@ -36,6 +36,7 @@
             appListBox.FormattingEnabled = true;
             appListBox.Name = "appListBox";
             appListBox.SelectedValueChanged += ListBox1_SelectedValueChanged;
+            appListBox.Size = new System.Drawing.Size(294, 319);
             // 
             // selectEntryButton
             // 

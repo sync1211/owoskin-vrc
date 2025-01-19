@@ -10,7 +10,11 @@ namespace OWOVRC.UI.Forms
         public AppDiscoveryForm()
         {
             InitializeComponent();
-            timer = new() { Interval = 500, AutoReset = true };
+            timer = new()
+            {
+                Interval = 500,
+                AutoReset = true
+            };
             timer.Elapsed += TimerElapsed;
         }
 
