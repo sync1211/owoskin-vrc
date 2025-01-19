@@ -32,36 +32,50 @@
             // 
             // appListBox
             // 
-            resources.ApplyResources(appListBox, "appListBox");
             appListBox.FormattingEnabled = true;
+            appListBox.ItemHeight = 15;
+            appListBox.Location = new Point(12, 12);
             appListBox.Name = "appListBox";
+            appListBox.Size = new Size(294, 319);
+            appListBox.TabIndex = 0;
             appListBox.SelectedValueChanged += ListBox1_SelectedValueChanged;
-            appListBox.Size = new System.Drawing.Size(294, 319);
             // 
             // selectEntryButton
             // 
-            resources.ApplyResources(selectEntryButton, "selectEntryButton");
+            selectEntryButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            selectEntryButton.Enabled = false;
+            selectEntryButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            selectEntryButton.Location = new Point(231, 341);
             selectEntryButton.Name = "selectEntryButton";
+            selectEntryButton.Size = new Size(75, 23);
+            selectEntryButton.TabIndex = 1;
+            selectEntryButton.Text = "Select";
             selectEntryButton.UseVisualStyleBackColor = true;
             selectEntryButton.Click += SelectEntryButton_Click;
             // 
             // closeButton
             // 
-            resources.ApplyResources(closeButton, "closeButton");
+            closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            closeButton.Location = new Point(150, 341);
             closeButton.Name = "closeButton";
+            closeButton.Size = new Size(76, 23);
+            closeButton.TabIndex = 2;
+            closeButton.Text = "Cancel";
             closeButton.UseVisualStyleBackColor = true;
             closeButton.Click += CloseButton_Click;
             // 
             // AppDiscoveryForm
             // 
             AcceptButton = selectEntryButton;
-            resources.ApplyResources(this, "$this");
             CancelButton = closeButton;
+            ClientSize = new Size(318, 376);
             Controls.Add(closeButton);
             Controls.Add(selectEntryButton);
             Controls.Add(appListBox);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AppDiscoveryForm";
+            Text = "Searching for MyOWO...";
             FormClosing += AppDiscoveryForm_FormClosing;
             Shown += AppDiscoveryForm_Shown;
             ResumeLayout(false);
