@@ -37,35 +37,33 @@ namespace OWOVRC.Classes
                 return default;
             }
 
-            string settingsData = File.ReadAllText(settingsFilePath);
-            if (string.IsNullOrWhiteSpace(settingsData))
+            using (FileStream fileStream = new(settingsFilePath, FileMode.Open))
             {
-                Log.Error("Failed to load {0} settings: file is empty", displayName);
-                return default;
-            }
+                if (fileStream.Length == 0)
+                {
+                    Log.Error("Failed to load {0} settings: file is empty", displayName);
+                    return default;
+                }
 
-            T? settings = JsonSerializer.Deserialize(settingsData, jsonTypeInfo);
-            if (settings == null)
-            {
-                Log.Error("Failed to load {0} settings: failed to deserialize", displayName);
-                return default;
-            }
+                T? settings = JsonSerializer.Deserialize(fileStream, jsonTypeInfo);
+                if (settings == null)
+                {
+                    Log.Error("Failed to load {0} settings: failed to deserialize", displayName);
+                    return default;
+                }
 
-            return settings;
+                return settings;
+            }
         }
 
         public static void SaveSettingsToFile<T>(T settings, string fileName, string displayName, JsonTypeInfo<T> jsonTypeInfo)
         {
-            string settingsData = JsonSerializer.Serialize(settings, jsonTypeInfo);
             string settingsFilePath = Path.Combine(settingsDir, fileName);
 
-            if (!File.Exists(settingsFilePath))
+            using (FileStream fileStream = new(settingsFilePath, FileMode.OpenOrCreate))
             {
-                FileStream newFile = File.Create(settingsFilePath);
-                newFile.Close();
+                JsonSerializer.Serialize(new Utf8JsonWriter(fileStream), settings, jsonTypeInfo);
             }
-
-            File.WriteAllText(settingsFilePath, settingsData);
 
             Log.Information("{0} settings saved", displayName);
         }
