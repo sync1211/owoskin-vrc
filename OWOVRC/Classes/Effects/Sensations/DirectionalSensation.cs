@@ -1,5 +1,5 @@
 ﻿using OWOGame;
-using OWOVRC.Classes.MathHelpers;
+using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
 

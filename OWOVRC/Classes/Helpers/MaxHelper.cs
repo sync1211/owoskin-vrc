@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace OWOVRC.Classes.MathHelpers
+namespace OWOVRC.Classes.Helpers
 {
     /// <summary>
     /// Implements multi-parameter max functions

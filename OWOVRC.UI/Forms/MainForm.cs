@@ -1,7 +1,6 @@
 using OwoAdvancedSensationBuilder.manager;
 using NAudio.CoreAudioApi;
 using OWOGame;
-using OWOVRC.Classes;
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -14,8 +13,8 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.Net;
-using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
 using System.ComponentModel;
+using OWOVRC.Classes.Helpers;
 
 namespace OWOVRC.UI
 {

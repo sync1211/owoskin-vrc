@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace OWOVRC.Classes
+namespace OWOVRC.Classes.Helpers
 {
     public static class AdminDetection
     {

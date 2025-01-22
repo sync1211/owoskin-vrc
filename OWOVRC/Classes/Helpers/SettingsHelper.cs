@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
-namespace OWOVRC.Classes
+namespace OWOVRC.Classes.Helpers
 {
     public static partial class SettingsHelper
     {
