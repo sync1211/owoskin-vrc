@@ -1,9 +1,11 @@
 ﻿using OWOGame;
+using System.ComponentModel;
 
 namespace OWOVRC.UI.Forms
 {
     public partial class AppDiscoveryForm : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string? SelectedApp { get; private set; }
         private readonly System.Timers.Timer timer;
 

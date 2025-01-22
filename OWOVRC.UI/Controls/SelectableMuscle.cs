@@ -6,9 +6,11 @@ namespace OWOVRC.UI.Controls
     {
         [Localizable(true)]
         [Description("The Muscle id of this element"), Category("Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public MusclesEnum Muscle { get; set; }
 
         public int MuscleID => (int)Muscle;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public bool IsActive
         {
             get
@@ -27,6 +29,7 @@ namespace OWOVRC.UI.Controls
 
         [Localizable(true)]
         [Description("The image shown when the element is inactive"), Category("Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Image? InactiveImage
         {
             get
@@ -44,6 +47,7 @@ namespace OWOVRC.UI.Controls
         }
         [Localizable(true)]
         [Description("The image shown when the element is active"), Category("Appearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Image? ActiveImage { get; set; }
 
         private bool active;

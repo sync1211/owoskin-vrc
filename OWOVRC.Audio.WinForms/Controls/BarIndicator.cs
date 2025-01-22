@@ -6,6 +6,7 @@ namespace OWOVRC.Audio.WinForms.Controls
     {
         [Localizable(true)]
         [Description("The value of the element"), Category("Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Value
         {
             get
@@ -28,13 +29,16 @@ namespace OWOVRC.Audio.WinForms.Controls
         private int value;
         [Localizable(true)]
         [Description("The minimum value of the element"), Category("Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Min { get; set; }
         [Localizable(true)]
         [Description("The maximum value of the element"), Category("Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Max { get; set; } = 100;
 
         [Localizable(true)]
         [Description("The color of the filled bar"), Category("Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color BarColor
         {
             get
@@ -51,6 +55,7 @@ namespace OWOVRC.Audio.WinForms.Controls
 
         [Localizable(true)]
         [Description("The value at which an indicator line should be shown of the element"), Category("Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int IndicatorValue
         {
             get
@@ -73,6 +78,7 @@ namespace OWOVRC.Audio.WinForms.Controls
         private int indicatorValue;
         [Localizable(true)]
         [Description("The color of the indicator bar"), Category("Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color IndicatorColor
         {
             get

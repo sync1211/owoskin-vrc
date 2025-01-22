@@ -10,6 +10,7 @@ namespace OWOVRC.UI.Controls
     {
         [Localizable(true)]
         [Description("If the elements should support reordering drag&drop"), Category("Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public bool AllowDrag
         {
             get
@@ -22,6 +23,7 @@ namespace OWOVRC.UI.Controls
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public bool IsEnabled
         {
             get
@@ -33,6 +35,7 @@ namespace OWOVRC.UI.Controls
                 enabledCheckbox.Checked = value;
             }
         }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Priority
         {
             get
@@ -44,6 +47,7 @@ namespace OWOVRC.UI.Controls
                 priorityInput.Value = value;
             }
         }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public float Min
         {
             get
@@ -56,6 +60,7 @@ namespace OWOVRC.UI.Controls
                 minInput.Value = (decimal)value;
             }
         }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public float Max
         {
             get
