@@ -156,7 +156,7 @@ namespace OWOVRC.Classes.Effects
                     return;
                 }
 
-                // Get Sensation
+                // Play sensation
                 Muscle[] muscles = owiSensation.GetMusclesWithIntensity(Settings.Intensity / 100f);
                 Sensation sensation = owiSensation.AsSensation();
 
