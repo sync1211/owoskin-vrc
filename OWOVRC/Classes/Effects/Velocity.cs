@@ -1,5 +1,4 @@
-﻿using OWOGame;
-using OWOVRC.Classes.Effects.Sensations;
+﻿using OWOVRC.Classes.Effects.Sensations;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
@@ -9,14 +8,6 @@ namespace OWOVRC.Classes.Effects
 {
     public class Velocity : OSCEffectBase
     {
-        // OSC Addresses
-        private const string ADDRESS_VEL_X = "VelocityX";
-        private const string ADDRESS_VEL_Y = "VelocityY";
-        private const string ADDRESS_VEL_Z = "VelocityZ";
-        private const string ADDRESS_VEL_SPEED = "VelocityMagnitude";
-        private const string ADDRESS_SEATED = "Seated";
-        private const string ADDRESS_GROUNDED = "Grounded";
-
         // OSC Avatar Parameters
         // https://creators.vrchat.com/avatars/animator-parameters/
         public bool IsGrounded { get; private set; }
@@ -81,14 +72,14 @@ namespace OWOVRC.Classes.Effects
         private bool ProcessMessage(OSCMessage message)
         {
             // Grounded
-            if (message.Address.Equals(ADDRESS_GROUNDED))
+            if (message.Address.Equals("Grounded"))
             {
                 IsGrounded = message.Values.ReadBooleanElement(0);
                 return true;
             }
 
             // Seated
-            if (message.Address.Equals(ADDRESS_SEATED))
+            if (message.Address.Equals("Seated"))
             {
                 IsSeated = message.Values.ReadBooleanElement(0);
                 return true;
@@ -111,54 +102,63 @@ namespace OWOVRC.Classes.Effects
 
             switch (message.Address)
             {
-                case ADDRESS_VEL_X:
+                case "VelocityX":
                     lastVelX = VelX;
                     VelX = value;
                     break;
-                case ADDRESS_VEL_Y:
+                case "VelocityY":
                     lastVelY = VelY;
                     VelY = value;
                     break;
-                case ADDRESS_VEL_Z:
+                case "VelocityZ":
                     lastVelZ = VelZ;
                     VelZ = value;
                     break;
-                case ADDRESS_VEL_SPEED:
+                case "VelocityMagnitude":
                     Speed = value;
+                    ProcessStopVelocity();
                     break;
                 default:
                     Log.Warning("Unknown velocity component '{message}' with value {value}", message.Address, value);
                     break;
             }
-
-            if (!message.Address.Equals(ADDRESS_VEL_SPEED))
-            {
-                return true;
-            }
-
-            // Sudden stop effect (e.g. hitting the ground after falling)
-            TimeSpan stoppingTime = DateTime.Now - LastSpeedPacket;
-            if (Settings.ImpactEnabled && stoppingTime < Settings.StopVelocityTime && Speed <= 1 && SpeedLast > 0)
-            {
-                double stopVelocity = Math.Min(SpeedLast, Settings.SpeedCap);
-                int velocityPercent = (int)(100 * stopVelocity / Settings.SpeedCap);
-
-                if (stopVelocity >= Settings.StopVelocityThreshold)
-                {
-                    owo.StopLoopedSensation(WindSensation._Name);
-
-                    Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, stoppingTime, velocityPercent);
-                    PlayStopSensation(velocityPercent);
-
-                    LastSpeedPacket = DateTime.MinValue;
-                    return true;
-                }
-            }
-
-            LastSpeedPacket = DateTime.Now;
-            SpeedLast = Speed;
-
             return true;
+        }
+
+
+        // Sudden stop effect (e.g. hitting the ground after falling)
+        /// <summary>
+        /// Checks whether the player has stopped moving suddenly and plays an impact sensation.
+        /// </summary>
+        private void ProcessStopVelocity()
+        {
+            TimeSpan decelerationDuration = DateTime.Now - LastSpeedPacket;
+
+            if (!Settings.ImpactEnabled || (decelerationDuration >= Settings.StopVelocityTime) || (Speed > 1) || (SpeedLast <= 0))
+            {
+                LastSpeedPacket = DateTime.Now;
+                SpeedLast = Speed;
+                return;
+            }
+
+            // Calculate stop velocity
+            double stopVelocity = Math.Min(SpeedLast, Settings.SpeedCap);
+            int velocityPercent = (int)(100 * stopVelocity / Settings.SpeedCap);
+
+            if (stopVelocity < Settings.StopVelocityThreshold)
+            {
+                LastSpeedPacket = DateTime.Now;
+                SpeedLast = Speed;
+                return;
+            }
+
+            // Play impact sensation
+            owo.StopLoopedSensation(WindSensation._Name);
+
+            Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, decelerationDuration, velocityPercent);
+            PlayStopSensation(velocityPercent);
+
+            LastSpeedPacket = DateTime.MinValue;
         }
 
         private void ProcessSensations()
