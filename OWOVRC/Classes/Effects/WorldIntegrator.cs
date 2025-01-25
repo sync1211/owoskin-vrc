@@ -152,7 +152,7 @@ namespace OWOVRC.Classes.Effects
 
                 if (owiSensation.Sensation.Equals("STOP", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    owo.StopAllSensations(); //TODO: Stop only OWI sensations
+                    StopAllOWISensations();
                     return;
                 }
 
@@ -161,6 +161,17 @@ namespace OWOVRC.Classes.Effects
                 Sensation sensation = owiSensation.AsSensation();
 
                 owo.AddSensation(sensation, muscles, $"OWI_{owiSensation.Sensation}");
+            }
+        }
+
+        private void StopAllOWISensations()
+        {
+            IEnumerable<string> sensationNames = owo.GetRunningSensations().Keys
+                .Where(key => key.StartsWith("OWI_"));
+
+            foreach (string sensationName in sensationNames)
+            {
+                owo.StopSensation(sensationName);
             }
         }
 
