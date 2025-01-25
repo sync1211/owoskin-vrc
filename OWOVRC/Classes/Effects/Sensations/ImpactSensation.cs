@@ -4,7 +4,7 @@
     {
         // Sensation parameters
         private const string _Name = "ImpactSensation";
-        private const int _frequency = 100;
+        private const int _frequency = 50;
         private const int _intensity = 100;
         public ImpactSensation(float durationSeconds = 0.2f) : base(_Name, _frequency, _intensity, durationSeconds) { }
 
