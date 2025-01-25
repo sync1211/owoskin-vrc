@@ -798,7 +798,7 @@ namespace OWOVRC.UI
 
         private void StopSensationInstance(AdvancedSensationStreamInstance instance)
         {
-            owo.StopLoopedSensation(instance.name);
+            owo.StopSensation(instance.name);
 
             Log.Information("Stopped sensation {0}", instance.name);
             UpdateASMStatus();

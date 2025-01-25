@@ -153,7 +153,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Play impact sensation
-            owo.StopLoopedSensation(WindSensation._Name);
+            owo.StopSensation(WindSensation._Name);
 
             Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, decelerationDuration, velocityPercent);
             PlayStopSensation(velocityPercent);
@@ -189,7 +189,7 @@ namespace OWOVRC.Classes.Effects
 
                 if (owo.GetRunningSensations().ContainsKey(WindSensation._Name))
                 {
-                    owo.StopLoopedSensation(WindSensation._Name);
+                    owo.StopSensation(WindSensation._Name);
                 }
                 return;
             }

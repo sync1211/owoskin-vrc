@@ -132,7 +132,7 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.IsEmpty)
             {
                 Log.Debug("No sensations playing, timer stopped.");
-                owo.StopLoopedSensation(SENSATION_NAME);
+                owo.StopSensation(SENSATION_NAME);
                 timer.Stop();
             }
         }
@@ -146,7 +146,7 @@ namespace OWOVRC.Classes.Effects
 
             if (activeMuscles.IsEmpty)
             {
-                owo.StopLoopedSensation(SENSATION_NAME);
+                owo.StopSensation(SENSATION_NAME);
                 return;
             }
 

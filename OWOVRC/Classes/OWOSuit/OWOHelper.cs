@@ -110,7 +110,7 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Debug("All sensations stopped!");
         }
 
-        public void StopLoopedSensation(string name)
+        public void StopSensation(string name)
         {
             sensationManager.stopSensation(name);
             Log.Debug("Looped sensation {name} stopped!", name);
