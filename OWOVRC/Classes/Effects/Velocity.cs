@@ -67,7 +67,7 @@ namespace OWOVRC.Classes.Effects
             // Empty message
             if (message.Values.ElementCount == 0)
             {
-                Log.Verbose("Ignoring empty message: {message}", message.Address);
+                //Log.Verbose("Ignoring empty message: {message}", message.Address);
                 return;
             }
 
@@ -104,7 +104,6 @@ namespace OWOVRC.Classes.Effects
             // Velocity
             if (!message.Address.StartsWith("Velocity"))
             {
-                Log.Verbose("Ignoring non-velocity message: {message}", message.Address);
                 return false;
             }
 
