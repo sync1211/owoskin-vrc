@@ -10,6 +10,7 @@ namespace OWOVRC.UI
         [STAThread]
         static void Main()
         {
+            ApplicationConfiguration.Initialize();
             if (AdminDetection.IsRunningAsAdmin())
             {
                 MessageBox.Show(
@@ -20,10 +21,22 @@ namespace OWOVRC.UI
                 );
             }
 
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            // Parse commandline switches
+            string[] args = Environment.GetCommandLineArgs();
+            bool autostart = args.Contains("--start");
+
+            // Create form
+            using (MainForm mainForm = new())
+            {
+                // Autostart (--start): Immediately start connecting to OWO
+                if (autostart)
+                {
+                    mainForm.Shown += (_, _) => mainForm.StartConnection();
+                }
+
+                // Show form
+                Application.Run(mainForm);
+            }
         }
     }
 }

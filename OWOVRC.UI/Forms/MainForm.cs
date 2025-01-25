@@ -198,6 +198,11 @@ namespace OWOVRC.UI
 
         private void StartButton_Click(object sender, EventArgs e)
         {
+            StartConnection();
+        }
+
+        public void StartConnection()
+        {
             StartOWO();
             UpdateControlAvailability();
             uiUpdateTimer.Start();
