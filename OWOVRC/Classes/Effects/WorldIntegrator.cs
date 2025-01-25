@@ -130,7 +130,7 @@ namespace OWOVRC.Classes.Effects
 
             // Remove log prefix
             int owiIndex = content.IndexOf(OWI_PREFIX);
-            string contentClean = content.Substring(owiIndex + OWI_PREFIX.Length).Trim();
+            string contentClean = content[(owiIndex + OWI_PREFIX.Length)..].Trim();
 
             // Convert to JSON
             OWISensation[]? sensations = JsonSerializer.Deserialize(contentClean, OWISensationJsonContext.Default.OWISensationArray);
@@ -152,7 +152,7 @@ namespace OWOVRC.Classes.Effects
 
                 if (owiSensation.Sensation.Equals("STOP", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    owo.StopAllSensations();
+                    owo.StopAllSensations(); //TODO: Stop only OWI sensations
                     return;
                 }
 
@@ -160,7 +160,7 @@ namespace OWOVRC.Classes.Effects
                 Muscle[] muscles = owiSensation.GetMusclesWithIntensity(Settings.Intensity / 100f);
                 Sensation sensation = owiSensation.AsSensation();
 
-                owo.AddSensation(sensation, muscles, owiSensation.Sensation);
+                owo.AddSensation(sensation, muscles, $"OWI_{owiSensation.Sensation}");
             }
         }
 
