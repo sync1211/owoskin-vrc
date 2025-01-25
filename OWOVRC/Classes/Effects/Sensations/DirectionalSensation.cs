@@ -102,7 +102,7 @@ namespace OWOVRC.Classes.Effects.Sensations
             float maxVelocity = velocities.Max();
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
-            Dictionary<Muscle, int> muscleIntensityScore = Muscle.All
+            Dictionary<Muscle, int> muscleIntensityScore = musclesScaled // (equivalent to Muscle.All)
                 .ToDictionary(muscle => muscle, _ => 0);
 
             if (maxVelocity == 0)
