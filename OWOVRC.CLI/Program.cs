@@ -68,7 +68,14 @@ namespace OWOVRC.CLI
             WorldIntegrator owi = new(owiSettings, owo);
             if (owiSettings.Enabled)
             {
-                owi.Start();
+                try
+                {
+                    owi.Start();
+                }
+                catch (FileNotFoundException)
+                {
+                    Log.Warning("OWI client failed to initialize!");
+                }
             }
 
             // Set up audio effects
