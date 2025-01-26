@@ -4,9 +4,9 @@
     {
         // Sensation parameters
         private const string _Name = "ImpactSensation";
-        private const int _frequency = 50;
+        private const int _frequency = 5;
         private const int _intensity = 100;
-        public ImpactSensation(float durationSeconds = 0.2f) : base(_Name, _frequency, _intensity, durationSeconds) { }
+        public ImpactSensation(float durationSeconds = 0.1f) : base(_Name, _frequency, _intensity, durationSeconds) { }
 
         /// <summary>
         /// Creates a sensation from a velocity vector.
@@ -15,7 +15,7 @@
         /// <param name="velocityZ">back/front</param></param>
         /// <param name="durationSeconds">duration of the sensation</param></param>
         /// </summary>
-        public static ImpactSensation CreateFromVelocity(float velocityX, float velocityY, float velocityZ, float durationSeconds = 0.2f)
+        public static ImpactSensation CreateFromVelocity(float velocityX, float velocityY, float velocityZ, float durationSeconds = 0.1f)
         {
             ImpactSensation sensation = new(durationSeconds);
             sensation.UpdateDirection(velocityX, velocityY, velocityZ);

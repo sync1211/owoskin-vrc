@@ -1,4 +1,5 @@
-﻿using OWOVRC.Classes.Effects.Sensations;
+﻿using OWOGame;
+using OWOVRC.Classes.Effects.Sensations;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
@@ -40,7 +41,7 @@ namespace OWOVRC.Classes.Effects
 
             this.Settings = Settings;
             windSensation = new WindSensation(0.3f);
-            impactSensation = new ImpactSensation(0.2f);
+            impactSensation = new ImpactSensation(0.1f);
         }
 
         public override void RegisterSensations()
@@ -152,9 +153,9 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            // Play impact sensation
             owo.StopSensation(WindSensation._Name);
 
+            // Play impact sensation
             Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, decelerationDuration, velocityPercent);
             PlayStopSensation(velocityPercent);
 
@@ -234,7 +235,7 @@ namespace OWOVRC.Classes.Effects
             impactSensation.Intensity = power;
 
             impactSensation.Play(owo, Settings.Priority);
-
+            Log.Information($"{owo.GetRunningSensations().ContainsKey(impactSensation.Name)}");
         }
 
         public override void Reset()
