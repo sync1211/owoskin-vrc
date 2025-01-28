@@ -45,14 +45,22 @@ namespace OWOVRC.Classes
                     return default;
                 }
 
-                T? settings = JsonSerializer.Deserialize(fileStream, jsonTypeInfo);
-                if (settings == null)
+                try
                 {
-                    Log.Error("Failed to load {0} settings: failed to deserialize", displayName);
+                    T? settings = JsonSerializer.Deserialize(fileStream, jsonTypeInfo);
+                    if (settings == null)
+                    {
+                        Log.Error("Failed to load {0} settings: failed to deserialize", displayName);
+                        return default;
+                    }
+
+                    return settings;
+                }
+                catch (JsonException e)
+                {
+                    Log.Error(e, "Failed to load {0} settings: failed to deserialize", displayName);
                     return default;
                 }
-
-                return settings;
             }
         }
 
