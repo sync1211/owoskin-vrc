@@ -1,5 +1,6 @@
 ﻿using OWOVRC.Classes;
 using OWOVRC.Classes.Effects;
+using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;

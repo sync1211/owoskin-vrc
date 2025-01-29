@@ -1,4 +1,4 @@
-using OWOVRC.Classes;
+using OWOVRC.Classes.Helpers;
 
 namespace OWOVRC.UI
 {
