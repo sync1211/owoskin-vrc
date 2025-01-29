@@ -1,4 +1,5 @@
 ﻿using OWOGame;
+using System.Runtime.CompilerServices;
 
 namespace OWOVRC.Classes.OWOSuit
 {
@@ -32,5 +33,11 @@ namespace OWOVRC.Classes.OWOSuit
         // This is needed as Muscle.All creates a new array every time it's called.
         // So every time we call MuscleGroups.MusclesCount, we're creating a new array and discarding it again!
         public static readonly int MusclesCount = Muscle.All.Length;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsRightMuscle(Muscle muscle)
+        {
+            return (muscle.id % 2) == 0;
+        }
     }
 }

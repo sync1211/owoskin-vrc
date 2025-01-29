@@ -4,6 +4,7 @@ using OWOVRC.Audio.Classes;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
+using System.Runtime.CompilerServices;
 
 namespace OWOVRC.Classes.Effects
 {
@@ -91,7 +92,7 @@ namespace OWOVRC.Classes.Effects
             {
                 Muscle muscle = muscles[j];
 
-                int soundIntensity = (muscle.id % 2 == 0)                                   // Intensity calculated via audio
+                int soundIntensity = OWOMuscles.IsRightMuscle(muscle)                       // Intensity calculated via audio
                     ? rightIntensity // Even id -> Right muscle
                     : leftIntensity; // Odd id -> Left muscle
                 int maxIntensity = spectrumSettings.Intensities[muscle.id];                 // User-configured max intensity

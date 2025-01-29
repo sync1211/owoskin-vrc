@@ -1,5 +1,4 @@
-﻿using OWOGame;
-using OWOVRC.Audio.Classes;
+﻿using OWOVRC.Audio.Classes;
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.Settings;
 
