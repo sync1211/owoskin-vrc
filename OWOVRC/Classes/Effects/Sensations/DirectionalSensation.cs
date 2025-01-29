@@ -109,7 +109,7 @@ namespace OWOVRC.Classes.Effects.Sensations
             }
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
-            Dictionary<Muscle, int> muscleIntensityScore = Muscle.All
+            Dictionary<Muscle, int> muscleIntensityScore = directions.All
                 .ToDictionary(muscle => muscle, _ => 0);
 
             // 2. Assign a weight to every direction based on their % of the maximum

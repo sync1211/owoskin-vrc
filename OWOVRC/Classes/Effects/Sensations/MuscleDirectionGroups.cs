@@ -12,6 +12,7 @@ namespace OWOVRC.Classes.Effects.Sensations
         public readonly Muscle[] Right;
         public readonly Muscle[] Up;
         public readonly Muscle[] Down;
+        public readonly Muscle[] All = Muscle.All;
 
         /*
             For reference:
