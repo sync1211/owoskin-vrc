@@ -5,9 +5,9 @@ permissions:
 
 on:
   push:
-    branches: [ "master", "net9" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "master", "net9" ]
+    branches: [ "master" ]
 
 jobs:
 
