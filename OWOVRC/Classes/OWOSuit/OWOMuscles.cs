@@ -2,21 +2,22 @@
 
 namespace OWOVRC.Classes.OWOSuit
 {
-    public static class OWOMuscles
+    public static partial class OWOMuscles
     {
         public static readonly Dictionary<string, Muscle> Muscles = new()
         {
-            { "owo_suit_pectoral_r",  Muscle.Pectoral_R },
-            { "owo_suit_pectoral_l",  Muscle.Pectoral_L },
-            { "owo_suit_abdominal_r",  Muscle.Abdominal_R },
-            { "owo_suit_abdominal_l",  Muscle.Abdominal_L },
-            { "owo_suit_arm_r",  Muscle.Arm_R },
-            { "owo_suit_arm_l",  Muscle.Arm_L },
-            { "owo_suit_dorsal_r",  Muscle.Dorsal_R },
-            { "owo_suit_dorsal_l",  Muscle.Dorsal_L },
-            { "owo_suit_lumbar_r",  Muscle.Lumbar_R },
-            { "owo_suit_lumbar_l",  Muscle.Lumbar_L }
+            //NOTE: Example muscle values!
+            //      Muscles are populated automatically at runtime to be up to date with the OWOGame package.
+            //      See AddMusclesFromProperties() in OWOMuscles.Autofill.cs for more information.
+            { "owo_suit_pectoral_r",  Muscle.Pectoral_R }, // Shadoki-compatible muscle name
+            { "pectoral_l",  Muscle.Pectoral_L }           // Normal muscle name (used by WorldIntegrator)
         };
+
+        static OWOMuscles()
+        {
+            // Populate Muscles dictionary
+            ImportMusclesFromProperties();
+        }
 
         public static readonly Dictionary<string, Muscle[]> MuscleGroups = new()
         {

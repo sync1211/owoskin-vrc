@@ -65,7 +65,7 @@ namespace OWOVRC.Classes.Effects
             {
                 string[] split = presetString.Split('/');
                 presetName = split[0];
-                muscleGroupName = split[1];
+                muscleGroupName = split[1].ToLower();
             }
 
             // Get preset
@@ -80,7 +80,7 @@ namespace OWOVRC.Classes.Effects
             {
                 muscles = muscleGroup;
             }
-            else if (OWOMuscles.Muscles.TryGetValue($"owo_suit_{muscleGroupName}", out Muscle muscle))
+            else if (OWOMuscles.Muscles.TryGetValue(muscleGroupName, out Muscle muscle))
             {
                 muscles = [muscle];
             }

@@ -54,7 +54,7 @@ namespace OWOVRC.Classes.Effects.OWI
             {
                 KeyValuePair<string, int> muscleData = Muscles.ElementAt(i);
                 string muscleName = muscleData.Key;
-                string muscleKey = $"owo_suit_{muscleName.ToLower()}";
+                string muscleKey = muscleName.ToLower();
 
                 // Calculate intensity
                 int intensity = (int) (muscleData.Value * multiplier);
