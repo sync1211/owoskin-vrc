@@ -37,7 +37,7 @@ namespace OWOVRC.Classes.Helpers
                 return default;
             }
 
-            using (FileStream fileStream = new(settingsFilePath, FileMode.Open))
+            using (FileStream fileStream = new(settingsFilePath, FileMode.Open, FileAccess.Read))
             {
                 if (fileStream.Length == 0)
                 {
@@ -68,7 +68,7 @@ namespace OWOVRC.Classes.Helpers
         {
             string settingsFilePath = Path.Combine(settingsDir, fileName);
 
-            using (FileStream fileStream = new(settingsFilePath, FileMode.OpenOrCreate))
+            using (FileStream fileStream = new(settingsFilePath, FileMode.OpenOrCreate, FileAccess.Write))
             {
                 JsonSerializer.Serialize(new Utf8JsonWriter(fileStream), settings, jsonTypeInfo);
             }
