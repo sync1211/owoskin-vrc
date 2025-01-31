@@ -59,6 +59,7 @@ namespace OWOVRC.Audio.Classes
         public readonly Complex[] Buffer;
         public readonly double Period;
         public readonly AudioChannel ChannelIndentifier;
+        public readonly Func<int, float> GetChannelValue;
 
         public AnalyzedAudioChannel(Complex[] fftBuffer, double period, AudioChannel channel, int amplification = 1_000)
         {
@@ -66,17 +67,22 @@ namespace OWOVRC.Audio.Classes
             this.Period = period;
             Amplification = amplification;
             ChannelIndentifier = channel;
+
+            if (channel == AudioChannel.Left)
+            {
+                GetChannelValue = GetChannelValueL;
+            }
+            else
+            {
+                GetChannelValue = GetChannelValueR;
+            }
         }
 
         public float GetFrequency(int frequency)
         {
             int actualFrequency = (int)(frequency / Period);
-            if (ChannelIndentifier == AudioChannel.Left)
-            {
-                return Buffer[actualFrequency].X * Amplification;
-            }
 
-            return Buffer[actualFrequency].Y * Amplification;
+            return GetChannelValue(actualFrequency) * Amplification;
         }
 
         public float GetFrequencyRange(int start, int end)
@@ -87,17 +93,21 @@ namespace OWOVRC.Audio.Classes
             double highest = 0;
             for (int i = actualStart; i <= actualEnd; i++)
             {
-                if (ChannelIndentifier == AudioChannel.Left)
-                {
-                    highest = Math.Max(Buffer[i].X, highest);
-                }
-                else
-                {
-                    highest = Math.Max(Buffer[i].Y, highest);
-                }
+                highest = Math.Max(GetChannelValue(i), highest);
             }
 
             return (float)highest * Amplification;
+        }
+
+        // Helper functions for getting the value corresponding to the channel of the object (chosen during initialization)
+        private float GetChannelValueR(int i)
+        {
+            return Buffer[i].Y;
+        }
+
+        private float GetChannelValueL(int i)
+        {
+            return Buffer[i].X;
         }
     }
 }
