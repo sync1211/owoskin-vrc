@@ -17,7 +17,8 @@ namespace OWOVRC.Test.Classes.Settings
                 SpeedCap = 201.0f,
                 IgnoreWhenGrounded = true,
                 IgnoreWhenSeated = true,
-                StopVelocityTime = TimeSpan.FromSeconds(2)
+                StopVelocityTime = TimeSpan.FromSeconds(2),
+                ImpactEnabled = false
             };
 
             string json = JsonSerializer.Serialize(settings);
@@ -33,6 +34,7 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.IgnoreWhenSeated, decodedSettings.IgnoreWhenSeated);
             Assert.AreEqual(settings.StopVelocityTime, decodedSettings.StopVelocityTime);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
+            Assert.AreEqual(settings.ImpactEnabled, decodedSettings.ImpactEnabled);
         }
     }
 }

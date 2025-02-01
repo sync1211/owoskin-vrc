@@ -9,10 +9,14 @@ namespace OWOVRC.Test.Classes.Settings
         [TestMethod]
         public void TestJsonEncodeDecode()
         {
-            WorldIntegratorSettings settings = new()
+            Dictionary<string, bool> sensations = new()
             {
-                Priority = 2,
-                Enabled = false,
+                { "Test1", true },
+                { "Test2", false }
+            };
+
+            WorldIntegratorSettings settings = new(false, 2, sensations)
+            {
                 UpdateInterval = 90,
                 Intensity = 89
             };
@@ -27,6 +31,13 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
             Assert.AreEqual(settings.UpdateInterval, decodedSettings.UpdateInterval);
             Assert.AreEqual(settings.Intensity, decodedSettings.Intensity);
+
+            Assert.AreEqual(settings.EnabledSensations.Count, decodedSettings.EnabledSensations.Count);
+            foreach (KeyValuePair<string, bool> sensation in sensations)
+            {
+                Assert.IsTrue(decodedSettings.EnabledSensations.ContainsKey(sensation.Key));
+                Assert.AreEqual(sensation.Value, decodedSettings.EnabledSensations[sensation.Key]);
+            }
         }
     }
 }

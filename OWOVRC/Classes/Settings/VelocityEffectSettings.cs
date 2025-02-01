@@ -9,8 +9,6 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public bool ImpactEnabled { get; set; } = true;
         [JsonInclude]
-        public int StopPriority { get; set; } = 1;
-        [JsonInclude]
         public float StopVelocityThreshold { get; set; } = 10;
         [JsonInclude]
         public float SpeedCap { get; set; } = 50.0f;
@@ -24,11 +22,10 @@ namespace OWOVRC.Classes.Settings
         public VelocityEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority) { }
 
         [JsonConstructor]
-        public VelocityEffectSettings(bool enabled, int priority, float threshold, bool impactEnabled, int stopPriority, float stopVelocityThreshold, float speedCap, bool ignoreWhenGrounded, bool ignoreWhenSeated, TimeSpan stopVelocityTime) : base(enabled, priority)
+        public VelocityEffectSettings(bool enabled, int priority, float threshold, bool impactEnabled, float stopVelocityThreshold, float speedCap, bool ignoreWhenGrounded, bool ignoreWhenSeated, TimeSpan stopVelocityTime) : base(enabled, priority)
         {
             Threshold = threshold;
             ImpactEnabled = impactEnabled;
-            StopPriority = stopPriority;
             StopVelocityThreshold = stopVelocityThreshold;
             SpeedCap = speedCap;
             IgnoreWhenGrounded = ignoreWhenGrounded;
