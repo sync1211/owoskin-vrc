@@ -219,7 +219,7 @@
             configureCollidersIntensityButton.Size = new Size(89, 23);
             configureCollidersIntensityButton.TabIndex = 11;
             configureCollidersIntensityButton.Text = "Configure";
-            helpToolTip.SetToolTip(configureCollidersIntensityButton, "Confirm muscle intensities for this effect");
+            helpToolTip.SetToolTip(configureCollidersIntensityButton, "Configure muscle intensities for this effect");
             configureCollidersIntensityButton.UseVisualStyleBackColor = true;
             configureCollidersIntensityButton.Click += ConfigureCollidersIntensityButton_Click;
             // 
