@@ -593,7 +593,7 @@ namespace OWOVRC.UI
             collidersSettings.SpeedMultiplier = (float)collidersSpeedMultiplierInput.Value;
 
             // Frequency
-            collidersSettings.Frequency = (int) collidersFrequencyInput.Value;
+            collidersSettings.Frequency = (int)collidersFrequencyInput.Value;
 
             SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
         }
@@ -945,6 +945,14 @@ namespace OWOVRC.UI
 
             audioSettingsPriorityPanel1.Items.Clear();
             audioSettingsPriorityPanel1.ImportSettings(audioSettings.SpectrumSettings, owo);
+        }
+
+        private void OwiConfigureSensationsButton_Click(object sender, EventArgs e)
+        {
+            using (BlacklistForm form = new("Enable/Disable Sensations", owiSettings.EnabledSensations))
+            {
+                DialogResult result = form.ShowDialog();
+            }
         }
     }
 }

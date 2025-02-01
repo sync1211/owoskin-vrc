@@ -3,6 +3,7 @@ using OWOVRC.Classes.Effects.OWI;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,6 +18,9 @@ namespace OWOVRC.Classes.Effects
 
         // Credits to the authors of OWI
         public static readonly string OWI_GITHUB_URL = "https://github.com/RevoForge/Vrchat-OWO-Integration";
+
+        // Prefix to avoid collisions with other sensations
+        private const string OWI_NAME_PREFIX = "World: ";
 
         // OWOHelper
         private readonly OWOHelper owo;
@@ -144,6 +148,18 @@ namespace OWOVRC.Classes.Effects
             PlaySensations(sensations);
         }
 
+        private bool IsSensationBlacklisted(string sensationName)
+        {
+            sensationName = sensationName.Trim();
+            if (!Settings.EnabledSensations.TryGetValue(sensationName, out bool isEnabled))
+            {
+                Settings.EnabledSensations.Add(sensationName, true);
+                return true;
+            }
+
+            return isEnabled;
+        }
+
         private void PlaySensations(OWISensation[] sensations)
         {
             for (int i = 0; i < sensations.Length; i++)
@@ -156,18 +172,25 @@ namespace OWOVRC.Classes.Effects
                     return;
                 }
 
+                // Consult blacklist
+                if (!IsSensationBlacklisted(owiSensation.Sensation))
+                {
+                    Log.Verbose("Ignoring blacklisted sensation {sensation}", owiSensation.Sensation);
+                    continue;
+                }
+
                 // Play sensation
                 Muscle[] muscles = owiSensation.GetMusclesWithIntensity(Settings.Intensity / 100f);
                 Sensation sensation = owiSensation.AsSensation();
 
-                owo.AddSensation(sensation, muscles, $"OWI_{owiSensation.Sensation}");
+                owo.AddSensation(sensation, muscles, $"{OWI_NAME_PREFIX}{owiSensation.Sensation}");
             }
         }
 
         private void StopAllOWISensations()
         {
             IEnumerable<string> sensationNames = owo.GetRunningSensations().Keys
-                .Where(key => key.StartsWith("OWI_"));
+                .Where(key => key.StartsWith(OWI_NAME_PREFIX));
 
             foreach (string sensationName in sensationNames)
             {

@@ -65,6 +65,8 @@
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             owiSettingsPage = new TabPage();
+            owiConfigureSensationsButton = new Button();
+            owiEnabledSensationsLabel = new Label();
             owiIntensityLabel = new Label();
             owiIntensityInput = new NumericUpDown();
             owiUpdateIntervalLabel = new Label();
@@ -541,6 +543,8 @@
             // 
             // owiSettingsPage
             // 
+            owiSettingsPage.Controls.Add(owiConfigureSensationsButton);
+            owiSettingsPage.Controls.Add(owiEnabledSensationsLabel);
             owiSettingsPage.Controls.Add(owiIntensityLabel);
             owiSettingsPage.Controls.Add(owiIntensityInput);
             owiSettingsPage.Controls.Add(owiUpdateIntervalLabel);
@@ -558,6 +562,28 @@
             owiSettingsPage.Text = "OWI";
             owiSettingsPage.ToolTipText = "OWOWorldIntegration connector";
             owiSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // owiConfigureSensationsButton
+            // 
+            owiConfigureSensationsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            owiConfigureSensationsButton.Location = new Point(262, 115);
+            owiConfigureSensationsButton.Name = "owiConfigureSensationsButton";
+            owiConfigureSensationsButton.Size = new Size(89, 23);
+            owiConfigureSensationsButton.TabIndex = 28;
+            owiConfigureSensationsButton.Text = "Configure";
+            helpToolTip.SetToolTip(owiConfigureSensationsButton, "Enable/Disable sensations received by OWI");
+            owiConfigureSensationsButton.UseVisualStyleBackColor = true;
+            owiConfigureSensationsButton.Click += OwiConfigureSensationsButton_Click;
+            // 
+            // owiEnabledSensationsLabel
+            // 
+            owiEnabledSensationsLabel.AutoSize = true;
+            owiEnabledSensationsLabel.Location = new Point(6, 118);
+            owiEnabledSensationsLabel.Name = "owiEnabledSensationsLabel";
+            owiEnabledSensationsLabel.Size = new Size(119, 15);
+            owiEnabledSensationsLabel.TabIndex = 27;
+            owiEnabledSensationsLabel.Text = "Configure Sensations";
+            helpToolTip.SetToolTip(owiEnabledSensationsLabel, "Enable/Disable sensations received by OWI");
             // 
             // owiIntensityLabel
             // 
@@ -592,19 +618,19 @@
             owiUpdateIntervalInput.Increment = new decimal(new int[] { 100, 0, 0, 0 });
             owiUpdateIntervalInput.Location = new Point(262, 55);
             owiUpdateIntervalInput.Maximum = new decimal(new int[] { 2000, 0, 0, 0 });
-            owiUpdateIntervalInput.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            owiUpdateIntervalInput.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             owiUpdateIntervalInput.Name = "owiUpdateIntervalInput";
             owiUpdateIntervalInput.Size = new Size(89, 23);
             owiUpdateIntervalInput.TabIndex = 22;
             helpToolTip.SetToolTip(owiUpdateIntervalInput, "Time between checking the VRChat log for new sensations from OWI");
-            owiUpdateIntervalInput.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            owiUpdateIntervalInput.Value = new decimal(new int[] { 100, 0, 0, 0 });
             // 
             // owiInformationGroup
             // 
             owiInformationGroup.Controls.Add(owiInfoLabel);
-            owiInformationGroup.Location = new Point(6, 115);
+            owiInformationGroup.Location = new Point(6, 171);
             owiInformationGroup.Name = "owiInformationGroup";
-            owiInformationGroup.Size = new Size(348, 121);
+            owiInformationGroup.Size = new Size(348, 65);
             owiInformationGroup.TabIndex = 21;
             owiInformationGroup.TabStop = false;
             owiInformationGroup.Text = "Information";
@@ -1237,7 +1263,6 @@
             // activeSensationsListBox
             // 
             activeSensationsListBox.FormattingEnabled = true;
-            activeSensationsListBox.ItemHeight = 15;
             activeSensationsListBox.Location = new Point(6, 6);
             activeSensationsListBox.Name = "activeSensationsListBox";
             activeSensationsListBox.Size = new Size(182, 259);
@@ -1401,5 +1426,7 @@
         private NumericUpDown collidersFrequencyInput;
         private Label sensationPriorityTitle;
         private Label sensationPriorityLabel;
+        private Label owiEnabledSensationsLabel;
+        private Button owiConfigureSensationsButton;
     }
 }
