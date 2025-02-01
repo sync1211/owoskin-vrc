@@ -628,24 +628,23 @@
             // owiInformationGroup
             // 
             owiInformationGroup.Controls.Add(owiInfoLabel);
-            owiInformationGroup.Location = new Point(6, 171);
+            owiInformationGroup.Location = new Point(6, 144);
             owiInformationGroup.Name = "owiInformationGroup";
-            owiInformationGroup.Size = new Size(348, 65);
+            owiInformationGroup.Size = new Size(348, 92);
             owiInformationGroup.TabIndex = 21;
             owiInformationGroup.TabStop = false;
             owiInformationGroup.Text = "Information";
             // 
             // owiInfoLabel
             // 
-            owiInfoLabel.AutoSize = true;
             owiInfoLabel.FlatStyle = FlatStyle.Popup;
-            owiInfoLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            owiInfoLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
             owiInfoLabel.ForeColor = SystemColors.ControlDarkDark;
-            owiInfoLabel.Location = new Point(21, 23);
+            owiInfoLabel.Location = new Point(6, 19);
             owiInfoLabel.Name = "owiInfoLabel";
-            owiInfoLabel.Size = new Size(308, 85);
+            owiInfoLabel.Size = new Size(336, 70);
             owiInfoLabel.TabIndex = 20;
-            owiInfoLabel.Text = "This effect receives data from worlds\r\nusing OWO World Integrator.\r\n\r\nTo use this effect, please enable debug logging in your\r\nVRChat client and visit a world that supports OWI.";
+            owiInfoLabel.Text = "This effect receives sensations from worlds that use the OWO World Integrator.\r\n\r\nRequires debug logging to be enabled in the VRChat client.\r\n\r\n";
             // 
             // owiLinkLabel
             // 
@@ -1308,7 +1307,6 @@
             ((System.ComponentModel.ISupportInitialize)owiIntensityInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).EndInit();
             owiInformationGroup.ResumeLayout(false);
-            owiInformationGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)owiPriorityInput).EndInit();
             oscPresetsPage.ResumeLayout(false);
             oscPresetsPage.PerformLayout();
