@@ -90,7 +90,6 @@ namespace OWOVRC.CLI
             // Start OSC listener
             Log.Information("Starting OSC receiver...");
             OSCReceiver receiver = new(settings.OSCPort);
-            RegisterSensations(effects, receiver);
             receiver.Start();
 
             // Start main task
@@ -126,15 +125,6 @@ namespace OWOVRC.CLI
             finally
             {
                 Log.Information("Quit");
-            }
-        }
-
-        public static void RegisterSensations(OSCEffectBase[] effects, OSCReceiver receiver)
-        {
-            foreach (OSCEffectBase effect in effects)
-            {
-                receiver.OnMessageReceived += effect.OnOSCMessageReceived;
-                effect.RegisterSensations();
             }
         }
 

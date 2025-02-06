@@ -1,7 +1,6 @@
 ﻿using OWOGame;
 using Serilog;
 using OwoAdvancedSensationBuilder.manager;
-using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
 using static OwoAdvancedSensationBuilder.manager.AdvancedSensationStreamInstance;
 
 namespace OWOVRC.Classes.OWOSuit
@@ -11,7 +10,6 @@ namespace OWOVRC.Classes.OWOSuit
         public static bool IsConnected => OWO.ConnectionState == ConnectionState.Connected;
 
         public string Address { get; set; }
-        private readonly List<BakedSensation> Sensations = [];
 
         private readonly AdvancedSensationManager sensationManager = AdvancedSensationManager.getInstance();
 
@@ -27,7 +25,7 @@ namespace OWOVRC.Classes.OWOSuit
         {
             Log.Information("Connecting to OWO...");
 
-            GameAuth auth = GameAuth.Create([.. Sensations]);
+            GameAuth auth = GameAuth.Create();
 
             OWO.Configure(auth);
 
@@ -114,17 +112,6 @@ namespace OWOVRC.Classes.OWOSuit
         {
             sensationManager.stopSensation(name);
             Log.Debug("Looped sensation {name} stopped!", name);
-        }
-
-        public void AddBakedSensation(BakedSensation sensation)
-        {
-            Log.Verbose("Registering baked sensation {sensation}", sensation);
-            Sensations.Add(sensation);
-        }
-
-        public void ClearBakedSensations()
-        {
-            Sensations.Clear();
         }
 
         private void HandleSensationAdd(AdvancedSensationStreamInstance instance, AddInfo addInfo)

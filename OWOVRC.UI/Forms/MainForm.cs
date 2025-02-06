@@ -347,11 +347,9 @@ namespace OWOVRC.UI
             receiver = new(connectionSettings.OSCPort);
 
             // Register effects
-            owo.ClearBakedSensations();
             foreach (OSCEffectBase effect in oscEffects)
             {
                 receiver.OnMessageReceived += effect.OnOSCMessageReceived;
-                effect.RegisterSensations();
             }
 
             // Start OSC receiver

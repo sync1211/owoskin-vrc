@@ -37,16 +37,9 @@ namespace OWOVRC.Classes.Effects
 
         public Velocity(OWOHelper owo, VelocityEffectSettings Settings): base(owo)
         {
-            RegisterSensations();
-
             this.Settings = Settings;
             windSensation = new WindSensation(0.3f);
             impactSensation = new ImpactSensation(0.1f);
-        }
-
-        public override void RegisterSensations()
-        {
-            // Nothing to register
         }
 
         public override void OnOSCMessageReceived(object? sender, OSCMessage message)
