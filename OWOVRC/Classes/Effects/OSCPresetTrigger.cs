@@ -101,10 +101,6 @@ namespace OWOVRC.Classes.Effects
 
             // Get intensity
             float oscIntensity = OSCHelpers.GetFloatValueFromMessage(message);
-            if (oscIntensity == 0)
-            {
-                return;
-            }
 
             // Get preset
             OSCSensationPreset? preset = GetPresetFromMessage(message, out Muscle[] muscles);
@@ -116,6 +112,19 @@ namespace OWOVRC.Classes.Effects
             if (!preset.Enabled)
             {
                 Log.Debug("Disabled preset {presetName} called!", preset.Name);
+                return;
+            }
+
+            // Stop looped sensation
+            if (oscIntensity == 0)
+            {
+                if (!preset.Loop)
+                {
+                    return;
+                }
+
+                Log.Debug("Stopping preset {presetName}!", preset.Name);
+                owo.StopSensation(preset.Name);
                 return;
             }
 

@@ -12,7 +12,7 @@ namespace OWOVRC.Test.Classes.Settings
         {
             Dictionary<string, OSCSensationPreset> presets = new()
             {
-                {"Test1", new OSCSensationPreset(true, "TestPreset", 9, 2, "4~Ball~100,1,100,0,0,0,Impact|0%100~impact-0~Impacts") }
+                {"Test1", new OSCSensationPreset(true, "TestPreset", 9, 2, false, "4~Ball~100,1,100,0,0,0,Impact|0%100~impact-0~Impacts") }
             };
             OSCPresetsSettings settings = new(presets)
             {

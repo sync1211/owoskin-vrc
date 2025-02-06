@@ -103,7 +103,7 @@ namespace OWOVRC.UI.Forms
                 // Fix potential name collisions
                 name = ResolveNameCollisions(name);
 
-                OSCSensationPreset preset = new(true, name, 1, 100, sensationString);
+                OSCSensationPreset preset = new(true, name, 1, 100, false, sensationString);
                 presets.Add(preset);
             }
             catch (System.FormatException)
