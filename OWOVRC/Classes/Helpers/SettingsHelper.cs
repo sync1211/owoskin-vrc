@@ -68,7 +68,7 @@ namespace OWOVRC.Classes.Helpers
         {
             string settingsFilePath = Path.Combine(settingsDir, fileName);
 
-            using (FileStream fileStream = new(settingsFilePath, FileMode.OpenOrCreate, FileAccess.Write))
+            using (FileStream fileStream = new(settingsFilePath, FileMode.Create, FileAccess.Write))
             {
                 JsonSerializer.Serialize(new Utf8JsonWriter(fileStream), settings, jsonTypeInfo);
             }
