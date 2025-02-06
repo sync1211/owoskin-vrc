@@ -1,4 +1,5 @@
 ﻿using OWOGame;
+using OWOVRC.Classes.Helpers;
 using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Settings
@@ -56,6 +57,11 @@ namespace OWOVRC.Classes.Settings
             return SensationsFactory
                 .Create(Frequency, SensationSeconds, 100, 0, 0, 0)
                 .WithPriority(Priority);
+        }
+
+        public override void SaveToFile()
+        {
+            SettingsHelper.SaveSettingsToFile(this, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
         }
     }
 }

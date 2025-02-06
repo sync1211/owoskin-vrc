@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using OWOVRC.Classes.Helpers;
+using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Settings
 {
@@ -31,6 +32,11 @@ namespace OWOVRC.Classes.Settings
             IgnoreWhenGrounded = ignoreWhenGrounded;
             IgnoreWhenSeated = ignoreWhenSeated;
             StopVelocityTime = stopVelocityTime;
+        }
+
+        public override void SaveToFile()
+        {
+            SettingsHelper.SaveSettingsToFile(this, "velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
         }
     }
 }

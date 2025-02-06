@@ -126,7 +126,6 @@ namespace OWOVRC.Classes.Effects
             return true;
         }
 
-
         // Sudden stop effect (e.g. hitting the ground after falling)
         /// <summary>
         /// Checks whether the player has stopped moving suddenly and plays an impact sensation.

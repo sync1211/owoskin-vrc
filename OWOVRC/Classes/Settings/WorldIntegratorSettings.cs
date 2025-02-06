@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Primitives;
+﻿using OWOVRC.Classes.Helpers;
 using System.Text.Json.Serialization;
+using Windows.UI.ViewManagement;
 
 namespace OWOVRC.Classes.Settings
 {
@@ -29,6 +30,11 @@ namespace OWOVRC.Classes.Settings
         public WorldIntegratorSettings(bool enabled, int priority = 10, Dictionary<string, bool>? enabledSensations = null) : base(enabled, priority)
         {
             EnabledSensations = enabledSensations ?? EnabledSensations;
+        }
+
+        public override void SaveToFile()
+        {
+            SettingsHelper.SaveSettingsToFile(this, "owi.json", "OWO World Integrator", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
         }
     }
 }

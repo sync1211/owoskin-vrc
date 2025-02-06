@@ -15,5 +15,7 @@ namespace OWOVRC.Classes.Settings
             Enabled = enabled;
             Priority = priority;
         }
+
+        public abstract void SaveToFile();
     }
 }

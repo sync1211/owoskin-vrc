@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using OWOVRC.Classes.Helpers;
+using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Settings
 {
@@ -17,6 +18,11 @@ namespace OWOVRC.Classes.Settings
         {
             OWOAddress = owoAddress;
             OSCPort = oscPort;
+        }
+
+        public void SaveToFile()
+        {
+            SettingsHelper.SaveSettingsToFile(this, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
     }
 }

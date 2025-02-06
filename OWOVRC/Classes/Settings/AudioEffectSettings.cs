@@ -1,4 +1,5 @@
 ﻿using OWOVRC.Audio.Classes;
+using OWOVRC.Classes.Helpers;
 using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Settings
@@ -64,6 +65,11 @@ namespace OWOVRC.Classes.Settings
         public void SortSettings()
         {
             Array.Sort(SpectrumSettings, (a, b) => b.Priority.CompareTo(a.Priority));
+        }
+
+        public override void SaveToFile()
+        {
+            SettingsHelper.SaveSettingsToFile(this, "audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
         }
     }
 }

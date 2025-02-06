@@ -15,6 +15,7 @@ using Serilog.Events;
 using System.Net;
 using System.ComponentModel;
 using OWOVRC.Classes.Helpers;
+using Windows.UI.ViewManagement;
 
 namespace OWOVRC.UI
 {
@@ -560,7 +561,7 @@ namespace OWOVRC.UI
                 owoIPInput.Text = connectionSettings.OWOAddress;
             }
 
-            SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
+            connectionSettings.SaveToFile();
         }
 
         private void OscPortInput_ValueChanged(object sender, EventArgs e)
@@ -574,7 +575,7 @@ namespace OWOVRC.UI
 
             connectionSettings.OSCPort = (int)oscPortInput.Value;
 
-            SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
+            connectionSettings.SaveToFile();
         }
 
         private void ApplyCollidersSettingsButton_Click(object sender, EventArgs e)
@@ -595,7 +596,7 @@ namespace OWOVRC.UI
             // Frequency
             collidersSettings.Frequency = (int)collidersFrequencyInput.Value;
 
-            SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
+            collidersSettings.SaveToFile();
         }
 
         private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
@@ -617,7 +618,7 @@ namespace OWOVRC.UI
             // Speed cap
             velocitySettings.SpeedCap = (float)velocitySpeedCapInput.Value;
 
-            SettingsHelper.SaveSettingsToFile(velocitySettings, "velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
+            velocitySettings.SaveToFile();
         }
 
         private void StopSensationsButton_Click(object sender, EventArgs e)
@@ -647,7 +648,7 @@ namespace OWOVRC.UI
             // Intensity
             owiSettings.Intensity = (int)owiIntensityInput.Value; //TODO: Replace with dialog
 
-            SettingsHelper.SaveSettingsToFile(owiSettings, "owi.json", "OWO World Integrator", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
+            owiSettings.SaveToFile();
             EnableOrDisableOWI();
         }
 
@@ -679,7 +680,7 @@ namespace OWOVRC.UI
 
             // Priority
             oscPresetsSettings.Priority = (int)oscPresetsPriorityInput.Value;
-            SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
+            oscPresetsSettings.SaveToFile();
         }
 
         private void OpenOscPresetsFormButton_Click(object sender, EventArgs e)
@@ -690,7 +691,7 @@ namespace OWOVRC.UI
 
                 if (result == DialogResult.OK)
                 {
-                    SettingsHelper.SaveSettingsToFile(oscPresetsSettings, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
+                    oscPresetsSettings.SaveToFile();
                 }
             }
         }
@@ -704,7 +705,7 @@ namespace OWOVRC.UI
                 entry.ApplyToSpectrumSettings();
             }
 
-            SettingsHelper.SaveSettingsToFile(audioSettings, "audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
+            audioSettings.SaveToFile();
             EnableOrDisableAudio();
         }
 
@@ -728,7 +729,7 @@ namespace OWOVRC.UI
             using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.CreateSensation(), null, owo))
             {
                 intensityForm.ShowDialog();
-                SettingsHelper.SaveSettingsToFile(collidersSettings, "colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
+                collidersSettings.SaveToFile();
             }
         }
 
@@ -745,7 +746,7 @@ namespace OWOVRC.UI
 
                 owoIPInput.Text = discoveryForm.SelectedApp;
                 connectionSettings.OWOAddress = discoveryForm.SelectedApp;
-                SettingsHelper.SaveSettingsToFile(connectionSettings, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
+                connectionSettings.SaveToFile();
             }
         }
 

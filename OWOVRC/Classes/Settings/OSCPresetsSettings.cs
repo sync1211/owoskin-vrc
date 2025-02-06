@@ -1,4 +1,5 @@
 ﻿using OWOVRC.Classes.Effects.OSCPresets;
+using OWOVRC.Classes.Helpers;
 using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Settings
@@ -17,6 +18,11 @@ namespace OWOVRC.Classes.Settings
         public OSCPresetsSettings(bool enabled, int priority, Dictionary<string, OSCSensationPreset> presets) : base(enabled, priority)
         {
             Presets = presets;
+        }
+
+        public override void SaveToFile()
+        {
+            SettingsHelper.SaveSettingsToFile(this, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
         }
     }
 }
