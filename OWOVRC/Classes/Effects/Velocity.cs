@@ -238,7 +238,7 @@ namespace OWOVRC.Classes.Effects
             Log.Information($"{owo.GetRunningSensations().ContainsKey(impactSensation.Name)}");
         }
 
-        public override void Reset()
+        public override void Stop()
         {
             VelX = 0;
             VelY = 0;
@@ -248,6 +248,9 @@ namespace OWOVRC.Classes.Effects
             LastSpeedPacket = DateTime.MinValue;
             IsGrounded = false;
             IsSeated = false;
+
+            owo.StopSensation(WindSensation._Name);
+            owo.StopSensation(ImpactSensation._Name);
 
             Log.Debug("Velocity effect reset!");
         }

@@ -217,7 +217,7 @@ namespace OWOVRC.Classes.Effects
             }
         }
 
-        public override void Reset()
+        public override void Stop()
         {
             activeMuscles.Clear();
             Log.Debug("Collision effect reset!");

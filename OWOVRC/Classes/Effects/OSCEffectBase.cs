@@ -9,6 +9,6 @@ namespace OWOVRC.Classes.Effects
 
         public abstract void OnOSCMessageReceived(object? sender, OSCMessage message);
         public abstract void RegisterSensations();
-        public abstract void Reset();
+        public abstract void Stop();
     }
 }

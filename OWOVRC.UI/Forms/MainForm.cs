@@ -627,7 +627,7 @@ namespace OWOVRC.UI
             // Reset all effects
             foreach (OSCEffectBase effect in oscEffects)
             {
-                effect.Reset();
+                effect.Stop();
             }
 
             Log.Information("Stopped all running sensations!");

@@ -141,12 +141,27 @@ namespace OWOVRC.Classes.Effects
             Sensation sensation = preset.SensationObject
                 .MultiplyIntensityBy((Multiplier)intensity);
 
-            owo.AddSensation(sensation, muscles, preset.Name);
+            // Play sensation
+            if (!preset.Loop)
+            {
+                owo.AddSensation(sensation, muscles, preset.Name);
+            }
+            else if (owo.GetRunningSensations().ContainsKey(preset.Name))
+            {
+                owo.UpdateLoopedSensation(preset.Name, sensation, muscles);
+            }
+            else
+            {
+                owo.AddLoopedSensation(sensation, preset.Name, muscles);
+            }
         }
 
-        public override void Reset()
+        public override void Stop()
         {
-            // Nothing to reset
+            foreach (OSCSensationPreset preset in Settings.Presets.Values)
+            {
+                owo.StopSensation(preset.Name);
+            }
         }
     }
 }

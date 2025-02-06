@@ -3,7 +3,7 @@
     public class ImpactSensation: DirectionalSensation
     {
         // Sensation parameters
-        private const string _Name = "ImpactSensation";
+        public const string _Name = "ImpactSensation";
         private const int _frequency = 5;
         private const int _intensity = 100;
         public ImpactSensation(float durationSeconds = 0.1f) : base(_Name, _frequency, _intensity, durationSeconds) { }
