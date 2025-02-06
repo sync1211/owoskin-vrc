@@ -5,12 +5,14 @@ Yet another [VRChat](https://vrchat.com) integration for the [OWO Skin](https://
 ![Screenshot](.github/Screenshot_1.png)
 
 ## Features
-* Velocity-based wind simulation (no setup required!)
-* Collider-based-feedback
+* Comprehensive UI
+* Collider-based feedback
+* Velocity-based collision feedback
+* Triggering custom sensations via OSC
 * Audio-reactive feedback
+* Velocity-based wind simulation (no setup required!)
 * Support for OWO enabled worlds ([OWO World Integrator](https://github.com/RevoForge/Vrchat-OWO-Integration))
-* Custom sensations triggered via OSC
-* Velocity-based collider feedback
+
 
 ## Usage
 
