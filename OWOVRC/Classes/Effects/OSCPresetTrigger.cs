@@ -144,7 +144,7 @@ namespace OWOVRC.Classes.Effects
             // Play sensation
             if (!preset.Loop)
             {
-                owo.AddSensation(sensation, muscles, preset.Name);
+                owo.AddSensation(preset.Name, sensation, muscles);
             }
             else if (owo.GetRunningSensations().ContainsKey(preset.Name))
             {
@@ -152,7 +152,7 @@ namespace OWOVRC.Classes.Effects
             }
             else
             {
-                owo.AddLoopedSensation(sensation, preset.Name, muscles);
+                owo.AddLoopedSensation(preset.Name, sensation, muscles);
             }
         }
 

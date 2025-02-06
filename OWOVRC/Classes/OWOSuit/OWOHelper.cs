@@ -58,7 +58,7 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Information("Disconnected from OWO!");
         }
 
-        public void AddSensation(Sensation sensation, Muscle[] muscles, string name)
+        public void AddSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
             instance.AfterAdd += HandleSensationAdd;
@@ -89,7 +89,7 @@ namespace OWOVRC.Classes.OWOSuit
             sensationManager.updateSensation(instance.sensation, name);
         }
 
-        public void AddSensation(Sensation sensation, string name)
+        public void AddSensation(string name, Sensation sensation)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation);
             instance.AfterAdd += HandleSensationAdd;

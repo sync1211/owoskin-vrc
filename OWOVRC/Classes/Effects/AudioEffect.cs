@@ -63,7 +63,7 @@ namespace OWOVRC.Classes.Effects
                     continue;
                 }
 
-                owo.AddSensation(sensation, SENSATION_NAME);
+                owo.AddSensation(SENSATION_NAME, sensation);
                 break;
             }
         }

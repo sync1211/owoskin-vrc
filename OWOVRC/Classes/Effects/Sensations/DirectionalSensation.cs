@@ -61,7 +61,7 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             if (!IsLoop)
             {
-                owo.AddSensation(sensation, musclesScaled, Name);
+                owo.AddSensation(Name, sensation, musclesScaled);
             }
             else
             {
@@ -101,7 +101,7 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             // Calculate max velocity
             float maxVelocity = MaxHelper.Max(frontVelocity, backVelocity, leftVelocity, rightVelocity, upVelocity, downVelocity);
-                    
+
             if (maxVelocity == 0)
             {
                 Log.Debug("maxVelocity is 0! {x} {y} {z}", velocityX, velocityY, velocityZ);

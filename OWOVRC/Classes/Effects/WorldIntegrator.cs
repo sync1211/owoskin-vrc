@@ -183,7 +183,7 @@ namespace OWOVRC.Classes.Effects
                 Muscle[] muscles = owiSensation.GetMusclesWithIntensity(Settings.Intensity / 100f);
                 Sensation sensation = owiSensation.AsSensation();
 
-                owo.AddSensation(sensation, muscles, $"{OWI_NAME_PREFIX}{owiSensation.Sensation}");
+                owo.AddSensation($"{OWI_NAME_PREFIX}{owiSensation.Sensation}", sensation, muscles);
             }
         }
 

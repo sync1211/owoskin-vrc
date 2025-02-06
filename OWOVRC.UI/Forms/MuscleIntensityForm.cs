@@ -223,7 +223,7 @@ namespace OWOVRC.UI.Forms
                 return;
             }
 
-            owoHelper.AddSensation(testSensation, musclesWithIntensity, SENSATION_NAME);
+            owoHelper.AddSensation(SENSATION_NAME, testSensation, musclesWithIntensity);
         }
 
         private void MuscleIntensityForm_Shown(object sender, EventArgs e)
