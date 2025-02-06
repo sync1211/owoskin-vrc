@@ -21,7 +21,7 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         public readonly string SensationString;
         [JsonIgnore]
         [Browsable(false)]
-        public readonly BakedSensation SensationObject;
+        public readonly Sensation SensationObject;
 
         [JsonConstructor]
         public OSCSensationPreset(bool enabled, string name, int priority, int intensity, bool loop, string sensationString)
@@ -32,7 +32,7 @@ namespace OWOVRC.Classes.Effects.OSCPresets
             Intensity = intensity;
             Loop = loop;
             SensationString = sensationString;
-            SensationObject = BakedSensation.Parse(SensationString);
+            SensationObject = Sensation.Parse(SensationString);
         }
     }
 }

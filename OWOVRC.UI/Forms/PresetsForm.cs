@@ -83,19 +83,6 @@ namespace OWOVRC.UI.Forms
 
         private void ImportOWOSensation(string name, string sensationString)
         {
-            // Check if sensation is baked
-            if (!sensationString.Contains('~'))
-            {
-                Log.Warning("Not importing sensation {name}: only baked sensations are supported!", name);
-                MessageBox.Show(
-                    $"The sensation {name} is baked and cannot be imported as a preset!",
-                    "Non-Baked sensation",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-                return;
-            }
-
             try
             {
                 Log.Verbose("Importing sensation {name}: {value}", name, sensationString);
