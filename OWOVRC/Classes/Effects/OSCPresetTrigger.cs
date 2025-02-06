@@ -117,18 +117,16 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            float presetIntensity = (float)preset.Intensity / 100;
-            float intensity = presetIntensity * oscIntensity;
+            float intensity = preset.Intensity * oscIntensity;
 
             // Apply intensity to muscles
             for (int i = 0; i < muscles.Length; i++)
             {
-                muscles[i] = muscles[i].WithIntensity((int)(intensity * 100));
+                muscles[i] = muscles[i].WithIntensity((int)intensity);
             }
 
-            Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, oscIntensity);
-            Sensation sensation = preset.SensationObject
-                .MultiplyIntensityBy((Multiplier)intensity);
+            Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, intensity);
+            Sensation sensation = preset.SensationObject;
 
             // Play sensation
             if (!preset.Loop)
