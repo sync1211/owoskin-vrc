@@ -168,7 +168,6 @@ namespace OWOVRC.Audio.Classes
         public AnalyzedAudioSample AnalyzeAudioStereo()
         {
             FastFourierTransform.FFT(true, (int)Math.Log2(buffer.Length), buffer);
-            //FastFourierTransform.FFT(true, (int)Math.Log2(rightBuffer.Length), rightBuffer);
 
             return Analyzer;
         }
