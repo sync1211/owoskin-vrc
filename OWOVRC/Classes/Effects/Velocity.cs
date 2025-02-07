@@ -196,7 +196,6 @@ namespace OWOVRC.Classes.Effects
 
             double speedCapped = Math.Min(Speed, Settings.SpeedCap);
             int speedPercent = (int)(100 * (speedCapped / Settings.SpeedCap));
-            Log.Debug("Movement speed: {speed} (max {speedCap}) => {intensity}%", Speed, Settings.SpeedCap, speedPercent);
 
             // Send sensation to vest
             PlayWindSensation(speedPercent);
@@ -227,7 +226,6 @@ namespace OWOVRC.Classes.Effects
             impactSensation.Intensity = power;
 
             impactSensation.Play(owo, Settings.Priority);
-            Log.Information($"{owo.GetRunningSensations().ContainsKey(impactSensation.Name)}");
         }
 
         public override void Stop()
