@@ -13,7 +13,7 @@ namespace OWOVRC.Classes.Settings
 
         [JsonInclude] //NOTE: zero-width space (U+200B) is used to force a linebreak in the UI
         public AudioEffectSpectrumSettings SubBassSettings { get; set; } =
-            new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 40, 2, 3, 15, 5);
+            new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 25, 2, 3, 15, 5);
         [JsonInclude]
         public AudioEffectSpectrumSettings TrebleSettings { get; set; } =
             new("Treble", AudioSpectrum.Brilliance, DefaultTrebleMuscles, 30, 1, 0.5f, 4, 75);
