@@ -344,7 +344,23 @@ namespace OWOVRC.UI
         {
             // Create OSC receiver
             receiver.Dispose(); // The receiver does not have a stop method, so we're re-creating it on launch
-            receiver = new(connectionSettings.OSCPort);
+
+            try
+            {
+                OSCReceiver newReceiver = new(connectionSettings.OSCPort);
+                receiver.Dispose();
+                receiver = newReceiver;
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                MessageBox.Show(
+                    "The selected OSC port is already in use by another process!",
+                    "Failed to bind to OSC port!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
 
             // Register effects
             foreach (OSCEffectBase effect in oscEffects)
