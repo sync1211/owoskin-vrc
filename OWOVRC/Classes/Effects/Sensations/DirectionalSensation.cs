@@ -137,8 +137,8 @@ namespace OWOVRC.Classes.Effects.Sensations
                 Muscle muscle = muscleData.Key;
                 int muscleValue = muscleData.Value;
 
-                int intensity = (int)((float)muscleValue / (float)maxMuscleValue) * 100;
-                musclesScaled[i] = muscle.WithIntensity(intensity);
+                int muscleIntensity = (int)((float)muscleValue / (float)maxMuscleValue) * 100;
+                musclesScaled[i] = muscle.WithIntensity(muscleIntensity);
             }
         }
 
