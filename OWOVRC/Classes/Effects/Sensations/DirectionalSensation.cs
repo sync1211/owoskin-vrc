@@ -56,7 +56,6 @@ namespace OWOVRC.Classes.Effects.Sensations
         public void Play(OWOHelper owo, int priority = 0)
         {
             // Play sensation
-            Log.Verbose("Playing wind sensation at {0}%", Intensity);
             Sensation sensation = CreateSensation(intensity).WithPriority(priority);
 
             if (!IsLoop)
