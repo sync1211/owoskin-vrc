@@ -7,20 +7,8 @@ namespace OWOVRC.Classes.Effects.Sensations
         // Sensation parameters
         public static readonly string _Name = "WindSensation";
         private const int _frequency = 100;
-        private const int _intensity = 25;
-        new public int Intensity
-        {
-            get
-            {
-                return intensity * 4;
-            }
-            set
-            {
-                intensity = value / 4;
-            }
-        }
 
-        public WindSensation(float durationSeconds = 0.2f): base(_Name, _frequency, _intensity / 4, durationSeconds, 0, 0, 0, true, new MuscleDirectionGroups(down: Muscle.All)) { }
+        public WindSensation(float durationSeconds = 0.2f): base(_Name, _frequency, durationSeconds, 0, 0, 0, true, new MuscleDirectionGroups(down: Muscle.All)) { }
 
         /// <summary>
         /// Creates a sensation from the wind velocity.

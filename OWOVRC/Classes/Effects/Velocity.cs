@@ -210,9 +210,8 @@ namespace OWOVRC.Classes.Effects
             float windVelY = VelY * -1;
             float windVelZ = VelZ * -1;
 
-            windSensation.UpdateDirection(windVelX, windVelY, windVelZ);
+            windSensation.UpdateDirection(windVelX, windVelY, windVelZ, intensity / 4);
 
-            windSensation.Intensity = intensity;
             windSensation.Play(owo, Settings.Priority);
         }
 
@@ -222,8 +221,7 @@ namespace OWOVRC.Classes.Effects
             float hitVelY = lastVelY * -1;
             float hitVelZ = lastVelZ * -1;
 
-            impactSensation.UpdateDirection(hitVelX, hitVelY, hitVelZ);
-            impactSensation.Intensity = power;
+            impactSensation.UpdateDirection(hitVelX, hitVelY, hitVelZ, power);
 
             impactSensation.Play(owo, Settings.Priority);
         }

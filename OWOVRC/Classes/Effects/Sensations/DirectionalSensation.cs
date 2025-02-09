@@ -7,18 +7,6 @@ namespace OWOVRC.Classes.Effects.Sensations
 {
     public abstract class DirectionalSensation
     {
-        protected int intensity;
-        public int Intensity
-        {
-            get
-            {
-                return intensity;
-            }
-            set
-            {
-                intensity = value;
-            }
-        }
         public readonly int Frequency;
         public float Duration;
         public readonly float RampUp;
@@ -27,15 +15,15 @@ namespace OWOVRC.Classes.Effects.Sensations
         public readonly bool IsLoop;
         public readonly string Name;
         private readonly Muscle[] musclesScaled = Muscle.All;
+        private readonly Sensation sensation;
 
         // Muscles to apply the sensation
         protected readonly MuscleDirectionGroups directions = new();
 
-        protected DirectionalSensation(string name, int frequency, int intensity, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0, bool loop = false, MuscleDirectionGroups? directions = null)
+        protected DirectionalSensation(string name, int frequency, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0, bool loop = false, MuscleDirectionGroups? directions = null)
         {
             Name = name;
             Frequency = frequency;
-            Intensity = intensity;
             Duration = durationSeconds;
             RampUp = rampUp;
             RampDown = rampDown;
@@ -43,6 +31,8 @@ namespace OWOVRC.Classes.Effects.Sensations
             IsLoop = loop;
 
             this.directions = directions ?? this.directions;
+
+            sensation = CreateSensation(100);
 
             // No direction specified -> front
             UpdateDirection(0, 0, 0);
@@ -55,23 +45,23 @@ namespace OWOVRC.Classes.Effects.Sensations
 
         public void Play(OWOHelper owo, int priority = 0)
         {
-            // Play sensation
-            Sensation sensation = CreateSensation(intensity).WithPriority(priority);
+            Sensation sensationPriority = sensation.WithPriority(priority);
 
+            // Play sensation
             if (!IsLoop)
             {
-                owo.AddSensation(Name, sensation, musclesScaled);
+                owo.AddSensation(Name, sensationPriority, musclesScaled);
             }
             else
             {
                 // Run or update sensation loop
                 if (owo.GetRunningSensations().ContainsKey(Name))
                 {
-                    owo.UpdateLoopedSensation(Name, sensation, musclesScaled);
+                    owo.UpdateLoopedSensation(Name, sensationPriority, musclesScaled);
                 }
                 else
                 {
-                    owo.AddLoopedSensation(Name, sensation, musclesScaled);
+                    owo.AddLoopedSensation(Name, sensationPriority, musclesScaled);
                 }
             }
         }
@@ -82,7 +72,7 @@ namespace OWOVRC.Classes.Effects.Sensations
         /// <param name="velocityY">down/up</param>
         /// <param name="velocityZ">back/front</param></param>
         /// </summary>
-        public void UpdateDirection(float velocityX, float velocityY, float velocityZ)
+        public void UpdateDirection(float velocityX, float velocityY, float velocityZ, int intensity = 100)
         {
             // Generate affected muscles dynamically based on direction
             // 1. Assign a weight to every direction based on their % of the maximum
@@ -136,7 +126,7 @@ namespace OWOVRC.Classes.Effects.Sensations
                 Muscle muscle = muscleData.Key;
                 int muscleValue = muscleData.Value;
 
-                int muscleIntensity = (int)((float)muscleValue / (float)maxMuscleValue) * 100;
+                int muscleIntensity = (int)((float)muscleValue / (float)maxMuscleValue) * intensity;
                 musclesScaled[i] = muscle.WithIntensity(muscleIntensity);
             }
         }
