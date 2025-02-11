@@ -13,15 +13,43 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public int MinIntensity { get; set; } = 50; // Min intensity when calculating speed
         [JsonInclude]
-        public int Frequency { get; set; } = 50;
+        public int Frequency_Value { get; set; } = 50;
         [JsonInclude]
-        public float SensationSeconds { get; set; } = 0.3f;
+        public float SensationSeconds_Value { get; set; } = 0.3f;
+        [JsonIgnore]
+        public int Frequency
+        {
+            get
+            {
+                return Frequency_Value;
+            }
+            set
+            {
+                Frequency_Value = value;
+                UpdateSensation();
+            }
+        }
+        [JsonIgnore]
+        public float SensationSeconds
+        {
+            get
+            {
+                return SensationSeconds_Value;
+            }
+            set
+            {
+                SensationSeconds_Value = value;
+                UpdateSensation();
+            }
+        }
         [JsonInclude]
         public float SpeedMultiplier { get; set; } = 2.0f;
         [JsonInclude]
         public TimeSpan MaxTimeDiff { get; set; } = TimeSpan.FromSeconds(1);
         [JsonInclude]
         public Dictionary<int, int> MuscleIntensities { get; } = [];
+        [JsonIgnore]
+        private Sensation sensation = null!;
 
         public CollidersEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority)
         {
@@ -29,6 +57,7 @@ namespace OWOVRC.Classes.Settings
             {
                 MuscleIntensities[muscle.id] = 100;
             }
+            UpdateSensation();
         }
 
         [JsonConstructor]
@@ -37,8 +66,8 @@ namespace OWOVRC.Classes.Settings
             UseVelocity = useVelocity;
             AllowContinuous = allowContinuous;
             MinIntensity = minIntensity;
-            Frequency = frequency;
-            SensationSeconds = sensationSeconds;
+            Frequency_Value = frequency;
+            SensationSeconds_Value = sensationSeconds;
             SpeedMultiplier = speedMultiplier;
             MaxTimeDiff = maxTimeDiff;
             MuscleIntensities = muscleIntensities ?? [];
@@ -50,12 +79,18 @@ namespace OWOVRC.Classes.Settings
                     MuscleIntensities[muscle.id] = 100;
                 }
             }
+            UpdateSensation();
         }
 
-        public Sensation CreateSensation()
+        private void UpdateSensation()
         {
-            return SensationsFactory
-                .Create(Frequency, SensationSeconds, 100, 0, 0, 0)
+            sensation = SensationsFactory
+                .Create(Frequency_Value, SensationSeconds_Value, 100, 0, 0, 0);
+        }
+
+        public Sensation GetSensation()
+        {
+            return sensation
                 .WithPriority(Priority);
         }
 

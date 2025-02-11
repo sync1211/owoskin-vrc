@@ -740,7 +740,7 @@ namespace OWOVRC.UI
 
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
         {
-            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.CreateSensation(), null, owo))
+            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.GetSensation(), null, owo))
             {
                 intensityForm.ShowDialog();
                 collidersSettings.SaveToFile();

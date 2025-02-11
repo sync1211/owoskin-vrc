@@ -42,13 +42,41 @@ namespace OWOVRC.Classes.Settings
         public int AudioFrequencyEnd { get; }
 
         [JsonInclude]
-        public int SensationFrequency { get; set; } = 10;
+        public int SensationFrequency_Value { get; set; } = 10;
         [JsonInclude]
-        public float SensationSeconds { get; set; } = 0.1f;
+        public float SensationSeconds_Value { get; set; } = 0.1f;
+        [JsonIgnore]
+        public int SensationFrequency
+        {
+            get
+            {
+                return SensationFrequency_Value;
+            }
+            set
+            {
+                SensationFrequency_Value = value;
+                UpdateSensation();
+            }
+        }
+        [JsonIgnore]
+        public float SensationSeconds
+        {
+            get
+            {
+                return SensationSeconds_Value;
+            }
+            set
+            {
+                SensationSeconds_Value = value;
+                UpdateSensation();
+            }
+        }
         [JsonInclude]
         public Dictionary<int, int> Intensities { get; } = [];
         [JsonIgnore]
         public EventHandler? OnPriorityChanged;
+        [JsonIgnore]
+        private Sensation sensation = null!;
 
         [JsonConstructor]
         public AudioEffectSpectrumSettings(bool enabled, string name, int priority, float minDB, float maxDB, int audioFrequencyStart, int audioFrequencyEnd, int sensationFrequency, float sensationSeconds, Dictionary<int, int>? intensities)
@@ -60,8 +88,8 @@ namespace OWOVRC.Classes.Settings
             MaxDB = maxDB;
             AudioFrequencyStart = audioFrequencyStart;
             AudioFrequencyEnd = audioFrequencyEnd;
-            SensationFrequency = sensationFrequency;
-            SensationSeconds = sensationSeconds;
+            SensationFrequency_Value = sensationFrequency;
+            SensationSeconds_Value = sensationSeconds;
             Intensities = intensities ?? [];
 
             if (MaxDB < MinDB)
@@ -70,6 +98,7 @@ namespace OWOVRC.Classes.Settings
             }
 
             AddMissingIntensities();
+            UpdateSensation();
         }
 
         private void AddMissingIntensities()
@@ -82,6 +111,12 @@ namespace OWOVRC.Classes.Settings
                 }
                 Intensities[muscle.id] = 0;
             }
+        }
+
+        private void UpdateSensation()
+        {
+            sensation = SensationsFactory
+                .Create(SensationFrequency, SensationSeconds);
         }
 
         public AudioEffectSpectrumSettings(string name, FrequencyRange frequencyRange)
@@ -116,10 +151,9 @@ namespace OWOVRC.Classes.Settings
             AddMissingIntensities();
         }
 
-        public Sensation CreateSensation()
+        public Sensation GetSensation()
         {
-            return SensationsFactory
-                .Create(SensationFrequency, SensationSeconds)
+            return sensation
                 .WithPriority(Priority);
         }
     }

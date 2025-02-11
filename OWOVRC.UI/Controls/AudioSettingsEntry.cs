@@ -167,7 +167,7 @@ namespace OWOVRC.UI.Controls
             Sensation? testSensation = null;
             if (audioEffectSpectrumSettings != null)
             {
-                testSensation = audioEffectSpectrumSettings.CreateSensation();
+                testSensation = audioEffectSpectrumSettings.GetSensation();
             }
 
             using (MuscleIntensityForm intensityForm = new(MuscleIntensities, testSensation, $"Muscles affected by {Name}", owoHelper))
