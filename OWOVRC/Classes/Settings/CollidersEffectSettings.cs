@@ -12,20 +12,22 @@ namespace OWOVRC.Classes.Settings
         public bool AllowContinuous { get; set; } = true;
         [JsonInclude]
         public int MinIntensity { get; set; } = 50; // Min intensity when calculating speed
+#pragma warning disable IDE1006 // Naming conventions
         [JsonInclude]
-        public int Frequency_Value { get; set; } = 50;
+        public int _frequency { get; set; } = 50; // Set by Frequency property
         [JsonInclude]
-        public float SensationSeconds_Value { get; set; } = 0.3f;
+        public float _sensationSeconds { get; set; } = 0.3f; // Set by SensationSeconds property
+#pragma warning restore IDE1006 // Naming conventions
         [JsonIgnore]
         public int Frequency
         {
             get
             {
-                return Frequency_Value;
+                return _frequency;
             }
             set
             {
-                Frequency_Value = value;
+                _frequency = value;
                 UpdateSensation();
             }
         }
@@ -34,11 +36,11 @@ namespace OWOVRC.Classes.Settings
         {
             get
             {
-                return SensationSeconds_Value;
+                return _sensationSeconds;
             }
             set
             {
-                SensationSeconds_Value = value;
+                _sensationSeconds = value;
                 UpdateSensation();
             }
         }
@@ -66,8 +68,8 @@ namespace OWOVRC.Classes.Settings
             UseVelocity = useVelocity;
             AllowContinuous = allowContinuous;
             MinIntensity = minIntensity;
-            Frequency_Value = frequency;
-            SensationSeconds_Value = sensationSeconds;
+            _frequency = frequency;
+            _sensationSeconds = Math.Min(0.2f, sensationSeconds);
             SpeedMultiplier = speedMultiplier;
             MaxTimeDiff = maxTimeDiff;
             MuscleIntensities = muscleIntensities ?? [];
@@ -85,7 +87,7 @@ namespace OWOVRC.Classes.Settings
         private void UpdateSensation()
         {
             sensation = SensationsFactory
-                .Create(Frequency_Value, SensationSeconds_Value, 100, 0, 0, 0);
+                .Create(_frequency, _sensationSeconds, 100, 0, 0, 0);
         }
 
         public Sensation GetSensation()
