@@ -36,9 +36,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\OWOVRC.Audio\OWOVRC.Audio.csproj" />
   </ItemGroup>
 
