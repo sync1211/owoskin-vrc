@@ -593,7 +593,7 @@
             owiIntensityLabel.Size = new Size(73, 15);
             owiIntensityLabel.TabIndex = 25;
             owiIntensityLabel.Text = "Intensity (%)";
-            helpToolTip.SetToolTip(owiIntensityLabel, "Specifies the intensity of this effect");
+            helpToolTip.SetToolTip(owiIntensityLabel, "Specifies the intensity of this effect.\r\nThis intensity is applied on top of the configured intensity for each encountered sensation!");
             // 
             // owiIntensityInput
             // 

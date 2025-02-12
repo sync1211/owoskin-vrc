@@ -964,7 +964,7 @@ namespace OWOVRC.UI
 
         private void OwiConfigureSensationsButton_Click(object sender, EventArgs e)
         {
-            using (BlacklistForm form = new("Enable/Disable Sensations", owiSettings.EnabledSensations))
+            using (OWIIntensityListForm form = new(owiSettings.EnabledSensations))
             {
                 DialogResult result = form.ShowDialog();
             }

@@ -148,16 +148,16 @@ namespace OWOVRC.Classes.Effects
             PlaySensations(sensations);
         }
 
-        private bool IsSensationBlacklisted(string sensationName)
+        private int GetSensationIntensity(string sensationName)
         {
             sensationName = sensationName.Trim();
-            if (!Settings.EnabledSensations.TryGetValue(sensationName, out bool isEnabled))
+            if (!Settings.EnabledSensations.TryGetValue(sensationName, out int intensity))
             {
-                Settings.EnabledSensations.Add(sensationName, true);
-                return true;
+                Settings.EnabledSensations.Add(sensationName, 100);
+                return 100;
             }
 
-            return isEnabled;
+            return intensity;
         }
 
         private void PlaySensations(OWISensation[] sensations)
@@ -173,14 +173,16 @@ namespace OWOVRC.Classes.Effects
                 }
 
                 // Consult blacklist
-                if (!IsSensationBlacklisted(owiSensation.Sensation))
+                int sensationIntensity = GetSensationIntensity(owiSensation.Sensation);
+                if (sensationIntensity == 0)
                 {
                     Log.Verbose("Ignoring blacklisted sensation {sensation}", owiSensation.Sensation);
                     continue;
                 }
 
                 // Play sensation
-                Muscle[] muscles = owiSensation.GetMusclesWithIntensity(Settings.Intensity / 100f);
+                int intensityMultiplier = (int) (Settings.Intensity / 100f) * sensationIntensity;
+                Muscle[] muscles = owiSensation.GetMusclesWithIntensity(intensityMultiplier / 100f);
                 Sensation sensation = owiSensation.AsSensation();
 
                 owo.AddSensation($"{OWI_NAME_PREFIX}{owiSensation.Sensation}", sensation, muscles);

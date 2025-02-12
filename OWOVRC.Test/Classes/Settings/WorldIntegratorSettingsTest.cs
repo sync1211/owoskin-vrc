@@ -9,10 +9,10 @@ namespace OWOVRC.Test.Classes.Settings
         [TestMethod]
         public void TestJsonEncodeDecode()
         {
-            Dictionary<string, bool> sensations = new()
+            Dictionary<string, int> sensations = new()
             {
-                { "Test1", true },
-                { "Test2", false }
+                { "Test1", 44 },
+                { "Test2", 12 }
             };
 
             WorldIntegratorSettings settings = new(false, 2, sensations)
@@ -33,7 +33,7 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.Intensity, decodedSettings.Intensity);
 
             Assert.AreEqual(settings.EnabledSensations.Count, decodedSettings.EnabledSensations.Count);
-            foreach (KeyValuePair<string, bool> sensation in sensations)
+            foreach (KeyValuePair<string, int> sensation in sensations)
             {
                 Assert.IsTrue(decodedSettings.EnabledSensations.ContainsKey(sensation.Key));
                 Assert.AreEqual(sensation.Value, decodedSettings.EnabledSensations[sensation.Key]);

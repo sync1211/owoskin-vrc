@@ -1,6 +1,5 @@
 ﻿using OWOVRC.Classes.Helpers;
 using System.Text.Json.Serialization;
-using Windows.UI.ViewManagement;
 
 namespace OWOVRC.Classes.Settings
 {
@@ -11,23 +10,23 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public int Intensity { get; set; } = 100;
         [JsonInclude]
-        public Dictionary<string, bool> EnabledSensations { get; } = new()
+        public Dictionary<string, int> EnabledSensations { get; } = new()
         {
-            { "Back Wind", true },
-            { "Death", true },
-            { "Front Wind", true },
-            { "Massage", true },
-            { "PaintBall", true },
-            { "Raindrop", true },
-            { "Recoil", true },
-            { "Sword Bleeding", true },
-            { "Sword Stab", true },
-            { "Weight", true }
+            { "Back Wind", 100 },
+            { "Death", 100 },
+            { "Front Wind", 100 },
+            { "Massage", 100 },
+            { "PaintBall", 100 },
+            { "Raindrop", 100 },
+            { "Recoil", 100 },
+            { "Sword Bleeding", 100 },
+            { "Sword Stab", 100 },
+            { "Weight", 100 }
         };
 
         public WorldIntegratorSettings() : base(true, 10) { }
         [JsonConstructor]
-        public WorldIntegratorSettings(bool enabled, int priority = 10, Dictionary<string, bool>? enabledSensations = null) : base(enabled, priority)
+        public WorldIntegratorSettings(bool enabled, int priority = 10, Dictionary<string, int>? enabledSensations = null) : base(enabled, priority)
         {
             EnabledSensations = enabledSensations ?? EnabledSensations;
         }

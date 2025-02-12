@@ -1,6 +1,6 @@
 ﻿namespace OWOVRC.UI.Forms
 {
-    partial class BlacklistForm
+    partial class OWIIntensityListForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlacklistForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OWIIntensityListForm));
             saveButton = new Button();
-            checkedListBox1 = new CheckedListBox();
+            dataGridView1 = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // saveButton
@@ -46,32 +47,40 @@
             saveButton.UseVisualStyleBackColor = true;
             saveButton.Click += CloseButton_Click;
             // 
-            // checkedListBox1
+            // dataGridView1
             // 
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(12, 12);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(294, 310);
-            checkedListBox1.TabIndex = 4;
-            checkedListBox1.SelectedIndexChanged += CheckedListBox1_SelectedIndexChanged;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = SystemColors.ControlLightLight;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(12, 12);
+            dataGridView1.MultiSelect = false;
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.Size = new Size(294, 316);
+            dataGridView1.TabIndex = 2;
             // 
-            // BlacklistForm
+            // OWIIntensityListForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(318, 369);
-            Controls.Add(checkedListBox1);
+            Controls.Add(dataGridView1);
             Controls.Add(saveButton);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "BlacklistForm";
-            Text = "Settings";
+            Name = "OWIIntensityListForm";
+            Text = "Sensation intensities";
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Button saveButton;
-        private CheckedListBox checkedListBox1;
+        private DataGridView dataGridView1;
     }
 }
