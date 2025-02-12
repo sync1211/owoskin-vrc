@@ -13,7 +13,7 @@ namespace OWOVRC.UI.Classes.Helpers
             }
             set
             {
-                intensity = Math.Clamp(value, 0, 100);
+                intensity = Math.Clamp(value, 0, 200);
                 Items[Sensation] = intensity;
             }
         }
