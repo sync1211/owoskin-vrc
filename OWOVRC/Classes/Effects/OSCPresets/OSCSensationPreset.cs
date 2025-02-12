@@ -13,7 +13,19 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         [JsonInclude]
         public int Priority { get; set; }
         [JsonInclude]
-        public int Intensity { get; set; }
+        public int Intensity
+        {
+            get
+            {
+                return intensity;
+            }
+            set
+            {
+                intensity = Math.Clamp(value, 0, 200);
+            }
+        }
+        [JsonIgnore]
+        private int intensity;
         [JsonInclude]
         public bool Loop { get; set; }
         [JsonInclude]

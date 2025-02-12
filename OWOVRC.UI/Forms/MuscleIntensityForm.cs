@@ -78,12 +78,19 @@ namespace OWOVRC.UI.Forms
             {
                 return;
             }
+
+            // Save intensity of the currently selected muscle
+            SaveIntensityValue();
+
             currentMuscleID = muscle.MuscleID;
             UpdateActiveMuscleGroup();
         }
 
         private void ShowFrontButton_Click(object sender, EventArgs e)
         {
+            // Save intensity of the currently selected muscle
+            SaveIntensityValue();
+
             muscleGroupsTabControl.SelectedIndex = 0;
 
             currentMuscleID = Muscle.Pectoral_R.id;
@@ -94,6 +101,9 @@ namespace OWOVRC.UI.Forms
 
         private void ShowBackButton_Click(object sender, EventArgs e)
         {
+            // Save intensity of the currently selected muscle
+            SaveIntensityValue();
+
             muscleGroupsTabControl.SelectedIndex = 1;
 
             currentMuscleID = Muscle.Dorsal_R.id;
@@ -131,7 +141,7 @@ namespace OWOVRC.UI.Forms
                 intensity = 0;
             }
 
-            muscleIntensityTrackBar.Value = intensity;
+            muscleIntensityTrackBar.Value = Math.Clamp(intensity, 0, 200);
             intensityValueInput.Text = muscleIntensityTrackBar.Value.ToString();
         }
 
@@ -144,18 +154,23 @@ namespace OWOVRC.UI.Forms
 
         private void IntensityValueTextBox_Exit(object sender, EventArgs e)
         {
+            SaveIntensityValue();
+            UpdateActiveMuscleGroup();
+        }
+
+        private void SaveIntensityValue()
+        {
             if (!int.TryParse(intensityValueInput.Text, out int value) || value < 0 || value > 200)
             {
                 intensityValueInput.Text = muscleIntensityTrackBar.Value.ToString();
             }
 
             muscleIntensities[currentMuscleID] = value;
-
-            UpdateActiveMuscleGroup();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
+            SaveIntensityValue(); // Make sure last entered intensity value is applied before closing
             Close();
         }
 
