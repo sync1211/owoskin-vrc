@@ -13,34 +13,34 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public int MinIntensity { get; set; } = 50; // Min intensity when calculating speed
 #pragma warning disable IDE1006 // Naming conventions
-        [JsonInclude]
-        public int _frequency { get; set; } = 50; // Set by Frequency property
-        [JsonInclude]
-        public float _sensationSeconds { get; set; } = 0.3f; // Set by SensationSeconds property
-#pragma warning restore IDE1006 // Naming conventions
         [JsonIgnore]
+        private int frequency { get; set; } = 50; // Set by Frequency property
+        [JsonIgnore]
+        private float sensationSeconds { get; set; } = 0.3f; // Set by SensationSeconds property
+#pragma warning restore IDE1006 // Naming conventions
+        [JsonInclude]
         public int Frequency
         {
             get
             {
-                return _frequency;
+                return frequency;
             }
             set
             {
-                _frequency = value;
+                frequency = value;
                 UpdateSensation();
             }
         }
-        [JsonIgnore]
+        [JsonInclude]
         public float SensationSeconds
         {
             get
             {
-                return _sensationSeconds;
+                return sensationSeconds;
             }
             set
             {
-                _sensationSeconds = value;
+                sensationSeconds = value;
                 UpdateSensation();
             }
         }
@@ -68,8 +68,8 @@ namespace OWOVRC.Classes.Settings
             UseVelocity = useVelocity;
             AllowContinuous = allowContinuous;
             MinIntensity = minIntensity;
-            _frequency = frequency;
-            _sensationSeconds = Math.Min(0.2f, sensationSeconds);
+            this.frequency = frequency;
+            this.sensationSeconds = Math.Min(0.2f, sensationSeconds);
             SpeedMultiplier = speedMultiplier;
             MaxTimeDiff = maxTimeDiff;
             MuscleIntensities = muscleIntensities ?? [];
@@ -87,7 +87,7 @@ namespace OWOVRC.Classes.Settings
         private void UpdateSensation()
         {
             sensation = SensationsFactory
-                .Create(_frequency, _sensationSeconds, 100, 0, 0, 0);
+                .Create(frequency, sensationSeconds, 100, 0, 0, 0);
         }
 
         public Sensation GetSensation()

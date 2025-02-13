@@ -11,22 +11,22 @@ namespace OWOVRC.Classes.Settings
         {
             get
             {
-                return _priority;
+                return priority;
             }
             set
             {
-                if (_priority == value)
+                if (priority == value)
                 {
                     return;
                 }
 
-                _priority = value;
+                priority = value;
                 OnPriorityChanged?.Invoke(this, EventArgs.Empty);
             }
         }
         [JsonIgnore]
 #pragma warning disable IDE1006 // Naming conventions
-        private int _priority { get; set; } = 0; // Set by Priority property
+        private int priority { get; set; } = 0; // Set by Priority property
         [JsonInclude]
         public bool Enabled { get; set; } = true;
         [JsonInclude]
@@ -40,34 +40,34 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public int AudioFrequencyEnd { get; }
 
-        [JsonInclude]
-        public int _sensationFrequency { get; set; } = 10; // Set by SensationFrequency property
-        [JsonInclude]
-        public float _sensationSeconds { get; set; } = 0.1f; // Set by SensationSeconds property
-#pragma warning restore IDE1006 // Naming conventions
         [JsonIgnore]
+        private int sensationFrequency { get; set; } = 10;
+        [JsonIgnore]
+        private float sensationSeconds { get; set; } = 0.1f;
+#pragma warning restore IDE1006 // Naming conventions
+        [JsonInclude]
         public int SensationFrequency
         {
             get
             {
-                return _sensationFrequency;
+                return sensationFrequency;
             }
             set
             {
-                _sensationFrequency = value;
+                sensationFrequency = value;
                 UpdateSensation();
             }
         }
-        [JsonIgnore]
+        [JsonInclude]
         public float SensationSeconds
         {
             get
             {
-                return _sensationSeconds;
+                return sensationSeconds;
             }
             set
             {
-                _sensationSeconds = value;
+                sensationSeconds = value;
                 UpdateSensation();
             }
         }
@@ -83,13 +83,13 @@ namespace OWOVRC.Classes.Settings
         {
             Enabled = enabled;
             Name = name;
-            Priority = priority;
+            this.priority = priority;
             MinDB = minDB;
             MaxDB = maxDB;
             AudioFrequencyStart = audioFrequencyStart;
             AudioFrequencyEnd = audioFrequencyEnd;
-            this._sensationFrequency = sensationFrequency;
-            this._sensationSeconds = sensationSeconds;
+            this.sensationFrequency = sensationFrequency;
+            this.sensationSeconds = sensationSeconds;
             Intensities = intensities ?? [];
 
             if (MaxDB < MinDB)
