@@ -7,6 +7,7 @@ namespace OWOVRC.Classes.OWOSuit
     {
         public static readonly Dictionary<string, Muscle> Muscles = new()
         {
+            // Shadoki-Style naming
             { "owo_suit_pectoral_r",  Muscle.Pectoral_R },
             { "owo_suit_pectoral_l",  Muscle.Pectoral_L },
             { "owo_suit_abdominal_r",  Muscle.Abdominal_R },
@@ -16,7 +17,19 @@ namespace OWOVRC.Classes.OWOSuit
             { "owo_suit_dorsal_r",  Muscle.Dorsal_R },
             { "owo_suit_dorsal_l",  Muscle.Dorsal_L },
             { "owo_suit_lumbar_r",  Muscle.Lumbar_R },
-            { "owo_suit_lumbar_l",  Muscle.Lumbar_L }
+            { "owo_suit_lumbar_l",  Muscle.Lumbar_L },
+
+            // Exact naming
+            { "pectoral_r",  Muscle.Pectoral_R },
+            { "pectoral_l",  Muscle.Pectoral_L },
+            { "abdominal_r",  Muscle.Abdominal_R },
+            { "abdominal_l",  Muscle.Abdominal_L },
+            { "arm_r",  Muscle.Arm_R },
+            { "arm_l",  Muscle.Arm_L },
+            { "dorsal_r",  Muscle.Dorsal_R },
+            { "dorsal_l",  Muscle.Dorsal_L },
+            { "lumbar_r",  Muscle.Lumbar_R },
+            { "lumbar_l",  Muscle.Lumbar_L }
         };
 
         public static readonly Dictionary<string, Muscle[]> MuscleGroups = new()
