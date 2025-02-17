@@ -571,7 +571,7 @@
             owiConfigureSensationsButton.Size = new Size(89, 23);
             owiConfigureSensationsButton.TabIndex = 28;
             owiConfigureSensationsButton.Text = "Configure";
-            helpToolTip.SetToolTip(owiConfigureSensationsButton, "Enable/Disable sensations received by OWI");
+            helpToolTip.SetToolTip(owiConfigureSensationsButton, "Configure the intensity of sensations received by OWI");
             owiConfigureSensationsButton.UseVisualStyleBackColor = true;
             owiConfigureSensationsButton.Click += OwiConfigureSensationsButton_Click;
             // 
