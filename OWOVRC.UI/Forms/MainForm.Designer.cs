@@ -288,7 +288,7 @@
             collidersSpeedMultiplierLabel.Size = new Size(93, 15);
             collidersSpeedMultiplierLabel.TabIndex = 11;
             collidersSpeedMultiplierLabel.Text = "Speed multiplier";
-            helpToolTip.SetToolTip(collidersSpeedMultiplierLabel, "Multiplier for velocity-based sensation scaling (Supports ");
+            helpToolTip.SetToolTip(collidersSpeedMultiplierLabel, "Multiplier for velocity-based sensation scaling");
             // 
             // collidersSpeedMultiplierInput
             // 
