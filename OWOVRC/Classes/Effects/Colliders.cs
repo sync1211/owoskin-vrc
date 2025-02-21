@@ -145,7 +145,7 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            MuscleCollisionData[] muscleCollisionData = [.. activeMuscles.Values];
+            Span<MuscleCollisionData> muscleCollisionData = [.. activeMuscles.Values];
             Muscle[] musclesScaled = new Muscle[muscleCollisionData.Length];
 
             for (int i = 0; i < muscleCollisionData.Length; i++)
