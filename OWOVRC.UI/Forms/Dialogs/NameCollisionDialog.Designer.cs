@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NameCollisionDialog));
             okButton = new Button();
             cancelButton = new Button();
             descriptionLabel = new Label();
@@ -103,9 +104,9 @@
             Controls.Add(cancelButton);
             Controls.Add(okButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "NameCollisionDialog";
-            ShowIcon = false;
             Text = "Name already in use";
             Shown += NameCollisionDialog_Shown;
             ResumeLayout(false);

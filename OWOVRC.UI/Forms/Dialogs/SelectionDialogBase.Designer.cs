@@ -1,6 +1,6 @@
 ﻿namespace OWOVRC.UI.Forms.Dialogs
 {
-    partial class SelectionDialog<T>
+    partial class SelectionDialogBase
     {
         /// <summary>
         /// Required designer variable.
@@ -26,8 +26,9 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        protected virtual void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectionDialogBase));
             okButton = new Button();
             cancelButton = new Button();
             descriptionLabel = new Label();
@@ -77,7 +78,7 @@
             comboBox1.Size = new Size(300, 23);
             comboBox1.TabIndex = 4;
             // 
-            // SelectionDialog
+            // SelectionDialogBase
             // 
             AcceptButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -89,9 +90,9 @@
             Controls.Add(cancelButton);
             Controls.Add(okButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            Name = "SelectionDialog";
-            ShowIcon = false;
+            Name = "SelectionDialogBase";
             Text = "Input";
             ResumeLayout(false);
             PerformLayout();
@@ -102,6 +103,6 @@
         private Button okButton;
         private Button cancelButton;
         private Label descriptionLabel;
-        private ComboBox comboBox1;
+        protected ComboBox comboBox1;
     }
 }

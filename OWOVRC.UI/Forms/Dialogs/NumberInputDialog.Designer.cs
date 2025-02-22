@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NumberInputDialog));
             okButton = new Button();
             cancelButton = new Button();
             inputBox = new NumericUpDown();
@@ -90,9 +91,9 @@
             Controls.Add(cancelButton);
             Controls.Add(okButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "NumberInputDialog";
-            ShowIcon = false;
             Text = "Input";
             Shown += NumberInputDialog_Shown;
             ((System.ComponentModel.ISupportInitialize)inputBox).EndInit();
