@@ -5,6 +5,7 @@ using OWOVRC.UI.Classes;
 using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace OWOVRC.UI.Forms
 {
@@ -33,7 +34,7 @@ namespace OWOVRC.UI.Forms
         {
             OpenFileDialog openFileDialog = new()
             {
-                Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (*.json)|*.json",
+                Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (oscPresets.json)|oscPresets.json",
                 Title = "Select a file to import",
                 Multiselect = true
             };
@@ -44,8 +45,16 @@ namespace OWOVRC.UI.Forms
                 return;
             }
 
-            foreach (string filePath in openFileDialog.FileNames)
+            ImportSensationFileList(openFileDialog.FileNames);
+        }
+
+        private void ImportSensationFileList(string[] fileNames)
+        {
+            int sensationsCount = presets.Count;
+            foreach (string filePath in fileNames)
             {
+                Log.Debug("Importing sensation from file: {file}", filePath);
+
                 if (filePath.EndsWith(".owo"))
                 {
                     ImportOWOSensationFromFile(filePath);
@@ -63,6 +72,17 @@ namespace OWOVRC.UI.Forms
                         MessageBoxIcon.Warning
                     );
                 }
+            }
+
+            // Nothing happened -> inform user to prevent confusion
+            if (presets.Count == sensationsCount)
+            {
+                MessageBox.Show(
+                    "The provided files did not contain any sensations to import!",
+                    "No sensations imported",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
             }
         }
 
@@ -223,11 +243,7 @@ namespace OWOVRC.UI.Forms
             }
 
             // Import
-            foreach (string file in files)
-            {
-                Log.Debug("Importing sensation via Drag&Drop: {file}", file);
-                ImportOWOSensationFromFile(file);
-            }
+            ImportSensationFileList(files);
         }
 
         private void DataGridView1_DragEnter(object sender, DragEventArgs e)
