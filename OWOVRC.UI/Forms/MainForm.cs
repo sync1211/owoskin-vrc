@@ -800,24 +800,12 @@ namespace OWOVRC.UI
                 sensationName = String.Empty;
             }
 
-            Dictionary<string, AdvancedSensationStreamInstance> sensations = owo.GetRunningSensations();
-
-            AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(sensationName);
-            if (selectedSensation == null)
-            {
-                Log.Warning("The sensation {0} could not be found!", sensationName);
-                //UpdateASMStatus();
-                return;
-            }
-
-            selectedSensation.LastCalculationOfCycle += StopSensationInstance;
-
-            Log.Information("Marked sensation {0} to stop on the next loop", sensationName);
+            owo.StopSensation(sensationName, false);
         }
 
         private void StopSensationInstance(AdvancedSensationStreamInstance instance)
         {
-            owo.StopSensation(instance.name);
+            owo.StopSensation(instance.name, true);
 
             Log.Information("Stopped sensation {0}", instance.name);
             UpdateASMStatus();

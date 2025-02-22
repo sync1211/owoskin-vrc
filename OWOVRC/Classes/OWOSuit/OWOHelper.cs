@@ -108,10 +108,46 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Debug("All sensations stopped!");
         }
 
-        public void StopSensation(string name)
+        public void StopSensation(string name, bool interrupt = true)
+        {
+            if (interrupt)
+            {
+                InterruptSensation(name);
+            }
+            else
+            {
+                StopSensationAfterPlay(name);
+            }
+        }
+
+        private void InterruptSensation(string name)
         {
             sensationManager.stopSensation(name);
-            Log.Debug("Looped sensation {name} stopped!", name);
+            Log.Debug("Sensation {name} stopped!", name);
+        }
+
+        private void StopSensationAfterPlay(string name)
+        {
+            Dictionary<string, AdvancedSensationStreamInstance> sensations = GetRunningSensations();
+
+            AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(name);
+            if (selectedSensation == null)
+            {
+                Log.Warning("The sensation {0} could not be found!", name);
+                return;
+            }
+
+            selectedSensation.LastCalculationOfCycle += StopSensationInstance;
+
+            Log.Information("Marked sensation {0} to stop on the next loop", name);
+        }
+
+        private void StopSensationInstance(AdvancedSensationStreamInstance instance)
+        {
+            instance.LastCalculationOfCycle -= StopSensationInstance;
+
+            sensationManager.stopSensation(instance.name);
+            Log.Debug("Sensation {name} stopped!", instance.name);
         }
 
         private void HandleSensationAdd(AdvancedSensationStreamInstance instance, AddInfo addInfo)
