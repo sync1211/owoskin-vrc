@@ -67,7 +67,7 @@ namespace OWOVRC.Classes.Settings
             }
             set
             {
-                sensationSeconds = value;
+                sensationSeconds = Math.Max(0.1f, value);
                 UpdateSensation();
             }
         }
@@ -89,7 +89,7 @@ namespace OWOVRC.Classes.Settings
             AudioFrequencyStart = audioFrequencyStart;
             AudioFrequencyEnd = audioFrequencyEnd;
             this.sensationFrequency = sensationFrequency;
-            this.sensationSeconds = sensationSeconds;
+            this.sensationSeconds = Math.Max(0.1f, sensationSeconds);
             Intensities = intensities ?? [];
 
             if (MaxDB < MinDB)

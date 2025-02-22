@@ -40,7 +40,7 @@ namespace OWOVRC.Classes.Settings
             }
             set
             {
-                sensationSeconds = value;
+                sensationSeconds = Math.Max(value, 0.2f);
                 UpdateSensation();
             }
         }
@@ -69,7 +69,7 @@ namespace OWOVRC.Classes.Settings
             AllowContinuous = allowContinuous;
             MinIntensity = minIntensity;
             this.frequency = frequency;
-            this.sensationSeconds = Math.Min(0.2f, sensationSeconds);
+            this.sensationSeconds = Math.Max(0.2f, sensationSeconds);
             SpeedMultiplier = speedMultiplier;
             MaxTimeDiff = maxTimeDiff;
             MuscleIntensities = muscleIntensities ?? [];
