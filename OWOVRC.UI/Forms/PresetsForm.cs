@@ -5,7 +5,6 @@ using OWOVRC.UI.Classes;
 using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 using System.ComponentModel;
-using System.Windows.Forms;
 
 namespace OWOVRC.UI.Forms
 {
@@ -55,13 +54,14 @@ namespace OWOVRC.UI.Forms
             {
                 Log.Debug("Importing sensation from file: {file}", filePath);
 
+                bool success = false;
                 if (filePath.EndsWith(".owo"))
                 {
-                    ImportOWOSensationFromFile(filePath);
+                    success = ImportOWOSensationFromFile(filePath);
                 }
                 else if (filePath.EndsWith(".json"))
                 {
-                    ImportSensationsFromSettingsFile(filePath);
+                    success = ImportSensationsFromSettingsFile(filePath);
                 }
                 else
                 {
@@ -71,6 +71,12 @@ namespace OWOVRC.UI.Forms
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
+                }
+
+                // Abort on error (or user abort)
+                if (!success)
+                {
+                    return;
                 }
             }
 
@@ -86,7 +92,7 @@ namespace OWOVRC.UI.Forms
             }
         }
 
-        private void ImportSensationsFromSettingsFile(string path)
+        private bool ImportSensationsFromSettingsFile(string path)
         {
             OSCPresetsSettings? importedSettings = SettingsHelper.LoadSettingsFromFile<OSCPresetsSettings>(path, "imported preset", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
             if (importedSettings == null || importedSettings.Presets == null)
@@ -97,7 +103,7 @@ namespace OWOVRC.UI.Forms
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
-                return;
+                return false;
             }
 
             foreach (OSCSensationPreset preset in importedSettings.Presets.Values)
@@ -105,15 +111,17 @@ namespace OWOVRC.UI.Forms
                 string? presetName = ResolveNameCollisions(preset.Name);
                 if (presetName == null)
                 {
-                    break;
+                    return false;
                 }
 
                 preset.Name = presetName;
                 presets.Add(preset);
             }
+
+            return true;
         }
 
-        private void ImportOWOSensationFromFile(string path)
+        private bool ImportOWOSensationFromFile(string path)
         {
             Log.Debug("Importing sensation from file: {path}", path);
 
@@ -121,14 +129,14 @@ namespace OWOVRC.UI.Forms
             {
                 Log.Warning("Not importing file {path}: unsupported extension", path);
                 MessageBox.Show($"Unsupported file type:{Environment.NewLine}{path}{Environment.NewLine}{Environment.NewLine}Only valid .owo files can be imported as presets!", "Unsupported file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
 
             string sensationString = File.ReadAllText(path);
 
             string fileName = Path.GetFileNameWithoutExtension(path);
 
-            ImportOWOSensation(fileName, sensationString);
+            return ImportOWOSensation(fileName, sensationString);
         }
 
         private string? ResolveNameCollisions(string name)
@@ -187,6 +195,7 @@ namespace OWOVRC.UI.Forms
             catch (System.FormatException)
             {
                 MessageBox.Show("Error parsing sensation file!", "Import failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
             return true;
         }
