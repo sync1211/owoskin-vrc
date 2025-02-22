@@ -1,6 +1,6 @@
 ﻿namespace OWOVRC.UI.Forms.Dialogs
 {
-    partial class SelectionDialog<T>
+    partial class NameCollisionDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,8 @@
             okButton = new Button();
             cancelButton = new Button();
             descriptionLabel = new Label();
-            comboBox1 = new ComboBox();
+            newNameInput = new TextBox();
+            autoRenameButton = new Button();
             SuspendLayout();
             // 
             // okButton
@@ -57,42 +58,56 @@
             cancelButton.TabIndex = 3;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += CancelButton_Click;
+            cancelButton.Click += ControlButton_Click;
             // 
             // descriptionLabel
             // 
-            descriptionLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             descriptionLabel.AutoSize = true;
             descriptionLabel.Location = new Point(12, 16);
             descriptionLabel.Name = "descriptionLabel";
-            descriptionLabel.Size = new Size(130, 15);
+            descriptionLabel.Size = new Size(140, 15);
             descriptionLabel.TabIndex = 3;
-            descriptionLabel.Text = "Please select an option:";
+            descriptionLabel.Text = "Please enter a new name:";
             // 
-            // comboBox1
+            // newNameInput
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(12, 34);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(300, 23);
-            comboBox1.TabIndex = 4;
+            newNameInput.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            newNameInput.Location = new Point(12, 34);
+            newNameInput.Name = "newNameInput";
+            newNameInput.Size = new Size(300, 23);
+            newNameInput.TabIndex = 4;
+            newNameInput.TextChanged += NewNameInput_TextChanged;
             // 
-            // SelectionDialog
+            // autoRenameButton
+            // 
+            autoRenameButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            autoRenameButton.DialogResult = DialogResult.Continue;
+            autoRenameButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            autoRenameButton.Location = new Point(12, 63);
+            autoRenameButton.Name = "autoRenameButton";
+            autoRenameButton.Size = new Size(92, 23);
+            autoRenameButton.TabIndex = 5;
+            autoRenameButton.Text = "Auto Rename";
+            autoRenameButton.UseVisualStyleBackColor = true;
+            // 
+            // NameCollisionDialog
             // 
             AcceptButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = cancelButton;
             ClientSize = new Size(324, 98);
-            Controls.Add(comboBox1);
+            Controls.Add(autoRenameButton);
+            Controls.Add(newNameInput);
             Controls.Add(descriptionLabel);
             Controls.Add(cancelButton);
             Controls.Add(okButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
-            Name = "SelectionDialog";
+            Name = "NameCollisionDialog";
             ShowIcon = false;
-            Text = "Input";
+            Text = "Name already in use";
+            Shown += NameCollisionDialog_Shown;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -102,6 +117,7 @@
         private Button okButton;
         private Button cancelButton;
         private Label descriptionLabel;
-        private ComboBox comboBox1;
+        private TextBox newNameInput;
+        private Button autoRenameButton;
     }
 }

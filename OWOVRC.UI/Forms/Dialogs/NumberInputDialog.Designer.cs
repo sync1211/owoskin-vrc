@@ -40,7 +40,7 @@
             okButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             okButton.DialogResult = DialogResult.OK;
             okButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            okButton.Location = new Point(186, 63);
+            okButton.Location = new Point(237, 63);
             okButton.Name = "okButton";
             okButton.Size = new Size(75, 23);
             okButton.TabIndex = 2;
@@ -52,7 +52,7 @@
             // 
             cancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             cancelButton.DialogResult = DialogResult.Cancel;
-            cancelButton.Location = new Point(105, 63);
+            cancelButton.Location = new Point(156, 63);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(75, 23);
             cancelButton.TabIndex = 3;
@@ -62,16 +62,15 @@
             // 
             // inputBox
             // 
-            inputBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            inputBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             inputBox.Location = new Point(12, 34);
             inputBox.Name = "inputBox";
-            inputBox.Size = new Size(249, 23);
+            inputBox.Size = new Size(300, 23);
             inputBox.TabIndex = 1;
             inputBox.KeyDown += InputBox_KeyDown;
             // 
             // descriptionLabel
             // 
-            descriptionLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             descriptionLabel.AutoSize = true;
             descriptionLabel.Location = new Point(12, 16);
             descriptionLabel.Name = "descriptionLabel";
@@ -85,7 +84,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = cancelButton;
-            ClientSize = new Size(273, 98);
+            ClientSize = new Size(324, 98);
             Controls.Add(descriptionLabel);
             Controls.Add(inputBox);
             Controls.Add(cancelButton);

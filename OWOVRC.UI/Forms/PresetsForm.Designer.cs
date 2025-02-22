@@ -74,11 +74,11 @@
             // importSensationButton
             // 
             importSensationButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            importSensationButton.Location = new Point(695, 12);
+            importSensationButton.Location = new Point(679, 12);
             importSensationButton.Name = "importSensationButton";
-            importSensationButton.Size = new Size(93, 23);
+            importSensationButton.Size = new Size(109, 23);
             importSensationButton.TabIndex = 2;
-            importSensationButton.Text = "Import .owo";
+            importSensationButton.Text = "Import sensation";
             importSensationButton.UseVisualStyleBackColor = true;
             importSensationButton.Click += ImportSensationButton_Click;
             // 
