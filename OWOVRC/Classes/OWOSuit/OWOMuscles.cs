@@ -3,34 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace OWOVRC.Classes.OWOSuit
 {
-    public static class OWOMuscles
+    public static partial class OWOMuscles
     {
-        public static readonly Dictionary<string, Muscle> Muscles = new()
-        {
-            //<AUTOGEN: MuscleDictionary>
-            { "owo_suit_pectoral_r", Muscle.Pectoral_R },
-            { "pectoral_r", Muscle.Pectoral_R },
-            { "owo_suit_pectoral_l", Muscle.Pectoral_L },
-            { "pectoral_l", Muscle.Pectoral_L },
-            { "owo_suit_abdominal_r", Muscle.Abdominal_R },
-            { "abdominal_r", Muscle.Abdominal_R },
-            { "owo_suit_abdominal_l", Muscle.Abdominal_L },
-            { "abdominal_l", Muscle.Abdominal_L },
-            { "owo_suit_arm_r", Muscle.Arm_R },
-            { "arm_r", Muscle.Arm_R },
-            { "owo_suit_arm_l", Muscle.Arm_L },
-            { "arm_l", Muscle.Arm_L },
-            { "owo_suit_dorsal_r", Muscle.Dorsal_R },
-            { "dorsal_r", Muscle.Dorsal_R },
-            { "owo_suit_dorsal_l", Muscle.Dorsal_L },
-            { "dorsal_l", Muscle.Dorsal_L },
-            { "owo_suit_lumbar_r", Muscle.Lumbar_R },
-            { "lumbar_r", Muscle.Lumbar_R },
-            { "owo_suit_lumbar_l", Muscle.Lumbar_L },
-            { "lumbar_l", Muscle.Lumbar_L }
-            //</AUTOGEN: MuscleDictionary>
-        };
-
         public static readonly Dictionary<string, Muscle[]> MuscleGroups = new()
         {
             { "all", Muscle.All },

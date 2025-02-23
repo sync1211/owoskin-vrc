@@ -59,9 +59,10 @@ namespace OWOVRC.Classes.Effects.OWI
                 int intensity = (int) (muscleData.Value * multiplier);
 
                 // Get Single muscle
-                if (OWOMuscles.Muscles.TryGetValue(muscleName.ToLower(), out Muscle muscle))
+                Muscle? muscle = OWOMuscles.GetMuscle(muscleName);
+                if (muscle != null)
                 {
-                    musclesScaled.Add(muscle.WithIntensity(intensity));
+                    musclesScaled.Add(muscle.Value.WithIntensity(intensity));
                 }
 
                 // Get Muscle group

@@ -65,13 +65,14 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Get muscles
+            Muscle? muscle = OWOMuscles.GetMuscle(muscleGroupName);
             if (OWOMuscles.MuscleGroups.TryGetValue(muscleGroupName, out Muscle[]? muscleGroup))
             {
                 muscles = muscleGroup;
             }
-            else if (OWOMuscles.Muscles.TryGetValue($"owo_suit_{muscleGroupName.ToLower()}", out Muscle muscle))
+            else if (muscle != null)
             {
-                muscles = [muscle];
+                muscles = [muscle.Value];
             }
             else
             {

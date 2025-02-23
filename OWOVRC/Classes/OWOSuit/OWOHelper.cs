@@ -5,7 +5,7 @@ using static OwoAdvancedSensationBuilder.manager.AdvancedSensationStreamInstance
 
 namespace OWOVRC.Classes.OWOSuit
 {
-    public partial class OWOHelper : IDisposable
+    public class OWOHelper : IDisposable
     {
         public static bool IsConnected => OWO.ConnectionState == ConnectionState.Connected;
 
