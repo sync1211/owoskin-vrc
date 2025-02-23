@@ -304,9 +304,41 @@ namespace OWOVRC.UI.Forms
             }
         }
 
+        private void RefreshCollisionState()
+        {
+            saveButton.Enabled = CheckForCollisions();
+        }
+
+        private bool CheckForCollisions()
+        {
+            DataGridViewColumn? column = dataGridView1.Columns[nameof(OSCSensationPreset.Name)];
+            if (column == null)
+            {
+                Log.Warning("[Validation] Column not found: {Name}", nameof(OSCSensationPreset.Name));
+                return false;
+            }
+
+            for (int rowIndex = 0; rowIndex < dataGridView1.RowCount; rowIndex++)
+            {
+                DataGridViewRow row = dataGridView1.Rows[rowIndex];
+                DataGridViewCell cell = row.Cells[column.Index];
+
+                if (cell == null)
+                {
+                    Log.Warning("[Validation] Cell not found: {Name}", nameof(OSCSensationPreset.Name));
+                    return false;
+                }
+            }
+        }
+
         private void PresetsHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             WikiHelper.OpenURL(WikiHelper.OSC_PRESETS_WIKI_URL);
+        }
+
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            RefreshCollisionState();
         }
     }
 }
