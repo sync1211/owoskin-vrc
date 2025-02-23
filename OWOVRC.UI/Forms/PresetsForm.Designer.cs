@@ -13,6 +13,8 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            presets.ListChanged -= OnListChange;
+
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -45,6 +47,7 @@
             // 
             dataGridView1.AllowDrop = true;
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToResizeRows = false;
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = SystemColors.Window;
@@ -172,6 +175,7 @@
             MinimumSize = new Size(765, 461);
             Name = "PresetsForm";
             Text = "PresetsForm";
+            Shown += PresetsForm_Shown;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

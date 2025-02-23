@@ -13,6 +13,7 @@ namespace OWOVRC.UI.Forms
         private readonly OSCPresetsSettings settings;
         private readonly BindingList<OSCSensationPreset> presets;
         private bool showCollisionDialog = true;
+        private const StringComparison stringComparison = StringComparison.CurrentCulture;
 
         public PresetsForm(OSCPresetsSettings settings)
         {
@@ -21,6 +22,12 @@ namespace OWOVRC.UI.Forms
             presets = new([.. settings.Presets.Values]);
 
             dataGridView1.DataSource = presets;
+            presets.ListChanged += OnListChange;
+        }
+
+        private void OnListChange(object? sender, EventArgs args)
+        {
+            RefreshCollisionState();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -107,7 +114,7 @@ namespace OWOVRC.UI.Forms
             }
 
             // Show a dialog to confirm import and rename presets if necessary
-            using (PresetsImportDialog dialog = new(importedSettings.Presets.Values.ToArray(), presets, Path.GetFileNameWithoutExtension(path)))
+            using (PresetsImportDialog dialog = new([.. importedSettings.Presets.Values], presets, Path.GetFileNameWithoutExtension(path), stringComparison))
             {
                 DialogResult result = dialog.ShowDialog();
 
@@ -153,7 +160,7 @@ namespace OWOVRC.UI.Forms
 
             if (showCollisionDialog)
             {
-                using (NameCollisionDialog dialog = new(name))
+                using (NameCollisionDialog dialog = new(name, stringComparison))
                 {
                     DialogResult result = dialog.ShowDialog();
                     if (result == DialogResult.OK)
@@ -306,7 +313,7 @@ namespace OWOVRC.UI.Forms
 
         private void RefreshCollisionState()
         {
-            saveButton.Enabled = CheckForCollisions();
+            saveButton.Enabled = !CheckForCollisions();
         }
 
         private bool CheckForCollisions()
@@ -318,6 +325,7 @@ namespace OWOVRC.UI.Forms
                 return false;
             }
 
+            bool result = false;
             for (int rowIndex = 0; rowIndex < dataGridView1.RowCount; rowIndex++)
             {
                 DataGridViewRow row = dataGridView1.Rows[rowIndex];
@@ -328,7 +336,34 @@ namespace OWOVRC.UI.Forms
                     Log.Warning("[Validation] Cell not found: {Name}", nameof(OSCSensationPreset.Name));
                     return false;
                 }
+
+                cell.ErrorText = String.Empty;
+
+                string data = cell.Value?.ToString() ?? "";
+                if (String.IsNullOrEmpty(data))
+                {
+                    cell.ErrorText = "Name must not be empty!";
+                    return true;
+                }
+
+                // Name already taken by preset
+                for (int i = 0; i < presets.Count; i++)
+                {
+                    if (i == rowIndex)
+                    {
+                        continue;
+                    }
+
+                    if (presets[i].Name.Equals(data, stringComparison))
+                    {
+                        cell.ErrorText = "A preset with this name already exists!";
+                        result = true;
+                        break;
+                    }
+                }
             }
+
+            return result;
         }
 
         private void PresetsHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -337,6 +372,11 @@ namespace OWOVRC.UI.Forms
         }
 
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            RefreshCollisionState();
+        }
+
+        private void PresetsForm_Shown(object sender, EventArgs e)
         {
             RefreshCollisionState();
         }
