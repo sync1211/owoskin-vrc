@@ -1,6 +1,6 @@
 ﻿namespace OWOVRC.UI.Forms.Dialogs
 {
-    partial class SelectionDialogBase
+    partial class TextInputDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -26,13 +26,13 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        protected virtual void InitializeComponent()
+        private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectionDialogBase));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextInputDialog));
             okButton = new Button();
             cancelButton = new Button();
             descriptionLabel = new Label();
-            comboBox1 = new ComboBox();
+            textInput = new TextBox();
             SuspendLayout();
             // 
             // okButton
@@ -58,43 +58,44 @@
             cancelButton.TabIndex = 3;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += CancelButton_Click;
+            cancelButton.Click += CloseButton_Click;
             // 
             // descriptionLabel
             // 
-            descriptionLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             descriptionLabel.AutoSize = true;
             descriptionLabel.Location = new Point(12, 16);
             descriptionLabel.Name = "descriptionLabel";
-            descriptionLabel.Size = new Size(130, 15);
+            descriptionLabel.Size = new Size(128, 15);
             descriptionLabel.TabIndex = 3;
-            descriptionLabel.Text = "Please select an option:";
+            descriptionLabel.Text = "Please enter some text:";
             // 
-            // comboBox1
+            // textInput
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(12, 34);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(300, 23);
-            comboBox1.TabIndex = 4;
+            textInput.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textInput.Location = new Point(12, 34);
+            textInput.Name = "textInput";
+            textInput.Size = new Size(300, 23);
+            textInput.TabIndex = 4;
+            textInput.TextChanged += NewNameInput_TextChanged;
             // 
-            // SelectionDialogBase
+            // TextInputDialog
             // 
             AcceptButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = cancelButton;
             ClientSize = new Size(324, 98);
-            Controls.Add(comboBox1);
+            Controls.Add(textInput);
             Controls.Add(descriptionLabel);
             Controls.Add(cancelButton);
             Controls.Add(okButton);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            Name = "SelectionDialogBase";
+            Name = "TextInputDialog";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Input";
+            Text = "Text input";
+            Shown += TextInputDialog_Shown;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -104,6 +105,6 @@
         private Button okButton;
         private Button cancelButton;
         private Label descriptionLabel;
-        protected ComboBox comboBox1;
+        private TextBox textInput;
     }
 }

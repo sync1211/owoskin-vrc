@@ -31,12 +31,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\Dialogs\TextInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\Dialogs\NameCollisionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\Dialogs\SelectionDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Forms\Dialogs\SelectionDialog.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

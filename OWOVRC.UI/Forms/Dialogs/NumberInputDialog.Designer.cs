@@ -94,6 +94,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "NumberInputDialog";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Input";
             Shown += NumberInputDialog_Shown;
             ((System.ComponentModel.ISupportInitialize)inputBox).EndInit();

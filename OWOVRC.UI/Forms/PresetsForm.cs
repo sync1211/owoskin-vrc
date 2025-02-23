@@ -106,15 +106,20 @@ namespace OWOVRC.UI.Forms
                 return false;
             }
 
-            foreach (OSCSensationPreset preset in importedSettings.Presets.Values)
+            // Show a dialog to confirm import and rename presets if necessary
+            using (PresetsImportDialog dialog = new(importedSettings.Presets.Values.ToArray(), presets, Path.GetFileNameWithoutExtension(path)))
             {
-                string? presetName = ResolveNameCollisions(preset.Name);
-                if (presetName == null)
+                DialogResult result = dialog.ShowDialog();
+
+                if (result != DialogResult.OK)
                 {
                     return false;
                 }
+            }
 
-                preset.Name = presetName;
+            foreach (OSCSensationPreset preset in importedSettings.Presets.Values)
+            {
+                preset.Name = preset.Name;
                 presets.Add(preset);
             }
 

@@ -35,8 +35,8 @@
             saveButton = new Button();
             dropIndicatorLabel = new Label();
             removePresetButton = new Button();
-            label1 = new Label();
-            label2 = new Label();
+            oscPathHintLabel = new Label();
+            oscPathLabel = new Label();
             presetsHelpLinkLabel = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -96,16 +96,17 @@
             // 
             // dropIndicatorLabel
             // 
-            dropIndicatorLabel.AutoSize = true;
-            dropIndicatorLabel.BackColor = Color.Transparent;
+            dropIndicatorLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dropIndicatorLabel.BackColor = SystemColors.ButtonHighlight;
             dropIndicatorLabel.Enabled = false;
             dropIndicatorLabel.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             dropIndicatorLabel.ForeColor = SystemColors.ControlDarkDark;
-            dropIndicatorLabel.Location = new Point(193, 188);
+            dropIndicatorLabel.Location = new Point(202, 194);
             dropIndicatorLabel.Name = "dropIndicatorLabel";
-            dropIndicatorLabel.Size = new Size(396, 45);
+            dropIndicatorLabel.Size = new Size(410, 63);
             dropIndicatorLabel.TabIndex = 5;
             dropIndicatorLabel.Text = "Drop files here to import";
+            dropIndicatorLabel.TextAlign = ContentAlignment.MiddleCenter;
             dropIndicatorLabel.Visible = false;
             // 
             // removePresetButton
@@ -118,25 +119,25 @@
             removePresetButton.UseVisualStyleBackColor = true;
             removePresetButton.Click += RemovePresetButton_Click;
             // 
-            // label1
+            // oscPathHintLabel
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(118, 16);
-            label1.Name = "label1";
-            label1.Size = new Size(231, 15);
-            label1.TabIndex = 7;
-            label1.Text = "Parameter OSC path for calling sensations:";
+            oscPathHintLabel.AutoSize = true;
+            oscPathHintLabel.Location = new Point(118, 16);
+            oscPathHintLabel.Name = "oscPathHintLabel";
+            oscPathHintLabel.Size = new Size(231, 15);
+            oscPathHintLabel.TabIndex = 7;
+            oscPathHintLabel.Text = "Parameter OSC path for calling sensations:";
             // 
-            // label2
+            // oscPathLabel
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.Blue;
-            label2.Location = new Point(355, 16);
-            label2.Name = "label2";
-            label2.Size = new Size(257, 15);
-            label2.TabIndex = 8;
-            label2.Text = "/OWO/SensationsTrigger/<Sensation Name>";
+            oscPathLabel.AutoSize = true;
+            oscPathLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            oscPathLabel.ForeColor = Color.Blue;
+            oscPathLabel.Location = new Point(355, 16);
+            oscPathLabel.Name = "oscPathLabel";
+            oscPathLabel.Size = new Size(257, 15);
+            oscPathLabel.TabIndex = 8;
+            oscPathLabel.Text = "/OWO/SensationsTrigger/<Sensation Name>";
             // 
             // presetsHelpLinkLabel
             // 
@@ -157,16 +158,17 @@
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = closeButton;
             ClientSize = new Size(800, 450);
-            Controls.Add(presetsHelpLinkLabel);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(removePresetButton);
             Controls.Add(dropIndicatorLabel);
+            Controls.Add(presetsHelpLinkLabel);
+            Controls.Add(oscPathLabel);
+            Controls.Add(oscPathHintLabel);
+            Controls.Add(removePresetButton);
             Controls.Add(saveButton);
             Controls.Add(importSensationButton);
             Controls.Add(closeButton);
             Controls.Add(dataGridView1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(765, 461);
             Name = "PresetsForm";
             Text = "PresetsForm";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -182,8 +184,8 @@
         private Button saveButton;
         private Label dropIndicatorLabel;
         private Button removePresetButton;
-        private Label label1;
-        private Label label2;
+        private Label oscPathHintLabel;
+        private Label oscPathLabel;
         private LinkLabel presetsHelpLinkLabel;
     }
 }

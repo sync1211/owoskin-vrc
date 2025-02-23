@@ -107,6 +107,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "NameCollisionDialog";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Name already in use";
             Shown += NameCollisionDialog_Shown;
             ResumeLayout(false);
