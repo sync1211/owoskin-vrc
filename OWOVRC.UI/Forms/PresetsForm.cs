@@ -380,5 +380,14 @@ namespace OWOVRC.UI.Forms
         {
             RefreshCollisionState();
         }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
     }
 }
