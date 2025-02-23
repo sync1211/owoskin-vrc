@@ -2,6 +2,11 @@
 {
     public class SelectionDialog<T> : SelectionDialogBase
     {
+        /*
+            /!\ The layout builder is broken for this class! /!\
+                Use SelectionDialogBase for layout instead.
+        */
+
         private readonly T[] items;
         public T Value => items[comboBox1.SelectedIndex];
 
