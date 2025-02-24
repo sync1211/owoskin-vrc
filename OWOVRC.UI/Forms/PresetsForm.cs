@@ -201,7 +201,7 @@ namespace OWOVRC.UI.Forms
                     return false; // Indicate the request to cancel
                 }
 
-                OSCSensationPreset preset = new(true, newName, 1, 100, false, false, sensationString);
+                OSCSensationPreset preset = new(true, newName, 10, 100, false, false, sensationString);
                 presets.Add(preset);
             }
             catch (System.FormatException)
