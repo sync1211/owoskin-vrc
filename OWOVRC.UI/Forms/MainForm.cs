@@ -63,7 +63,8 @@ namespace OWOVRC.UI
             InitializeComponent();
             ClearSensationDetails();
 
-            logLevelSwitch = Logging.SetUpLogger(logBox);
+            // Logger (replaces pre-UI logger)
+            logLevelSwitch = Logging.SetUpLogger(LogEventLevel.Information, logBox);
 
             // Update UI every 0.1 Seconds
             uiUpdateTimer = new()

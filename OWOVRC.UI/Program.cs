@@ -1,4 +1,7 @@
 using OWOVRC.Classes.Helpers;
+using OWOVRC.UI.Classes;
+using Serilog.Core;
+using Serilog.Events;
 
 namespace OWOVRC.UI
 {
@@ -11,6 +14,24 @@ namespace OWOVRC.UI
         static void Main()
         {
             ApplicationConfiguration.Initialize();
+
+            // Logger (pre-UI)
+            const LogEventLevel defaultLogLevel =
+#if DEBUG
+                Serilog.Events.LogEventLevel.Debug;
+#else
+                Serilog.Events.LogEventLevel.Information;
+#endif
+            LoggingLevelSwitch logLevelSwitch = Logging.SetUpLogger(defaultLogLevel);
+
+            // Parse commandline switches
+            CommandlineParser args = new(Environment.GetCommandLineArgs());
+
+            if (args.CpuAffinity != null)
+            {
+                CPUHelper.SetCpuAffinity(args.CpuAffinity.Value);
+            }
+
             if (AdminDetection.IsRunningAsAdmin())
             {
                 MessageBox.Show(
@@ -21,15 +42,11 @@ namespace OWOVRC.UI
                 );
             }
 
-            // Parse commandline switches
-            string[] args = Environment.GetCommandLineArgs();
-            bool autostart = args.Contains("--start");
-
             // Create form
             using (MainForm mainForm = new())
             {
                 // Autostart (--start): Immediately start connecting to OWO
-                if (autostart)
+                if (args.Autostart)
                 {
                     mainForm.Shown += (_, _) => mainForm.StartConnection();
                 }

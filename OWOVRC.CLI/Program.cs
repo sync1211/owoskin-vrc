@@ -14,6 +14,25 @@ namespace OWOVRC.CLI
     {
         static void Main()
         {
+            // Logger
+            LoggingLevelSwitch logLevel = Logging.SetUpLogger();
+#if DEBUG
+            logLevel.MinimumLevel = Serilog.Events.LogEventLevel.Debug;
+#else
+            logLevel.MinimumLevel = Serilog.Events.LogEventLevel.Information;
+#endif
+
+            // Parse commandline switches
+            Log.Debug("Parsing commandline switches...");
+            CommandlineParser args = new(Environment.GetCommandLineArgs());
+
+            if (args.CpuAffinity != null)
+            {
+                Log.Debug("Setting CPU affinity...");
+                CPUHelper.SetCpuAffinity(args.CpuAffinity.Value);
+            }
+
+
             // Check if running as admin
             //NOTE: The point of the CLI version is to run unattended / as part of a script, so waiting
             //      for user input is counter-productive. Though so is running as admin, so show this annoying
@@ -27,15 +46,6 @@ namespace OWOVRC.CLI
                 Console.ReadLine();
             }
 
-            // Logger
-            LoggingLevelSwitch logLevel = Logging.SetUpLogger();
-#if DEBUG
-            logLevel.MinimumLevel = Serilog.Events.LogEventLevel.Debug;
-#else
-            logLevel.MinimumLevel = Serilog.Events.LogEventLevel.Information;
-#endif
-
-            Log.Debug("Preparing...");
             Log.Debug("Importing settings...");
 
             // Get Settings
