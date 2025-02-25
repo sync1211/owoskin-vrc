@@ -13,9 +13,7 @@ namespace OWOVRC.UI.Classes
             LoggerConfiguration loggerConfig = new LoggerConfiguration()
                 .MinimumLevel.ControlledBy(logLevelSwitch)
                 .WriteTo.Console()
-#if DEBUG
                 .WriteTo.Debug();
-#endif
 
             if (textBox != null)
             {

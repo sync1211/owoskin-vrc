@@ -13,9 +13,7 @@ namespace OWOVRC.CLI.Classes
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.ControlledBy(logLevelSwitch)
                 .WriteTo.Console()
-#if DEBUG
                 .WriteTo.Debug()
-#endif
                 .CreateLogger();
 
             Log.Information("Logging started!");
