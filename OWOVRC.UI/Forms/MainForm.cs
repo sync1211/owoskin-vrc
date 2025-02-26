@@ -955,7 +955,7 @@ namespace OWOVRC.UI
         {
             using (OWIIntensityListForm form = new(owiSettings.EnabledSensations))
             {
-                DialogResult result = form.ShowDialog();
+                form.ShowDialog();
                 owiSettings.SaveToFile();
             }
         }
