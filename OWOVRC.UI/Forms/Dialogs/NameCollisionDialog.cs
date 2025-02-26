@@ -3,7 +3,7 @@
     public partial class NameCollisionDialog : Form
     {
         public string Value => newNameInput.Text.Trim();
-        private bool IsCollision => Value.Equals(origName, stringComparison) || string.IsNullOrEmpty(Value);
+        private bool IsCollision => string.IsNullOrEmpty(Value) || Value.Equals(origName, stringComparison);
         private readonly string origName;
         private readonly StringComparison stringComparison;
 
