@@ -16,6 +16,7 @@ namespace OWOVRC.Test.Classes.Helpers
         [DataRow(new string[] { "--affinity=0x0F0" }, false, 0x0F0, null)]
         [DataRow(new string[] { "--affinity=0xF00", "--start" }, true, 0xF00, null)]
         [DataRow(new string[] { "--start" }, true, null, null)]
+        [DataRow(new string[] { "--start", "--vrc-affinity=0xF0", "--affinity=0xF00" }, true, 0xF00, null)]
         public void TestParseArguments(string[] args, bool autostart, int? affinity, ProcessPriorityClass? priority)
         {
            CommandlineParser parser = new(args);
@@ -23,6 +24,17 @@ namespace OWOVRC.Test.Classes.Helpers
             Assert.AreEqual(autostart, parser.Autostart);
             Assert.AreEqual(affinity, parser.CpuAffinity);
             Assert.AreEqual(priority, parser.Priority);
+        }
+
+        [TestMethod] //NOTE: Separate test as the inverse is dependent on the core count of the machine executing the test.
+        public void TestParseVrcAffinity()
+        {
+            string[] args = ["--start", "--affinity=0xF00", "--vrc-affinity=0xF0"];
+            CommandlineParser parser = new(args);
+
+            Assert.IsTrue(parser.Autostart);
+            Assert.AreEqual(new IntPtr(CPUHelper.InvertAffinityValue(0xF0)), parser.CpuAffinity);
+            Assert.IsNull(parser.Priority);
         }
     }
 }

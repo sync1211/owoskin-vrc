@@ -5,27 +5,30 @@ namespace OWOVRC.Classes.Helpers
 {
     public static class CPUHelper
     {
+        private static readonly Process Process = Process.GetCurrentProcess();
+        public static readonly long MaxAffinityValue = (2L << (Environment.ProcessorCount - 1)) - 1; // Assuming the CPU is not hot-swappable. (Yes, those exist!)
+
         public static void SetCpuAffinity(IntPtr cores)
         {
-            int coreCount = Environment.ProcessorCount;
-            long maxAffinityValue = 2L << coreCount;
-
-            if (maxAffinityValue < cores.ToInt64())
+            if (MaxAffinityValue < cores.ToInt64())
             {
-                Log.Error("Failed to set CPU affinity: Invalid CPU affinity value: {cores}", cores);
+                Log.Error("Failed to set CPU affinity: Invalid CPU affinity value: {cores}", cores.ToString("X"));
                 return;
             }
 
-            Process process = Process.GetCurrentProcess();
-            process.ProcessorAffinity = cores;
+            Process.ProcessorAffinity = cores;
             Log.Information("CPU affinity set to {cores}!", cores.ToString("X"));
         }
 
         public static void SetProcessPriority(ProcessPriorityClass priority)
         {
-            Process process = Process.GetCurrentProcess();
-            process.PriorityClass = priority;
+            Process.PriorityClass = priority;
             Log.Information("Process priority set to {priority}!", priority);
+        }
+
+        public static long InvertAffinityValue(int affinity)
+        {
+            return affinity ^ MaxAffinityValue;
         }
     }
 }

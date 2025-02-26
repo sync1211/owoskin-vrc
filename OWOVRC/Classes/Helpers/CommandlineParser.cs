@@ -8,6 +8,7 @@ namespace OWOVRC.Classes.Helpers
     {
         private const string AUTOSTART_SWITCH = "--start";
         private const string CPU_AFFINITY_ARG = "--affinity=";
+        private const string REVERSE_AFFINITY_ARG = "--vrc-affinity=";
         private const string PROCESS_PRIORITY_ARG = "--process-priority=";
 
         public readonly bool Autostart;
@@ -49,6 +50,24 @@ namespace OWOVRC.Classes.Helpers
                     CpuAffinity = new IntPtr(affinity);
                 }
 
+                // CPU affinity (inverted)
+                else if (arg.StartsWith(REVERSE_AFFINITY_ARG, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    string argValue = arg.Substring(REVERSE_AFFINITY_ARG.Length).TrimStart('0', 'x');
+                    if (!int.TryParse(argValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int affinity) || affinity > CPUHelper.MaxAffinityValue)
+                    {
+                        Log.Error("Invalid inverse CPU affinity value: {arg}", argValue);
+                        continue;
+                    }
+
+                    if (CpuAffinity != null)
+                    {
+                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg}", CpuAffinity.Value.ToString("X"));
+                    }
+
+                    CpuAffinity = new IntPtr(CPUHelper.InvertAffinityValue(affinity));
+                }
+
                 // Process priority
                 else if (arg.StartsWith(PROCESS_PRIORITY_ARG, StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -64,6 +83,11 @@ namespace OWOVRC.Classes.Helpers
                     {
                         Log.Error("Invalid process priority value: {arg}", argValue);
                         continue;
+                    }
+
+                    if (CpuAffinity != null)
+                    {
+                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg}", CpuAffinity.Value.ToString("X"));
                     }
 
                     Priority = priorityClass.Value;
