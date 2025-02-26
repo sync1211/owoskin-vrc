@@ -26,10 +26,16 @@ namespace OWOVRC.CLI
             Log.Debug("Parsing commandline switches...");
             CommandlineParser args = new(Environment.GetCommandLineArgs());
 
+            // CPU affinity
             if (args.CpuAffinity != null)
             {
-                Log.Debug("Setting CPU affinity...");
                 CPUHelper.SetCpuAffinity(args.CpuAffinity.Value);
+            }
+
+            // Process priority
+            if (args.Priority != null)
+            {
+                CPUHelper.SetProcessPriority(args.Priority.Value);
             }
 
 

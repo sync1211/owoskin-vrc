@@ -20,5 +20,12 @@ namespace OWOVRC.Classes.Helpers
             process.ProcessorAffinity = cores;
             Log.Information("CPU affinity set to {cores}!", cores.ToString("X"));
         }
+
+        public static void SetProcessPriority(ProcessPriorityClass priority)
+        {
+            Process process = Process.GetCurrentProcess();
+            process.PriorityClass = priority;
+            Log.Information("Process priority set to {priority}!", priority);
+        }
     }
 }

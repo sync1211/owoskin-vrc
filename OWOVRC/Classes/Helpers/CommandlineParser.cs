@@ -1,4 +1,5 @@
 ﻿using Serilog;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace OWOVRC.Classes.Helpers
@@ -7,9 +8,21 @@ namespace OWOVRC.Classes.Helpers
     {
         private const string AUTOSTART_SWITCH = "--start";
         private const string CPU_AFFINITY_ARG = "--affinity=";
+        private const string PROCESS_PRIORITY_ARG = "--process-priority=";
 
-        public bool Autostart { get; private set; }
-        public IntPtr? CpuAffinity { get; private set; }
+        public readonly bool Autostart;
+        public readonly IntPtr? CpuAffinity;
+        public readonly ProcessPriorityClass? Priority;
+
+        private readonly ProcessPriorityClass[] priorityClasses =
+        {
+            ProcessPriorityClass.Idle,        // -2
+            ProcessPriorityClass.BelowNormal, // -1
+            ProcessPriorityClass.Normal,      // 0
+            ProcessPriorityClass.AboveNormal, // 1
+            ProcessPriorityClass.High         // 2
+         // ProcessPriorityClass.RealTime     // 3 (shouldn't be used)
+        };
 
         public CommandlineParser(string[] args)
         {
@@ -23,20 +36,49 @@ namespace OWOVRC.Classes.Helpers
                     Autostart = true;
                 }
 
-                // CPU affinity (part 1)
+                // CPU affinity
                 else if (arg.StartsWith(CPU_AFFINITY_ARG, StringComparison.CurrentCultureIgnoreCase))
                 {
                     string argValue = arg.Substring(CPU_AFFINITY_ARG.Length).TrimStart('0', 'x');
-                    if (int.TryParse(argValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int affinity) && affinity > 0)
+                    if (!int.TryParse(argValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int affinity) || affinity <= 0)
                     {
-                        CpuAffinity = new IntPtr(affinity);
+                        Log.Error("Invalid CPU affinity value: {arg}", argValue);
+                        continue;
                     }
-                    else
+
+                    CpuAffinity = new IntPtr(affinity);
+                }
+
+                // Process priority
+                else if (arg.StartsWith(PROCESS_PRIORITY_ARG, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    string argValue = arg.Substring(PROCESS_PRIORITY_ARG.Length);
+                    if (!int.TryParse(argValue, out int priority))
                     {
-                        Log.Error("Invalid CPU affinity value: {arg}", arg);
+                        Log.Error("Invalid process priority value: {arg}", argValue);
+                        continue;
                     }
+
+                    ProcessPriorityClass? priorityClass = IntToPriorityClass(priority);
+                    if (priorityClass == null)
+                    {
+                        Log.Error("Invalid process priority value: {arg}", argValue);
+                        continue;
+                    }
+
+                    Priority = priorityClass.Value;
                 }
             }
+        }
+
+        private ProcessPriorityClass? IntToPriorityClass(int priorityId)
+        {
+            if (priorityId < -2 || priorityId > 2)
+            {
+                return null;
+            }
+
+            return priorityClasses[priorityId + 2];
         }
     }
 }

@@ -27,9 +27,16 @@ namespace OWOVRC.UI
             // Parse commandline switches
             CommandlineParser args = new(Environment.GetCommandLineArgs());
 
+            // CPU affinity
             if (args.CpuAffinity != null)
             {
                 CPUHelper.SetCpuAffinity(args.CpuAffinity.Value);
+            }
+
+            // Process priority
+            if (args.Priority != null)
+            {
+                CPUHelper.SetProcessPriority(args.Priority.Value);
             }
 
             if (AdminDetection.IsRunningAsAdmin())
