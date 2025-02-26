@@ -26,9 +26,9 @@ namespace OWOVRC.Classes.Helpers
             Log.Information("Process priority set to {priority}!", priority);
         }
 
-        public static long InvertAffinityValue(int affinity)
+        public static IntPtr InvertAffinityValue(int affinity)
         {
-            return affinity ^ MaxAffinityValue;
+            return new IntPtr(affinity ^ MaxAffinityValue);
         }
     }
 }

@@ -65,7 +65,7 @@ namespace OWOVRC.Classes.Helpers
                         Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg}", CpuAffinity.Value.ToString("X"));
                     }
 
-                    CpuAffinity = new IntPtr(CPUHelper.InvertAffinityValue(affinity));
+                    CpuAffinity = CPUHelper.InvertAffinityValue(affinity);
                 }
 
                 // Process priority
