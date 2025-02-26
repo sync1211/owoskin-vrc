@@ -15,14 +15,14 @@ namespace OWOVRC.UI
         {
             ApplicationConfiguration.Initialize();
 
-            // Logger (pre-UI)
+            // Logger
             const LogEventLevel defaultLogLevel =
 #if DEBUG
                 Serilog.Events.LogEventLevel.Debug;
 #else
                 Serilog.Events.LogEventLevel.Information;
 #endif
-            LoggingLevelSwitch logLevelSwitch = Logging.SetUpLogger(defaultLogLevel);
+            Logging.SetUpLogger(defaultLogLevel);
 
             // Parse commandline switches
             CommandlineParser args = new(Environment.GetCommandLineArgs());

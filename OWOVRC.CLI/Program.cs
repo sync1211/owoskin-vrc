@@ -7,6 +7,7 @@ using OWOVRC.Classes.Settings;
 using OWOVRC.CLI.Classes;
 using Serilog;
 using Serilog.Core;
+using Serilog.Events;
 
 namespace OWOVRC.CLI
 {
@@ -15,12 +16,13 @@ namespace OWOVRC.CLI
         static void Main()
         {
             // Logger
-            LoggingLevelSwitch logLevel = Logging.SetUpLogger();
+            const LogEventLevel logLevel =
 #if DEBUG
-            logLevel.MinimumLevel = Serilog.Events.LogEventLevel.Debug;
+            Serilog.Events.LogEventLevel.Debug;
 #else
-            logLevel.MinimumLevel = Serilog.Events.LogEventLevel.Information;
+            Serilog.Events.LogEventLevel.Information;
 #endif
+            Logging.SetUpLogger(logLevel);
 
             // Parse commandline switches
             Log.Debug("Parsing commandline switches...");

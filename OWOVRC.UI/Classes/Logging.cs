@@ -6,29 +6,28 @@ namespace OWOVRC.UI.Classes
 {
     public static class Logging
     {
-        public static LoggingLevelSwitch SetUpLogger(LogEventLevel? logLevel = null, RichTextBox ? textBox = null)
+        public static void SetUpLogger(LogEventLevel logLevel)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Is(logLevel)
+                .WriteTo.Console()
+                .WriteTo.Debug()
+                .CreateLogger();
+
+            Log.Information("Logging started!");
+        }
+
+        public static LoggingLevelSwitch SetUpWithTextBox(RichTextBox textBox)
         {
             LoggingLevelSwitch logLevelSwitch = new();
 
-            LoggerConfiguration loggerConfig = new LoggerConfiguration()
+            Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.ControlledBy(logLevelSwitch)
                 .WriteTo.Console()
-                .WriteTo.Debug();
+                .WriteTo.Debug()
+                .WriteTo.RichTextBox(textBox)
+                .CreateLogger();
 
-            if (textBox != null)
-            {
-                loggerConfig = loggerConfig.WriteTo.RichTextBox(textBox);
-            }
-
-            Log.Logger = loggerConfig.CreateLogger();
-
-            // Set log level
-            if (logLevel != null)
-            {
-                logLevelSwitch.MinimumLevel = logLevel.Value;
-            }
-
-            Log.Information("Logging started!");
             return logLevelSwitch;
         }
 
