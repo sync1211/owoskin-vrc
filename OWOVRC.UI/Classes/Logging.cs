@@ -28,6 +28,8 @@ namespace OWOVRC.UI.Classes
                 .WriteTo.RichTextBox(textBox)
                 .CreateLogger();
 
+            Log.Information("UI logger created!");
+
             return logLevelSwitch;
         }
 
