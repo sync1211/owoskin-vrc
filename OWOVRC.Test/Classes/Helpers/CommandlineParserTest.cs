@@ -29,11 +29,11 @@ namespace OWOVRC.Test.Classes.Helpers
         [TestMethod] //NOTE: Separate test as the inverse is dependent on the core count of the machine executing the test.
         public void TestParseVrcAffinity()
         {
-            string[] args = ["--start", "--affinity=0xF00", "--vrc-affinity=0xF0"];
+            string[] args = ["--start", "--affinity=0xF00", "--vrc-affinity=0xF"];
             CommandlineParser parser = new(args);
 
             Assert.IsTrue(parser.Autostart);
-            Assert.AreEqual(new IntPtr(CPUHelper.InvertAffinityValue(0xF0)), parser.CpuAffinity);
+            Assert.AreEqual(CPUHelper.InvertAffinityValue(0xF), parser.CpuAffinity);
             Assert.IsNull(parser.Priority);
         }
     }
