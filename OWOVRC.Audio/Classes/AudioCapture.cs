@@ -34,7 +34,7 @@ namespace OWOVRC.Audio.Classes
 
         private readonly int bufferLength;
 
-        private Func<ReadOnlySpan<Byte>, int, Complex> CreateComplexFromBuffer = null!;
+        private Func<ReadOnlySpan<byte>, ReadOnlySpan<byte>, Complex> CreateComplexFromBuffer = null!;
 
         public AudioCapture(MMDevice? device = null)
         {
@@ -118,43 +118,46 @@ namespace OWOVRC.Audio.Classes
 
             for (int i = 0; i < sampleCount; i++)
             {
-                buffer[i] = CreateComplexFromBuffer(bufferSpan, i);
+                buffer[i] = CreateComplexFromBuffer(
+                    bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel),
+                    bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel)
+                );
             }
 
-            OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
+            OnSampleRead?.Invoke(this, AnalyzeAudio());
         }
 
         // 32-bit IEEE float
-        private Complex CreateComplexFromBuffer_IeeeFloat32(ReadOnlySpan<byte> buffer, int index)
+        private Complex CreateComplexFromBuffer_IeeeFloat32(ReadOnlySpan<byte> sliceX, ReadOnlySpan<byte> sliceY)
         {
             return new Complex()
             {
-                X = BitConverter.ToSingle(buffer.Slice(index * bytesPerSample, bytesPerSampleChannel)),
-                Y = BitConverter.ToSingle(buffer.Slice((index * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
+                X = BitConverter.ToSingle(sliceX),
+                Y = BitConverter.ToSingle(sliceY)
             };
         }
 
         // 16-bit PCM
-        private Complex CreateComplexFromBuffer_PCM16(ReadOnlySpan<byte> buffer, int index)
+        private Complex CreateComplexFromBuffer_PCM16(ReadOnlySpan<byte> sliceX, ReadOnlySpan<byte> sliceY)
         {
             return new Complex()
             {
-                X = BitConverter.ToInt16(buffer.Slice(index * bytesPerSample, bytesPerSampleChannel)),
-                Y = BitConverter.ToInt16(buffer.Slice((index * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
+                X = BitConverter.ToInt16(sliceX),
+                Y = BitConverter.ToInt16(sliceY)
             };
         }
 
         // 32-bit PCM
-        private Complex CreateComplexFromBuffer_PCM32(ReadOnlySpan<byte> buffer, int index)
+        private Complex CreateComplexFromBuffer_PCM32(ReadOnlySpan<byte> sliceX, ReadOnlySpan<byte> sliceY)
         {
             return new Complex()
             {
-                X = BitConverter.ToInt32(buffer.Slice(index * bytesPerSample, bytesPerSampleChannel)),
-                Y = BitConverter.ToInt32(buffer.Slice((index * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
+                X = BitConverter.ToInt32(sliceX),
+                Y = BitConverter.ToInt32(sliceY)
             };
         }
 
-        public AnalyzedAudioSample AnalyzeAudioStereo()
+        public AnalyzedAudioSample AnalyzeAudio()
         {
             FastFourierTransform.FFT(true, (int)Math.Log2(buffer.Length), buffer);
 
