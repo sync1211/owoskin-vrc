@@ -35,6 +35,8 @@ namespace OWOVRC.Audio.Classes
 
         private readonly int bufferLength;
 
+        private Func<ReadOnlySpan<Byte>, int, Complex> CreateComplexFromBuffer = null!;
+
         public AudioCapture(MMDevice? device = null)
         {
             if (device != null)
@@ -58,10 +60,12 @@ namespace OWOVRC.Audio.Classes
             double fftPeriod = (double)capture.WaveFormat.SampleRate / buffer.Length;
             Analyzer = new(buffer, fftPeriod);
 
-            RegisterDataAvaiableEvent();
+            SelectFormatProcessor();
+
+            capture.DataAvailable += OnDataAvailable;
         }
 
-        private void RegisterDataAvaiableEvent()
+        private void SelectFormatProcessor()
         {
             if (waveEncoding == WaveFormatEncoding.Pcm)
             {
@@ -69,13 +73,13 @@ namespace OWOVRC.Audio.Classes
                 {
                     // 16-bit PCM
                     Log.Debug("Audio mode: 16-bit PCM");
-                    capture.DataAvailable += OnDataAvailable_PCM16;
+                    CreateComplexFromBuffer = CreateComplexFromBuffer_PCM16;
                 }
                 else if (bytesPerSampleChannel == 4)
                 {
                     // 32-bit PCM
                     Log.Debug("Audio mode: 32-bit PCM");
-                    capture.DataAvailable += OnDataAvailable_PCM32;
+                    CreateComplexFromBuffer = CreateComplexFromBuffer_PCM32;
                 }
                 else
                 {
@@ -87,7 +91,7 @@ namespace OWOVRC.Audio.Classes
             {
                 // 32-bit IEEE float
                 Log.Debug("Audio mode: 32-bit IEEE float");
-                capture.DataAvailable += OnDataAvailable_IeeeFloat32;
+                CreateComplexFromBuffer = CreateComplexFromBuffer_IeeeFloat32;
             }
             else
             {
@@ -108,8 +112,7 @@ namespace OWOVRC.Audio.Classes
             Log.Information("Audio capture stopped!");
         }
 
-        // 32-bit IEEE float
-        private void OnDataAvailable_IeeeFloat32(object? sender, WaveInEventArgs e)
+        private void OnDataAvailable(object? sender, WaveInEventArgs e)
         {
             int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, buffer.Length);
 
@@ -117,52 +120,40 @@ namespace OWOVRC.Audio.Classes
 
             for (int i = 0; i < sampleCount; i++)
             {
-                buffer[i] = new Complex()
-                {
-                    X = BitConverter.ToSingle(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel)),
-                    Y = BitConverter.ToSingle(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
-                };
+                buffer[i] = CreateComplexFromBuffer(bufferSpan, i);
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
+        }
+
+        // 32-bit IEEE float
+        private Complex CreateComplexFromBuffer_IeeeFloat32(ReadOnlySpan<byte> buffer, int index)
+        {
+            return new Complex()
+            {
+                X = BitConverter.ToSingle(buffer.Slice(index * bytesPerSample, bytesPerSampleChannel)),
+                Y = BitConverter.ToSingle(buffer.Slice((index * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
+            };
         }
 
         // 16-bit PCM
-        private void OnDataAvailable_PCM16(object? sender, WaveInEventArgs e)
+        private Complex CreateComplexFromBuffer_PCM16(ReadOnlySpan<byte> buffer, int index)
         {
-            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, buffer.Length);
-
-            ReadOnlySpan<byte> bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
-
-            for (int i = 0; i < sampleCount; i++)
+            return new Complex()
             {
-                buffer[i] = new Complex()
-                {
-                    X = BitConverter.ToInt16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel)),
-                    Y = BitConverter.ToInt16(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
-                };
-            }
-
-            OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
+                X = BitConverter.ToInt16(buffer.Slice(index * bytesPerSample, bytesPerSampleChannel)),
+                Y = BitConverter.ToInt16(buffer.Slice((index * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
+            };
         }
 
         // 32-bit PCM
-        private void OnDataAvailable_PCM32(object? sender, WaveInEventArgs e)
+        private Complex CreateComplexFromBuffer_PCM32(ReadOnlySpan<byte> buffer, int index)
         {
-            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, buffer.Length);
-
-            ReadOnlySpan<byte> bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
-
-            for (int i = 0; i < sampleCount; i++)
+            return new Complex()
             {
-                buffer[i] = new Complex()
-                {
-                    X = BitConverter.ToInt32(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel)),
-                    Y = BitConverter.ToInt32(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
-                };
-            }
-
-            OnSampleRead?.Invoke(this, AnalyzeAudioStereo());
+                X = BitConverter.ToInt32(buffer.Slice(index * bytesPerSample, bytesPerSampleChannel)),
+                Y = BitConverter.ToInt32(buffer.Slice((index * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel))
+            };
         }
 
         public AnalyzedAudioSample AnalyzeAudioStereo()
@@ -186,9 +177,7 @@ namespace OWOVRC.Audio.Classes
 
         public void Dispose()
         {
-            capture.DataAvailable -= OnDataAvailable_PCM16;
-            capture.DataAvailable -= OnDataAvailable_PCM32;
-            capture.DataAvailable -= OnDataAvailable_IeeeFloat32;
+            capture.DataAvailable -= OnDataAvailable;
 
             if (capture.CaptureState != CaptureState.Stopped)
             {
