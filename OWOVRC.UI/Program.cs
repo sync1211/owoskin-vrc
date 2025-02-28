@@ -1,17 +1,25 @@
 using OWOVRC.Classes.Helpers;
 using OWOVRC.UI.Classes;
 using Serilog.Events;
+using System.Runtime.InteropServices;
 
 namespace OWOVRC.UI
 {
-    internal static class Program
+    internal static partial class Program
     {
+        [LibraryImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool AttachConsole(int dwProcessId);
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
+            // Allow logging to console
+            AttachConsole(-1);
+
             ApplicationConfiguration.Initialize();
 
             // Logger
