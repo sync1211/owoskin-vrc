@@ -5,7 +5,7 @@ using Serilog;
 
 namespace OWOVRC.Audio.Classes
 {
-    public partial class AudioCapture : IDisposable
+    public class AudioCapture : IDisposable
     {
         public EventHandler<AnalyzedAudioSample>? OnSampleRead;
         public bool IsListening
@@ -27,14 +27,15 @@ namespace OWOVRC.Audio.Classes
 
         private readonly WasapiLoopbackCapture capture;
 
-        private readonly Complex[] buffer;
+        private readonly Complex[] bufferR;
+        private readonly Complex[] bufferL;
 
         private readonly int bytesPerSampleChannel;
         private readonly int bytesPerSample;
 
         private readonly int bufferLength;
 
-        private Func<ReadOnlySpan<byte>, ReadOnlySpan<byte>, Complex> CreateComplexFromBuffer = null!;
+        private Func<ReadOnlySpan<byte>, Complex> CreateComplexFromBuffer = null!;
 
         public AudioCapture(MMDevice? device = null)
         {
@@ -50,13 +51,14 @@ namespace OWOVRC.Audio.Classes
             int sampleRate = capture.WaveFormat.SampleRate;
 
             bufferLength = sampleRate / 2;
-            buffer = new Complex[bufferLength];
+            bufferR = new Complex[bufferLength];
+            bufferL = new Complex[bufferLength];
 
             bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
 
-            double fftPeriod = (double)capture.WaveFormat.SampleRate / buffer.Length;
-            Analyzer = new(buffer, fftPeriod);
+            double fftPeriod = (double)capture.WaveFormat.SampleRate / bufferLength;
+            Analyzer = new(bufferR, bufferL, fftPeriod);
 
             SelectFormatProcessor(capture.WaveFormat.Encoding);
 
@@ -112,54 +114,53 @@ namespace OWOVRC.Audio.Classes
 
         private void OnDataAvailable(object? sender, WaveInEventArgs e)
         {
-            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, buffer.Length);
+            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, bufferR.Length);
 
             ReadOnlySpan<byte> bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
 
             for (int i = 0; i < sampleCount; i++)
             {
-                buffer[i] = CreateComplexFromBuffer(
-                    bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel),
-                    bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel)
-                );
+                bufferL[i] = CreateComplexFromBuffer(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                bufferR[i] = CreateComplexFromBuffer(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudio());
         }
 
         // 32-bit IEEE float
-        private Complex CreateComplexFromBuffer_IeeeFloat32(ReadOnlySpan<byte> sliceX, ReadOnlySpan<byte> sliceY)
+        private Complex CreateComplexFromBuffer_IeeeFloat32(ReadOnlySpan<byte> sliceX)
         {
             return new Complex()
             {
                 X = BitConverter.ToSingle(sliceX),
-                Y = BitConverter.ToSingle(sliceY)
+                Y = 0
             };
         }
 
         // 16-bit PCM
-        private Complex CreateComplexFromBuffer_PCM16(ReadOnlySpan<byte> sliceX, ReadOnlySpan<byte> sliceY)
+        private Complex CreateComplexFromBuffer_PCM16(ReadOnlySpan<byte> sliceX)
         {
             return new Complex()
             {
                 X = BitConverter.ToInt16(sliceX),
-                Y = BitConverter.ToInt16(sliceY)
+                Y = 0
             };
         }
 
         // 32-bit PCM
-        private Complex CreateComplexFromBuffer_PCM32(ReadOnlySpan<byte> sliceX, ReadOnlySpan<byte> sliceY)
+        private Complex CreateComplexFromBuffer_PCM32(ReadOnlySpan<byte> sliceX)
         {
             return new Complex()
             {
                 X = BitConverter.ToInt32(sliceX),
-                Y = BitConverter.ToInt32(sliceY)
+                Y = 0
             };
         }
 
         public AnalyzedAudioSample AnalyzeAudio()
         {
-            FastFourierTransform.FFT(true, (int)Math.Log2(buffer.Length), buffer);
+            FastFourierTransform.FFT(true, (int)Math.Log2(bufferR.Length), bufferR);
+            FastFourierTransform.FFT(true, (int)Math.Log2(bufferL.Length), bufferL);
 
             return Analyzer;
         }
