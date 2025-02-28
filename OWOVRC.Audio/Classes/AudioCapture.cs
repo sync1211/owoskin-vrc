@@ -31,7 +31,6 @@ namespace OWOVRC.Audio.Classes
 
         private readonly int bytesPerSampleChannel;
         private readonly int bytesPerSample;
-        private readonly WaveFormatEncoding waveEncoding;
 
         private readonly int bufferLength;
 
@@ -55,17 +54,16 @@ namespace OWOVRC.Audio.Classes
 
             bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
-            waveEncoding = capture.WaveFormat.Encoding;
 
             double fftPeriod = (double)capture.WaveFormat.SampleRate / buffer.Length;
             Analyzer = new(buffer, fftPeriod);
 
-            SelectFormatProcessor();
+            SelectFormatProcessor(capture.WaveFormat.Encoding);
 
             capture.DataAvailable += OnDataAvailable;
         }
 
-        private void SelectFormatProcessor()
+        private void SelectFormatProcessor(WaveFormatEncoding waveEncoding)
         {
             if (waveEncoding == WaveFormatEncoding.Pcm)
             {
