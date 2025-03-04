@@ -37,8 +37,6 @@
             saveButton = new Button();
             dropIndicatorLabel = new Label();
             removePresetButton = new Button();
-            oscPathHintLabel = new Label();
-            oscPathLabel = new Label();
             presetsHelpLinkLabel = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -123,26 +121,6 @@
             removePresetButton.UseVisualStyleBackColor = true;
             removePresetButton.Click += RemovePresetButton_Click;
             // 
-            // oscPathHintLabel
-            // 
-            oscPathHintLabel.AutoSize = true;
-            oscPathHintLabel.Location = new Point(118, 16);
-            oscPathHintLabel.Name = "oscPathHintLabel";
-            oscPathHintLabel.Size = new Size(231, 15);
-            oscPathHintLabel.TabIndex = 7;
-            oscPathHintLabel.Text = "Parameter OSC path for calling sensations:";
-            // 
-            // oscPathLabel
-            // 
-            oscPathLabel.AutoSize = true;
-            oscPathLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            oscPathLabel.ForeColor = Color.Blue;
-            oscPathLabel.Location = new Point(355, 16);
-            oscPathLabel.Name = "oscPathLabel";
-            oscPathLabel.Size = new Size(257, 15);
-            oscPathLabel.TabIndex = 8;
-            oscPathLabel.Text = "/OWO/SensationsTrigger/<Sensation Name>";
-            // 
             // presetsHelpLinkLabel
             // 
             presetsHelpLinkLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
@@ -164,8 +142,6 @@
             ClientSize = new Size(800, 450);
             Controls.Add(dropIndicatorLabel);
             Controls.Add(presetsHelpLinkLabel);
-            Controls.Add(oscPathLabel);
-            Controls.Add(oscPathHintLabel);
             Controls.Add(removePresetButton);
             Controls.Add(saveButton);
             Controls.Add(importSensationButton);
@@ -189,8 +165,6 @@
         private Button saveButton;
         private Label dropIndicatorLabel;
         private Button removePresetButton;
-        private Label oscPathHintLabel;
-        private Label oscPathLabel;
         private LinkLabel presetsHelpLinkLabel;
     }
 }

@@ -9,7 +9,6 @@ namespace OWOVRC.Classes.Effects
 {
     public class OSCPresetTrigger : OSCEffectBase
     {
-        private const string OSC_ADDRESS_PREFIX = "OWO/SensationsTrigger/";
         public readonly OSCPresetsSettings Settings;
 
         public OSCPresetTrigger(OWOHelper owo, OSCPresetsSettings settings) : base(owo)
@@ -19,7 +18,7 @@ namespace OWOVRC.Classes.Effects
 
         public void AddPreset(OSCSensationPreset preset)
         {
-            Settings.Presets.Add(preset.Name, preset);
+            Settings.Presets.Add(preset.Path, preset);
         }
 
         public void RemovePreset(string name)
@@ -37,45 +36,60 @@ namespace OWOVRC.Classes.Effects
             ProcessMessage(message);
         }
 
-        public OSCSensationPreset? GetPresetFromMessage(OSCMessage message, out Muscle[] muscles)
+        private static void SplitPathAndMuscleName(string path, out string presetPath, out string muscleName)
         {
-            muscles = [];
-            if (!message.Address.StartsWith(OSC_ADDRESS_PREFIX) || message.Address.Length <= (OSC_ADDRESS_PREFIX.Length + 1))
+            presetPath = path;
+            muscleName = String.Empty;
+
+            int index = path.LastIndexOf('/');
+            if (index == -1)
             {
-                return null;
+                return;
             }
 
-            string presetString = message.Address.Substring(OSC_ADDRESS_PREFIX.Length);
-            string muscleGroupName = String.Empty;
-            string presetName = presetString;
+            muscleName = path.Substring(index + 1);
+            presetPath = path.Substring(0, index);
+        }
 
-            // Check if preset contains muscle information
-            if (presetString.Contains('/'))
+        private static Muscle[]? GetMuscles(string muscleName)
+        {
+            if (OWOMuscles.MuscleGroups.TryGetValue(muscleName, out Muscle[]? muscleGroup))
             {
-                string[] split = presetString.Split('/');
-                presetName = split[0];
-                muscleGroupName = split[1];
+                return muscleGroup;
             }
-
-            // Get preset
-            if (!Settings.Presets.TryGetValue(presetName, out OSCSensationPreset? preset) || preset == null)
+            else if (OWOMuscles.Muscles.TryGetValue(muscleName.ToLower(), out Muscle muscle))
             {
-                Log.Warning("Preset {presetName} not found!", presetName);
-                return null;
-            }
-
-            // Get muscles
-            if (OWOMuscles.MuscleGroups.TryGetValue(muscleGroupName, out Muscle[]? muscleGroup))
-            {
-                muscles = muscleGroup;
-            }
-            else if (OWOMuscles.Muscles.TryGetValue($"owo_suit_{muscleGroupName.ToLower()}", out Muscle muscle))
-            {
-                muscles = [muscle];
+                return [muscle];
             }
             else
             {
+                return null;
+            }
+        }
+
+        public OSCSensationPreset? GetPresetFromMessage(OSCMessage message, out Muscle[] muscles)
+        {
+            string address = message.Address;
+            SplitPathAndMuscleName(address, out string presetPath, out string muscleGroupName);
+
+            // Attempt to parse last element of path as muscle
+            Muscle[]? muscles1 = GetMuscles(muscleGroupName);
+            if (muscles1 == null)
+            {
+                // Message does not contain a valid muscle -> Use complete path as preset name
                 muscles = Muscle.All;
+            }
+            else
+            {
+                address = presetPath;
+                muscles = muscles1;
+            }
+
+            // Get preset
+            if (!Settings.Presets.TryGetValue(address, out OSCSensationPreset? preset) || preset == null)
+            {
+                Log.Debug("Preset {presetName} not found!", address);
+                return null;
             }
 
             return preset;
@@ -100,16 +114,16 @@ namespace OWOVRC.Classes.Effects
 
             if (!preset.Enabled)
             {
-                Log.Debug("Disabled preset {presetName} called!", preset.Name);
+                Log.Debug("Disabled preset {presetName} called!", preset.Path);
                 return;
             }
 
             // Stop looped sensation
             if (oscIntensity == 0)
             {
-                Log.Debug("Stopping preset {presetName}!", preset.Name);
+                Log.Debug("Stopping preset {presetName}!", preset.Path);
 
-                owo.StopSensation(preset.Name, preset.Interruptable);
+                owo.StopSensation(preset.Path, preset.Interruptable);
                 return;
             }
 
@@ -121,21 +135,21 @@ namespace OWOVRC.Classes.Effects
                 muscles[i] = muscles[i].WithIntensity((int)intensity);
             }
 
-            Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, intensity);
+            Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Path, intensity);
             Sensation sensation = preset.SensationObject;
 
             // Play sensation
             if (!preset.Loop)
             {
-                owo.AddSensation(preset.Name, sensation, muscles);
+                owo.AddSensation(preset.Path, sensation, muscles);
             }
-            else if (owo.GetRunningSensations().ContainsKey(preset.Name))
+            else if (owo.GetRunningSensations().ContainsKey(preset.Path))
             {
-                owo.UpdateLoopedSensation(preset.Name, sensation, muscles);
+                owo.UpdateLoopedSensation(preset.Path, sensation, muscles);
             }
             else
             {
-                owo.AddLoopedSensation(preset.Name, sensation, muscles);
+                owo.AddLoopedSensation(preset.Path, sensation, muscles);
             }
         }
 
@@ -143,7 +157,7 @@ namespace OWOVRC.Classes.Effects
         {
             foreach (OSCSensationPreset preset in Settings.Presets.Values)
             {
-                owo.StopSensation(preset.Name);
+                owo.StopSensation(preset.Path);
             }
         }
     }
