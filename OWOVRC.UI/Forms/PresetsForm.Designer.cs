@@ -57,6 +57,7 @@
             dataGridView1.Size = new Size(776, 368);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
+            dataGridView1.DataError += DataGridView1_DataError;
             dataGridView1.DragDrop += DataGridView1_DragDrop;
             dataGridView1.DragEnter += DataGridView1_DragEnter;
             dataGridView1.DragLeave += DataGridView1_DragLeave;

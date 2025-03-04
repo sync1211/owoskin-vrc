@@ -1,4 +1,5 @@
-﻿using OWOVRC.Classes.Effects.OSCPresets;
+﻿using Microsoft.VisualBasic;
+using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
@@ -390,6 +391,18 @@ namespace OWOVRC.UI.Forms
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (e.Exception == null)
+            {
+                MessageBox.Show("Data error!", "Input error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            MessageBox.Show(e.Exception.Message, "Input error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            dataGridView1.CancelEdit();
         }
     }
 }

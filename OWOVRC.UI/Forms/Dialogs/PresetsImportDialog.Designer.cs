@@ -53,6 +53,7 @@
             dataGridView1.Size = new Size(511, 266);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
+            dataGridView1.DataError += DataGridView1_DataError;
             // 
             // importButton
             // 

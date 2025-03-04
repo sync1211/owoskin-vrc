@@ -147,5 +147,17 @@ namespace OWOVRC.UI.Forms.Dialogs
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (e.Exception == null)
+            {
+                MessageBox.Show("Data error!", "Input error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            MessageBox.Show(e.Exception.Message, "Input error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            dataGridView1.CancelEdit();
+        }
     }
 }
