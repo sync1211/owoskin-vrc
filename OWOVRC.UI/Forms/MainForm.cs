@@ -190,8 +190,6 @@ namespace OWOVRC.UI
 
             openDiscoveryButton.Enabled = !IsRunning;
 
-            openOscPresetsFormButton.Enabled = !IsRunning;
-
             audioDeviceSelectButton.Enabled = !IsRunning;
 
             stopSensationsButton.Enabled = IsRunning;
