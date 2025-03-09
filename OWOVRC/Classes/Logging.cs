@@ -15,7 +15,7 @@ namespace OWOVRC.Classes
                 .WriteTo.Debug()
                 .CreateLogger();
 
-            Log.Information("Logging started!");
+            Log.Debug("Logging started!");
 
             return logLevelSwitch;
         }

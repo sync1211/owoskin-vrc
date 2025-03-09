@@ -1,6 +1,5 @@
 ﻿using Serilog;
 using Serilog.Core;
-using Serilog.Events;
 
 namespace OWOVRC.UI.Classes
 {
@@ -17,7 +16,7 @@ namespace OWOVRC.UI.Classes
                 .WriteTo.RichTextBox(textBox)
                 .CreateLogger();
 
-            Log.Information("UI logger created!");
+            Log.Debug("UI logger created!");
 
             return loggingLevelSwitch;
         }
