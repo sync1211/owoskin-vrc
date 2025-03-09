@@ -32,8 +32,8 @@ namespace OWOVRC.UI
         private AudioEffectSettings audioSettings = new();
 
         // OWO
+        private OSCReceiver? receiver;
         private readonly OWOHelper owo = new();
-        private OSCReceiver receiver = new();
         private const string UnnamedSensationName = "<Unnamed>";
 
         // Effects
@@ -236,7 +236,7 @@ namespace OWOVRC.UI
             }
 
             // OSC receiver
-            if (receiver.IsRunning)
+            if (receiver != null && receiver.IsRunning)
             {
                 oscStatusLabel.Text = "Running";
                 oscStatusLabel.ForeColor = Color.Green;
@@ -351,16 +351,20 @@ namespace OWOVRC.UI
             stopSelectedSensationLoopButton.Enabled = itemSelected;
         }
 
+        private void ClearOSCReceiver()
+        {
+            receiver?.Dispose();
+            receiver = null;
+        }
+
         private void StartOWO()
         {
             // Create OSC receiver
-            receiver.Dispose(); // The receiver does not have a stop method, so we're re-creating it on launch
+            ClearOSCReceiver(); // The receiver does not have a stop method, so we're re-creating it on launch
 
             try
             {
-                OSCReceiver newReceiver = new(connectionSettings.OSCPort);
-                receiver.Dispose();
-                receiver = newReceiver;
+                receiver = new(connectionSettings.OSCPort);
             }
             catch (System.Net.Sockets.SocketException)
             {
@@ -430,9 +434,12 @@ namespace OWOVRC.UI
         private void StopOWO()
         {
             // Unregister effects
-            foreach (OSCEffectBase effect in oscEffects)
+            if (receiver != null)
             {
-                receiver.OnMessageReceived -= effect.OnOSCMessageReceived;
+                foreach (OSCEffectBase effect in oscEffects)
+                {
+                    receiver.OnMessageReceived -= effect.OnOSCMessageReceived;
+                }
             }
 
             // Stop OWI
@@ -442,7 +449,7 @@ namespace OWOVRC.UI
             audioEffect?.Stop();
 
             // Stop osc receiver
-            receiver.Dispose();
+            ClearOSCReceiver();
 
             owo.Disconnect();
             Log.Information("Stopped OWOVRC");
@@ -573,7 +580,7 @@ namespace OWOVRC.UI
             owo.Dispose();
 
             // Stop OSC receiver
-            receiver.Dispose();
+            ClearOSCReceiver();
 
             // Unregister UI events
             logLevelComboBox.SelectedIndexChanged -= ComboBox1_SelectedIndexChanged;
