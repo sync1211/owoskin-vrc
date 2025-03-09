@@ -171,7 +171,8 @@ namespace OWOVRC.Audio.Classes
             while (capture.CaptureState == CaptureState.Stopping)
             {
                 Log.Information("DISPOSE: Waiting for audio capture to stop...");
-                await Task.Delay(1000);
+                await Task.Delay(1000)
+                    .ConfigureAwait(false);
             }
 
             Dispose();

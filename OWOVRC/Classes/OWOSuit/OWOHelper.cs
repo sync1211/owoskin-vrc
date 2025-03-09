@@ -31,7 +31,8 @@ namespace OWOVRC.Classes.OWOSuit
 
             try
             {
-                await OWO.Connect(Address);
+                await OWO.Connect(Address)
+                    .ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -20,14 +20,14 @@ namespace OWOVRC.Classes
         public readonly LogEventLevel? LogLevel;
 
         private readonly ProcessPriorityClass[] priorityClasses =
-        {
+        [
             ProcessPriorityClass.Idle,        // -2
             ProcessPriorityClass.BelowNormal, // -1
             ProcessPriorityClass.Normal,      // 0
             ProcessPriorityClass.AboveNormal, // 1
             ProcessPriorityClass.High         // 2
          // ProcessPriorityClass.RealTime     // 3 (shouldn't be used)
-        };
+        ];
 
         private readonly Dictionary<string, LogEventLevel> LogLevelMap = Logging.Levels
             .ToDictionary(

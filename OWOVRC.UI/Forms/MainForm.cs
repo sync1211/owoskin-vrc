@@ -410,7 +410,8 @@ namespace OWOVRC.UI
 
         private async Task StartOWOHelper()
         {
-            await owo.Connect();
+            await owo.Connect()
+                .ConfigureAwait(false);
         }
 
         private void StopOWO()

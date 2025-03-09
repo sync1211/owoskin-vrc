@@ -113,10 +113,12 @@ namespace OWOVRC.CLI
 
         public static async Task MainLoop(OWOHelper owo)
         {
-            await owo.Connect();
+            await owo.Connect()
+                .ConfigureAwait(false);
             try
             {
-                await Task.Delay(-1);
+                await Task.Delay(-1)
+                    .ConfigureAwait(false);
             }
             finally
             {
