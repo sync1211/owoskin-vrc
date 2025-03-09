@@ -4,25 +4,14 @@ using Serilog.Events;
 
 namespace OWOVRC.UI.Classes
 {
-    public static class Logging
+    public class Logging: OWOVRC.Classes.Logging
     {
-        public static void SetUpLogger(LogEventLevel logLevel)
+        public static LoggingLevelSwitch SetUpWithTextBox(RichTextBox textBox, LoggingLevelSwitch? logLevelSwitch = null)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Is(logLevel)
-                .WriteTo.Console()
-                .WriteTo.Debug()
-                .CreateLogger();
-
-            Log.Information("Logging started!");
-        }
-
-        public static LoggingLevelSwitch SetUpWithTextBox(RichTextBox textBox)
-        {
-            LoggingLevelSwitch logLevelSwitch = new();
+            LoggingLevelSwitch loggingLevelSwitch = logLevelSwitch ?? new();
 
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.ControlledBy(logLevelSwitch)
+                .MinimumLevel.ControlledBy(loggingLevelSwitch)
                 .WriteTo.Console()
                 .WriteTo.Debug()
                 .WriteTo.RichTextBox(textBox)
@@ -30,17 +19,7 @@ namespace OWOVRC.UI.Classes
 
             Log.Information("UI logger created!");
 
-            return logLevelSwitch;
+            return loggingLevelSwitch;
         }
-
-        public static readonly LogEventLevel[] Levels =
-        [
-            LogEventLevel.Verbose,
-            LogEventLevel.Debug,
-            LogEventLevel.Information,
-            LogEventLevel.Warning,
-            LogEventLevel.Error,
-            LogEventLevel.Fatal
-        ];
     }
 }

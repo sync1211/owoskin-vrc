@@ -1,8 +1,10 @@
-﻿using Serilog;
+﻿using OWOVRC.Classes.Helpers;
+using Serilog;
+using Serilog.Events;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace OWOVRC.Classes.Helpers
+namespace OWOVRC.Classes
 {
     public class CommandlineParser
     {
@@ -10,10 +12,12 @@ namespace OWOVRC.Classes.Helpers
         private const string CPU_AFFINITY_ARG = "--affinity=";
         private const string REVERSE_AFFINITY_ARG = "--vrc-affinity=";
         private const string PROCESS_PRIORITY_ARG = "--process-priority=";
+        private const string LOG_LEVEL_ARG = "--log-level=";
 
         public readonly bool Autostart;
-        public readonly IntPtr? CpuAffinity;
+        public readonly nint? CpuAffinity;
         public readonly ProcessPriorityClass? Priority;
+        public readonly LogEventLevel? LogLevel;
 
         private readonly ProcessPriorityClass[] priorityClasses =
         {
@@ -24,6 +28,12 @@ namespace OWOVRC.Classes.Helpers
             ProcessPriorityClass.High         // 2
          // ProcessPriorityClass.RealTime     // 3 (shouldn't be used)
         };
+
+        private readonly Dictionary<string, LogEventLevel> LogLevelMap = Logging.Levels
+            .ToDictionary(
+                level => level.ToString().ToLower(),
+                level => level
+            );
 
         public CommandlineParser(string[] args)
         {
@@ -47,7 +57,7 @@ namespace OWOVRC.Classes.Helpers
                         continue;
                     }
 
-                    CpuAffinity = new IntPtr(affinity);
+                    CpuAffinity = new nint(affinity);
                 }
 
                 // CPU affinity (inverted)
@@ -91,6 +101,18 @@ namespace OWOVRC.Classes.Helpers
                     }
 
                     Priority = priorityClass.Value;
+                }
+
+                // Log level
+                else if (arg.StartsWith(LOG_LEVEL_ARG, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    string argValue = arg.Substring(LOG_LEVEL_ARG.Length).ToLower();
+                    if (!LogLevelMap.TryGetValue(argValue, out LogEventLevel logLevel))
+                    {
+                        Log.Error("Invalid log level value: {arg}", argValue);
+                        continue;
+                    }
+                    LogLevel = logLevel;
                 }
             }
         }

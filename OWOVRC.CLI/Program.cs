@@ -4,10 +4,8 @@ using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
-using OWOVRC.CLI.Classes;
 using Serilog;
 using Serilog.Core;
-using Serilog.Events;
 
 namespace OWOVRC.CLI
 {
@@ -16,30 +14,10 @@ namespace OWOVRC.CLI
         static void Main()
         {
             // Logger
-            const LogEventLevel logLevel =
-#if DEBUG
-            Serilog.Events.LogEventLevel.Debug;
-#else
-            Serilog.Events.LogEventLevel.Information;
-#endif
-            Logging.SetUpLogger(logLevel);
+            LoggingLevelSwitch logLevelSwitch = Classes.Logging.SetUpLogger();
 
             // Parse commandline switches
-            Log.Debug("Parsing commandline switches...");
-            CommandlineParser args = new(Environment.GetCommandLineArgs());
-
-            // CPU affinity
-            if (args.CpuAffinity != null)
-            {
-                CPUHelper.SetCpuAffinity(args.CpuAffinity.Value);
-            }
-
-            // Process priority
-            if (args.Priority != null)
-            {
-                CPUHelper.SetProcessPriority(args.Priority.Value);
-            }
-
+            CommandlineSettings.ProcessCommandlineArgs(logLevelSwitch);
 
             // Check if running as admin
             //NOTE: The point of the CLI version is to run unattended / as part of a script, so waiting

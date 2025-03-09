@@ -875,7 +875,6 @@
             logLevelComboBox.Name = "logLevelComboBox";
             logLevelComboBox.Size = new Size(121, 23);
             logLevelComboBox.TabIndex = 3;
-            logLevelComboBox.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
             // 
             // logLevelTitle
             // 

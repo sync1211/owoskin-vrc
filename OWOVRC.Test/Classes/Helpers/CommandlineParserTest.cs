@@ -1,4 +1,5 @@
-﻿using OWOVRC.Classes.Helpers;
+﻿using OWOVRC.Classes;
+using OWOVRC.Classes.Helpers;
 using System.Diagnostics;
 
 namespace OWOVRC.Test.Classes.Helpers

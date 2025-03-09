@@ -15,7 +15,6 @@ using Serilog.Events;
 using System.Net;
 using System.ComponentModel;
 using OWOVRC.Classes.Helpers;
-using Windows.UI.ViewManagement;
 
 namespace OWOVRC.UI
 {
@@ -58,13 +57,13 @@ namespace OWOVRC.UI
         // DataSource for activeSensationListBox
         private readonly BindingList<string> activeSensationList = [];
 
-        public MainForm()
+        public MainForm(LoggingLevelSwitch? logLevelSwitch = null)
         {
             InitializeComponent();
             ClearSensationDetails();
 
             // Logger (replaces pre-UI logger)
-            logLevelSwitch = Logging.SetUpWithTextBox(logBox);
+            this.logLevelSwitch = Logging.SetUpWithTextBox(logBox, logLevelSwitch);
 
             // Update UI every 0.1 Seconds
             uiUpdateTimer = new()
@@ -437,7 +436,7 @@ namespace OWOVRC.UI
             IsRunning = false;
         }
 
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBox1_SelectedIndexChanged(object? sender, EventArgs e)
         {
             if (logLevelComboBox.SelectedItem is LogEventLevel level)
             {
@@ -449,8 +448,8 @@ namespace OWOVRC.UI
         private void MainForm_Load(object sender, EventArgs e)
         {
             logLevelComboBox.DataSource = Logging.Levels;
-            logLevelSwitch.MinimumLevel = LogEventLevel.Information;
             logLevelComboBox.SelectedItem = logLevelSwitch.MinimumLevel;
+            logLevelComboBox.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
 
             LoadSettings();
 
@@ -561,6 +560,9 @@ namespace OWOVRC.UI
 
             // Stop OSC receiver
             receiver.Dispose();
+
+            // Unregister UI events
+            logLevelComboBox.SelectedIndexChanged -= ComboBox1_SelectedIndexChanged;
         }
 
         private void OwoIPInput_Exit(object sender, EventArgs e)

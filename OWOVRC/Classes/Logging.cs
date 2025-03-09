@@ -1,21 +1,23 @@
-﻿using Microsoft.Extensions.Logging;
-using Serilog;
+﻿using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 
-namespace OWOVRC.CLI.Classes
+namespace OWOVRC.Classes
 {
-    public static class Logging
+    public abstract class Logging
     {
-        public static void SetUpLogger(LogEventLevel logLevel)
+        public static LoggingLevelSwitch SetUpLogger()
         {
+            LoggingLevelSwitch logLevelSwitch = new();
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Is(logLevel)
+                .MinimumLevel.ControlledBy(logLevelSwitch)
                 .WriteTo.Console()
                 .WriteTo.Debug()
                 .CreateLogger();
 
             Log.Information("Logging started!");
+
+            return logLevelSwitch;
         }
 
         public static readonly LogEventLevel[] Levels =
