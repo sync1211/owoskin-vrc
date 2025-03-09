@@ -287,27 +287,40 @@ namespace OWOVRC.UI
             }
         }
 
+        private void UpdateSensationsList(Dictionary<string, AdvancedSensationStreamInstance> activeSensations)
+        {
+            string[] sensationKeys = [.. activeSensations.Keys];
+
+            // Delete removed items
+            for (int i = 0; i < activeSensationList.Count; i++)
+            {
+                string item = activeSensationList[i];
+                if (!sensationKeys.Contains(item))
+                {
+                    activeSensationList.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            // Add new items
+            for (int i = 0; i < sensationKeys.Length; i++)
+            {
+                string item = sensationKeys[i];
+                if (!activeSensationList.Contains(item))
+                {
+                    activeSensationList.Add(item);
+                }
+            }
+        }
+
         private void UpdateASMStatus()
         {
             int selectedItemIndex = activeSensationsListBox.SelectedIndex;
 
-            activeSensationsListBox.BeginUpdate();
-
             // Update entries
             Dictionary<string, AdvancedSensationStreamInstance> runningSensations = owo.GetRunningSensations();
-            string[] activeSensationKeys = [.. runningSensations.Keys];
-            activeSensationList.Clear();
-            for (int i = 0; i < activeSensationKeys.Length; i++)
-            {
-                string sensationName = activeSensationKeys[i];
-                if (string.IsNullOrEmpty(sensationName))
-                {
-                    sensationName = UnnamedSensationName;
-                }
-
-                activeSensationList.Add(sensationName);
-            }
-
+            activeSensationsListBox.BeginUpdate();
+            UpdateSensationsList(runningSensations);
             activeSensationsListBox.EndUpdate();
 
             // Select previously selected item
@@ -325,7 +338,7 @@ namespace OWOVRC.UI
             }
             else
             {
-                AdvancedSensationStreamInstance? selectedSensation = runningSensations.Values.ToArray()[activeSensationsListBox.SelectedIndex];
+                AdvancedSensationStreamInstance? selectedSensation = runningSensations.Values.ElementAt(activeSensationsListBox.SelectedIndex);
                 UpdateSensationDetails(selectedSensation);
             }
         }
