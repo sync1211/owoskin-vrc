@@ -140,7 +140,7 @@ namespace OWOVRC.Classes.OWOSuit
 
             selectedSensation.LastCalculationOfCycle += StopSensationInstance;
 
-            Log.Information("Marked sensation {0} to stop on the next loop", name);
+            Log.Debug("Marked sensation {0} to stop on the next loop", name);
         }
 
         private void StopSensationInstance(AdvancedSensationStreamInstance instance)
