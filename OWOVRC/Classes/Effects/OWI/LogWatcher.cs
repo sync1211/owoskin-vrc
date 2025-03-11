@@ -27,6 +27,11 @@ namespace OWOVRC.Classes.Effects.OWI
 
         public void Start()
         {
+            if (readerThread != null)
+            {
+                Log.Warning("Another reader thread may already be running, stopping existing thread before creating a new one!");
+                Stop();
+            }
             cancellationTokenSource = new CancellationTokenSource();
             readerThread = new Thread(ReadLog);
             readerThread.Start();
@@ -43,6 +48,11 @@ namespace OWOVRC.Classes.Effects.OWI
 
             cancellationTokenSource.Cancel();
             Log.Debug("Requested cancellation of log reader thread!");
+            readerThread.Join(); // Wait for thread to close
+
+            // Cleanup
+            readerThread = null;
+            cancellationTokenSource = null;
         }
 
         //this will run in a separate thread
