@@ -9,9 +9,9 @@ namespace OWOVRC.UI.Forms
     {
         private readonly AudioEffect effect;
         private readonly ScalingHelper scalingHelper;
-        private readonly float subBassThreshold;
-        private readonly float bassThreshold;
-        private readonly float trebleThreshold;
+        public float SubBassThreshold;
+        public float BassThreshold;
+        public float TrebleThreshold;
 
         private readonly Font regularFont = new("Segoe UI", 9F, FontStyle.Regular);
         private readonly Font boldFont = new("Segoe UI", 9F, FontStyle.Bold);
@@ -20,9 +20,9 @@ namespace OWOVRC.UI.Forms
         {
             this.effect = effect;
 
-            this.subBassThreshold = subBassThreshold;
-            this.bassThreshold = bassThreshold;
-            this.trebleThreshold = trebleThreshold;
+            this.SubBassThreshold = subBassThreshold;
+            this.BassThreshold = bassThreshold;
+            this.TrebleThreshold = trebleThreshold;
 
             float maxThreshold = GetMaxThreshold();
             scalingHelper = new(maxThreshold);
@@ -35,7 +35,7 @@ namespace OWOVRC.UI.Forms
         /// </summary>
         private float GetMaxThreshold()
         {
-            float[] floats = [0, bassThreshold, subBassThreshold, trebleThreshold];
+            float[] floats = [0, BassThreshold, SubBassThreshold, TrebleThreshold];
             return floats.Max();
         }
 
@@ -96,7 +96,7 @@ namespace OWOVRC.UI.Forms
                 subBassIndicatorRight,
                 leftSubBassDBLabel,
                 rightSubBassDBLabel,
-                subBassThreshold
+                SubBassThreshold
             );
 
             // Bass
@@ -107,7 +107,7 @@ namespace OWOVRC.UI.Forms
                 bassIndicatorRight,
                 leftBassDBLabel,
                 rightBassDBLabel,
-                bassThreshold
+                BassThreshold
             );
 
             // Treble
@@ -118,7 +118,7 @@ namespace OWOVRC.UI.Forms
                 trebleIndicatorRight,
                 leftTrebleDBLabel,
                 rightTrebleDBLabel,
-                trebleThreshold
+                TrebleThreshold
             );
 
             // Max amplitude

@@ -57,6 +57,9 @@ namespace OWOVRC.UI
         // DataSource for activeSensationListBox
         private readonly BindingList<string> activeSensationList = [];
 
+        // Audio monitor form for AudioEffect
+        private AudioMonitorForm? audioMonitorForm;
+
         public MainForm(LoggingLevelSwitch? logLevelSwitch = null)
         {
             InitializeComponent();
@@ -412,7 +415,7 @@ namespace OWOVRC.UI
                 SetUpAudio();
             }
 
-            if (audioSettings.Enabled)
+            if (audioSettings.Enabled && !audioEffect!.IsRunning)
             {
                 audioEffect!.Start();
             }
@@ -439,6 +442,7 @@ namespace OWOVRC.UI
                 foreach (OSCEffectBase effect in oscEffects)
                 {
                     receiver.OnMessageReceived -= effect.OnOSCMessageReceived;
+                    effect.Stop();
                 }
             }
 
@@ -446,7 +450,10 @@ namespace OWOVRC.UI
             owi?.Stop();
 
             // Stop audio effect
-            audioEffect?.Stop();
+            if (audioMonitorForm == null)
+            {
+                audioEffect?.Stop();
+            }
 
             // Stop osc receiver
             ClearOSCReceiver();
@@ -743,6 +750,7 @@ namespace OWOVRC.UI
 
             audioSettings.SaveToFile();
             EnableOrDisableAudio();
+            UpdateAudioMonitorThresholds();
         }
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -879,6 +887,38 @@ namespace OWOVRC.UI
             sensationBlockLowerPrioLabel.Text = instance.blockLowerPrio ? "Yes" : "No";
         }
 
+        private void AudioMonitorForm_Closed(object? sender, EventArgs e)
+        {
+            if (audioMonitorForm == null)
+            {
+                return;
+            }
+
+            audioMonitorForm.FormClosed -= AudioMonitorForm_Closed;
+            audioMonitorForm = null;
+
+            if (!IsRunning)
+            {
+                audioEffect?.Stop();
+            }
+        }
+
+        private void UpdateAudioMonitorThresholds()
+        {
+            if (audioMonitorForm == null)
+            {
+                return;
+            }
+
+            float subBassThreshold = audioSettings.SubBassSettings.MinDB;
+            float bassThreshold = audioSettings.BassSettings.MinDB;
+            float trebleThreshold = audioSettings.TrebleSettings.MinDB;
+
+            audioMonitorForm.SubBassThreshold = subBassThreshold;
+            audioMonitorForm.BassThreshold = bassThreshold;
+            audioMonitorForm.TrebleThreshold = trebleThreshold;
+        }
+
         private void AudioMonitorButton_Click(object sender, EventArgs e)
         {
             if (audioEffect == null)
@@ -892,19 +932,15 @@ namespace OWOVRC.UI
                 audioEffect.Start();
             }
 
-            float subBassThreshold = audioSettings.SubBassSettings.MinDB;
-            float bassThreshold = audioSettings.BassSettings.MinDB;
-            float trebleThreshold = audioSettings.TrebleSettings.MinDB;
-
-            using (AudioMonitorForm form = new(audioEffect, subBassThreshold, bassThreshold, trebleThreshold))
+            if (audioMonitorForm == null)
             {
-                form.ShowDialog();
+                audioMonitorForm = new AudioMonitorForm(audioEffect, 0, 0, 0);
+                audioMonitorForm.FormClosed += AudioMonitorForm_Closed;
+                UpdateAudioMonitorThresholds();
+                audioMonitorForm.Show();
             }
 
-            if (!IsRunning)
-            {
-                audioEffect.Stop();
-            }
+            audioMonitorForm.Activate();
         }
 
         /// <summary>
