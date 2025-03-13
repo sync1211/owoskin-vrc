@@ -51,18 +51,18 @@ namespace OWOVRC.UI.Forms
             showBackButton = new Button();
             muscleIntensityTrackBar = new TrackBar();
             intensityValueInput = new NumericUpDown();
-            label1 = new Label();
-            label2 = new Label();
+            intensityLabel = new Label();
+            percentLabel = new Label();
             muscleNameLabel = new Label();
             closeButton = new Button();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
+            minValueLabel = new Label();
+            maxValueLabel = new Label();
+            midValueLabel = new Label();
             setIntensityForAllButton = new Button();
-            label6 = new Label();
-            panel1 = new Panel();
-            label8 = new Label();
-            label7 = new Label();
+            minPointLabel = new Label();
+            intensitySliderCoverPanel = new Panel();
+            maxPointLabel = new Label();
+            midPointLabel = new Label();
             testSensationButton = new Button();
             helpToolTip = new ToolTip(components);
             muscleGroupsTabControl.SuspendLayout();
@@ -82,7 +82,7 @@ namespace OWOVRC.UI.Forms
             ((System.ComponentModel.ISupportInitialize)backMusclesImg).BeginInit();
             ((System.ComponentModel.ISupportInitialize)muscleIntensityTrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)intensityValueInput).BeginInit();
-            panel1.SuspendLayout();
+            intensitySliderCoverPanel.SuspendLayout();
             SuspendLayout();
             // 
             // showFrontButton
@@ -128,11 +128,11 @@ namespace OWOVRC.UI.Forms
             // abdominalRMuscle
             // 
             abdominalRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            abdominalRMuscle.IsActive = false;
             abdominalRMuscle.ActiveImage = Properties.Resources.muscleAbdominalL_Active;
             abdominalRMuscle.BackgroundImage = Properties.Resources.muscleAbdominalL_Inactive;
             abdominalRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             abdominalRMuscle.InactiveImage = Properties.Resources.muscleAbdominalL_Inactive;
+            abdominalRMuscle.IsActive = false;
             abdominalRMuscle.Location = new Point(358, 269);
             abdominalRMuscle.Muscle = MusclesEnum.Abdominal_R;
             abdominalRMuscle.Name = "abdominalRMuscle";
@@ -144,11 +144,11 @@ namespace OWOVRC.UI.Forms
             // abdominalLMuscle
             // 
             abdominalLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            abdominalLMuscle.IsActive = false;
             abdominalLMuscle.ActiveImage = Properties.Resources.muscleAbdominalR_Active;
             abdominalLMuscle.BackgroundImage = Properties.Resources.muscleAbdominalR_Inactive;
             abdominalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             abdominalLMuscle.InactiveImage = Properties.Resources.muscleAbdominalR_Inactive;
+            abdominalLMuscle.IsActive = false;
             abdominalLMuscle.Location = new Point(248, 269);
             abdominalLMuscle.Muscle = MusclesEnum.Abdominal_L;
             abdominalLMuscle.Name = "abdominalLMuscle";
@@ -160,11 +160,11 @@ namespace OWOVRC.UI.Forms
             // armRMuscle
             // 
             armRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            armRMuscle.IsActive = false;
             armRMuscle.ActiveImage = Properties.Resources.muscleArmL_Active;
             armRMuscle.BackgroundImage = Properties.Resources.muscleArmL_Inactive;
             armRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             armRMuscle.InactiveImage = Properties.Resources.muscleArmL_Inactive;
+            armRMuscle.IsActive = false;
             armRMuscle.Location = new Point(456, 169);
             armRMuscle.Muscle = MusclesEnum.Arm_R;
             armRMuscle.Name = "armRMuscle";
@@ -176,11 +176,11 @@ namespace OWOVRC.UI.Forms
             // pectoralRMuscle
             // 
             pectoralRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            pectoralRMuscle.IsActive = false;
             pectoralRMuscle.ActiveImage = Properties.Resources.musclePectoralL_Active;
             pectoralRMuscle.BackgroundImage = Properties.Resources.musclePectoralL_Inactive;
             pectoralRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             pectoralRMuscle.InactiveImage = Properties.Resources.musclePectoralL_Inactive;
+            pectoralRMuscle.IsActive = false;
             pectoralRMuscle.Location = new Point(337, 121);
             pectoralRMuscle.Muscle = MusclesEnum.Pectoral_R;
             pectoralRMuscle.Name = "pectoralRMuscle";
@@ -192,11 +192,11 @@ namespace OWOVRC.UI.Forms
             // pectoralLMuscle
             // 
             pectoralLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            pectoralLMuscle.IsActive = false;
             pectoralLMuscle.ActiveImage = Properties.Resources.musclePectoralR_Active;
             pectoralLMuscle.BackgroundImage = Properties.Resources.musclePectoralR_Inactive;
             pectoralLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             pectoralLMuscle.InactiveImage = Properties.Resources.musclePectoralR_Inactive;
+            pectoralLMuscle.IsActive = false;
             pectoralLMuscle.Location = new Point(224, 120);
             pectoralLMuscle.Muscle = MusclesEnum.Pectoral_L;
             pectoralLMuscle.Name = "pectoralLMuscle";
@@ -208,11 +208,11 @@ namespace OWOVRC.UI.Forms
             // armLMuscle
             // 
             armLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            armLMuscle.IsActive = false;
             armLMuscle.ActiveImage = Properties.Resources.muscleArmR_Active;
             armLMuscle.BackgroundImage = Properties.Resources.muscleArmR_Inactive;
             armLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             armLMuscle.InactiveImage = Properties.Resources.muscleArmR_Inactive;
+            armLMuscle.IsActive = false;
             armLMuscle.Location = new Point(130, 173);
             armLMuscle.Muscle = MusclesEnum.Arm_L;
             armLMuscle.Name = "armLMuscle";
@@ -249,11 +249,11 @@ namespace OWOVRC.UI.Forms
             // lumbarRMuscle
             // 
             lumbarRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            lumbarRMuscle.IsActive = false;
             lumbarRMuscle.ActiveImage = Properties.Resources.muscleLumbarL_Active;
             lumbarRMuscle.BackgroundImage = Properties.Resources.muscleLumbarL_Inactive;
             lumbarRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             lumbarRMuscle.InactiveImage = Properties.Resources.muscleLumbarL_Inactive;
+            lumbarRMuscle.IsActive = false;
             lumbarRMuscle.Location = new Point(348, 300);
             lumbarRMuscle.Muscle = MusclesEnum.Lumbar_R;
             lumbarRMuscle.Name = "lumbarRMuscle";
@@ -265,11 +265,11 @@ namespace OWOVRC.UI.Forms
             // lumbarLMuscle
             // 
             lumbarLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            lumbarLMuscle.IsActive = false;
             lumbarLMuscle.ActiveImage = Properties.Resources.muscleLumbarR_Active;
             lumbarLMuscle.BackgroundImage = Properties.Resources.muscleLumbarR_Inactive;
             lumbarLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             lumbarLMuscle.InactiveImage = Properties.Resources.muscleLumbarR_Inactive;
+            lumbarLMuscle.IsActive = false;
             lumbarLMuscle.Location = new Point(258, 300);
             lumbarLMuscle.Muscle = MusclesEnum.Lumbar_L;
             lumbarLMuscle.Name = "lumbarLMuscle";
@@ -281,11 +281,11 @@ namespace OWOVRC.UI.Forms
             // dorsalRMuscle
             // 
             dorsalRMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            dorsalRMuscle.IsActive = false;
             dorsalRMuscle.ActiveImage = Properties.Resources.muscleDorsalL_Active;
             dorsalRMuscle.BackgroundImage = Properties.Resources.muscleDorsalL_Inactive;
             dorsalRMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             dorsalRMuscle.InactiveImage = Properties.Resources.muscleDorsalL_Inactive;
+            dorsalRMuscle.IsActive = false;
             dorsalRMuscle.Location = new Point(345, 192);
             dorsalRMuscle.Muscle = MusclesEnum.Dorsal_R;
             dorsalRMuscle.Name = "dorsalRMuscle";
@@ -297,11 +297,11 @@ namespace OWOVRC.UI.Forms
             // dorsalLMuscle
             // 
             dorsalLMuscle.AccessibleRole = AccessibleRole.RadioButton;
-            dorsalLMuscle.IsActive = false;
             dorsalLMuscle.ActiveImage = Properties.Resources.muscleDorsalR_Active;
             dorsalLMuscle.BackgroundImage = Properties.Resources.muscleDorsalR_Inactive;
             dorsalLMuscle.BackgroundImageLayout = ImageLayout.Zoom;
             dorsalLMuscle.InactiveImage = Properties.Resources.muscleDorsalR_Inactive;
+            dorsalLMuscle.IsActive = false;
             dorsalLMuscle.Location = new Point(253, 192);
             dorsalLMuscle.Muscle = MusclesEnum.Dorsal_L;
             dorsalLMuscle.Name = "dorsalLMuscle";
@@ -357,25 +357,27 @@ namespace OWOVRC.UI.Forms
             helpToolTip.SetToolTip(intensityValueInput, resources.GetString("intensityValueInput.ToolTip"));
             intensityValueInput.Leave += IntensityValueTextBox_Exit;
             // 
-            // label1
+            // intensityLabel
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(291, 475);
-            label1.Name = "label1";
-            label1.Size = new Size(52, 15);
-            label1.TabIndex = 5;
-            label1.Text = "Intensity";
-            helpToolTip.SetToolTip(label1, "The intensity setting for the selected muscle.");
+            intensityLabel.AutoSize = true;
+            intensityLabel.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            intensityLabel.Location = new Point(291, 475);
+            intensityLabel.Name = "intensityLabel";
+            intensityLabel.Size = new Size(52, 15);
+            intensityLabel.TabIndex = 5;
+            intensityLabel.Text = "Intensity";
+            helpToolTip.SetToolTip(intensityLabel, "The intensity setting for the selected muscle.");
             // 
-            // label2
+            // percentLabel
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(388, 476);
-            label2.Name = "label2";
-            label2.Size = new Size(17, 15);
-            label2.TabIndex = 6;
-            label2.Text = "%";
-            helpToolTip.SetToolTip(label2, "The intensity setting for the selected muscle.");
+            percentLabel.AutoSize = true;
+            percentLabel.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            percentLabel.Location = new Point(388, 476);
+            percentLabel.Name = "percentLabel";
+            percentLabel.Size = new Size(17, 15);
+            percentLabel.TabIndex = 6;
+            percentLabel.Text = "%";
+            helpToolTip.SetToolTip(percentLabel, "The intensity setting for the selected muscle.");
             // 
             // muscleNameLabel
             // 
@@ -401,32 +403,35 @@ namespace OWOVRC.UI.Forms
             closeButton.UseVisualStyleBackColor = true;
             closeButton.Click += CloseButton_Click;
             // 
-            // label3
+            // minValueLabel
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(11, 534);
-            label3.Name = "label3";
-            label3.Size = new Size(13, 15);
-            label3.TabIndex = 9;
-            label3.Text = "0";
+            minValueLabel.AutoSize = true;
+            minValueLabel.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            minValueLabel.Location = new Point(11, 534);
+            minValueLabel.Name = "minValueLabel";
+            minValueLabel.Size = new Size(13, 15);
+            minValueLabel.TabIndex = 9;
+            minValueLabel.Text = "0";
             // 
-            // label4
+            // maxValueLabel
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(650, 534);
-            label4.Name = "label4";
-            label4.Size = new Size(25, 15);
-            label4.TabIndex = 10;
-            label4.Text = "200";
+            maxValueLabel.AutoSize = true;
+            maxValueLabel.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            maxValueLabel.Location = new Point(650, 534);
+            maxValueLabel.Name = "maxValueLabel";
+            maxValueLabel.Size = new Size(25, 15);
+            maxValueLabel.TabIndex = 10;
+            maxValueLabel.Text = "200";
             // 
-            // label5
+            // midValueLabel
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(327, 534);
-            label5.Name = "label5";
-            label5.Size = new Size(25, 15);
-            label5.TabIndex = 11;
-            label5.Text = "100";
+            midValueLabel.AutoSize = true;
+            midValueLabel.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            midValueLabel.Location = new Point(327, 534);
+            midValueLabel.Name = "midValueLabel";
+            midValueLabel.Size = new Size(25, 15);
+            midValueLabel.TabIndex = 11;
+            midValueLabel.Text = "100";
             // 
             // setIntensityForAllButton
             // 
@@ -439,48 +444,51 @@ namespace OWOVRC.UI.Forms
             setIntensityForAllButton.UseVisualStyleBackColor = true;
             setIntensityForAllButton.Click += SetIntensityForAllButton_Click;
             // 
-            // label6
+            // minPointLabel
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.ForeColor = SystemColors.ControlDarkDark;
-            label6.Location = new Point(-2, -4);
-            label6.Name = "label6";
-            label6.Size = new Size(16, 25);
-            label6.TabIndex = 13;
-            label6.Text = "I";
+            minPointLabel.AutoSize = true;
+            minPointLabel.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            minPointLabel.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            minPointLabel.ForeColor = SystemColors.ControlDarkDark;
+            minPointLabel.Location = new Point(-2, -4);
+            minPointLabel.Name = "minPointLabel";
+            minPointLabel.Size = new Size(16, 25);
+            minPointLabel.TabIndex = 13;
+            minPointLabel.Text = "I";
             // 
-            // panel1
+            // intensitySliderCoverPanel
             // 
-            panel1.Controls.Add(label8);
-            panel1.Controls.Add(label7);
-            panel1.Controls.Add(label6);
-            panel1.Location = new Point(12, 516);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(657, 32);
-            panel1.TabIndex = 14;
+            intensitySliderCoverPanel.Controls.Add(maxPointLabel);
+            intensitySliderCoverPanel.Controls.Add(midPointLabel);
+            intensitySliderCoverPanel.Controls.Add(minPointLabel);
+            intensitySliderCoverPanel.Location = new Point(12, 516);
+            intensitySliderCoverPanel.Name = "intensitySliderCoverPanel";
+            intensitySliderCoverPanel.Size = new Size(657, 32);
+            intensitySliderCoverPanel.TabIndex = 14;
             // 
-            // label8
+            // maxPointLabel
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label8.ForeColor = SystemColors.ControlDarkDark;
-            label8.Location = new Point(644, -4);
-            label8.Name = "label8";
-            label8.Size = new Size(16, 25);
-            label8.TabIndex = 16;
-            label8.Text = "I";
+            maxPointLabel.AutoSize = true;
+            maxPointLabel.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            maxPointLabel.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            maxPointLabel.ForeColor = SystemColors.ControlDarkDark;
+            maxPointLabel.Location = new Point(644, -4);
+            maxPointLabel.Name = "maxPointLabel";
+            maxPointLabel.Size = new Size(16, 25);
+            maxPointLabel.TabIndex = 16;
+            maxPointLabel.Text = "I";
             // 
-            // label7
+            // midPointLabel
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.ForeColor = SystemColors.ControlDarkDark;
-            label7.Location = new Point(321, -4);
-            label7.Name = "label7";
-            label7.Size = new Size(16, 25);
-            label7.TabIndex = 15;
-            label7.Text = "I";
+            midPointLabel.AutoSize = true;
+            midPointLabel.Font = new Font("Segoe UI", 9, FontStyle.Regular, GraphicsUnit.Point, 0);
+            midPointLabel.Font = new Font("Segoe UI Light", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            midPointLabel.ForeColor = SystemColors.ControlDarkDark;
+            midPointLabel.Location = new Point(321, -4);
+            midPointLabel.Name = "midPointLabel";
+            midPointLabel.Size = new Size(16, 25);
+            midPointLabel.TabIndex = 15;
+            midPointLabel.Text = "I";
             // 
             // testSensationButton
             // 
@@ -501,15 +509,15 @@ namespace OWOVRC.UI.Forms
             CancelButton = closeButton;
             ClientSize = new Size(681, 590);
             Controls.Add(testSensationButton);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(panel1);
+            Controls.Add(midValueLabel);
+            Controls.Add(maxValueLabel);
+            Controls.Add(minValueLabel);
+            Controls.Add(intensitySliderCoverPanel);
             Controls.Add(setIntensityForAllButton);
             Controls.Add(closeButton);
             Controls.Add(muscleNameLabel);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(percentLabel);
+            Controls.Add(intensityLabel);
             Controls.Add(intensityValueInput);
             Controls.Add(muscleIntensityTrackBar);
             Controls.Add(showBackButton);
@@ -539,8 +547,8 @@ namespace OWOVRC.UI.Forms
             ((System.ComponentModel.ISupportInitialize)backMusclesImg).EndInit();
             ((System.ComponentModel.ISupportInitialize)muscleIntensityTrackBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)intensityValueInput).EndInit();
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            intensitySliderCoverPanel.ResumeLayout(false);
+            intensitySliderCoverPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -566,18 +574,18 @@ namespace OWOVRC.UI.Forms
         private SelectableMuscle lumbarLMuscle;
         private SelectableMuscle lumbarRMuscle;
         private NumericUpDown intensityValueInput;
-        private Label label1;
-        private Label label2;
+        private Label intensityLabel;
+        private Label percentLabel;
         private Label muscleNameLabel;
         private Button closeButton;
-        private Label label3;
-        private Label label4;
-        private Label label5;
+        private Label minValueLabel;
+        private Label maxValueLabel;
+        private Label midValueLabel;
         private Button setIntensityForAllButton;
-        private Label label6;
-        private Panel panel1;
-        private Label label7;
-        private Label label8;
+        private Label minPointLabel;
+        private Panel intensitySliderCoverPanel;
+        private Label midPointLabel;
+        private Label maxPointLabel;
         private Button testSensationButton;
         private ToolTip helpToolTip;
     }
