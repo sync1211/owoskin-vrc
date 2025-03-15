@@ -50,7 +50,7 @@ namespace OWOVRC.Classes.OWOSuit
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsRightMuscle(Muscle muscle)
         {
-            return (muscle.id % 2) == 0;
+            return int.IsEvenInteger(muscle.id);
         }
     }
 }
