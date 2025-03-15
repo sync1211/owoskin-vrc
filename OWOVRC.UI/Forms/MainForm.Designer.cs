@@ -90,7 +90,7 @@
             audioMonitorButton = new Button();
             applyAudioSettingsButton = new Button();
             audioEnabledCheckbox = new CheckBox();
-            audioSettingsPriorityPanel1 = new Controls.AudioSettingsPriorityPanel();
+            audioSettingsPriorityPanel1 = new OWOVRC.UI.Controls.AudioSettingsPriorityPanel();
             sensationNameTitle = new Label();
             sensationLoopTitle = new Label();
             logLevelComboBox = new ComboBox();
@@ -394,9 +394,9 @@
             notVeryHelpfulLabel.ForeColor = SystemColors.ControlDarkDark;
             notVeryHelpfulLabel.Location = new Point(6, 250);
             notVeryHelpfulLabel.Name = "notVeryHelpfulLabel";
-            notVeryHelpfulLabel.Size = new Size(130, 15);
+            notVeryHelpfulLabel.Size = new Size(162, 15);
             notVeryHelpfulLabel.TabIndex = 16;
-            notVeryHelpfulLabel.Text = "No exta setup required!";
+            notVeryHelpfulLabel.Text = "No additional setup required!";
             helpToolTip.SetToolTip(notVeryHelpfulLabel, "This effect uses built-in VRChat OSC messages.\r\nAs a result it will work with any Avatar without any setup. :)");
             // 
             // velocitySpeedCapLabel
