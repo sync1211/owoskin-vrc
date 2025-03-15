@@ -1004,7 +1004,7 @@ namespace OWOVRC.UI
                 return;
             }
 
-            audioSettingsPriorityPanel1.Items.Clear();
+            audioSettingsPriorityPanel1.ClearItems();
             audioSettingsPriorityPanel1.ImportSettings(audioSettings.SpectrumSettings, owo);
         }
 

@@ -74,6 +74,8 @@ namespace OWOVRC.UI.Controls
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsPickedUp { get; private set; }
         public EventHandler<MouseEventArgs>? OnDragStart;
         public EventHandler<MouseEventArgs>? OnDragStop;
         public EventHandler? OnPriorityChanged;
@@ -143,11 +145,14 @@ namespace OWOVRC.UI.Controls
                 return;
             }
 
+            IsPickedUp = true;
+
             OnDragStart?.Invoke(this, e);
         }
 
         private void DragHandle1_MouseUp(object? sender, MouseEventArgs e)
         {
+            IsPickedUp = false;
             OnDragStop?.Invoke(this, e);
         }
 

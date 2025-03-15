@@ -1,9 +1,6 @@
-﻿using OWOGame;
-using OWOVRC.Classes.OWOSuit;
+﻿using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
-using System.Windows.Forms.VisualStyles;
 
 namespace OWOVRC.UI.Controls
 {
@@ -14,68 +11,71 @@ namespace OWOVRC.UI.Controls
         public int itemSpacing = 2;
         [Localizable(true)]
         [Description("If the elements should support reordering drag&drop"), Category("Data")]
-        public bool DragReordering;
+        public bool DragReordering = true;
 
-        public readonly BindingList<AudioSettingsEntry> Items = [];
+        private readonly List<AudioSettingsEntry> items = [];
+        public AudioSettingsEntry[] Items
+        {
+            get {
+                return [.. items];
+            }
+        }
 
         private AudioSettingsEntry? pickedUpEntry;
         private int pickedUpEntryIndex;
         private int mouseStartY;
 
-        //TODO: Scrolling support
         public AudioSettingsPriorityPanel()
         {
             InitializeComponent();
-            Items.ListChanged += HandleListChanged;
-            AddItems();
-        }
-
-        private void HandleListChanged(object? sender, EventArgs e)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(AddItems);
-            }
-            else
-            {
-                AddItems();
-            }
+            CreateControlList();
         }
 
         private void HandlePriorityChanged(object? sender, EventArgs e)
         {
             if (InvokeRequired)
             {
-                Invoke(UpdateItemOrder);
+                Invoke(UpdateItems);
             }
             else
             {
-                UpdateItemOrder();
+                UpdateItems();
             }
+        }
+
+        private void UpdateItems()
+        {
+            SortItems();
+            UpdateItemOffsets();
+        }
+
+        public void ClearItems()
+        {
+            items.Clear();
+            CreateControlList();
         }
 
         public void ImportSettings(AudioEffectSpectrumSettings[] spectrumSettings, OWOHelper owo)
         {
-            Items.ListChanged -= HandleListChanged;
-
             foreach (AudioEffectSpectrumSettings settings in spectrumSettings)
             {
                 AudioSettingsEntry entry = AudioSettingsEntry.FromSpectrumSettings(settings, owo);
-                Items.Add(entry);
+                items.Add(entry);
             }
 
-            Items.ListChanged += HandleListChanged;
-
-            HandleListChanged(this, EventArgs.Empty);
+            CreateControlList();
         }
 
-        public void AddItems()
+        private void CreateControlList()
         {
             SuspendLayout();
             Controls.Clear();
 
-            foreach (AudioSettingsEntry item in Items.OrderByDescending((entry) => entry.Priority))
-            {
+            SortItems();
+
+            for (int i = 0; i < items.Count; i++) {
+                AudioSettingsEntry item = items[i];
+
                 item.OnDragStart -= HandleItemDragStart;
                 item.OnDragStop -= HandleItemDragStop;
                 item.OnPriorityChanged -= HandlePriorityChanged;
@@ -90,18 +90,23 @@ namespace OWOVRC.UI.Controls
             AddMouseMoveHandler(this);
             ResumeLayout(true);
 
-            UpdateItemOrder();
+            UpdateItemOffsets();
         }
 
-        public void UpdateItemOrder()
+        private void UpdateItemOffsets()
         {
             int lastY = itemSpacing;
 
-            foreach (AudioSettingsEntry item in Items.OrderByDescending((entry) => entry.Priority))
+            for (int i = 0 ; i < items.Count; i++)
             {
+                AudioSettingsEntry item = items[i];
                 item.AllowDrag = DragReordering;
 
-                item.Top = lastY;
+                if (!item.IsPickedUp)
+                {
+                    item.Top = lastY;
+                }
+
                 item.Left = itemSpacing;
                 item.Width = Width - (itemSpacing * 2);
 
@@ -135,7 +140,7 @@ namespace OWOVRC.UI.Controls
             if (pickedUpEntry != null)
             {
                 pickedUpEntry = null;
-                UpdateItemOrder();
+                UpdateItemOffsets();
                 return;
             }
 
@@ -143,8 +148,7 @@ namespace OWOVRC.UI.Controls
             pickedUpEntry.BringToFront();
 
             mouseStartY = e.Y;
-            pickedUpEntryIndex = Items.IndexOf(pickedUpEntry);
-            UpdateEntrySpacingForDragged();
+            pickedUpEntryIndex = items.IndexOf(pickedUpEntry);
         }
 
         public void HandleItemDragStop(object? sender, MouseEventArgs e)
@@ -154,79 +158,51 @@ namespace OWOVRC.UI.Controls
                 return;
             }
 
-            if (pickedUpEntryIndex < Items.Count)
-            {
-                AudioSettingsEntry entry = Items[pickedUpEntryIndex];
-                pickedUpEntry.Priority = entry.Priority;
-                entry.Priority--;
-
-                // Update the priority of all items below the replaced entry
-                int maxPriority = entry.Priority;
-                for (int i = 0; i < Items.Count; i++)
-                {
-                    AudioSettingsEntry currentEntry = Items[i];
-                    if (currentEntry == pickedUpEntry || currentEntry == entry)
-                    {
-                        continue;
-                    }
-
-                    if (currentEntry.Priority < pickedUpEntry.Priority && currentEntry.Priority >= maxPriority)
-                    {
-                        maxPriority--;
-                        currentEntry.Priority = maxPriority;
-                    }
-                }
-            }
-            else
-            {
-                int minPriority = Items.Min((entry) => entry.Priority);
-
-                if (minPriority == 0)
-                {
-                    AudioSettingsEntry[] priorityArr = [.. Items.OrderBy((entry) => entry.Priority)];
-
-                    minPriority++;
-                    foreach (AudioSettingsEntry item in priorityArr)
-                    {
-                        if (item.Priority > minPriority)
-                        {
-                            continue;
-                        }
-
-                        item.Priority = minPriority;
-                        minPriority++;
-                    }
-
-                    pickedUpEntry.Priority = 0;
-                }
-                else
-                {
-                    pickedUpEntry.Priority = minPriority - 1;
-                }
-            }
-
             UpdatePriorities();
             pickedUpEntry = null;
 
-            SortItems();
+            UpdateItemOffsets();
+
+            Refresh();
+        }
+
+        private void UpdatePriorities()
+        {
+            // Update priorities starting with the lowest value
+            int lastPriority = items.Min(item => item.Priority);
+            AudioSettingsEntry? lastItem = items.LastOrDefault();
+            if (lastItem != null)
+            {
+                lastItem.Priority = lastPriority;
+            }
+
+            for (int i = (items.Count - 2); i >= 0; i--)
+            {
+                AudioSettingsEntry item = items[i];
+
+                // Ensure entry has a higher priority than the last one
+                if (item.Priority <= lastPriority)
+                {
+                    lastPriority++;
+                    item.Priority = lastPriority;
+                }
+                else
+                {
+                    lastPriority = item.Priority;
+                }
+            }
         }
 
         private void SortItems()
         {
-            Items.ListChanged -= HandleListChanged;
+            AudioSettingsEntry[] newItems = items.OrderByDescending((entry) => entry.Priority).ToArray();
 
-            AudioSettingsEntry[] newItems = Items.OrderByDescending((entry) => entry.Priority).ToArray();
-
-            Items.Clear();
-            foreach (AudioSettingsEntry item in newItems)
+            for (int i = 0; i < newItems.Length; i++)
             {
+                AudioSettingsEntry item = newItems[i];
                 item.AllowDrag = DragReordering;
-                Items.Add(item);
+                items[i] = item;
             }
-
-            Items.ListChanged += HandleListChanged;
-
-            HandleListChanged(this, EventArgs.Empty);
         }
 
         private void AudioSettingsPriorityPanel_MouseMove(object? sender, MouseEventArgs e)
@@ -243,76 +219,53 @@ namespace OWOVRC.UI.Controls
 
             pickedUpEntry.Top = Math.Max(itemSpacing, pickedUpEntry.Top - offset);
 
-            pickedUpEntry.Refresh();
+            //pickedUpEntry.Refresh();
+            // Move item to its new position
+            MoveItemToIndex();
 
-            UpdatePickedUpEntryIndex();
-            UpdateEntrySpacingForDragged();
+            // Update position for all other items
+            UpdateItemOffsets();
 
             // Reactivate MouseMove events
             pickedUpEntry.DragHandle1.MouseMove += AudioSettingsPriorityPanel_MouseMove;
         }
 
-        private void UpdatePickedUpEntryIndex()
+        private int GetPickedUpEntryIndex()
+        {
+            if (pickedUpEntry == null)
+            {
+                return -1;
+            }
+
+            int itemHeight = pickedUpEntry.Height + (itemSpacing * 2);
+
+            float index = (float) pickedUpEntry.Top / (float) itemHeight;
+            return Math.Min((int)Math.Round(index), items.Count);
+        }
+
+        private void MoveItemToIndex()
         {
             if (pickedUpEntry == null)
             {
                 return;
             }
 
-            int entryHeight = pickedUpEntry.Height + itemSpacing;
-            int pickedUpEntryPos = pickedUpEntry.Top;
-
-            pickedUpEntryIndex = Math.Max(0, (pickedUpEntryPos + (entryHeight / 2)) / entryHeight);
-        }
-
-        private void UpdateEntrySpacingForDragged()
-        {
-            if (pickedUpEntry == null)
+            int index = GetPickedUpEntryIndex();
+            if (index == -1 || index == pickedUpEntryIndex)
             {
                 return;
             }
 
-            AudioSettingsEntry[] priorityArr = [.. Items.OrderByDescending((entry) => entry.Priority)];
-
-            int lastY = itemSpacing;
-            for (int i = 0; i < priorityArr.Length; i++)
+            // Account for pickedUpEntry being removed from the list
+            if (index > pickedUpEntryIndex)
             {
-                AudioSettingsEntry item = priorityArr[i];
-                if (item == pickedUpEntry)
-                {
-                    if (pickedUpEntryIndex == 0)
-                    {
-                        lastY += pickedUpEntry.Height + itemSpacing;
-                    }
-                    continue;
-                }
-
-                // Insert placeholder for picked up entry
-                if (i == pickedUpEntryIndex)
-                {
-                    lastY += pickedUpEntry.Height + itemSpacing;
-                }
-
-                item.Top = lastY;
-                item.Left = itemSpacing;
-
-                item.Refresh();
-
-                lastY += item.Height + itemSpacing;
+                index--;
             }
-        }
 
-        private void UpdatePriorities()
-        {
-            AudioSettingsEntry[] priorityArr = [.. Items.OrderBy((entry) => entry.Priority)];
+            items.RemoveAt(pickedUpEntryIndex);
+            items.Insert(index, pickedUpEntry);
 
-            int minPriority = priorityArr[0].Priority;
-
-            foreach (AudioSettingsEntry item in priorityArr)
-            {
-                item.Priority = minPriority;
-                minPriority++;
-            }
+            pickedUpEntryIndex = index;
         }
     }
 }

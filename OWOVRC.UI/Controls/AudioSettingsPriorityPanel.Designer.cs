@@ -14,7 +14,7 @@
         protected override void Dispose(bool disposing)
         {
 
-            foreach (AudioSettingsEntry item in Items.OrderByDescending((entry) => entry.Priority))
+            foreach (AudioSettingsEntry item in items.OrderByDescending((entry) => entry.Priority))
             {
                 item.OnDragStart -= HandleItemDragStart;
                 item.OnDragStop -= HandleItemDragStop;
