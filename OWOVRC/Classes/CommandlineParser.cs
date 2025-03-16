@@ -114,6 +114,10 @@ namespace OWOVRC.Classes
                     }
                     LogLevel = logLevel;
                 }
+                else
+                {
+                    Log.Warning("Unknown commandline argument: {arg}", arg);
+                }
             }
         }
 
