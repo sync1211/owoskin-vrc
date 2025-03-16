@@ -239,7 +239,7 @@ namespace OWOVRC.UI
             }
 
             // OSC receiver
-            if (receiver != null && receiver.IsRunning)
+            if (receiver?.IsRunning ?? false)
             {
                 oscStatusLabel.Text = "Running";
                 oscStatusLabel.ForeColor = Color.Green;
