@@ -60,7 +60,7 @@ namespace OWOVRC.Classes.OWOSuit
         public void AddSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
-            instance.OnFirstSensationTick += HandleSensationFirstTick;
+            //instance.OnFirstSensationTick += HandleSensationFirstTick;
             instance.AfterUpdate += HandleSensationUpdate;
             instance.AfterRemove += HandleSensationRemove;
 
@@ -72,7 +72,7 @@ namespace OWOVRC.Classes.OWOSuit
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
             instance.setLoop(true);
-            instance.OnFirstSensationTick += HandleSensationFirstTick;
+            //instance.OnFirstSensationTick += HandleSensationFirstTick;
             instance.AfterUpdate += HandleSensationUpdate;
             instance.AfterRemove += HandleSensationRemove;
 
@@ -83,7 +83,7 @@ namespace OWOVRC.Classes.OWOSuit
         public void UpdateLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
-            instance.OnFirstSensationTick += HandleSensationFirstTick;
+            //instance.OnFirstSensationTick += HandleSensationFirstTick;
             instance.AfterUpdate += HandleSensationUpdate;
             instance.AfterRemove += HandleSensationRemove;
 
@@ -94,7 +94,7 @@ namespace OWOVRC.Classes.OWOSuit
         public void AddSensation(string name, Sensation sensation)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation);
-            instance.OnFirstSensationTick += HandleSensationFirstTick;
+            //instance.OnFirstSensationTick += HandleSensationFirstTick;
             instance.AfterUpdate += HandleSensationUpdate;
             instance.AfterRemove += HandleSensationRemove;
 
@@ -155,10 +155,10 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Debug("Sensation {name} stopped!", instance.name);
         }
 
-        private void HandleSensationFirstTick(AdvancedSensationStreamInstance instance, bool firstCycle)
-        {
-            OnSensationChange?.Invoke(this, instance);
-        }
+        //private void HandleSensationFirstTick(AdvancedSensationStreamInstance instance, bool firstCycle)
+        //{
+        //    OnSensationChange?.Invoke(this, instance);
+        //}
 
         private void HandleSensationUpdate(AdvancedSensationStreamInstance instance)
         {
