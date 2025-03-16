@@ -72,10 +72,11 @@ namespace OWOVRC.Classes
 
                     if (CpuAffinity != null)
                     {
-                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg}", CpuAffinity.Value.ToString("X"));
+                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg:X}", CpuAffinity);
                     }
 
                     CpuAffinity = CPUHelper.InvertAffinityValue(affinity);
+                    Log.Information("VRChat's CPU affinity is {affinity:X}, setting own affinity to {invertedAffinity:X}", affinity, CpuAffinity);
                 }
 
                 // Process priority
@@ -97,7 +98,7 @@ namespace OWOVRC.Classes
 
                     if (CpuAffinity != null)
                     {
-                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg}", CpuAffinity.Value.ToString("X"));
+                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg:X}", CpuAffinity);
                     }
 
                     Priority = priorityClass.Value;

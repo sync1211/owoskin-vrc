@@ -11,7 +11,7 @@ namespace OWOVRC.Classes.Helpers
         {
             if (MaxAffinityValue < cores.ToInt64())
             {
-                Log.Error("Failed to set CPU affinity: Invalid CPU affinity value: {cores}", cores.ToString("X"));
+                Log.Error("Failed to set CPU affinity: Invalid CPU affinity value: {cores:X}", cores);
                 return;
             }
 
@@ -19,7 +19,7 @@ namespace OWOVRC.Classes.Helpers
             {
                 Process.ProcessorAffinity = cores;
             }
-            Log.Information("CPU affinity set to {cores}!", cores.ToString("X"));
+            Log.Information("CPU affinity set to {cores:X}!", cores);
         }
 
         public static void SetProcessPriority(ProcessPriorityClass priority)
