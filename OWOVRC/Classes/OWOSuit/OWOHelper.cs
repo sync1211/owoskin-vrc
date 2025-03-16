@@ -60,42 +60,46 @@ namespace OWOVRC.Classes.OWOSuit
         public void AddSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
-            instance.AfterAdd += HandleSensationAdd;
+            instance.OnFirstSensationTick += HandleSensationFirstTick;
             instance.AfterUpdate += HandleSensationUpdate;
             instance.AfterRemove += HandleSensationRemove;
 
             sensationManager.play(instance);
+            OnSensationChange?.Invoke(this, instance);
         }
 
         public void AddLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
             instance.setLoop(true);
-            instance.AfterAdd += HandleSensationAdd;
+            instance.OnFirstSensationTick += HandleSensationFirstTick;
             instance.AfterUpdate += HandleSensationUpdate;
             instance.AfterRemove += HandleSensationRemove;
 
             sensationManager.play(instance);
+            OnSensationChange?.Invoke(this, instance);
         }
 
         public void UpdateLoopedSensation(string name, Sensation sensation, Muscle[] muscles)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation.WithMuscles(muscles));
-            instance.AfterAdd += HandleSensationAdd;
+            instance.OnFirstSensationTick += HandleSensationFirstTick;
             instance.AfterUpdate += HandleSensationUpdate;
             instance.AfterRemove += HandleSensationRemove;
 
             sensationManager.updateSensation(instance.sensation, name);
+            OnSensationChange?.Invoke(this, instance);
         }
 
         public void AddSensation(string name, Sensation sensation)
         {
             AdvancedSensationStreamInstance instance = new(name, sensation);
-            instance.AfterAdd += HandleSensationAdd;
+            instance.OnFirstSensationTick += HandleSensationFirstTick;
             instance.AfterUpdate += HandleSensationUpdate;
             instance.AfterRemove += HandleSensationRemove;
 
             sensationManager.play(instance);
+            OnSensationChange?.Invoke(this, instance);
         }
 
         public Dictionary<string, AdvancedSensationStreamInstance> GetRunningSensations()
@@ -151,7 +155,7 @@ namespace OWOVRC.Classes.OWOSuit
             Log.Debug("Sensation {name} stopped!", instance.name);
         }
 
-        private void HandleSensationAdd(AdvancedSensationStreamInstance instance, AddInfo addInfo)
+        private void HandleSensationFirstTick(AdvancedSensationStreamInstance instance, bool firstCycle)
         {
             OnSensationChange?.Invoke(this, instance);
         }
