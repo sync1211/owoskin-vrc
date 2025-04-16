@@ -83,7 +83,6 @@
             oscPresetsPriorityLabel = new Label();
             oscPresetsPriorityInput = new NumericUpDown();
             oscPresetsEnabledCheckbox = new CheckBox();
-            openOscPresetsFormButton = new Button();
             applyOscPresetsSettingsButton = new Button();
             audioResponsePage = new TabPage();
             audioDeviceSelectButton = new Button();
@@ -129,6 +128,8 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
+            openOscPresetsFormButton = new Button();
+            openAdvancedPresetsFormButton = new Button();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
@@ -700,6 +701,7 @@
             // 
             // oscPresetsPage
             // 
+            oscPresetsPage.Controls.Add(openAdvancedPresetsFormButton);
             oscPresetsPage.Controls.Add(presetsHelpLinkLabel);
             oscPresetsPage.Controls.Add(oscPresetsPriorityLabel);
             oscPresetsPage.Controls.Add(oscPresetsPriorityInput);
@@ -754,18 +756,6 @@
             oscPresetsEnabledCheckbox.TabIndex = 20;
             oscPresetsEnabledCheckbox.Text = "Enabled";
             oscPresetsEnabledCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // openOscPresetsFormButton
-            // 
-            openOscPresetsFormButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            openOscPresetsFormButton.Location = new Point(96, 98);
-            openOscPresetsFormButton.Name = "openOscPresetsFormButton";
-            openOscPresetsFormButton.Size = new Size(148, 38);
-            openOscPresetsFormButton.TabIndex = 18;
-            openOscPresetsFormButton.Text = "Configure";
-            helpToolTip.SetToolTip(openOscPresetsFormButton, "Opens a dialog to configure sensation presets");
-            openOscPresetsFormButton.UseVisualStyleBackColor = true;
-            openOscPresetsFormButton.Click += OpenOscPresetsFormButton_Click;
             // 
             // applyOscPresetsSettingsButton
             // 
@@ -1268,6 +1258,30 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
+            // openOscPresetsFormButton
+            // 
+            openOscPresetsFormButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            openOscPresetsFormButton.Location = new Point(96, 98);
+            openOscPresetsFormButton.Name = "openOscPresetsFormButton";
+            openOscPresetsFormButton.Size = new Size(148, 38);
+            openOscPresetsFormButton.TabIndex = 18;
+            openOscPresetsFormButton.Text = "Configure";
+            helpToolTip.SetToolTip(openOscPresetsFormButton, "Opens a dialog to configure sensation presets");
+            openOscPresetsFormButton.UseVisualStyleBackColor = true;
+            openOscPresetsFormButton.Click += OpenOscPresetsFormButton_Click;
+            // 
+            // openAdvancedPresetsFormButton
+            // 
+            openAdvancedPresetsFormButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            openAdvancedPresetsFormButton.Location = new Point(96, 142);
+            openAdvancedPresetsFormButton.Name = "openAdvancedPresetsFormButton";
+            openAdvancedPresetsFormButton.Size = new Size(148, 38);
+            openAdvancedPresetsFormButton.TabIndex = 24;
+            openAdvancedPresetsFormButton.Text = "Configure";
+            helpToolTip.SetToolTip(openAdvancedPresetsFormButton, "Opens a dialog to configure sensation presets");
+            openAdvancedPresetsFormButton.UseVisualStyleBackColor = true;
+            openAdvancedPresetsFormButton.Click += openAdvancedPresetsFormButton_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1384,7 +1398,6 @@
         private Label owiStatusTitle;
         private TabPage oscPresetsPage;
         private Button applyOscPresetsSettingsButton;
-        private Button openOscPresetsFormButton;
         private Label oscPresetsPriorityLabel;
         private NumericUpDown oscPresetsPriorityInput;
         private CheckBox oscPresetsEnabledCheckbox;
@@ -1425,5 +1438,7 @@
         private Label sensationPriorityLabel;
         private Label owiEnabledSensationsLabel;
         private Button owiConfigureSensationsButton;
+        private Button openAdvancedPresetsFormButton;
+        private Button openOscPresetsFormButton;
     }
 }

@@ -1016,5 +1016,13 @@ namespace OWOVRC.UI
                 owiSettings.SaveToFile();
             }
         }
+
+        private void openAdvancedPresetsFormButton_Click(object sender, EventArgs e)
+        {
+            using (AdvancedPresetsForm form = new())
+            {
+                form.ShowDialog();
+            }
+        }
     }
 }
