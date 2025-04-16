@@ -11,7 +11,6 @@ namespace OWOVRC.UI.Forms
 {
     public partial class PresetsForm : Form
     {
-        private const string PATH_BASE = "OWO/SensationsTrigger";
         private readonly OSCPresetsSettings settings;
         private readonly BindingList<OSCSensationPreset> presets;
         private bool showCollisionDialog = true;
@@ -130,7 +129,7 @@ namespace OWOVRC.UI.Forms
 
             foreach (OSCSensationPreset preset in importedSettings.Presets.Values)
             {
-                preset.Path = preset.Path;
+                preset.Name = preset.Name;
                 presets.Add(preset);
             }
 
@@ -155,16 +154,16 @@ namespace OWOVRC.UI.Forms
             return ImportOWOSensation(fileName, sensationString);
         }
 
-        private string? ResolvePathCollisions(string path)
+        private string? ResolveNameCollisions(string name)
         {
-            if (!presets.Any((preset) => preset.Path.Equals(path)))
+            if (!presets.Any((preset) => preset.Name.Equals(name)))
             {
-                return path;
+                return name;
             }
 
             if (showCollisionDialog)
             {
-                using (NameCollisionDialog dialog = new(path, stringComparison))
+                using (NameCollisionDialog dialog = new(name, stringComparison))
                 {
                     DialogResult result = dialog.ShowDialog();
                     if (result == DialogResult.OK)
@@ -184,23 +183,22 @@ namespace OWOVRC.UI.Forms
 
             // Rename by addin a "(<i>)" suffix
             int i = 1;
-            while (presets.Any((preset) => preset.Path.Equals($"{path} ({i})")))
+            while (presets.Any((preset) => preset.Name.Equals($"{name} ({i})")))
             {
                 i++;
             }
 
-            return $"{path} ({i})";
+            return $"{name} ({i})";
         }
 
         private bool ImportOWOSensation(string name, string sensationString)
         {
-            name = $"{PATH_BASE}/{name}";
             try
             {
                 Log.Verbose("Importing sensation {name}: {value}", name, sensationString);
 
                 // Fix potential name collisions
-                string? newName = ResolvePathCollisions(name);
+                string? newName = ResolveNameCollisions(name);
                 if (newName == null)
                 {
                     return false; // Indicate the request to cancel
@@ -228,22 +226,22 @@ namespace OWOVRC.UI.Forms
             List<string> names = [];
             foreach (OSCSensationPreset preset in presets)
             {
-                if (names.Contains(preset.Path))
+                if (names.Contains(preset.Name))
                 {
                     MessageBox.Show(
-                        $"The preset {preset.Path} is listed more than once!{Environment.NewLine}Preset names must be unique!",
+                        $"The preset {preset.Name} is listed more than once!{Environment.NewLine}Preset names must be unique!",
                         "Duplicate preset names found",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
                 }
-                names.Add(preset.Path);
+                names.Add(preset.Name);
             }
 
             settings.Presets.Clear();
             foreach (OSCSensationPreset preset in presets)
             {
-                settings.Presets.Add(preset.Path, preset);
+                settings.Presets.Add(preset.Name, preset);
             }
 
             DialogResult = DialogResult.OK;
@@ -323,10 +321,10 @@ namespace OWOVRC.UI.Forms
 
         private bool CheckForCollisions()
         {
-            DataGridViewColumn? column = dataGridView1.Columns[nameof(OSCSensationPreset.Path)];
+            DataGridViewColumn? column = dataGridView1.Columns[nameof(OSCSensationPreset.Name)];
             if (column == null)
             {
-                Log.Warning("[Validation] Column not found: {Name}", nameof(OSCSensationPreset.Path));
+                Log.Warning("[Validation] Column not found: {Name}", nameof(OSCSensationPreset.Name));
                 return false;
             }
 
@@ -338,7 +336,7 @@ namespace OWOVRC.UI.Forms
 
                 if (cell == null)
                 {
-                    Log.Warning("[Validation] Cell not found: {Name}", nameof(OSCSensationPreset.Path));
+                    Log.Warning("[Validation] Cell not found: {Name}", nameof(OSCSensationPreset.Name));
                     return false;
                 }
 
@@ -359,7 +357,7 @@ namespace OWOVRC.UI.Forms
                         continue;
                     }
 
-                    if (presets[i].Path.Equals(data, stringComparison))
+                    if (presets[i].Name.Equals(data, stringComparison))
                     {
                         cell.ErrorText = "A preset with this name already exists!";
                         result = true;

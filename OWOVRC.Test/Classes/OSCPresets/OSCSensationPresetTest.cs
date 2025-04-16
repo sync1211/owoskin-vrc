@@ -18,7 +18,7 @@ namespace OWOVRC.Test.Classes.OSCPresets
             Assert.IsNotNull(decodedPreset);
 
             Assert.AreEqual(preset.Enabled, decodedPreset.Enabled);
-            Assert.AreEqual(preset.Path, decodedPreset.Path);
+            Assert.AreEqual(preset.Name, decodedPreset.Name);
             Assert.AreEqual(preset.Priority, decodedPreset.Priority);
             Assert.AreEqual(preset.Intensity, decodedPreset.Intensity);
             Assert.AreEqual(preset.SensationString, decodedPreset.SensationString);
