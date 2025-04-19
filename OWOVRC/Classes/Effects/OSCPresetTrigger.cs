@@ -9,7 +9,7 @@ namespace OWOVRC.Classes.Effects
 {
     public class OSCPresetTrigger : OSCEffectBase
     {
-        private const string OSC_ADDRESS_PREFIX = "OWO/SensationsTrigger/";
+        public static string OSC_ADDRESS_PREFIX = "OWO/SensationsTrigger/";
         public readonly OSCPresetsSettings Settings;
 
         public OSCPresetTrigger(OWOHelper owo, OSCPresetsSettings settings) : base(owo)

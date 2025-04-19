@@ -79,10 +79,12 @@
             owiEnabledCheckbox = new CheckBox();
             applyOwiSettingsButton = new Button();
             oscPresetsPage = new TabPage();
+            openAdvancedPresetsFormButton = new Button();
             presetsHelpLinkLabel = new LinkLabel();
             oscPresetsPriorityLabel = new Label();
             oscPresetsPriorityInput = new NumericUpDown();
             oscPresetsEnabledCheckbox = new CheckBox();
+            openOscPresetsFormButton = new Button();
             applyOscPresetsSettingsButton = new Button();
             audioResponsePage = new TabPage();
             audioDeviceSelectButton = new Button();
@@ -128,8 +130,7 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
-            openOscPresetsFormButton = new Button();
-            openAdvancedPresetsFormButton = new Button();
+            radioButton1 = new RadioButton();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
@@ -701,6 +702,7 @@
             // 
             // oscPresetsPage
             // 
+            oscPresetsPage.Controls.Add(radioButton1);
             oscPresetsPage.Controls.Add(openAdvancedPresetsFormButton);
             oscPresetsPage.Controls.Add(presetsHelpLinkLabel);
             oscPresetsPage.Controls.Add(oscPresetsPriorityLabel);
@@ -716,6 +718,18 @@
             oscPresetsPage.Text = "Presets";
             oscPresetsPage.ToolTipText = "Custom sensation presets";
             oscPresetsPage.UseVisualStyleBackColor = true;
+            // 
+            // openAdvancedPresetsFormButton
+            // 
+            openAdvancedPresetsFormButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            openAdvancedPresetsFormButton.Location = new Point(96, 132);
+            openAdvancedPresetsFormButton.Name = "openAdvancedPresetsFormButton";
+            openAdvancedPresetsFormButton.Size = new Size(148, 38);
+            openAdvancedPresetsFormButton.TabIndex = 24;
+            openAdvancedPresetsFormButton.Text = "Advanced";
+            helpToolTip.SetToolTip(openAdvancedPresetsFormButton, "Opens a dialog to configure sensation presets");
+            openAdvancedPresetsFormButton.UseVisualStyleBackColor = true;
+            openAdvancedPresetsFormButton.Click += OpenAdvancedPresetsFormButton_Click;
             // 
             // presetsHelpLinkLabel
             // 
@@ -756,6 +770,18 @@
             oscPresetsEnabledCheckbox.TabIndex = 20;
             oscPresetsEnabledCheckbox.Text = "Enabled";
             oscPresetsEnabledCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // openOscPresetsFormButton
+            // 
+            openOscPresetsFormButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            openOscPresetsFormButton.Location = new Point(96, 88);
+            openOscPresetsFormButton.Name = "openOscPresetsFormButton";
+            openOscPresetsFormButton.Size = new Size(148, 38);
+            openOscPresetsFormButton.TabIndex = 18;
+            openOscPresetsFormButton.Text = "Configure";
+            helpToolTip.SetToolTip(openOscPresetsFormButton, "Opens a dialog to configure sensation presets");
+            openOscPresetsFormButton.UseVisualStyleBackColor = true;
+            openOscPresetsFormButton.Click += OpenOscPresetsFormButton_Click;
             // 
             // applyOscPresetsSettingsButton
             // 
@@ -1258,29 +1284,16 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
-            // openOscPresetsFormButton
+            // radioButton1
             // 
-            openOscPresetsFormButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            openOscPresetsFormButton.Location = new Point(96, 98);
-            openOscPresetsFormButton.Name = "openOscPresetsFormButton";
-            openOscPresetsFormButton.Size = new Size(148, 38);
-            openOscPresetsFormButton.TabIndex = 18;
-            openOscPresetsFormButton.Text = "Configure";
-            helpToolTip.SetToolTip(openOscPresetsFormButton, "Opens a dialog to configure sensation presets");
-            openOscPresetsFormButton.UseVisualStyleBackColor = true;
-            openOscPresetsFormButton.Click += OpenOscPresetsFormButton_Click;
-            // 
-            // openAdvancedPresetsFormButton
-            // 
-            openAdvancedPresetsFormButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            openAdvancedPresetsFormButton.Location = new Point(96, 142);
-            openAdvancedPresetsFormButton.Name = "openAdvancedPresetsFormButton";
-            openAdvancedPresetsFormButton.Size = new Size(148, 38);
-            openAdvancedPresetsFormButton.TabIndex = 24;
-            openAdvancedPresetsFormButton.Text = "Configure";
-            helpToolTip.SetToolTip(openAdvancedPresetsFormButton, "Opens a dialog to configure sensation presets");
-            openAdvancedPresetsFormButton.UseVisualStyleBackColor = true;
-            openAdvancedPresetsFormButton.Click += openAdvancedPresetsFormButton_Click;
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(96, 63);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(191, 19);
+            radioButton1.TabIndex = 25;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "TODO: Implement mode switch";
+            radioButton1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -1440,5 +1453,6 @@
         private Button owiConfigureSensationsButton;
         private Button openAdvancedPresetsFormButton;
         private Button openOscPresetsFormButton;
+        private RadioButton radioButton1;
     }
 }

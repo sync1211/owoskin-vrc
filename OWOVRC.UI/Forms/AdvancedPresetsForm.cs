@@ -1,44 +1,153 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using OWOVRC.Classes.Effects;
+using OWOVRC.Classes.Effects.OSCPresets;
+using OWOVRC.UI.Forms.Dialogs;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Runtime.CompilerServices;
 
 namespace OWOVRC.UI.Forms
 {
     public partial class AdvancedPresetsForm : Form
     {
-        public AdvancedPresetsForm()
+        public List<OSCAdvancedSensationPreset> Presets
+        {
+            get
+            {
+                return [.. presets];
+            }
+        }
+        private BindingList<OSCAdvancedSensationPreset> presets;
+
+        public AdvancedPresetsForm(OSCAdvancedSensationPreset[] presets)
         {
             InitializeComponent();
-            tabControl1.DrawItem += tabControl1_DrawItem;
+            this.presets = [.. presets];
+            listBox1.DataSource = this.presets;
+
+            RefreshControls();
         }
 
-        private void tabControl1_DrawItem(object? sender, DrawItemEventArgs e)
+        private void RefreshControls()
         {
-            var g = e.Graphics;
-            var text = this.tabControl1.TabPages[e.Index].Text;
-            var sizeText = g.MeasureString(text, this.tabControl1.Font);
-
-            var x = e.Bounds.Left + 3;
-            var y = e.Bounds.Top + (e.Bounds.Height - sizeText.Height) / 2;
-
-            g.DrawString(text, this.tabControl1.Font, Brushes.Black, x, y);
+            RefreshInputAvailability();
+            RefreshInputData();
         }
 
-        private void cancelButton_Click(object sender, EventArgs e)
+        private void RefreshInputAvailability()
+        {
+            bool entrySelected = listBox1.SelectedItem != null;
+            deleteEntryButton.Enabled = entrySelected;
+            copyEntryButton.Enabled = entrySelected;
+            addEntryButton.Enabled = true;
+
+            presetGroupBox.Enabled = entrySelected;
+        }
+
+        private void RefreshInputData()
+        {
+            if (listBox1.SelectedItem is OSCAdvancedSensationPreset preset)
+            {
+                nameInput.Text = preset.Name;
+                priorityInput.Value = preset.Priority;
+                intensityInput.Value = preset.Intensity;
+                loopCheckBox.Checked = preset.Loop;
+                interruptableCheckBox.Checked = preset.Interruptable;
+                minValueInput.Value = (decimal) preset.MinValue;
+                maxValueInput.Value = (decimal) preset.MaxValue;
+            }
+            else
+            {
+                nameInput.Text = string.Empty;
+                priorityInput.Value = 0;
+                intensityInput.Value = 0;
+                loopCheckBox.Checked = false;
+                interruptableCheckBox.Checked = false;
+                minValueInput.Value = 0;
+                maxValueInput.Value = 0;
+            }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private bool checkForConflicts()
         {
+            //TODO: Implement me!
+            return false;
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            if (checkForConflicts())
+            {
+                MessageBox.Show("There are conflicts in the presets. Please resolve them before saving.", "Conflicts Detected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void AddEntryButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new()
+            {
+                Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (oscPresets.json)|oscPresets.json",
+                Title = "Select a file to import",
+                Multiselect = true
+            })
+            {
+                if (openFileDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                //TODO: Importing of OWOVRC Preset settings (oscPresets.json)
+                foreach (string file in openFileDialog.FileNames)
+                {
+                    string name = Path.GetFileNameWithoutExtension(file);
+                    string path = $"{OSCPresetTrigger.OSC_ADDRESS_PREFIX}{name}";
+
+                    presets.Add(new OSCAdvancedSensationPreset(true, name, 0, 0, false, false, path, file, 0, 0));
+                }
+            }
+        }
+
+        private void CopyEntryButton_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem is not OSCAdvancedSensationPreset preset)
+            {
+                return;
+            }
+
+            OSCAdvancedSensationPreset newPreset = new(
+                preset.Enabled,
+                $"{preset.Name} - Copy",
+                preset.Priority,
+                preset.Intensity,
+                preset.Loop,
+                preset.Interruptable,
+                preset.SensationString,
+                $"{preset.Path} - Copy",
+                preset.MinValue,
+                preset.MaxValue
+            );
+            presets.Add(newPreset);
+        }
+
+        private void DeleteEntryButton_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem == null)
+            {
+                return;
+            }
+            presets.RemoveAt(listBox1.SelectedIndex);
+        }
+
+        private void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshControls();
         }
     }
 }

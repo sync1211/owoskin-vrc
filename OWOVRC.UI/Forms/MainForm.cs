@@ -15,6 +15,7 @@ using Serilog.Events;
 using System.Net;
 using System.ComponentModel;
 using OWOVRC.Classes.Helpers;
+using OWOVRC.Classes.Effects.OSCPresets;
 
 namespace OWOVRC.UI
 {
@@ -1017,11 +1018,23 @@ namespace OWOVRC.UI
             }
         }
 
-        private void openAdvancedPresetsFormButton_Click(object sender, EventArgs e)
+        private void OpenAdvancedPresetsFormButton_Click(object sender, EventArgs e)
         {
-            using (AdvancedPresetsForm form = new())
+            using (AdvancedPresetsForm form = new([.. oscPresetsSettings.AdvancedPresets.Values]))
             {
                 form.ShowDialog();
+
+                if (form.DialogResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+                // Save the presets
+                oscPresetsSettings.AdvancedPresets.Clear();
+                foreach (OSCAdvancedSensationPreset preset in form.Presets)
+                {
+                    oscPresetsSettings.AdvancedPresets.Add(preset.Name, preset);
+                }
             }
         }
     }

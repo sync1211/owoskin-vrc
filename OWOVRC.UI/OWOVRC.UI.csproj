@@ -34,7 +34,7 @@
     <Compile Update="Forms\Dialogs\TextInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\Dialogs\NameCollisionDialog.cs">
+    <Compile Update="Forms\Dialogs\NameDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\Dialogs\SelectionDialog.cs" />

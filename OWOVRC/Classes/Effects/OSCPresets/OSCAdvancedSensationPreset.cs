@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Windows.Media.Audio;
 
 namespace OWOVRC.Classes.Effects.OSCPresets
 {

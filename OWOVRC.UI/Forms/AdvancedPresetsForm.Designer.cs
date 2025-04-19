@@ -28,261 +28,306 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
-            checkBox2 = new CheckBox();
-            checkBox1 = new CheckBox();
-            numericUpDown4 = new NumericUpDown();
-            label5 = new Label();
-            numericUpDown3 = new NumericUpDown();
-            label4 = new Label();
-            label3 = new Label();
-            textBox2 = new TextBox();
-            numericUpDown2 = new NumericUpDown();
-            label2 = new Label();
-            numericUpDown1 = new NumericUpDown();
-            label1 = new Label();
-            textBox1 = new TextBox();
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvancedPresetsForm));
+            interruptableCheckBox = new CheckBox();
+            loopCheckBox = new CheckBox();
+            priorityInput = new NumericUpDown();
+            priorityLabel = new Label();
+            intensityInput = new NumericUpDown();
+            intensityLabel = new Label();
+            pathLabel = new Label();
+            pathInput = new TextBox();
+            maxValueInput = new NumericUpDown();
+            maxLabel = new Label();
+            minValueInput = new NumericUpDown();
+            minLabel = new Label();
+            nameInput = new TextBox();
             enabledCheckBox = new CheckBox();
-            tabPage2 = new TabPage();
             saveButton = new Button();
             cancelButton = new Button();
-            tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            listBox1 = new ListBox();
+            deleteEntryButton = new Button();
+            copyEntryButton = new Button();
+            addEntryButton = new Button();
+            nameLabel = new Label();
+            presetGroupBox = new GroupBox();
+            toolTip1 = new ToolTip(components);
+            ((System.ComponentModel.ISupportInitialize)priorityInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)intensityInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)maxValueInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)minValueInput).BeginInit();
+            presetGroupBox.SuspendLayout();
             SuspendLayout();
             // 
-            // tabControl1
+            // interruptableCheckBox
             // 
-            tabControl1.Alignment = TabAlignment.Left;
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
-            tabControl1.ItemSize = new Size(30, 120);
-            tabControl1.Location = new Point(12, 12);
-            tabControl1.Multiline = true;
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(536, 257);
-            tabControl1.SizeMode = TabSizeMode.Fixed;
-            tabControl1.TabIndex = 0;
+            interruptableCheckBox.AutoSize = true;
+            interruptableCheckBox.Location = new Point(68, 192);
+            interruptableCheckBox.Name = "interruptableCheckBox";
+            interruptableCheckBox.Size = new Size(94, 19);
+            interruptableCheckBox.TabIndex = 13;
+            interruptableCheckBox.Text = "Interruptable";
+            interruptableCheckBox.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
+            // loopCheckBox
             // 
-            tabPage1.Controls.Add(checkBox2);
-            tabPage1.Controls.Add(checkBox1);
-            tabPage1.Controls.Add(numericUpDown4);
-            tabPage1.Controls.Add(label5);
-            tabPage1.Controls.Add(numericUpDown3);
-            tabPage1.Controls.Add(label4);
-            tabPage1.Controls.Add(label3);
-            tabPage1.Controls.Add(textBox2);
-            tabPage1.Controls.Add(numericUpDown2);
-            tabPage1.Controls.Add(label2);
-            tabPage1.Controls.Add(numericUpDown1);
-            tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(textBox1);
-            tabPage1.Controls.Add(enabledCheckBox);
-            tabPage1.Location = new Point(124, 4);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(408, 249);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "tabPage1";
-            tabPage1.UseVisualStyleBackColor = true;
+            loopCheckBox.AutoSize = true;
+            loopCheckBox.Location = new Point(9, 192);
+            loopCheckBox.Name = "loopCheckBox";
+            loopCheckBox.Size = new Size(53, 19);
+            loopCheckBox.TabIndex = 12;
+            loopCheckBox.Text = "Loop";
+            loopCheckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // priorityInput
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(65, 149);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(94, 19);
-            checkBox2.TabIndex = 13;
-            checkBox2.Text = "Interruptable";
-            checkBox2.UseVisualStyleBackColor = true;
+            priorityInput.Location = new Point(64, 163);
+            priorityInput.Maximum = new decimal(new int[] { 8, 0, 0, 0 });
+            priorityInput.Name = "priorityInput";
+            priorityInput.Size = new Size(98, 23);
+            priorityInput.TabIndex = 11;
             // 
-            // checkBox1
+            // priorityLabel
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(6, 149);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(53, 19);
-            checkBox1.TabIndex = 12;
-            checkBox1.Text = "Loop";
-            checkBox1.UseVisualStyleBackColor = true;
+            priorityLabel.AutoSize = true;
+            priorityLabel.Location = new Point(9, 165);
+            priorityLabel.Name = "priorityLabel";
+            priorityLabel.Size = new Size(45, 15);
+            priorityLabel.TabIndex = 10;
+            priorityLabel.Text = "Priority";
             // 
-            // numericUpDown4
+            // intensityInput
             // 
-            numericUpDown4.Location = new Point(61, 120);
-            numericUpDown4.Name = "numericUpDown4";
-            numericUpDown4.Size = new Size(120, 23);
-            numericUpDown4.TabIndex = 11;
+            intensityInput.Location = new Point(64, 134);
+            intensityInput.Maximum = new decimal(new int[] { 200, 0, 0, 0 });
+            intensityInput.Name = "intensityInput";
+            intensityInput.Size = new Size(98, 23);
+            intensityInput.TabIndex = 9;
             // 
-            // label5
+            // intensityLabel
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(6, 122);
-            label5.Name = "label5";
-            label5.Size = new Size(45, 15);
-            label5.TabIndex = 10;
-            label5.Text = "Priority";
+            intensityLabel.AutoSize = true;
+            intensityLabel.Location = new Point(9, 136);
+            intensityLabel.Name = "intensityLabel";
+            intensityLabel.Size = new Size(52, 15);
+            intensityLabel.TabIndex = 8;
+            intensityLabel.Text = "Intensity";
             // 
-            // numericUpDown3
+            // pathLabel
             // 
-            numericUpDown3.Location = new Point(61, 91);
-            numericUpDown3.Name = "numericUpDown3";
-            numericUpDown3.Size = new Size(120, 23);
-            numericUpDown3.TabIndex = 9;
+            pathLabel.AutoSize = true;
+            pathLabel.Location = new Point(9, 79);
+            pathLabel.Name = "pathLabel";
+            pathLabel.Size = new Size(31, 15);
+            pathLabel.TabIndex = 7;
+            pathLabel.Text = "Path";
             // 
-            // label4
+            // pathInput
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(6, 93);
-            label4.Name = "label4";
-            label4.Size = new Size(52, 15);
-            label4.TabIndex = 8;
-            label4.Text = "Intensity";
+            pathInput.Location = new Point(64, 76);
+            pathInput.Name = "pathInput";
+            pathInput.Size = new Size(271, 23);
+            pathInput.TabIndex = 6;
             // 
-            // label3
+            // maxValueInput
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(6, 36);
-            label3.Name = "label3";
-            label3.Size = new Size(31, 15);
-            label3.TabIndex = 7;
-            label3.Text = "Path";
+            maxValueInput.DecimalPlaces = 2;
+            maxValueInput.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
+            maxValueInput.Location = new Point(64, 105);
+            maxValueInput.Name = "maxValueInput";
+            maxValueInput.Size = new Size(98, 23);
+            maxValueInput.TabIndex = 5;
             // 
-            // textBox2
+            // maxLabel
             // 
-            textBox2.Location = new Point(61, 33);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(120, 23);
-            textBox2.TabIndex = 6;
+            maxLabel.AutoSize = true;
+            maxLabel.Location = new Point(203, 109);
+            maxLabel.Name = "maxLabel";
+            maxLabel.Size = new Size(30, 15);
+            maxLabel.TabIndex = 4;
+            maxLabel.Text = "Max";
             // 
-            // numericUpDown2
+            // minValueInput
             // 
-            numericUpDown2.Location = new Point(139, 62);
-            numericUpDown2.Name = "numericUpDown2";
-            numericUpDown2.Size = new Size(42, 23);
-            numericUpDown2.TabIndex = 5;
+            minValueInput.DecimalPlaces = 2;
+            minValueInput.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
+            minValueInput.Location = new Point(237, 105);
+            minValueInput.Name = "minValueInput";
+            minValueInput.Size = new Size(98, 23);
+            minValueInput.TabIndex = 3;
             // 
-            // label2
+            // minLabel
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(109, 65);
-            label2.Name = "label2";
-            label2.Size = new Size(30, 15);
-            label2.TabIndex = 4;
-            label2.Text = "Max";
+            minLabel.AutoSize = true;
+            minLabel.Location = new Point(9, 109);
+            minLabel.Name = "minLabel";
+            minLabel.Size = new Size(28, 15);
+            minLabel.TabIndex = 2;
+            minLabel.Text = "Min";
             // 
-            // numericUpDown1
+            // nameInput
             // 
-            numericUpDown1.Location = new Point(61, 62);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(42, 23);
-            numericUpDown1.TabIndex = 3;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(6, 64);
-            label1.Name = "label1";
-            label1.Size = new Size(28, 15);
-            label1.TabIndex = 2;
-            label1.Text = "Min";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(27, 6);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 1;
+            nameInput.Location = new Point(62, 47);
+            nameInput.Name = "nameInput";
+            nameInput.Size = new Size(273, 23);
+            nameInput.TabIndex = 1;
             // 
             // enabledCheckBox
             // 
             enabledCheckBox.AutoSize = true;
-            enabledCheckBox.Location = new Point(6, 10);
+            enabledCheckBox.Location = new Point(9, 22);
             enabledCheckBox.Name = "enabledCheckBox";
-            enabledCheckBox.Size = new Size(15, 14);
+            enabledCheckBox.Size = new Size(68, 19);
             enabledCheckBox.TabIndex = 0;
+            enabledCheckBox.Text = "Enabled";
             enabledCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            tabPage2.Location = new Point(124, 4);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(408, 249);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "tabPage2";
-            tabPage2.UseVisualStyleBackColor = true;
             // 
             // saveButton
             // 
             saveButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             saveButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            saveButton.Location = new Point(470, 279);
+            saveButton.Location = new Point(455, 276);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(75, 23);
             saveButton.TabIndex = 1;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
-            saveButton.Click += saveButton_Click;
+            saveButton.Click += SaveButton_Click;
             // 
             // cancelButton
             // 
             cancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            cancelButton.Location = new Point(389, 279);
+            cancelButton.Location = new Point(374, 276);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(75, 23);
             cancelButton.TabIndex = 2;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += cancelButton_Click;
+            cancelButton.Click += CancelButton_Click;
+            // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.Location = new Point(12, 12);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(171, 259);
+            listBox1.TabIndex = 3;
+            listBox1.SelectedIndexChanged += ListBox1_SelectedIndexChanged;
+            // 
+            // deleteEntryButton
+            // 
+            deleteEntryButton.Image = (Image)resources.GetObject("deleteEntryButton.Image");
+            deleteEntryButton.Location = new Point(130, 272);
+            deleteEntryButton.Name = "deleteEntryButton";
+            deleteEntryButton.Size = new Size(53, 27);
+            deleteEntryButton.TabIndex = 19;
+            toolTip1.SetToolTip(deleteEntryButton, "Delete preset");
+            deleteEntryButton.UseVisualStyleBackColor = true;
+            deleteEntryButton.Click += DeleteEntryButton_Click;
+            // 
+            // copyEntryButton
+            // 
+            copyEntryButton.Image = (Image)resources.GetObject("copyEntryButton.Image");
+            copyEntryButton.Location = new Point(71, 272);
+            copyEntryButton.Name = "copyEntryButton";
+            copyEntryButton.Size = new Size(53, 27);
+            copyEntryButton.TabIndex = 18;
+            toolTip1.SetToolTip(copyEntryButton, "Duplicate preset");
+            copyEntryButton.UseVisualStyleBackColor = true;
+            copyEntryButton.Click += CopyEntryButton_Click;
+            // 
+            // addEntryButton
+            // 
+            addEntryButton.Image = (Image)resources.GetObject("addEntryButton.Image");
+            addEntryButton.Location = new Point(12, 272);
+            addEntryButton.Name = "addEntryButton";
+            addEntryButton.Size = new Size(53, 27);
+            addEntryButton.TabIndex = 17;
+            toolTip1.SetToolTip(addEntryButton, "Add new preset");
+            addEntryButton.UseVisualStyleBackColor = true;
+            addEntryButton.Click += AddEntryButton_Click;
+            // 
+            // nameLabel
+            // 
+            nameLabel.AutoSize = true;
+            nameLabel.Location = new Point(9, 50);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new Size(39, 15);
+            nameLabel.TabIndex = 20;
+            nameLabel.Text = "Name";
+            // 
+            // presetGroupBox
+            // 
+            presetGroupBox.Controls.Add(priorityInput);
+            presetGroupBox.Controls.Add(nameLabel);
+            presetGroupBox.Controls.Add(maxLabel);
+            presetGroupBox.Controls.Add(maxValueInput);
+            presetGroupBox.Controls.Add(minValueInput);
+            presetGroupBox.Controls.Add(pathInput);
+            presetGroupBox.Controls.Add(interruptableCheckBox);
+            presetGroupBox.Controls.Add(minLabel);
+            presetGroupBox.Controls.Add(pathLabel);
+            presetGroupBox.Controls.Add(loopCheckBox);
+            presetGroupBox.Controls.Add(enabledCheckBox);
+            presetGroupBox.Controls.Add(intensityLabel);
+            presetGroupBox.Controls.Add(nameInput);
+            presetGroupBox.Controls.Add(intensityInput);
+            presetGroupBox.Controls.Add(priorityLabel);
+            presetGroupBox.Location = new Point(189, 12);
+            presetGroupBox.Name = "presetGroupBox";
+            presetGroupBox.Size = new Size(341, 259);
+            presetGroupBox.TabIndex = 21;
+            presetGroupBox.TabStop = false;
+            presetGroupBox.Text = "Preset";
             // 
             // AdvancedPresetsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(557, 314);
+            ClientSize = new Size(542, 311);
+            Controls.Add(presetGroupBox);
+            Controls.Add(deleteEntryButton);
+            Controls.Add(copyEntryButton);
+            Controls.Add(addEntryButton);
+            Controls.Add(listBox1);
             Controls.Add(cancelButton);
             Controls.Add(saveButton);
-            Controls.Add(tabControl1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AdvancedPresetsForm";
-            Text = "AdvancedPresetsForm";
-            tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            Text = "Advanced Presets";
+            ((System.ComponentModel.ISupportInitialize)priorityInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)intensityInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)maxValueInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)minValueInput).EndInit();
+            presetGroupBox.ResumeLayout(false);
+            presetGroupBox.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private TabControl tabControl1;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
-        private NumericUpDown numericUpDown3;
-        private Label label4;
-        private Label label3;
-        private TextBox textBox2;
-        private NumericUpDown numericUpDown2;
-        private Label label2;
-        private NumericUpDown numericUpDown1;
-        private Label label1;
-        private TextBox textBox1;
+        private NumericUpDown intensityInput;
+        private Label intensityLabel;
+        private Label pathLabel;
+        private TextBox pathInput;
+        private NumericUpDown maxValueInput;
+        private Label maxLabel;
+        private NumericUpDown minValueInput;
+        private Label minLabel;
+        private TextBox nameInput;
         private CheckBox enabledCheckBox;
         private Button saveButton;
         private Button cancelButton;
-        private CheckBox checkBox1;
-        private NumericUpDown numericUpDown4;
-        private Label label5;
-        private CheckBox checkBox2;
+        private CheckBox loopCheckBox;
+        private NumericUpDown priorityInput;
+        private Label priorityLabel;
+        private CheckBox interruptableCheckBox;
+        private ListBox listBox1;
+        private Button deleteEntryButton;
+        private Button copyEntryButton;
+        private Button addEntryButton;
+        private Label nameLabel;
+        private GroupBox presetGroupBox;
+        private ToolTip toolTip1;
     }
 }
