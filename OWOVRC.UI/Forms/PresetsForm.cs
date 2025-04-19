@@ -40,20 +40,22 @@ namespace OWOVRC.UI.Forms
 
         private void ImportSensationButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new()
+            using (OpenFileDialog openFileDialog = new()
             {
                 Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (oscPresets.json)|oscPresets.json",
                 Title = "Select a file to import",
                 Multiselect = true
-            };
-
-            DialogResult result = openFileDialog.ShowDialog();
-            if (result != DialogResult.OK)
+            })
             {
-                return;
-            }
 
-            ImportSensationFileList(openFileDialog.FileNames);
+                DialogResult result = openFileDialog.ShowDialog();
+                if (result != DialogResult.OK)
+                {
+                    return;
+                }
+
+                ImportSensationFileList(openFileDialog.FileNames);
+            }
         }
 
         private void ImportSensationFileList(string[] fileNames)
