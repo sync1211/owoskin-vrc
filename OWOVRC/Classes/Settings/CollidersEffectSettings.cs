@@ -50,11 +50,15 @@ namespace OWOVRC.Classes.Settings
         public TimeSpan MaxTimeDiff { get; set; } = TimeSpan.FromSeconds(1);
         [JsonInclude]
         public Dictionary<int, int> MuscleIntensities { get; } = [];
+        [JsonInclude]
+        public float DecayFactor { get; set; } = 2f;
         [JsonIgnore]
         private Sensation sensation = null!;
 
-        public CollidersEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority)
+        public CollidersEffectSettings(bool enabled = true, int priority = 10, float decayFactor = 2) : base(enabled, priority)
         {
+            DecayFactor = decayFactor;
+
             foreach (Muscle muscle in Muscle.All)
             {
                 MuscleIntensities[muscle.id] = 100;
@@ -63,7 +67,7 @@ namespace OWOVRC.Classes.Settings
         }
 
         [JsonConstructor]
-        public CollidersEffectSettings(bool enabled, int priority, bool useVelocity, bool allowContinuous, int minIntensity, int frequency, float sensationSeconds, float speedMultiplier, TimeSpan maxTimeDiff, Dictionary<int, int> muscleIntensities) : base(enabled, priority)
+        public CollidersEffectSettings(bool enabled, int priority, bool useVelocity, bool allowContinuous, int minIntensity, int frequency, float sensationSeconds, float speedMultiplier, TimeSpan maxTimeDiff, Dictionary<int, int> muscleIntensities, float decayFactor = 2) : base(enabled, priority)
         {
             UseVelocity = useVelocity;
             AllowContinuous = allowContinuous;
@@ -73,6 +77,7 @@ namespace OWOVRC.Classes.Settings
             SpeedMultiplier = speedMultiplier;
             MaxTimeDiff = maxTimeDiff;
             MuscleIntensities = muscleIntensities ?? [];
+            DecayFactor = decayFactor;
 
             foreach (Muscle muscle in Muscle.All)
             {

@@ -208,7 +208,7 @@ namespace OWOVRC.Classes.Effects
             for (int i = 0; i < activeMuscles.Count; i++)
             {
                 MuscleCollisionData muscleData = activeMuscles.ElementAt(i).Value;
-                muscleData.VelocityMultiplier = 0;
+                muscleData.VelocityMultiplier = (float) Math.Round(Math.Floor(muscleData.VelocityMultiplier / Settings.DecayFactor), 2);
             }
         }
 

@@ -640,6 +640,9 @@ namespace OWOVRC.UI
             // Frequency
             collidersSettings.Frequency = (int)collidersFrequencyInput.Value;
 
+            // Decay Factor
+            collidersSettings.DecayFactor = (float)collidersSpeedDecayInput.Value;
+
             collidersSettings.SaveToFile();
         }
 
