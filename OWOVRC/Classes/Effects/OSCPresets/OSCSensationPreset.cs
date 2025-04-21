@@ -9,7 +9,7 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         [JsonInclude]
         public bool Enabled { get; set; }
         [JsonInclude]
-        public string Path { get; set; }
+        public string Name { get; set; }
         [JsonInclude]
         public int Priority { get; set; }
         [JsonInclude]
@@ -38,10 +38,10 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         public readonly Sensation SensationObject;
 
         [JsonConstructor]
-        public OSCSensationPreset(bool enabled, string path, int priority, int intensity, bool loop, bool interruptable, string sensationString)
+        public OSCSensationPreset(bool enabled, string name, int priority, int intensity, bool loop, bool interruptable, string sensationString)
         {
             Enabled = enabled;
-            Path = path ?? String.Empty;
+            Name = name;
             Priority = priority;
             Intensity = intensity;
             Loop = loop;
