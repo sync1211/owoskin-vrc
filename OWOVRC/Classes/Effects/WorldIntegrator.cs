@@ -43,7 +43,7 @@ namespace OWOVRC.Classes.Effects
             Settings = settings;
             this.owo = owo;
             logWatcher = new("", settings.UpdateInterval);
-            logWatcher.OnLogLineRead += OnLogChange;
+            logWatcher.OnLogLineRead += HandleNewLogLine;
         }
 
         public void Start()
@@ -100,23 +100,13 @@ namespace OWOVRC.Classes.Effects
             return recentLogFile;
         }
 
-        private void OnLogChange(object? source, string logLine)
+        private void HandleNewLogLine(object? source, string content)
         {
             if (!Settings.Enabled)
             {
                 return;
             }
 
-            if (!logLine.Contains(OWI_PREFIX))
-            {
-                return;
-            }
-
-            ProcessLogLine(logLine);
-        }
-
-        public void ProcessLogLine(string content)
-        {
             /*
              * Examples: (Ignoring the preceeding "2024.11.17 16:43:57 Log        -  ")
              * VRC_OWO_WorldIntegration: [{"priority": 3, "sensation": "PaintBall","frequency": 5,"duration": 0.2,"intensity": 100,"rampup":0,"rampdown":0,"exitdelay":0,"Muscles": { "pectoral_L": 100}},{ "sensation": "PaintBall","frequency": 5,"duration": 0.2,"intensity": 100,"rampup":0,"rampdown":0.1,"exitdelay":0,"Muscles": { "pectoral_R": 50,"abdominal_L": 50,"abdominal_R": 25,"arm_L": 25 }}]
@@ -127,13 +117,13 @@ namespace OWOVRC.Classes.Effects
              */
 
             // Non-OWI message
-            if (!content.Contains(OWI_PREFIX))
+            int owiIndex = content.IndexOf(OWI_PREFIX);
+            if (owiIndex == -1)
             {
                 return;
             }
 
             // Remove log prefix
-            int owiIndex = content.IndexOf(OWI_PREFIX);
             string contentClean = content[(owiIndex + OWI_PREFIX.Length)..].Trim();
 
             // Convert to JSON
@@ -204,7 +194,7 @@ namespace OWOVRC.Classes.Effects
         {
             Stop();
 
-            logWatcher.OnLogLineRead -= OnLogChange;
+            logWatcher.OnLogLineRead -= HandleNewLogLine;
 
             GC.SuppressFinalize(this);
         }

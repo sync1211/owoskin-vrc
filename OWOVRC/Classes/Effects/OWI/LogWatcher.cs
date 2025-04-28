@@ -75,8 +75,8 @@ namespace OWOVRC.Classes.Effects.OWI
                     {
                         try
                         {
-                            string? line = reader.ReadLine();
-                            if (line != null && line.Trim().Length != 0)
+                            string? line = reader.ReadLine()?.Trim();
+                            if (!String.IsNullOrEmpty(line))
                             {
                                 Log.Verbose("New log line: '{line}'", line);
                                 OnLogLineRead?.Invoke(this, line);
