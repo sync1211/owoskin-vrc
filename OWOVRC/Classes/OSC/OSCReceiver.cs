@@ -18,12 +18,12 @@ namespace OWOVRC.Classes.OSC
         public OSCReceiver(int port = 9001)
         {
             Port = port;
-            receiver = new OscServer(Port);
+            receiver = OscServer.GetOrCreate(Port);
+            receiver.AddMonitorCallback(MessageReceived);
         }
 
         public void Start()
         {
-            receiver.AddMonitorCallback(MessageReceived);
             try
             {
                 receiver.Start();
@@ -46,13 +46,16 @@ namespace OWOVRC.Classes.OSC
                 return;
             }
 
+            // Remove OSC prefix
+            addressString = addressString[OSC_ADDRESS.Length..];
+
             if (values.ElementCount == 0)
             {
                 Log.Verbose("Message at {address} does not include any values, ignoring.", addressString);
                 return;
             }
 
-            OnMessageReceived?.Invoke(this, new OSCMessage(addressString.Remove(0, OSC_ADDRESS.Length), values));
+            OnMessageReceived?.Invoke(this, new OSCMessage(addressString, values));
         }
 
         protected virtual void Dispose(bool disposing)
