@@ -38,20 +38,21 @@
             collidersHelpLinkLabel = new LinkLabel();
             collidersPriorityLabel = new Label();
             collidersPriorityInput = new NumericUpDown();
+            collidersUseVelocityCheckbox = new CheckBox();
             configureCollidersIntensityLabel = new Label();
             velocityBasedGroupBox = new GroupBox();
+            collidersSpeedDecayCheckbox = new CheckBox();
             collidersSpeedDecayInput = new NumericUpDown();
-            collidersSpeedDecayLabel = new Label();
             collidersSpeedMultiplierLabel = new Label();
             collidersSpeedMultiplierInput = new NumericUpDown();
             collidersMinIntensityLabel = new Label();
             collidersMinIntensityInput = new NumericUpDown();
-            collidersUseVelocityCheckbox = new CheckBox();
             collidersAllowContinuousCheckbox = new CheckBox();
             collidersEnabledCheckbox = new CheckBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
             notVeryHelpfulLabel = new Label();
+            velocityImpactEnabledCheckbox = new CheckBox();
             velocitySpeedCapLabel = new Label();
             velocityPriorityLabel = new Label();
             velocitySpeedCapInput = new NumericUpDown();
@@ -59,7 +60,6 @@
             velocityIgnoreWhenSeatedCheckbox = new CheckBox();
             velocityImpactGroup = new GroupBox();
             velocityMinImpactLabel = new Label();
-            velocityImpactEnabledCheckbox = new CheckBox();
             velocityMinImpactInput = new NumericUpDown();
             velocityThresholdLabel = new Label();
             velocityThresholdInput = new NumericUpDown();
@@ -183,6 +183,7 @@
             collidersSettingsPage.Controls.Add(collidersHelpLinkLabel);
             collidersSettingsPage.Controls.Add(collidersPriorityLabel);
             collidersSettingsPage.Controls.Add(collidersPriorityInput);
+            collidersSettingsPage.Controls.Add(collidersUseVelocityCheckbox);
             collidersSettingsPage.Controls.Add(configureCollidersIntensityLabel);
             collidersSettingsPage.Controls.Add(velocityBasedGroupBox);
             collidersSettingsPage.Controls.Add(collidersEnabledCheckbox);
@@ -258,6 +259,19 @@
             collidersPriorityInput.TabIndex = 8;
             helpToolTip.SetToolTip(collidersPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
             // 
+            // collidersUseVelocityCheckbox
+            // 
+            collidersUseVelocityCheckbox.AutoSize = true;
+            collidersUseVelocityCheckbox.BackColor = SystemColors.ControlLightLight;
+            collidersUseVelocityCheckbox.Location = new Point(16, 109);
+            collidersUseVelocityCheckbox.Name = "collidersUseVelocityCheckbox";
+            collidersUseVelocityCheckbox.Size = new Size(103, 19);
+            collidersUseVelocityCheckbox.TabIndex = 3;
+            collidersUseVelocityCheckbox.Text = "Velocity-Based";
+            helpToolTip.SetToolTip(collidersUseVelocityCheckbox, "Enables velocity-based intensity on collision.\r\nThe velocity is calculated using the distance to the center of the collider.");
+            collidersUseVelocityCheckbox.UseVisualStyleBackColor = false;
+            collidersUseVelocityCheckbox.CheckedChanged += CollidersUseVelocityCheckbox_CheckedChanged;
+            // 
             // configureCollidersIntensityLabel
             // 
             configureCollidersIntensityLabel.AutoSize = true;
@@ -270,39 +284,41 @@
             // 
             // velocityBasedGroupBox
             // 
+            velocityBasedGroupBox.Controls.Add(collidersSpeedDecayCheckbox);
             velocityBasedGroupBox.Controls.Add(collidersSpeedDecayInput);
-            velocityBasedGroupBox.Controls.Add(collidersSpeedDecayLabel);
             velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierLabel);
             velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierInput);
             velocityBasedGroupBox.Controls.Add(collidersMinIntensityLabel);
             velocityBasedGroupBox.Controls.Add(collidersMinIntensityInput);
-            velocityBasedGroupBox.Controls.Add(collidersUseVelocityCheckbox);
             velocityBasedGroupBox.Controls.Add(collidersAllowContinuousCheckbox);
             velocityBasedGroupBox.Location = new Point(6, 109);
             velocityBasedGroupBox.Name = "velocityBasedGroupBox";
             velocityBasedGroupBox.Size = new Size(348, 131);
             velocityBasedGroupBox.TabIndex = 5;
             velocityBasedGroupBox.TabStop = false;
-            velocityBasedGroupBox.Text = "Velocity-Based";
+            velocityBasedGroupBox.Text = " Velocity-Based";
+            // 
+            // collidersSpeedDecayCheckbox
+            // 
+            collidersSpeedDecayCheckbox.AutoSize = true;
+            collidersSpeedDecayCheckbox.Location = new Point(10, 100);
+            collidersSpeedDecayCheckbox.Name = "collidersSpeedDecayCheckbox";
+            collidersSpeedDecayCheckbox.Size = new Size(112, 19);
+            collidersSpeedDecayCheckbox.TabIndex = 14;
+            collidersSpeedDecayCheckbox.Text = "Decay time (ms)";
+            helpToolTip.SetToolTip(collidersSpeedDecayCheckbox, "The times it takes for the sensation intensity to return the rest sensation (or 0, if the rest sensation is disabled)");
+            collidersSpeedDecayCheckbox.UseVisualStyleBackColor = true;
+            collidersSpeedDecayCheckbox.CheckedChanged += CollidersSpeedDecayCheckbox_CheckedChanged;
             // 
             // collidersSpeedDecayInput
             // 
-            collidersSpeedDecayInput.DecimalPlaces = 2;
+            collidersSpeedDecayInput.Increment = new decimal(new int[] { 100, 0, 0, 0 });
             collidersSpeedDecayInput.Location = new Point(247, 99);
+            collidersSpeedDecayInput.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             collidersSpeedDecayInput.Name = "collidersSpeedDecayInput";
             collidersSpeedDecayInput.Size = new Size(89, 23);
             collidersSpeedDecayInput.TabIndex = 13;
-            helpToolTip.SetToolTip(collidersSpeedDecayInput, "The factor by which to reduce the velocity based intensity per calculation cycle (0.1s).");
-            // 
-            // collidersSpeedDecayLabel
-            // 
-            collidersSpeedDecayLabel.AutoSize = true;
-            collidersSpeedDecayLabel.Location = new Point(6, 101);
-            collidersSpeedDecayLabel.Name = "collidersSpeedDecayLabel";
-            collidersSpeedDecayLabel.Size = new Size(75, 15);
-            collidersSpeedDecayLabel.TabIndex = 12;
-            collidersSpeedDecayLabel.Text = "Decay Factor";
-            helpToolTip.SetToolTip(collidersSpeedDecayLabel, "The factor by which to reduce the velocity based intensity per calculation cycle (0.1s).\r\n(Higher is faster. Formula: intensity = intensity / decayFactor)");
+            helpToolTip.SetToolTip(collidersSpeedDecayInput, "The times it takes for the sensation intensity to return the rest sensation (or 0, if the rest sensation is disabled)");
             // 
             // collidersSpeedMultiplierLabel
             // 
@@ -330,9 +346,9 @@
             collidersMinIntensityLabel.AutoSize = true;
             collidersMinIntensityLabel.Location = new Point(6, 44);
             collidersMinIntensityLabel.Name = "collidersMinIntensityLabel";
-            collidersMinIntensityLabel.Size = new Size(76, 15);
+            collidersMinIntensityLabel.Size = new Size(97, 15);
             collidersMinIntensityLabel.TabIndex = 9;
-            collidersMinIntensityLabel.Text = "Min Intensity";
+            collidersMinIntensityLabel.Text = "Min Intensity (%)";
             helpToolTip.SetToolTip(collidersMinIntensityLabel, "The base intensity for velocity-based collisions. (Idle intensity)");
             // 
             // collidersMinIntensityInput
@@ -343,21 +359,10 @@
             collidersMinIntensityInput.TabIndex = 8;
             helpToolTip.SetToolTip(collidersMinIntensityInput, "The base intensity for velocity-based collisions. (Idle intensity)");
             // 
-            // collidersUseVelocityCheckbox
-            // 
-            collidersUseVelocityCheckbox.AutoSize = true;
-            collidersUseVelocityCheckbox.Location = new Point(274, 0);
-            collidersUseVelocityCheckbox.Name = "collidersUseVelocityCheckbox";
-            collidersUseVelocityCheckbox.Size = new Size(68, 19);
-            collidersUseVelocityCheckbox.TabIndex = 3;
-            collidersUseVelocityCheckbox.Text = "Enabled";
-            helpToolTip.SetToolTip(collidersUseVelocityCheckbox, "Enables velocity-based intensity on collision.\r\nThe velocity is calculated using the distance to the center of the collider.");
-            collidersUseVelocityCheckbox.UseVisualStyleBackColor = true;
-            // 
             // collidersAllowContinuousCheckbox
             // 
             collidersAllowContinuousCheckbox.AutoSize = true;
-            collidersAllowContinuousCheckbox.Location = new Point(6, 22);
+            collidersAllowContinuousCheckbox.Location = new Point(10, 22);
             collidersAllowContinuousCheckbox.Name = "collidersAllowContinuousCheckbox";
             collidersAllowContinuousCheckbox.Size = new Size(195, 19);
             collidersAllowContinuousCheckbox.TabIndex = 4;
@@ -391,6 +396,7 @@
             // velocitySettingsPage
             // 
             velocitySettingsPage.Controls.Add(notVeryHelpfulLabel);
+            velocitySettingsPage.Controls.Add(velocityImpactEnabledCheckbox);
             velocitySettingsPage.Controls.Add(velocitySpeedCapLabel);
             velocitySettingsPage.Controls.Add(velocityPriorityLabel);
             velocitySettingsPage.Controls.Add(velocitySpeedCapInput);
@@ -422,6 +428,19 @@
             notVeryHelpfulLabel.TabIndex = 16;
             notVeryHelpfulLabel.Text = "No additional setup required!";
             helpToolTip.SetToolTip(notVeryHelpfulLabel, "This effect uses built-in VRChat OSC messages.\r\nAs a result it will work with any Avatar without any setup. :)");
+            // 
+            // velocityImpactEnabledCheckbox
+            // 
+            velocityImpactEnabledCheckbox.AutoSize = true;
+            velocityImpactEnabledCheckbox.BackColor = SystemColors.ControlLightLight;
+            velocityImpactEnabledCheckbox.Location = new Point(16, 188);
+            velocityImpactEnabledCheckbox.Name = "velocityImpactEnabledCheckbox";
+            velocityImpactEnabledCheckbox.Size = new Size(116, 19);
+            velocityImpactEnabledCheckbox.TabIndex = 3;
+            velocityImpactEnabledCheckbox.Text = "Impact sensation";
+            helpToolTip.SetToolTip(velocityImpactEnabledCheckbox, "Enables impact sensation on sudden deceleration.\r\nThis effect plays whenever the speed falls under the Min. velocity within a second after moving faster than the Min. impact velocity.");
+            velocityImpactEnabledCheckbox.UseVisualStyleBackColor = false;
+            velocityImpactEnabledCheckbox.CheckedChanged += VelocityImpactEnabledCheckbox_CheckedChanged;
             // 
             // velocitySpeedCapLabel
             // 
@@ -474,11 +493,10 @@
             // velocityImpactGroup
             // 
             velocityImpactGroup.Controls.Add(velocityMinImpactLabel);
-            velocityImpactGroup.Controls.Add(velocityImpactEnabledCheckbox);
             velocityImpactGroup.Controls.Add(velocityMinImpactInput);
-            velocityImpactGroup.Location = new Point(6, 165);
+            velocityImpactGroup.Location = new Point(6, 188);
             velocityImpactGroup.Name = "velocityImpactGroup";
-            velocityImpactGroup.Size = new Size(345, 75);
+            velocityImpactGroup.Size = new Size(345, 52);
             velocityImpactGroup.TabIndex = 12;
             velocityImpactGroup.TabStop = false;
             velocityImpactGroup.Text = "Impact";
@@ -486,28 +504,17 @@
             // velocityMinImpactLabel
             // 
             velocityMinImpactLabel.AutoSize = true;
-            velocityMinImpactLabel.Location = new Point(6, 44);
+            velocityMinImpactLabel.Location = new Point(6, 22);
             velocityMinImpactLabel.Name = "velocityMinImpactLabel";
             velocityMinImpactLabel.Size = new Size(147, 15);
             velocityMinImpactLabel.TabIndex = 11;
             velocityMinImpactLabel.Text = "Min. impact velocity (m/s)";
             helpToolTip.SetToolTip(velocityMinImpactLabel, "Minimum velocity to reach to trigger the impact effect on deceleration");
             // 
-            // velocityImpactEnabledCheckbox
-            // 
-            velocityImpactEnabledCheckbox.AutoSize = true;
-            velocityImpactEnabledCheckbox.Location = new Point(6, 22);
-            velocityImpactEnabledCheckbox.Name = "velocityImpactEnabledCheckbox";
-            velocityImpactEnabledCheckbox.Size = new Size(68, 19);
-            velocityImpactEnabledCheckbox.TabIndex = 3;
-            velocityImpactEnabledCheckbox.Text = "Enabled";
-            helpToolTip.SetToolTip(velocityImpactEnabledCheckbox, "Enables impact sensation on sudden deceleration.\r\nThis effect plays whenever the speed falls under the Min. velocity within a second after moving faster than the Min. impact velocity.");
-            velocityImpactEnabledCheckbox.UseVisualStyleBackColor = true;
-            // 
             // velocityMinImpactInput
             // 
             velocityMinImpactInput.DecimalPlaces = 2;
-            velocityMinImpactInput.Location = new Point(247, 41);
+            velocityMinImpactInput.Location = new Point(250, 19);
             velocityMinImpactInput.Name = "velocityMinImpactInput";
             velocityMinImpactInput.Size = new Size(89, 23);
             velocityMinImpactInput.TabIndex = 10;
@@ -1451,6 +1458,6 @@
         private Label owiEnabledSensationsLabel;
         private Button owiConfigureSensationsButton;
         private NumericUpDown collidersSpeedDecayInput;
-        private Label collidersSpeedDecayLabel;
+        private CheckBox collidersSpeedDecayCheckbox;
     }
 }

@@ -521,6 +521,11 @@ namespace OWOVRC.UI
             collidersMinIntensityInput.Text = collidersSettings.MinIntensity.ToString();
             collidersSpeedMultiplierInput.Text = collidersSettings.SpeedMultiplier.ToString();
             collidersFrequencyInput.Text = collidersSettings.Frequency.ToString();
+            collidersSpeedDecayCheckbox.Checked = collidersSettings.DecayEnabled;
+            collidersSpeedDecayInput.Value = collidersSettings.DecayTime;
+
+            collidersSpeedDecayInput.Enabled = collidersSpeedDecayCheckbox.Checked;
+            velocityBasedGroupBox.Enabled = collidersUseVelocityCheckbox.Checked;
         }
 
         private void UpdateVelocityEffectSettings()
@@ -641,7 +646,8 @@ namespace OWOVRC.UI
             collidersSettings.Frequency = (int)collidersFrequencyInput.Value;
 
             // Decay Factor
-            collidersSettings.DecayFactor = (float)collidersSpeedDecayInput.Value;
+            collidersSettings.DecayEnabled = collidersSpeedDecayCheckbox.Checked;
+            collidersSettings.DecayTime = (int)collidersSpeedDecayInput.Value;
 
             collidersSettings.SaveToFile();
         }
@@ -1019,6 +1025,21 @@ namespace OWOVRC.UI
                 form.ShowDialog();
                 owiSettings.SaveToFile();
             }
+        }
+
+        private void CollidersSpeedDecayCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            collidersSpeedDecayInput.Enabled = collidersSpeedDecayCheckbox.Checked;
+        }
+
+        private void CollidersUseVelocityCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            velocityBasedGroupBox.Enabled = collidersUseVelocityCheckbox.Checked;
+        }
+
+        private void VelocityImpactEnabledCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            velocityImpactGroup.Enabled = velocityImpactEnabledCheckbox.Checked;
         }
     }
 }
