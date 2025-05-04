@@ -574,6 +574,7 @@ namespace OWOVRC.UI
             uiUpdateTimer.Stop();
 
             // Stop logging
+            Log.Information("Form closing, disposing logger..");
             Log.CloseAndFlush();
 
             // Remove events

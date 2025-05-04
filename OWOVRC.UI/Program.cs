@@ -1,8 +1,6 @@
 using OWOVRC.Classes;
 using OWOVRC.Classes.Helpers;
-using OWOVRC.UI.Classes;
 using Serilog.Core;
-using Serilog.Events;
 using System.Runtime.InteropServices;
 
 namespace OWOVRC.UI
