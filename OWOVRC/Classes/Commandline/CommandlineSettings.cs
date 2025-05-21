@@ -2,14 +2,14 @@
 using Serilog;
 using Serilog.Core;
 
-namespace OWOVRC.Classes
+namespace OWOVRC.Classes.Commandline
 {
     public static class CommandlineSettings
     {
-        public static CommandlineParser ProcessCommandlineArgs(LoggingLevelSwitch logLevelSwitch)
+        public static CommandlineArgs ParseAndApply(LoggingLevelSwitch logLevelSwitch)
         {
             {
-                CommandlineParser args = new(Environment.GetCommandLineArgs());
+                CommandlineArgs args = CommandlineParser.Parse(Environment.GetCommandLineArgs());
 
                 // CPU affinity
                 if (args.CpuAffinity != null)

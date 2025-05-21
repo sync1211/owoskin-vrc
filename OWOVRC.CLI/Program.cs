@@ -1,4 +1,4 @@
-﻿using OWOVRC.Classes;
+﻿using OWOVRC.Classes.Commandline;
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OSC;
@@ -17,7 +17,7 @@ namespace OWOVRC.CLI
             LoggingLevelSwitch logLevelSwitch = Classes.Logging.SetUpLogger();
 
             // Parse commandline switches
-            CommandlineSettings.ProcessCommandlineArgs(logLevelSwitch);
+            CommandlineSettings.ParseAndApply(logLevelSwitch);
 
             // Check if running as admin
             //NOTE: The point of the CLI version is to run unattended / as part of a script, so waiting

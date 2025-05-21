@@ -4,9 +4,9 @@ using Serilog.Events;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace OWOVRC.Classes
+namespace OWOVRC.Classes.Commandline
 {
-    public class CommandlineParser
+    public static class CommandlineParser
     {
         private const string AUTOSTART_SWITCH = "--start";
         private const string CPU_AFFINITY_ARG = "--affinity=";
@@ -14,12 +14,7 @@ namespace OWOVRC.Classes
         private const string PROCESS_PRIORITY_ARG = "--process-priority=";
         private const string LOG_LEVEL_ARG = "--log-level=";
 
-        public readonly bool Autostart;
-        public readonly nint? CpuAffinity;
-        public readonly ProcessPriorityClass? Priority;
-        public readonly LogEventLevel? LogLevel;
-
-        private readonly ProcessPriorityClass[] priorityClasses =
+        private static readonly ProcessPriorityClass[] priorityClasses =
         [
             ProcessPriorityClass.Idle,        // -2
             ProcessPriorityClass.BelowNormal, // -1
@@ -29,14 +24,16 @@ namespace OWOVRC.Classes
          // ProcessPriorityClass.RealTime     // 3 (shouldn't be used)
         ];
 
-        private readonly Dictionary<string, LogEventLevel> LogLevelMap = Logging.Levels
+        private static readonly Dictionary<string, LogEventLevel> LogLevelMap = Logging.Levels
             .ToDictionary(
                 level => level.ToString().ToLower(),
                 level => level
             );
 
-        public CommandlineParser(string[] args)
+        public static CommandlineArgs Parse(string[] args)
         {
+            CommandlineArgs options = new();
+
             for (int i = 0; i < args.Length; i++)
             {
                 string arg = args[i];
@@ -44,7 +41,7 @@ namespace OWOVRC.Classes
                 // Autostart
                 if (arg.Equals(AUTOSTART_SWITCH, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    Autostart = true;
+                    options.Autostart = true;
                 }
 
                 // CPU affinity
@@ -57,7 +54,7 @@ namespace OWOVRC.Classes
                         continue;
                     }
 
-                    CpuAffinity = new nint(affinity);
+                    options.CpuAffinity = new nint(affinity);
                 }
 
                 // CPU affinity (inverted)
@@ -70,13 +67,13 @@ namespace OWOVRC.Classes
                         continue;
                     }
 
-                    if (CpuAffinity != null)
+                    if (options.CpuAffinity != null)
                     {
-                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg:X}", CpuAffinity);
+                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg:X}", options.CpuAffinity);
                     }
 
-                    CpuAffinity = CPUHelper.InvertAffinityValue(affinity);
-                    Log.Information("VRChat's CPU affinity is {affinity:X}, setting own affinity to {invertedAffinity:X}", affinity, CpuAffinity);
+                    options.CpuAffinity = CPUHelper.InvertAffinityValue(affinity);
+                    Log.Information("VRChat's CPU affinity is {affinity:X}, setting own affinity to {invertedAffinity:X}", affinity, options.CpuAffinity);
                 }
 
                 // Process priority
@@ -96,12 +93,12 @@ namespace OWOVRC.Classes
                         continue;
                     }
 
-                    if (CpuAffinity != null)
+                    if (options.CpuAffinity != null)
                     {
-                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg:X}", CpuAffinity);
+                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg:X}", options.CpuAffinity);
                     }
 
-                    Priority = priorityClass.Value;
+                    options.Priority = priorityClass.Value;
                 }
 
                 // Log level
@@ -113,16 +110,18 @@ namespace OWOVRC.Classes
                         Log.Error("Invalid log level value: {arg}", argValue);
                         continue;
                     }
-                    LogLevel = logLevel;
+                    options.LogLevel = logLevel;
                 }
                 else
                 {
                     Log.Warning("Unknown commandline argument: {arg}", arg);
                 }
             }
+
+            return options;
         }
 
-        private ProcessPriorityClass? IntToPriorityClass(int priorityId)
+        private static ProcessPriorityClass? IntToPriorityClass(int priorityId)
         {
             if (priorityId < -2 || priorityId > 2)
             {

@@ -1,4 +1,4 @@
-using OWOVRC.Classes;
+using OWOVRC.Classes.Commandline;
 using OWOVRC.Classes.Helpers;
 using Serilog.Core;
 using System.Runtime.InteropServices;
@@ -26,7 +26,7 @@ namespace OWOVRC.UI
             LoggingLevelSwitch logLevelSwitch = Classes.Logging.SetUpLogger();
 
             // Parse commandline switches
-            CommandlineParser args = CommandlineSettings.ProcessCommandlineArgs(logLevelSwitch);
+            CommandlineArgs args = CommandlineSettings.ParseAndApply(logLevelSwitch);
 
             // Admin detection
             if (AdminDetection.IsRunningAsAdmin())

@@ -1,4 +1,5 @@
 ﻿using OWOVRC.Classes;
+using OWOVRC.Classes.Commandline;
 using OWOVRC.Classes.Helpers;
 using Serilog.Events;
 using System.Diagnostics;
@@ -25,23 +26,23 @@ namespace OWOVRC.Test.Classes
         [DataRow(new string[] { "--log-level=Informatio_n" }, false, null, null, null)]
         public void TestParseArguments(string[] args, bool autostart, int? affinity, ProcessPriorityClass? priority, LogEventLevel? logLevel)
         {
-           CommandlineParser parser = new(args);
+            CommandlineArgs parsedArgs = CommandlineParser.Parse(args);
 
-            Assert.AreEqual(autostart, parser.Autostart);
-            Assert.AreEqual(affinity, parser.CpuAffinity);
-            Assert.AreEqual(priority, parser.Priority);
-            Assert.AreEqual(logLevel, parser.LogLevel);
+            Assert.AreEqual(autostart, parsedArgs.Autostart);
+            Assert.AreEqual(affinity, parsedArgs.CpuAffinity);
+            Assert.AreEqual(priority, parsedArgs.Priority);
+            Assert.AreEqual(logLevel, parsedArgs.LogLevel);
         }
 
         [TestMethod] //NOTE: Separate test as the inverse is dependent on the core count of the machine executing the test.
         public void TestParseVrcAffinity()
         {
             string[] args = ["--start", "--affinity=0xF00", "--vrc-affinity=0x2"]; // 0x2 -> Core #2 (assuming at least 2 cores for compatbility with GitHub Actions)
-            CommandlineParser parser = new(args);
+            CommandlineArgs parsedArgs = CommandlineParser.Parse(args);
 
-            Assert.IsTrue(parser.Autostart);
-            Assert.AreEqual(CPUHelper.InvertAffinityValue(0x2), parser.CpuAffinity);
-            Assert.IsNull(parser.Priority);
+            Assert.IsTrue(parsedArgs.Autostart);
+            Assert.AreEqual(CPUHelper.InvertAffinityValue(0x2), parsedArgs.CpuAffinity);
+            Assert.IsNull(parsedArgs.Priority);
         }
     }
 }
