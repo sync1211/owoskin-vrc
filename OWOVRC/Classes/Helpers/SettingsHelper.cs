@@ -70,7 +70,10 @@ namespace OWOVRC.Classes.Helpers
 
             using (FileStream fileStream = new(settingsFilePath, FileMode.Create, FileAccess.Write))
             {
-                JsonSerializer.Serialize(new Utf8JsonWriter(fileStream), settings, jsonTypeInfo);
+                using (Utf8JsonWriter writer = new(fileStream))
+                {
+                    JsonSerializer.Serialize(writer, settings, jsonTypeInfo);
+                }
             }
 
             Log.Information("{0} settings saved", displayName);
