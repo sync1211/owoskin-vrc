@@ -134,7 +134,7 @@ namespace OWOVRC.Classes.OWOSuit
             AdvancedSensationStreamInstance? selectedSensation = sensations.GetValueOrDefault(name);
             if (selectedSensation == null)
             {
-                Log.Warning("The sensation {0} could not be found!", name);
+                Log.Debug("The sensation {0} is not running!", name);
                 return;
             }
 
