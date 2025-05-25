@@ -1,11 +1,13 @@
 ﻿using Microsoft.VisualBasic;
 using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Helpers;
+using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
 using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace OWOVRC.UI.Forms
 {
@@ -16,14 +18,83 @@ namespace OWOVRC.UI.Forms
         private bool showCollisionDialog = true;
         private const StringComparison stringComparison = StringComparison.CurrentCulture;
 
-        public PresetsForm(OSCPresetsSettings settings)
+        private const string PLAY_BUTTON_COLUMN_NAME = "PlaySensationButtonColumn";
+        private readonly OWOHelper? owo;
+
+        public PresetsForm(OSCPresetsSettings settings, OWOHelper? owo = null)
         {
             InitializeComponent();
+            this.owo = owo;
             this.settings = settings;
             presets = new([.. settings.Presets.Values]);
 
             dataGridView1.DataSource = presets;
             presets.ListChanged += OnListChange;
+            AddTestButtonColumn();
+        }
+
+        private void AddTestButtonColumn()
+        {
+            if (owo == null)
+            {
+                Log.Information("PresetsForm has been created without OWOHelper. Senastion play buttons will not be added!");
+                return;
+            }
+
+            string buttonText = OWOHelper.IsConnected ? "Preview" : "unavailable";
+
+            DataGridViewButtonColumn buttonColumn = new()
+            {
+                HeaderText = "Preview",
+                Text = buttonText,
+                UseColumnTextForButtonValue = true,
+                Name = PLAY_BUTTON_COLUMN_NAME,
+                Width = 80,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.None,
+                Resizable = DataGridViewTriState.False,
+            };
+
+            dataGridView1.Columns.Add(buttonColumn);
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex > dataGridView1.Columns.Count || e.ColumnIndex < 0 || e.RowIndex < 0)
+            {
+                return;
+            }
+
+            DataGridViewColumn column = dataGridView1.Columns[e.ColumnIndex];
+
+            if (!column.Name.Equals(PLAY_BUTTON_COLUMN_NAME))
+            {
+                return;
+            }
+
+            TestSensation(presets[e.RowIndex]);
+        }
+
+        private void TestSensation(OSCSensationPreset preset)
+        {
+            if (owo == null)
+            {
+                Log.Warning("Cannot test sensation: OWOHelper is not initialized! (This should not be possible, please file an issue on GitHub!)");
+                return;
+            }
+
+            if (!OWOHelper.IsConnected)
+            {
+                Log.Warning("Cannot test sensation: OWO is not connected!");
+                MessageBox.Show(
+                    $"Please connect to OWO to preview presets.",
+                    "OWO not connected!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return;
+            }
+
+            owo.AddSensation(preset.Name, preset.SensationObject);
         }
 
         private void OnListChange(object? sender, EventArgs args)

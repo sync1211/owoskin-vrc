@@ -729,7 +729,7 @@ namespace OWOVRC.UI
 
         private void OpenOscPresetsFormButton_Click(object sender, EventArgs e)
         {
-            using (PresetsForm presetsForm = new(oscPresetsSettings))
+            using (PresetsForm presetsForm = new(oscPresetsSettings, owo))
             {
                 DialogResult result = presetsForm.ShowDialog();
 
