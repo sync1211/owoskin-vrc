@@ -20,7 +20,8 @@ namespace OWOVRC.Classes.Effects
         private readonly System.Timers.Timer timer;
 
         // Param base
-        private const string ADDRESS_BASE = "owo_suit_";
+        private const string OWO_ADDRESS_BASE = "owo_suit_";
+        private const string BHAPTICS_ADDRESS_BASE = "bosc_v1_";
 
         // Dictionary to keep track of active haptic effects
         private readonly ConcurrentDictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
@@ -55,13 +56,13 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            // Non-OWO message
-            if (!message.Address.StartsWith(ADDRESS_BASE))
+            // Non-OWO or bHaptics message
+            string muscle = message.Address.ToLower();
+            if (!(muscle.StartsWith(OWO_ADDRESS_BASE) || muscle.StartsWith(BHAPTICS_ADDRESS_BASE)))
             {
                 return;
             }
 
-            string muscle = message.Address;
             float proximity = OSCHelpers.GetFloatValueFromMessage(message);
 
             if (proximity > 0)
@@ -151,7 +152,7 @@ namespace OWOVRC.Classes.Effects
             for (int i = 0; i < muscleCollisionData.Length; i++)
             {
                 MuscleCollisionData muscleData = muscleCollisionData[i];
-                if (!OWOMuscles.Muscles.TryGetValue(muscleData.Name.ToLower(), out Muscle muscle))
+                if (!OWOMuscles.Muscles.TryGetValue(muscleData.Name, out Muscle muscle))
                 {
                     Log.Warning(
                         "Muscle '{muscle}' not found in muscle list. Skipping sensation.",
