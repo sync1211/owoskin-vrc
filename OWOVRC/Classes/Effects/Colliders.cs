@@ -109,6 +109,7 @@ namespace OWOVRC.Classes.Effects
             if (timediff < Settings.MaxTimeDiff)
             {
                 muscleData.VelocityMultiplier = speed * (Settings.SpeedMultiplier * 100);
+                muscleData.AddDecay(Settings.DecayCycleCount);
             }
             activeMuscles[muscle] = muscleData;
         }
@@ -170,7 +171,7 @@ namespace OWOVRC.Classes.Effects
 
                 if (Settings.UseVelocity)
                 {
-                    float increase = muscleData.VelocityMultiplier * Settings.MinIntensity;
+                    float increase = muscleData.VelocityMultiplier * Math.Max(Settings.MinIntensity, 1);
                     Log.Debug("Increase: {inc}", increase);
                     intensity = Settings.MinIntensity + (int)increase;
                     intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
@@ -200,15 +201,17 @@ namespace OWOVRC.Classes.Effects
             }
         }
 
+
         public void OnTimerElapsed(object? sender, ElapsedEventArgs e)
         {
             UpdateHaptics();
 
-            // Disable velocity-based haptics until the next time we receive a message
+            // Apply decay to velocity-based multiplier
+            //NOTE: The decayFactor needs to be determined when VelocityMultiplier is set
             for (int i = 0; i < activeMuscles.Count; i++)
             {
                 MuscleCollisionData muscleData = activeMuscles.ElementAt(i).Value;
-                muscleData.VelocityMultiplier = 0;
+                muscleData.ApplyDecay();
             }
         }
 
