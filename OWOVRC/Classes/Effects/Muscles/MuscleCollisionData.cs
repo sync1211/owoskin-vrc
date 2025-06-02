@@ -1,6 +1,6 @@
 ﻿namespace OWOVRC.Classes.Effects.Muscles
 {
-    public struct MuscleCollisionData
+    public class MuscleCollisionData
     {
         public string Name { get; private set; }
         public float Proximity { get; private set; }
