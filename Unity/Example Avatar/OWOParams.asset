@@ -69,52 +69,52 @@ MonoBehaviour:
     saved: 1
     defaultValue: 0
     networkSynced: 1
-  - name: owo_suit_pectoral_r
+  - name: owo_suit_Pectoral_R
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_pectoral_l
+  - name: owo_suit_Pectoral_L
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_abdominal_r
+  - name: owo_suit_Abdominal_R
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_abdominal_l
+  - name: owo_suit_Abdominal_l
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_arm_r
+  - name: owo_suit_Arm_R
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_arm_l
+  - name: owo_suit_Arm_L
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_dorsal_r
+  - name: owo_suit_Dorsal_R
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_dorsal_l
+  - name: owo_suit_Dorsal_L
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_lumbar_r
+  - name: owo_suit_Lumbar_R
     valueType: 1
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_lumbar_l
+  - name: owo_suit_Lumbar_L
     valueType: 1
     saved: 0
     defaultValue: 0
