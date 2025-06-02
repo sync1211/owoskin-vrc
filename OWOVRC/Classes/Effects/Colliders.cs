@@ -151,8 +151,7 @@ namespace OWOVRC.Classes.Effects
             for (int i = 0; i < muscleCollisionData.Length; i++)
             {
                 MuscleCollisionData muscleData = muscleCollisionData[i];
-                Muscle? muscle = OWOMuscles.Muscles.GetValueOrDefault(muscleData.Name.ToLower());
-                if (muscle == null)
+                if (!OWOMuscles.Muscles.TryGetValue(muscleData.Name.ToLower(), out Muscle muscle))
                 {
                     Log.Warning(
                         "Muscle '{muscle}' not found in muscle list. Skipping sensation.",
@@ -163,7 +162,7 @@ namespace OWOVRC.Classes.Effects
 
                 // Velocity-based intensity
                 int intensity = 100;
-                if (Settings.MuscleIntensities.TryGetValue(muscle.Value.id, out int baseIntensity))
+                if (Settings.MuscleIntensities.TryGetValue(muscle.id, out int baseIntensity))
                 {
                     intensity = baseIntensity;
                 }
@@ -184,7 +183,7 @@ namespace OWOVRC.Classes.Effects
                     muscleData.VelocityMultiplier
                 );
 
-                musclesScaled[i] = muscle.Value.WithIntensity(intensity);
+                musclesScaled[i] = muscle.WithIntensity(intensity);
             }
 
             Sensation sensation = Settings.GetSensation();
