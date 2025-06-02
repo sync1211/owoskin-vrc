@@ -87,7 +87,7 @@ namespace OWOVRC.Classes.Effects
             MuscleCollisionData muscleData = new(muscle, proxmimity);
 
             // Muscle does not exist yet, skip velocity calculation
-            if (!activeMuscles.TryGetValue(muscle, out MuscleCollisionData muscleDataPrev))
+            if (!activeMuscles.TryGetValue(muscle, out MuscleCollisionData? muscleDataPrev) || muscleDataPrev == null)
             {
                 if (!activeMuscles.TryAdd(muscle, muscleData))
                 {
@@ -119,7 +119,7 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.ContainsKey(muscle))
             {
                 Log.Debug("Stop: {muscle}", muscle);
-                if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData _))
+                if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData? _))
                 {
                     Log.Warning("Muscle '{muscle}' could not be from active muscles.", muscle);
                 }
@@ -200,7 +200,6 @@ namespace OWOVRC.Classes.Effects
                 owo.AddLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
             }
         }
-
 
         public void OnTimerElapsed(object? sender, ElapsedEventArgs e)
         {
