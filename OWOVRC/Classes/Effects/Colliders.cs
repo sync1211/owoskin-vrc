@@ -84,9 +84,9 @@ namespace OWOVRC.Classes.Effects
             }
 
             MuscleCollisionData muscleData = new(muscle, proxmimity);
-            MuscleCollisionData? valuePrev = activeMuscles.GetValueOrDefault(muscle);
 
-            if (valuePrev == null)
+            // Muscle does not exist yet, skip velocity calculation
+            if (!activeMuscles.TryGetValue(muscle, out MuscleCollisionData muscleDataPrev))
             {
                 if (!activeMuscles.TryAdd(muscle, muscleData))
                 {
@@ -98,9 +98,9 @@ namespace OWOVRC.Classes.Effects
             // Calculate speed
             //NOTE: I am using a delta of the proximity value as well as a time delta from the last received message to calculate the speed
             //      This is not very ideal, but it's the best I've got so far
-            float distance = Math.Abs(valuePrev.Proximity - proxmimity);
+            float distance = Math.Abs(muscleDataPrev.Proximity - proxmimity);
 
-            TimeSpan timediff = muscleData.LastUpdate - valuePrev.LastUpdate;
+            TimeSpan timediff = muscleData.LastUpdate - muscleDataPrev.LastUpdate;
 
             float time = (float)timediff.TotalMilliseconds;
             float speed = distance / time;
@@ -117,7 +117,7 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.ContainsKey(muscle))
             {
                 Log.Debug("Stop: {muscle}", muscle);
-                if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData? _))
+                if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData _))
                 {
                     Log.Warning("Muscle '{muscle}' could not be from active muscles.", muscle);
                 }

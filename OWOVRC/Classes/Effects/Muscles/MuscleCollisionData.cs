@@ -1,6 +1,6 @@
 ﻿namespace OWOVRC.Classes.Effects.Muscles
 {
-    public class MuscleCollisionData
+    public struct MuscleCollisionData
     {
         public string Name { get; private set; }
         public float Proximity { get; private set; }
@@ -14,6 +14,5 @@
             LastUpdate = DateTime.Now;
             VelocityMultiplier = 0;
         }
-
     }
 }

@@ -3,7 +3,7 @@ using Serilog.Events;
 
 namespace OWOVRC.Classes.Commandline
 {
-    public class CommandlineArgs
+    public struct CommandlineArgs
     {
         public bool Autostart { get; internal set; }
         public nint? CpuAffinity { get; internal set; }
