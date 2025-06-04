@@ -1,6 +1,6 @@
 ﻿namespace OWOVRC.Audio.Classes
 {
-    public class FrequencyRange
+    public struct FrequencyRange
     {
         public readonly int Start;
         public readonly int End;
