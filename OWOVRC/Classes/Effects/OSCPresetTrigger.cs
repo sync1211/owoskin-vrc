@@ -73,6 +73,10 @@ namespace OWOVRC.Classes.Effects
             {
                 muscles = [muscle];
             }
+            else if (preset.SensationObject is SensationWithMuscles sensationWithMuscles && sensationWithMuscles.Muscles.Length > 0)
+            {
+                muscles = sensationWithMuscles.muscles;
+            }
             else
             {
                 muscles = Muscle.All;

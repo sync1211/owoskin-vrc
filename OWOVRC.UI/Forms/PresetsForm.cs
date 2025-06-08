@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using OWOGame;
 using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OWOSuit;
@@ -94,7 +95,25 @@ namespace OWOVRC.UI.Forms
                 return;
             }
 
-            owo.AddSensation(preset.Name, preset.SensationObject);
+            // Apply intensity
+            Muscle[] muscles = Muscle.All;
+            if (preset.SensationObject is SensationWithMuscles sensationWithMuscles)
+            {
+                muscles = new Muscle[](sensationWithMuscles.muscles.Length);
+                for (int i = 0; i < muscles.Length; i++)
+                {
+                    muscles[i] = sensationWithMuscles.muscles[i].WithIntensity(preset.Intensity);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < muscles.Length; i++)
+                {
+                    muscles[i] = muscles[i].WithIntensity(preset.Intensity);
+                }
+            }
+
+            owo.AddSensation(preset.Name, preset.SensationObject, muscles);
         }
 
         private void OnListChange(object? sender, EventArgs args)
