@@ -58,7 +58,7 @@ namespace OWOVRC.UI.Forms
             dataGridView1.Columns.Add(buttonColumn);
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex > dataGridView1.Columns.Count || e.ColumnIndex < 0 || e.RowIndex < 0)
             {
@@ -87,7 +87,7 @@ namespace OWOVRC.UI.Forms
             {
                 Log.Warning("Cannot test sensation: OWO is not connected!");
                 MessageBox.Show(
-                    $"Please connect to OWO to preview presets.",
+                    "Please connect to OWO to preview presets.",
                     "OWO not connected!",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
@@ -99,7 +99,7 @@ namespace OWOVRC.UI.Forms
             Muscle[] muscles = Muscle.All;
             if (preset.SensationObject is SensationWithMuscles sensationWithMuscles)
             {
-                muscles = new Muscle[](sensationWithMuscles.muscles.Length);
+                muscles = new Muscle[sensationWithMuscles.muscles.Length];
                 for (int i = 0; i < muscles.Length; i++)
                 {
                     muscles[i] = sensationWithMuscles.muscles[i].WithIntensity(preset.Intensity);
@@ -136,7 +136,6 @@ namespace OWOVRC.UI.Forms
                 Multiselect = true
             })
             {
-
                 DialogResult result = openFileDialog.ShowDialog();
                 if (result != DialogResult.OK)
                 {
