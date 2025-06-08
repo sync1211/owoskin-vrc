@@ -73,16 +73,25 @@ namespace OWOVRC.Classes.Effects
             {
                 muscles = [muscle];
             }
-            else if (preset.SensationObject is SensationWithMuscles sensationWithMuscles && sensationWithMuscles.muscles.Length > 0)
-            {
-                muscles = sensationWithMuscles.muscles;
-            }
             else
             {
-                muscles = Muscle.All;
+                muscles = GetMusclesFromSensation(preset.SensationObject);
             }
 
             return preset;
+        }
+
+        public static Muscle[] GetMusclesFromSensation(Sensation sensation)
+        {
+            if (sensation is SensationWithMuscles sensationWithMuscles)
+            {
+                return sensationWithMuscles.muscles;
+            }
+            else if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
+            {
+                return refSensationWithMuscles.muscles;
+            }
+            return Muscle.All;
         }
 
         public void ProcessMessage(OSCMessage message)
