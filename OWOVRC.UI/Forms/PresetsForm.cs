@@ -427,7 +427,7 @@ namespace OWOVRC.UI.Forms
 
                 cell.ErrorText = String.Empty;
 
-                string data = cell.Value?.ToString() ?? "";
+                string? data = cell.Value?.ToString();
                 if (String.IsNullOrEmpty(data))
                 {
                     cell.ErrorText = "Name must not be empty!";
