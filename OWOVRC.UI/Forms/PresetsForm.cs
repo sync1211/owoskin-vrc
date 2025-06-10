@@ -308,10 +308,12 @@ namespace OWOVRC.UI.Forms
             }
 
             // Check for collisions
-            List<string> names = [];
-            foreach (OSCSensationPreset preset in presets)
+            HashSet<string> names = [];
+            for (int i = 0; i < presets.Count; i++)
             {
-                if (names.Contains(preset.Name))
+                OSCSensationPreset preset = presets[i];
+
+                if (!names.Add(preset.Name))
                 {
                     MessageBox.Show(
                         $"The preset {preset.Name} is listed more than once!{Environment.NewLine}Preset names must be unique!",
@@ -319,13 +321,14 @@ namespace OWOVRC.UI.Forms
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
+                    return;
                 }
-                names.Add(preset.Name);
             }
 
             settings.Presets.Clear();
-            foreach (OSCSensationPreset preset in presets)
+            for (int i = 0; i < presets.Count; i++)
             {
+                OSCSensationPreset preset = presets[i];
                 settings.Presets.Add(preset.Name, preset);
             }
 
