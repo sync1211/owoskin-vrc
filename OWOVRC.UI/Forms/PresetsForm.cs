@@ -206,7 +206,6 @@ namespace OWOVRC.UI.Forms
 
             foreach (OSCSensationPreset preset in importedSettings.Presets.Values)
             {
-                preset.Name = preset.Name;
                 presets.Add(preset);
             }
 
