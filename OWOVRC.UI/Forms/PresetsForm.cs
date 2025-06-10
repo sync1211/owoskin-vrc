@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using OWOGame;
+﻿using OWOGame;
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Helpers;
@@ -9,7 +8,6 @@ using OWOVRC.UI.Classes;
 using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace OWOVRC.UI.Forms
 {
@@ -260,14 +258,22 @@ namespace OWOVRC.UI.Forms
                 }
             }
 
-            // Rename by addin a "(<i>)" suffix
-            int i = 1;
-            while (presets.Any((preset) => preset.Name.Equals($"{name} ({i})")))
-            {
-                i++;
-            }
+            // Rename by adding a "(<i>)" suffix
+            return GetNonCollidingName(name, presets, stringComparison);
+        }
 
-            return $"{name} ({i})";
+        public static string GetNonCollidingName(string name, IEnumerable<OSCSensationPreset> presets, StringComparison stringComparison)
+        {
+            // Rename by adding a "(<i>)" suffix
+            int i = 1;
+            string newName;
+            do
+            {
+                newName = $"{name} ({i})";
+                i++;
+            } while (presets.Any((preset) => preset.Name.Equals(newName, stringComparison)));
+
+            return newName;
         }
 
         private bool ImportOWOSensation(string name, string sensationString)
