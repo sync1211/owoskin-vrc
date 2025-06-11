@@ -412,9 +412,20 @@ namespace OWOVRC.UI.Forms
             }
 
             // Delete selected presets
-            for (int i = 0; i < presetsToDelete.Length; i++)
+            try
             {
-                presets.Remove(presetsToDelete[i]);
+                presets.RaiseListChangedEvents = false; // Prevent unnecessary updates
+                for (int i = 0; i < presetsToDelete.Length; i++)
+                {
+                    presets.Remove(presetsToDelete[i]);
+                }
+            }
+            finally
+            {
+                // Re-enable list change events and dispatch change event
+                //NOTE: This will also trigger the change event even if no changed were made!
+                presets.RaiseListChangedEvents = true;
+                presets.ResetBindings();
             }
         }
 
