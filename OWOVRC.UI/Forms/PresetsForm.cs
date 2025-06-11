@@ -106,6 +106,8 @@ namespace OWOVRC.UI.Forms
 
         private void OnListChange(object? sender, EventArgs args)
         {
+            //NOTE: This method may be called after trying to import sensations from a file
+            //      REGARDLESS of whether there were any changes made to the list!
             RefreshCollisionState();
         }
 
@@ -136,46 +138,60 @@ namespace OWOVRC.UI.Forms
 
         private void ImportSensationFileList(string[] fileNames)
         {
-            int sensationsCount = presets.Count;
-            foreach (string filePath in fileNames)
-            {
-                Log.Debug("Importing sensation from file: {file}", filePath);
+            // Disable list change events to prevent unnecessary updates when importing multiple sensations
+            presets.RaiseListChangedEvents = false;
 
-                bool success = false;
-                if (filePath.EndsWith(".owo"))
+            try
+            {
+                int sensationsCount = presets.Count;
+                for (int i = 0; i < fileNames.Length; i++)
                 {
-                    success = ImportOWOSensationFromFile(filePath);
+                    string filePath = fileNames[i];
+                    Log.Debug("Importing sensation from file: {file}", filePath);
+
+                    bool success = false;
+                    if (filePath.EndsWith(".owo"))
+                    {
+                        success = ImportOWOSensationFromFile(filePath);
+                    }
+                    else if (filePath.EndsWith(".json"))
+                    {
+                        success = ImportSensationsFromSettingsFile(filePath);
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"Unsupported file extension:{Environment.NewLine}{filePath}",
+                            "Unsupported file extension",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+
+                    // Abort on error (or user abort)
+                    if (!success)
+                    {
+                        return;
+                    }
                 }
-                else if (filePath.EndsWith(".json"))
-                {
-                    success = ImportSensationsFromSettingsFile(filePath);
-                }
-                else
+
+                // Nothing happened -> inform user to prevent confusion
+                if (presets.Count == sensationsCount)
                 {
                     MessageBox.Show(
-                        $"Unsupported file extension:{Environment.NewLine}{filePath}",
-                        "Unsupported file extension",
+                        "The provided files did not contain any sensations to import!",
+                        "No sensations imported",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
                 }
-
-                // Abort on error (or user abort)
-                if (!success)
-                {
-                    return;
-                }
             }
-
-            // Nothing happened -> inform user to prevent confusion
-            if (presets.Count == sensationsCount)
+            finally
             {
-                MessageBox.Show(
-                    "The provided files did not contain any sensations to import!",
-                    "No sensations imported",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                // Re-enable list change events and dispatch change event
+                //NOTE: This will also trigger the change event even if no changed were made!
+                presets.RaiseListChangedEvents = true;
+                OnListChange(this, EventArgs.Empty);
             }
         }
 
@@ -388,16 +404,17 @@ namespace OWOVRC.UI.Forms
             }
 
             // Get preset objects as the index will change when removing
-            List<OSCSensationPreset> presetsToDelete = [];
-            foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+            OSCSensationPreset[] presetsToDelete = new OSCSensationPreset[dataGridView1.SelectedCells.Count];
+            for (int i = 0; i < presetsToDelete.Length; i++)
             {
-                presetsToDelete.Add(presets[cell.RowIndex]);
+                DataGridViewCell cell = dataGridView1.SelectedCells[i];
+                presetsToDelete[i] = presets[cell.RowIndex];
             }
 
             // Delete selected presets
-            foreach (OSCSensationPreset preset in presetsToDelete)
+            for (int i = 0; i < presetsToDelete.Length; i++)
             {
-                presets.Remove(preset);
+                presets.Remove(presetsToDelete[i]);
             }
         }
 
