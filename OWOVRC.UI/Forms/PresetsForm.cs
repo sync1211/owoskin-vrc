@@ -192,8 +192,6 @@ namespace OWOVRC.UI.Forms
                 //NOTE: This will also trigger the change event even if no changed were made!
                 presets.RaiseListChangedEvents = true;
                 presets.ResetBindings();
-
-                OnListChange(this, EventArgs.Empty);
             }
         }
 
