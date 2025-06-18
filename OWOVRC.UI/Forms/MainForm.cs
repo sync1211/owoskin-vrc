@@ -294,26 +294,19 @@ namespace OWOVRC.UI
         {
             string[] sensationKeys = [.. activeSensations.Keys];
 
-            // Delete removed items
-            for (int i = 0; i < activeSensationList.Count; i++)
-            {
-                string item = activeSensationList[i];
-                if (!sensationKeys.Contains(item))
-                {
-                    activeSensationList.RemoveAt(i);
-                    i--;
-                }
-            }
+            // Disable updates until the list is fully updated
+            activeSensationList.RaiseListChangedEvents = false;
+            activeSensationList.Clear();
 
-            // Add new items
+            // Import running sensations from SensationManager
             for (int i = 0; i < sensationKeys.Length; i++)
             {
-                string item = sensationKeys[i];
-                if (!activeSensationList.Contains(item))
-                {
-                    activeSensationList.Add(item);
-                }
+                activeSensationList.Add(sensationKeys[i]);
             }
+
+            // Trigger list update event
+            activeSensationList.RaiseListChangedEvents = true;
+            activeSensationList.ResetBindings();
         }
 
         private void UpdateASMStatus()
