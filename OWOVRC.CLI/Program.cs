@@ -76,7 +76,7 @@ namespace OWOVRC.CLI
             }
 
             // Set up audio effects
-            Log.Debug("Preparing audio effects...");
+            //Log.Debug("Preparing audio effects...");
             //AudioEffect audio = new(owo, audioSettings);
             //if (audioSettings.Enabled)
             //{
