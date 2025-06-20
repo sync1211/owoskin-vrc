@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using OWOGame;
+using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OWOSuit;
@@ -7,7 +8,6 @@ using OWOVRC.UI.Classes;
 using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace OWOVRC.UI.Forms
 {
@@ -57,7 +57,7 @@ namespace OWOVRC.UI.Forms
             dataGridView1.Columns.Add(buttonColumn);
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex > dataGridView1.Columns.Count || e.ColumnIndex < 0 || e.RowIndex < 0)
             {
@@ -86,7 +86,7 @@ namespace OWOVRC.UI.Forms
             {
                 Log.Warning("Cannot test sensation: OWO is not connected!");
                 MessageBox.Show(
-                    $"Please connect to OWO to preview presets.",
+                    "Please connect to OWO to preview presets.",
                     "OWO not connected!",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
@@ -94,11 +94,20 @@ namespace OWOVRC.UI.Forms
                 return;
             }
 
-            owo.AddSensation(preset.Name, preset.SensationObject);
+            // Apply intensity
+            Muscle[] muscles = OSCPresetTrigger.GetMusclesFromSensation(preset.SensationObject);
+            for (int i = 0; i < muscles.Length; i++)
+            {
+                muscles[i] = muscles[i].WithIntensity(preset.Intensity);
+            }
+
+            owo.AddSensation(preset.Name, preset.SensationObject, muscles);
         }
 
         private void OnListChange(object? sender, EventArgs args)
         {
+            //NOTE: This method may be called after trying to import sensations from a file
+            //      REGARDLESS of whether there were any changes made to the list!
             RefreshCollisionState();
         }
 
@@ -117,7 +126,6 @@ namespace OWOVRC.UI.Forms
                 Multiselect = true
             })
             {
-
                 DialogResult result = openFileDialog.ShowDialog();
                 if (result != DialogResult.OK)
                 {
@@ -130,46 +138,60 @@ namespace OWOVRC.UI.Forms
 
         private void ImportSensationFileList(string[] fileNames)
         {
-            int sensationsCount = presets.Count;
-            foreach (string filePath in fileNames)
-            {
-                Log.Debug("Importing sensation from file: {file}", filePath);
+            // Disable list change events to prevent unnecessary updates when importing multiple sensations
+            presets.RaiseListChangedEvents = false;
 
-                bool success = false;
-                if (filePath.EndsWith(".owo"))
+            try
+            {
+                int sensationsCount = presets.Count;
+                for (int i = 0; i < fileNames.Length; i++)
                 {
-                    success = ImportOWOSensationFromFile(filePath);
+                    string filePath = fileNames[i];
+                    Log.Debug("Importing sensation from file: {file}", filePath);
+
+                    bool success = false;
+                    if (filePath.EndsWith(".owo"))
+                    {
+                        success = ImportOWOSensationFromFile(filePath);
+                    }
+                    else if (filePath.EndsWith(".json"))
+                    {
+                        success = ImportSensationsFromSettingsFile(filePath);
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"Unsupported file extension:{Environment.NewLine}{filePath}",
+                            "Unsupported file extension",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+
+                    // Abort on error (or user abort)
+                    if (!success)
+                    {
+                        return;
+                    }
                 }
-                else if (filePath.EndsWith(".json"))
-                {
-                    success = ImportSensationsFromSettingsFile(filePath);
-                }
-                else
+
+                // Nothing happened -> inform user to prevent confusion
+                if (presets.Count == sensationsCount)
                 {
                     MessageBox.Show(
-                        $"Unsupported file extension:{Environment.NewLine}{filePath}",
-                        "Unsupported file extension",
+                        "The provided files did not contain any sensations to import!",
+                        "No sensations imported",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
                 }
-
-                // Abort on error (or user abort)
-                if (!success)
-                {
-                    return;
-                }
             }
-
-            // Nothing happened -> inform user to prevent confusion
-            if (presets.Count == sensationsCount)
+            finally
             {
-                MessageBox.Show(
-                    "The provided files did not contain any sensations to import!",
-                    "No sensations imported",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                // Re-enable list change events and dispatch change event
+                //NOTE: This will also trigger the change event even if no changed were made!
+                presets.RaiseListChangedEvents = true;
+                presets.ResetBindings();
             }
         }
 
@@ -200,7 +222,6 @@ namespace OWOVRC.UI.Forms
 
             foreach (OSCSensationPreset preset in importedSettings.Presets.Values)
             {
-                preset.Name = preset.Name;
                 presets.Add(preset);
             }
 
@@ -252,14 +273,22 @@ namespace OWOVRC.UI.Forms
                 }
             }
 
-            // Rename by addin a "(<i>)" suffix
-            int i = 1;
-            while (presets.Any((preset) => preset.Name.Equals($"{name} ({i})")))
-            {
-                i++;
-            }
+            // Rename by adding a "(<i>)" suffix
+            return GetNonCollidingName(name, presets, stringComparison);
+        }
 
-            return $"{name} ({i})";
+        public static string GetNonCollidingName(string name, IEnumerable<OSCSensationPreset> presets, StringComparison stringComparison)
+        {
+            // Rename by adding a "(<i>)" suffix
+            int i = 1;
+            string newName;
+            do
+            {
+                newName = $"{name} ({i})";
+                i++;
+            } while (presets.Any((preset) => preset.Name.Equals(newName, stringComparison)));
+
+            return newName;
         }
 
         private bool ImportOWOSensation(string name, string sensationString)
@@ -294,10 +323,12 @@ namespace OWOVRC.UI.Forms
             }
 
             // Check for collisions
-            List<string> names = [];
-            foreach (OSCSensationPreset preset in presets)
+            HashSet<string> names = [];
+            for (int i = 0; i < presets.Count; i++)
             {
-                if (names.Contains(preset.Name))
+                OSCSensationPreset preset = presets[i];
+
+                if (!names.Add(preset.Name))
                 {
                     MessageBox.Show(
                         $"The preset {preset.Name} is listed more than once!{Environment.NewLine}Preset names must be unique!",
@@ -305,13 +336,14 @@ namespace OWOVRC.UI.Forms
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
+                    return;
                 }
-                names.Add(preset.Name);
             }
 
             settings.Presets.Clear();
-            foreach (OSCSensationPreset preset in presets)
+            for (int i = 0; i < presets.Count; i++)
             {
+                OSCSensationPreset preset = presets[i];
                 settings.Presets.Add(preset.Name, preset);
             }
 
@@ -372,16 +404,28 @@ namespace OWOVRC.UI.Forms
             }
 
             // Get preset objects as the index will change when removing
-            List<OSCSensationPreset> presetsToDelete = [];
-            foreach (DataGridViewCell cell in dataGridView1.SelectedCells)
+            OSCSensationPreset[] presetsToDelete = new OSCSensationPreset[dataGridView1.SelectedCells.Count];
+            for (int i = 0; i < presetsToDelete.Length; i++)
             {
-                presetsToDelete.Add(presets[cell.RowIndex]);
+                DataGridViewCell cell = dataGridView1.SelectedCells[i];
+                presetsToDelete[i] = presets[cell.RowIndex];
             }
 
             // Delete selected presets
-            foreach (OSCSensationPreset preset in presetsToDelete)
+            try
             {
-                presets.Remove(preset);
+                presets.RaiseListChangedEvents = false; // Prevent unnecessary updates
+                for (int i = 0; i < presetsToDelete.Length; i++)
+                {
+                    presets.Remove(presetsToDelete[i]);
+                }
+            }
+            finally
+            {
+                // Re-enable list change events and dispatch change event
+                //NOTE: This will also trigger the change event even if no changed were made!
+                presets.RaiseListChangedEvents = true;
+                presets.ResetBindings();
             }
         }
 
@@ -413,7 +457,7 @@ namespace OWOVRC.UI.Forms
 
                 cell.ErrorText = String.Empty;
 
-                string data = cell.Value?.ToString() ?? "";
+                string? data = cell.Value?.ToString();
                 if (String.IsNullOrEmpty(data))
                 {
                     cell.ErrorText = "Name must not be empty!";

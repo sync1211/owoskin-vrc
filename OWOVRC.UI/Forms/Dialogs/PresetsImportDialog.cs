@@ -57,9 +57,9 @@ namespace OWOVRC.UI.Forms.Dialogs
 
         private bool CheckForCollisions()
         {
-            foreach (OSCSensationPreset preset in Presets)
+            for (int i = 0; i < Presets.Count; i++)
             {
-                if (existing.Any(p => p.Name.Equals(preset.Name, stringComparison)))
+                if (existing.Any(p => p.Name.Equals(Presets[i].Name, stringComparison)))
                 {
                     return true;
                 }

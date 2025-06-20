@@ -4,7 +4,7 @@ using OWOVRC.Classes.Helpers;
 using Serilog.Events;
 using System.Diagnostics;
 
-namespace OWOVRC.Test.Classes
+namespace OWOVRC.Test.Classes.Commandline
 {
     [TestClass]
     public class CommandlineParserTest
