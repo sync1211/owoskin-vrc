@@ -590,7 +590,7 @@
             owiSettingsPage.Name = "owiSettingsPage";
             owiSettingsPage.Size = new Size(360, 275);
             owiSettingsPage.TabIndex = 2;
-            owiSettingsPage.Text = "OWI";
+            owiSettingsPage.Text = "World";
             owiSettingsPage.ToolTipText = "OWOWorldIntegration connector";
             owiSettingsPage.UseVisualStyleBackColor = true;
             // 
