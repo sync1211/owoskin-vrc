@@ -2,7 +2,7 @@
 
 namespace OWOVRC.Classes.OSC
 {
-    public class OSCMessage
+    public readonly struct OSCMessage
     {
         public readonly string Address;
         public readonly OscMessageValues Values;
