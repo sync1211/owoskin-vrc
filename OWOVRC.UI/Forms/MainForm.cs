@@ -415,7 +415,7 @@ namespace OWOVRC.UI
 
             // Start OWO connection
             owo.Address = connectionSettings.OWOAddress;
-            Task.Run(StartOWOHelper);
+            _ = Task.Run(StartOWOHelper);
             Log.Information("Started OWOVRC");
 
             IsRunning = true;

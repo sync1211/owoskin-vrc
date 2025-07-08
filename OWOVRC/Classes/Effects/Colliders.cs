@@ -38,7 +38,7 @@ namespace OWOVRC.Classes.Effects
 
             timer = new System.Timers.Timer()
             {
-                Interval = Settings.SensationSeconds * 1000 - 100, // Subtract 100ms to reduce "gaps" between sensations
+                Interval = (Settings.SensationSeconds * 1000) - 100, // Subtract 100ms to reduce "gaps" between sensations
                 AutoReset = true
             };
             timer.Elapsed += OnTimerElapsed;

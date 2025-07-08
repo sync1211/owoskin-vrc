@@ -191,7 +191,7 @@ namespace OWOVRC.Audio.Classes
             {
                 // Wait asynchronously for audio capture to stop and call Dispose again.
                 // Can't be done via Thread.Sleep as it blocks the thread used by the audio capture.
-                Task.Run(DisposeAsync);
+                _ = Task.Run(DisposeAsync);
                 return;
             }
 
