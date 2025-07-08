@@ -447,9 +447,9 @@
             velocitySpeedCapLabel.AutoSize = true;
             velocitySpeedCapLabel.Location = new Point(6, 83);
             velocitySpeedCapLabel.Name = "velocitySpeedCapLabel";
-            velocitySpeedCapLabel.Size = new Size(96, 15);
+            velocitySpeedCapLabel.Size = new Size(109, 15);
             velocitySpeedCapLabel.TabIndex = 11;
-            velocitySpeedCapLabel.Text = "Max speed (m/s)";
+            velocitySpeedCapLabel.Text = "Max. velocity (m/s)";
             helpToolTip.SetToolTip(velocitySpeedCapLabel, "Maximum speed for wind effects (used for scaling)");
             // 
             // velocityPriorityLabel
