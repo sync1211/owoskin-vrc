@@ -20,7 +20,7 @@ jobs:
     
     # Example Avatar
     - name: "Collect files for Example Avatar"
-      run: find 'Unity/Example Avatar/' -type f > metaList
+      run: find 'Unity/Example Avatar/' -name \*.meta > metaList
     - name: "Create unitypackage for Example Avatar"
       uses: pCYSl5EDgo/create-unitypackage@v1.2.3
       with:
@@ -34,7 +34,7 @@ jobs:
     
     # OWOSkin Prefab
     - name: "Collect files for OWOSkin Prefab"
-      run: find 'Unity/OWOSkin Prefab/' -type f > metaList
+      run: find 'Unity/OWOSkin Prefab/' -name \*.meta > metaList
     - name: "Create unitypackage for OWOSkin Prefab"
       uses: "pCYSl5EDgo/create-unitypackage@v1.2.3"
       with:
