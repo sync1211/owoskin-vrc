@@ -14,33 +14,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - run: mkdir output
     
     # Example Avatar
     - name: "Collect files for Example Avatar"
-      run: find Unity/Example Avatar/ >> metaList
+      run: find 'Unity/Example Avatar/' -type f > metaList
     - name: "Create unitypackage for Example Avatar"
-      uses: pCYSl5EDgo/create-unitypackage@master
+      uses: pCYSl5EDgo/create-unitypackage@v1.2.3
       with:
         package-path: 'output/Example Avatar.unitypackage'
         include-files: metaList
-    - uses: actions/upload-artifact@master
+    - name: "Upload Example Avatar"
+      uses: actions/upload-artifact@v4
       with:
-        path: output
+        path: 'output/Example Avatar.unitypackage'
         name: Example Avatar
     
     # OWOSkin Prefab
     - name: "Collect files for OWOSkin Prefab"
-      run: find Unity/OWOSkin Prefab/ >> metaList
+      run: find 'Unity/OWOSkin Prefab/' -type f > metaList
     - name: "Create unitypackage for OWOSkin Prefab"
-      uses: pCYSl5EDgo/create-unitypackage@master
-        with:
-            package-path: 'output/OWOSkin Prefab.unitypackage'
-            include-files: metaList
+      uses: "pCYSl5EDgo/create-unitypackage@v1.2.3"
+      with:
+        package-path: 'output/OWOSkin Prefab.unitypackage'
+        include-files: metaList
     - name: "Upload OWOSkin Prefab"
-      uses: actions/upload-artifact@master
-        with:
-            path: output
-            name: OWOSkin Prefab
+      uses: actions/upload-artifact@v4
+      with:
+        path: "output/OWOSkin Prefab.unitypackage"
+        name: OWOSkin Prefab
