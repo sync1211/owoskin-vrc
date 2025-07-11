@@ -30,7 +30,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{5C92
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{8A9D8DE1-DEC1-4B7E-862F-6B938021B310}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\codeql.yml = .github\workflows\codeql.yml
 		.github\workflows\dotnet-desktop.yml = .github\workflows\dotnet-desktop.yml
 	EndProjectSection
 EndProject
