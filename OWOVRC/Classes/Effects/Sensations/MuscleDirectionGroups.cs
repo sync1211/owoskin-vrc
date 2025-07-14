@@ -1,7 +1,6 @@
 ﻿using OWOGame;
 using OWOVRC.Classes.OWOSuit;
 
-
 namespace OWOVRC.Classes.Effects.Sensations
 {
     public class MuscleDirectionGroups
