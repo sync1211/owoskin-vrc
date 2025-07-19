@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Test", "OWOVRC.Test\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.CLI", "OWOVRC.CLI\OWOVRC.CLI.csproj", "{2EFF406F-1746-41A6-AFA7-FD8C91C42464}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{94290CC7-129B-4150-B83E-3ED4ABEA2818}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder.Test", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.Test\OwoAdvancedSensationBuilder.Test.csproj", "{ED398336-24D0-444B-883F-32CE2771EF9C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio", "OWOVRC.Audio\OWOVRC.Audio.csproj", "{3967422C-271F-45C9-912B-4CCCBFDCD2C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio.WinForms", "OWOVRC.Audio.WinForms\OWOVRC.Audio.WinForms.csproj", "{5BF6B045-5C9B-4743-AC15-35B2084B8BDD}"
@@ -30,12 +26,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{5C92
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{8A9D8DE1-DEC1-4B7E-862F-6B938021B310}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\create-unitypackages.yml = .github\workflows\create-unitypackages.yml
 		.github\workflows\dotnet-desktop.yml = .github\workflows\dotnet-desktop.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.UI.Test", "OWOVRC.UI.Test\OWOVRC.UI.Test.csproj", "{875E4846-F964-497C-9C80-056F30F260C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio.WinForms.Test", "OWOVRC.Audio.WinForms.Test\OWOVRC.Audio.WinForms.Test.csproj", "{9F8B1F85-EC13-403C-82A7-2D1341C619CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{20276BE6-2718-385D-AD1F-1090590D5F77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder.Test", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.Test\OwoAdvancedSensationBuilder.Test.csproj", "{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,30 +96,6 @@ Global
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Release|x64.Build.0 = Release|x64
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Release|x86.ActiveCfg = Release|Any CPU
 		{2EFF406F-1746-41A6-AFA7-FD8C91C42464}.Release|x86.Build.0 = Release|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Debug|x64.Build.0 = Debug|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Debug|x86.Build.0 = Debug|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Release|x64.ActiveCfg = Release|x64
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Release|x64.Build.0 = Release|x64
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Release|x86.ActiveCfg = Release|Any CPU
-		{94290CC7-129B-4150-B83E-3ED4ABEA2818}.Release|x86.Build.0 = Release|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Debug|x64.Build.0 = Debug|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Debug|x86.Build.0 = Debug|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Release|x64.ActiveCfg = Release|x64
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Release|x64.Build.0 = Release|x64
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Release|x86.ActiveCfg = Release|Any CPU
-		{ED398336-24D0-444B-883F-32CE2771EF9C}.Release|x86.Build.0 = Release|Any CPU
 		{3967422C-271F-45C9-912B-4CCCBFDCD2C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3967422C-271F-45C9-912B-4CCCBFDCD2C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3967422C-271F-45C9-912B-4CCCBFDCD2C0}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -179,6 +156,30 @@ Global
 		{9F8B1F85-EC13-403C-82A7-2D1341C619CA}.Release|x64.Build.0 = Release|x64
 		{9F8B1F85-EC13-403C-82A7-2D1341C619CA}.Release|x86.ActiveCfg = Release|Any CPU
 		{9F8B1F85-EC13-403C-82A7-2D1341C619CA}.Release|x86.Build.0 = Release|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Debug|x64.Build.0 = Debug|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Debug|x86.Build.0 = Debug|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Release|x64.ActiveCfg = Release|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Release|x64.Build.0 = Release|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Release|x86.ActiveCfg = Release|Any CPU
+		{20276BE6-2718-385D-AD1F-1090590D5F77}.Release|x86.Build.0 = Release|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Debug|x64.Build.0 = Debug|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Debug|x86.Build.0 = Debug|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|x64.ActiveCfg = Release|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|x64.Build.0 = Release|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|x86.ActiveCfg = Release|Any CPU
+		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
