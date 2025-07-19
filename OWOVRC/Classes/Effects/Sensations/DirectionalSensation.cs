@@ -2,6 +2,7 @@
 using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
+using System.Runtime.CompilerServices;
 
 namespace OWOVRC.Classes.Effects.Sensations
 {
@@ -99,7 +100,7 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
             Dictionary<Muscle, int> muscleIntensityScore = directions.All
-                .ToDictionary(muscle => muscle, _ => 0);
+                .ToDictionary(ReturnMuscle, ReturnZero); // These functions are muscle => muscle and _ => 0
 
             // 2. Assign a weight to every direction based on their % of the maximum
             int frontWeight = (int)(frontVelocity / maxVelocity) * 100;
@@ -138,6 +139,20 @@ namespace OWOVRC.Classes.Effects.Sensations
                 Muscle muscle = directionMuscles[i];
                 muscles[muscle] += weight;
             }
+        }
+
+        // Used to create the muscleIntensityScore dictionary
+        //NOTE: These were once a lambda, but this is faster (no closure allocation)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Muscle ReturnMuscle(Muscle muscle)
+        {
+            return muscle;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static int ReturnZero(Muscle muscle)
+        {
+            return 0;
         }
     }
 }

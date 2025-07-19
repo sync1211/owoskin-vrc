@@ -1,0 +1,47 @@
+name: Create Unity Packages
+permissions:
+  contents: read
+  actions: write
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  unitypackage:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - run: mkdir output
+    
+    # Example Avatar
+    - name: "Collect files for Example Avatar"
+      run: find 'Unity/Example Avatar/' -name \*.meta > metaList
+    - name: "Create unitypackage for Example Avatar"
+      uses: pCYSl5EDgo/create-unitypackage@v1.2.3
+      with:
+        package-path: 'output/Example Avatar.unitypackage'
+        include-files: metaList
+    - name: "Upload Example Avatar"
+      uses: actions/upload-artifact@v4
+      with:
+        path: 'output/Example Avatar.unitypackage'
+        name: Example Avatar
+    
+    # OWOSkin Prefab
+    - name: "Collect files for OWOSkin Prefab"
+      run: find 'Unity/OWOSkin Prefab/' -name \*.meta > metaList
+    - name: "Create unitypackage for OWOSkin Prefab"
+      uses: "pCYSl5EDgo/create-unitypackage@v1.2.3"
+      with:
+        package-path: 'output/OWOSkin Prefab.unitypackage'
+        include-files: metaList
+    - name: "Upload OWOSkin Prefab"
+      uses: actions/upload-artifact@v4
+      with:
+        path: "output/OWOSkin Prefab.unitypackage"
+        name: OWOSkin Prefab
