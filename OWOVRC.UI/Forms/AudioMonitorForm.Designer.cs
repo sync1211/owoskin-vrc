@@ -31,25 +31,37 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioMonitorForm));
             closeButton = new Button();
             leftSubBassTitle = new Label();
-            subBassIndicatorLeft = new Audio.WinForms.Controls.BarIndicator();
+            subBassIndicatorLeft = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
             bandsBoxLeft = new GroupBox();
+            leftMidDBLabel = new Label();
+            leftMidTitle = new Label();
+            midIndicatorLeft = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
+            leftLowMidDBLabel = new Label();
+            leftLowMidTitle = new Label();
+            lowMidIndicatorLeft = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
             leftTrebleDBLabel = new Label();
             LeftTrebleTitle = new Label();
-            trebleIndicatorLeft = new Audio.WinForms.Controls.BarIndicator();
+            trebleIndicatorLeft = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
             leftBassDBLabel = new Label();
             leftBassTitle = new Label();
-            bassIndicatorLeft = new Audio.WinForms.Controls.BarIndicator();
+            bassIndicatorLeft = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
             leftSubBassDBLabel = new Label();
             bandsBoxRight = new GroupBox();
+            rightMidDBLabel = new Label();
+            rightMidTitle = new Label();
+            midIndicatorRight = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
+            rightLowMidDBLabel = new Label();
+            rightLowMidTitle = new Label();
+            lowMidIndicatorRight = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
             rightTrebleDBLabel = new Label();
             rightBassDBLabel = new Label();
             rightTrebleTitle = new Label();
             rightBassTitle = new Label();
-            trebleIndicatorRight = new Audio.WinForms.Controls.BarIndicator();
-            bassIndicatorRight = new Audio.WinForms.Controls.BarIndicator();
+            trebleIndicatorRight = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
+            bassIndicatorRight = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
             rightSubBassDBLabel = new Label();
             rightSubBassTitle = new Label();
-            subBassIndicatorRight = new Audio.WinForms.Controls.BarIndicator();
+            subBassIndicatorRight = new OWOVRC.Audio.WinForms.Controls.BarIndicator();
             label2 = new Label();
             maxDBLabel = new Label();
             bandsBoxLeft.SuspendLayout();
@@ -60,7 +72,7 @@
             // 
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             closeButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            closeButton.Location = new Point(415, 265);
+            closeButton.Location = new Point(690, 265);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(75, 23);
             closeButton.TabIndex = 0;
@@ -94,6 +106,12 @@
             // 
             // bandsBoxLeft
             // 
+            bandsBoxLeft.Controls.Add(leftMidDBLabel);
+            bandsBoxLeft.Controls.Add(leftMidTitle);
+            bandsBoxLeft.Controls.Add(midIndicatorLeft);
+            bandsBoxLeft.Controls.Add(leftLowMidDBLabel);
+            bandsBoxLeft.Controls.Add(leftLowMidTitle);
+            bandsBoxLeft.Controls.Add(lowMidIndicatorLeft);
             bandsBoxLeft.Controls.Add(leftTrebleDBLabel);
             bandsBoxLeft.Controls.Add(LeftTrebleTitle);
             bandsBoxLeft.Controls.Add(trebleIndicatorLeft);
@@ -105,10 +123,78 @@
             bandsBoxLeft.Controls.Add(subBassIndicatorLeft);
             bandsBoxLeft.Location = new Point(12, 12);
             bandsBoxLeft.Name = "bandsBoxLeft";
-            bandsBoxLeft.Size = new Size(239, 244);
+            bandsBoxLeft.Size = new Size(376, 244);
             bandsBoxLeft.TabIndex = 7;
             bandsBoxLeft.TabStop = false;
             bandsBoxLeft.Text = "Left";
+            // 
+            // leftMidDBLabel
+            // 
+            leftMidDBLabel.Font = new Font("Segoe UI", 9F);
+            leftMidDBLabel.Location = new Point(293, 221);
+            leftMidDBLabel.Name = "leftMidDBLabel";
+            leftMidDBLabel.Size = new Size(63, 18);
+            leftMidDBLabel.TabIndex = 30;
+            leftMidDBLabel.Text = "0db";
+            leftMidDBLabel.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // leftMidTitle
+            // 
+            leftMidTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            leftMidTitle.Location = new Point(293, 19);
+            leftMidTitle.Name = "leftMidTitle";
+            leftMidTitle.Size = new Size(62, 15);
+            leftMidTitle.TabIndex = 29;
+            leftMidTitle.Text = "Mid";
+            leftMidTitle.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // midIndicatorLeft
+            // 
+            midIndicatorLeft.BarColor = Color.DarkOrange;
+            midIndicatorLeft.Enabled = false;
+            midIndicatorLeft.IndicatorColor = Color.Gray;
+            midIndicatorLeft.IndicatorValue = 75;
+            midIndicatorLeft.Location = new Point(293, 37);
+            midIndicatorLeft.Max = 100;
+            midIndicatorLeft.Min = 0;
+            midIndicatorLeft.Name = "midIndicatorLeft";
+            midIndicatorLeft.Size = new Size(63, 181);
+            midIndicatorLeft.TabIndex = 28;
+            midIndicatorLeft.Value = 50;
+            // 
+            // leftLowMidDBLabel
+            // 
+            leftLowMidDBLabel.Font = new Font("Segoe UI", 9F);
+            leftLowMidDBLabel.Location = new Point(225, 221);
+            leftLowMidDBLabel.Name = "leftLowMidDBLabel";
+            leftLowMidDBLabel.Size = new Size(63, 18);
+            leftLowMidDBLabel.TabIndex = 27;
+            leftLowMidDBLabel.Text = "0db";
+            leftLowMidDBLabel.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // leftLowMidTitle
+            // 
+            leftLowMidTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            leftLowMidTitle.Location = new Point(225, 19);
+            leftLowMidTitle.Name = "leftLowMidTitle";
+            leftLowMidTitle.Size = new Size(62, 15);
+            leftLowMidTitle.TabIndex = 26;
+            leftLowMidTitle.Text = "Low-Mid";
+            leftLowMidTitle.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // lowMidIndicatorLeft
+            // 
+            lowMidIndicatorLeft.BarColor = Color.MidnightBlue;
+            lowMidIndicatorLeft.Enabled = false;
+            lowMidIndicatorLeft.IndicatorColor = Color.Gray;
+            lowMidIndicatorLeft.IndicatorValue = 75;
+            lowMidIndicatorLeft.Location = new Point(225, 37);
+            lowMidIndicatorLeft.Max = 100;
+            lowMidIndicatorLeft.Min = 0;
+            lowMidIndicatorLeft.Name = "lowMidIndicatorLeft";
+            lowMidIndicatorLeft.Size = new Size(63, 181);
+            lowMidIndicatorLeft.TabIndex = 25;
+            lowMidIndicatorLeft.Value = 50;
             // 
             // leftTrebleDBLabel
             // 
@@ -190,6 +276,12 @@
             // bandsBoxRight
             // 
             bandsBoxRight.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            bandsBoxRight.Controls.Add(rightMidDBLabel);
+            bandsBoxRight.Controls.Add(rightMidTitle);
+            bandsBoxRight.Controls.Add(midIndicatorRight);
+            bandsBoxRight.Controls.Add(rightLowMidDBLabel);
+            bandsBoxRight.Controls.Add(rightLowMidTitle);
+            bandsBoxRight.Controls.Add(lowMidIndicatorRight);
             bandsBoxRight.Controls.Add(rightTrebleDBLabel);
             bandsBoxRight.Controls.Add(rightBassDBLabel);
             bandsBoxRight.Controls.Add(rightTrebleTitle);
@@ -199,12 +291,80 @@
             bandsBoxRight.Controls.Add(rightSubBassDBLabel);
             bandsBoxRight.Controls.Add(rightSubBassTitle);
             bandsBoxRight.Controls.Add(subBassIndicatorRight);
-            bandsBoxRight.Location = new Point(258, 12);
+            bandsBoxRight.Location = new Point(395, 12);
             bandsBoxRight.Name = "bandsBoxRight";
-            bandsBoxRight.Size = new Size(232, 244);
+            bandsBoxRight.Size = new Size(370, 244);
             bandsBoxRight.TabIndex = 17;
             bandsBoxRight.TabStop = false;
             bandsBoxRight.Text = "Right";
+            // 
+            // rightMidDBLabel
+            // 
+            rightMidDBLabel.Font = new Font("Segoe UI", 9F);
+            rightMidDBLabel.Location = new Point(290, 221);
+            rightMidDBLabel.Name = "rightMidDBLabel";
+            rightMidDBLabel.Size = new Size(63, 18);
+            rightMidDBLabel.TabIndex = 33;
+            rightMidDBLabel.Text = "0db";
+            rightMidDBLabel.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // rightMidTitle
+            // 
+            rightMidTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            rightMidTitle.Location = new Point(290, 19);
+            rightMidTitle.Name = "rightMidTitle";
+            rightMidTitle.Size = new Size(62, 15);
+            rightMidTitle.TabIndex = 32;
+            rightMidTitle.Text = "Mid";
+            rightMidTitle.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // midIndicatorRight
+            // 
+            midIndicatorRight.BarColor = Color.DarkOrange;
+            midIndicatorRight.Enabled = false;
+            midIndicatorRight.IndicatorColor = Color.Gray;
+            midIndicatorRight.IndicatorValue = 75;
+            midIndicatorRight.Location = new Point(290, 37);
+            midIndicatorRight.Max = 100;
+            midIndicatorRight.Min = 0;
+            midIndicatorRight.Name = "midIndicatorRight";
+            midIndicatorRight.Size = new Size(63, 181);
+            midIndicatorRight.TabIndex = 31;
+            midIndicatorRight.Value = 50;
+            // 
+            // rightLowMidDBLabel
+            // 
+            rightLowMidDBLabel.Font = new Font("Segoe UI", 9F);
+            rightLowMidDBLabel.Location = new Point(221, 221);
+            rightLowMidDBLabel.Name = "rightLowMidDBLabel";
+            rightLowMidDBLabel.Size = new Size(63, 18);
+            rightLowMidDBLabel.TabIndex = 30;
+            rightLowMidDBLabel.Text = "0db";
+            rightLowMidDBLabel.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // rightLowMidTitle
+            // 
+            rightLowMidTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            rightLowMidTitle.Location = new Point(221, 19);
+            rightLowMidTitle.Name = "rightLowMidTitle";
+            rightLowMidTitle.Size = new Size(62, 15);
+            rightLowMidTitle.TabIndex = 29;
+            rightLowMidTitle.Text = "Low-Mid";
+            rightLowMidTitle.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // lowMidIndicatorRight
+            // 
+            lowMidIndicatorRight.BarColor = Color.MidnightBlue;
+            lowMidIndicatorRight.Enabled = false;
+            lowMidIndicatorRight.IndicatorColor = Color.Gray;
+            lowMidIndicatorRight.IndicatorValue = 75;
+            lowMidIndicatorRight.Location = new Point(221, 37);
+            lowMidIndicatorRight.Max = 100;
+            lowMidIndicatorRight.Min = 0;
+            lowMidIndicatorRight.Name = "lowMidIndicatorRight";
+            lowMidIndicatorRight.Size = new Size(63, 181);
+            lowMidIndicatorRight.TabIndex = 28;
+            lowMidIndicatorRight.Value = 50;
             // 
             // rightTrebleDBLabel
             // 
@@ -334,7 +494,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = closeButton;
-            ClientSize = new Size(502, 300);
+            ClientSize = new Size(777, 300);
             Controls.Add(maxDBLabel);
             Controls.Add(label2);
             Controls.Add(bandsBoxRight);
@@ -380,5 +540,19 @@
         private Label rightTrebleDBLabel;
         private Label rightTrebleTitle;
         private Audio.WinForms.Controls.BarIndicator trebleIndicatorRight;
+        private Label leftMidDBLabel;
+        private Label label5;
+        private Audio.WinForms.Controls.BarIndicator midIndicatorLeft;
+        private Label leftLowMidDBLabel;
+        private Label label3;
+        private Audio.WinForms.Controls.BarIndicator lowMidIndicatorLeft;
+        private Label rightMidDBLabel;
+        private Label rightMidTitle;
+        private Audio.WinForms.Controls.BarIndicator midIndicatorRight;
+        private Label rightLowMidDBLabel;
+        private Label rightLowMidTitle;
+        private Audio.WinForms.Controls.BarIndicator lowMidIndicatorRight;
+        private Label leftMidTitle;
+        private Label leftLowMidTitle;
     }
 }

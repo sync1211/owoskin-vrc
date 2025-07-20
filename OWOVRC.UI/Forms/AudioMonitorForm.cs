@@ -12,22 +12,21 @@ namespace OWOVRC.UI.Forms
         public float SubBassThreshold;
         public float BassThreshold;
         public float TrebleThreshold;
+        public float LowMidThreshold;
+        public float MidThreshold;
 
         private readonly Font regularFont = new("Segoe UI", 9F, FontStyle.Regular);
         private readonly Font boldFont = new("Segoe UI", 9F, FontStyle.Bold);
 
-        public AudioMonitorForm(AudioEffect effect, float subBassThreshold = -1, float bassThreshold = -1, float trebleThreshold = -1)
+        public AudioMonitorForm(AudioEffect effect)
         {
             this.effect = effect;
-
-            this.SubBassThreshold = subBassThreshold;
-            this.BassThreshold = bassThreshold;
-            this.TrebleThreshold = trebleThreshold;
 
             float maxThreshold = GetMaxThreshold();
             scalingHelper = new(maxThreshold);
 
             InitializeComponent();
+            ImportThresholdsFromSettings();
         }
 
         /// <summary>
@@ -35,7 +34,7 @@ namespace OWOVRC.UI.Forms
         /// </summary>
         private float GetMaxThreshold()
         {
-            float[] floats = [0, BassThreshold, SubBassThreshold, TrebleThreshold];
+            float[] floats = [0, BassThreshold, SubBassThreshold, TrebleThreshold, LowMidThreshold, MidThreshold];
             return floats.Max();
         }
 
@@ -73,11 +72,8 @@ namespace OWOVRC.UI.Forms
             leftLabel.Text = $"{dbLeftRound}db";
             rightLabel.Text = $"{dbRightRound}db";
 
-            if (threshold != -1)
-            {
-                leftLabel.Font = dbLeftRound >= threshold ? boldFont : regularFont;
-                rightLabel.Font = dbRightRound >= threshold ? boldFont : regularFont;
-            }
+            leftLabel.Font = dbLeftRound >= threshold ? boldFont : regularFont;
+            rightLabel.Font = dbRightRound >= threshold ? boldFont : regularFont;
 
             leftBar.IndicatorValue = scalingHelper.ToPercentage(threshold);
             rightBar.IndicatorValue = scalingHelper.ToPercentage(threshold);
@@ -121,9 +117,40 @@ namespace OWOVRC.UI.Forms
                 TrebleThreshold
             );
 
+            // Low-Mid
+            UpdateBar(
+                leftSample.LowMid,
+                rightSample.LowMid,
+                lowMidIndicatorLeft,
+                lowMidIndicatorRight,
+                leftLowMidDBLabel,
+                rightLowMidDBLabel,
+                LowMidThreshold
+            );
+
+            // Mid
+            UpdateBar(
+                leftSample.Mid,
+                rightSample.Mid,
+                midIndicatorLeft,
+                midIndicatorRight,
+                leftMidDBLabel,
+                rightMidDBLabel,
+                MidThreshold
+            );
+
             // Max amplitude
             double maxAmplitude = Math.Round(scalingHelper.MaxAmplitude, 2);
             maxDBLabel.Text = $"{maxAmplitude}db";
+        }
+
+        public void ImportThresholdsFromSettings()
+        {
+            SubBassThreshold = effect.Settings.SubBassSettings.MinDB;
+            BassThreshold = effect.Settings.BassSettings.MinDB;
+            TrebleThreshold = effect.Settings.TrebleSettings.MinDB;
+            LowMidThreshold = effect.Settings.LowMidSettings.MinDB;
+            MidThreshold = effect.Settings.MidSettings.MinDB;
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
