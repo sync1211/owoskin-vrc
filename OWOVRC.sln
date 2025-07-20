@@ -34,6 +34,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.UI.Test", "OWOVRC.UI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.Audio.WinForms.Test", "OWOVRC.Audio.WinForms.Test\OWOVRC.Audio.WinForms.Test.csproj", "{9F8B1F85-EC13-403C-82A7-2D1341C619CA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{84D27F74-D2BA-6C25-2661-968F101900D9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{20276BE6-2718-385D-AD1F-1090590D5F77}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder.Test", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.Test\OwoAdvancedSensationBuilder.Test.csproj", "{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}"
