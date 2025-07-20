@@ -119,9 +119,13 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.ContainsKey(muscle))
             {
                 Log.Debug("Stop: {muscle}", muscle);
-                if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData? _))
+                if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData? muscleData))
                 {
                     Log.Warning("Muscle '{muscle}' could not be from active muscles.", muscle);
+                }
+                else if (muscleData != null && (DateTime.Now - muscleData.LastUpdate).TotalMilliseconds <= timer.Interval)
+                {
+                    activeMuscles.TryAdd(muscle, muscleData); // Re-add the muscle as it has not been played yet
                 }
             }
 
@@ -129,7 +133,7 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.IsEmpty)
             {
                 Log.Debug("No sensations playing, timer stopped.");
-                owo.StopSensation(SENSATION_NAME);
+                owo.StopSensation(SENSATION_NAME, false);
                 timer.Stop();
             }
         }
@@ -143,7 +147,7 @@ namespace OWOVRC.Classes.Effects
 
             if (activeMuscles.IsEmpty)
             {
-                owo.StopSensation(SENSATION_NAME);
+                owo.StopSensation(SENSATION_NAME, false);
                 return;
             }
 
