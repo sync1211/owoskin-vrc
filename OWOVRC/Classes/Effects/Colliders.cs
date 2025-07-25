@@ -111,21 +111,23 @@ namespace OWOVRC.Classes.Effects
                 muscleData.VelocityMultiplier = speed * (Settings.SpeedMultiplier * 100);
                 muscleData.AddDecay(Settings.DecayCycleCount);
             }
-            activeMuscles[muscle] = muscleData;
+            activeMuscles.AddOrUpdate(muscle, muscleData, (_, _) => muscleData);
+            Log.Debug("Add/Update muscle {muscle} (Active: {muscleCount})", muscleData.Name, activeMuscles.Count);
         }
 
         private void OnCollisionExit(string muscle)
         {
             if (activeMuscles.ContainsKey(muscle))
             {
-                Log.Debug("Stop: {muscle}", muscle);
-                if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData? muscleData))
+                Log.Debug("Stop: {muscle} (Active muscles: {muscleCount}", muscle, activeMuscles.Count);
+                if (!activeMuscles.TryGetValue(muscle, out MuscleCollisionData? muscleData))
                 {
                     Log.Warning("Muscle '{muscle}' could not be from active muscles.", muscle);
                 }
-                else if (muscleData != null && (DateTime.Now - muscleData.LastUpdate).TotalMilliseconds <= timer.Interval)
+                else
                 {
-                    activeMuscles.TryAdd(muscle, muscleData); // Re-add the muscle as it has not been played yet
+                    // Mark muscle to stop on next calculation cycle
+                    muscleData.StopOnNextCycle = true;
                 }
             }
 
@@ -176,12 +178,12 @@ namespace OWOVRC.Classes.Effects
                 if (Settings.UseVelocity)
                 {
                     float increase = muscleData.VelocityMultiplier * Math.Max(Settings.MinIntensity, 1);
-                    Log.Debug("Increase: {inc}", increase);
+                    Log.Verbose("Increase: {inc}", increase);
                     intensity = Settings.MinIntensity + (int)increase;
                     intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
                 }
 
-                Log.Debug(
+                Log.Verbose(
                     "Muscle: {muscle}, Intensity: {intensity}% (Min: {base}%, Multiplier: {multiplier})",
                     muscleData.Name,
                     intensity,
@@ -190,6 +192,12 @@ namespace OWOVRC.Classes.Effects
                 );
 
                 musclesScaled[i] = muscle.WithIntensity(intensity);
+
+                // Remove if requested
+                if (muscleData.StopOnNextCycle)
+                {
+                    activeMuscles.TryRemove(muscleData.Name, out _);
+                }
             }
 
             Sensation sensation = Settings.GetSensation();
