@@ -45,7 +45,6 @@
             saveButton.TabIndex = 1;
             saveButton.Text = "Close";
             saveButton.UseVisualStyleBackColor = true;
-            saveButton.Click += CloseButton_Click;
             // 
             // dataGridView1
             // 

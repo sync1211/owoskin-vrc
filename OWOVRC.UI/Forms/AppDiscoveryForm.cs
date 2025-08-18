@@ -58,12 +58,6 @@ namespace OWOVRC.UI.Forms
             }
         }
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
         private void SelectEntryButton_Click(object sender, EventArgs e)
         {
             if (appListBox.SelectedItem is not string slectedApp)

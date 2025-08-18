@@ -16,11 +16,6 @@
             Text = title;
         }
 
-        private void ControlButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void NumberInputDialog_Shown(object sender, EventArgs e)
         {
             inputBox.Focus();

@@ -152,10 +152,5 @@ namespace OWOVRC.UI.Forms
             LowMidThreshold = effect.Settings.LowMidSettings.MinDB;
             MidThreshold = effect.Settings.MidSettings.MinDB;
         }
-
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
     }
 }
