@@ -773,7 +773,7 @@ namespace OWOVRC.UI
 
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
         {
-            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.GetSensation(), null, owo))
+            using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.GetSensation(), title: null, owoHelper: owo))
             {
                 intensityForm.ShowDialog();
                 collidersSettings.SaveToFile();
@@ -833,12 +833,12 @@ namespace OWOVRC.UI
                 sensationName = String.Empty;
             }
 
-            owo.StopSensation(sensationName, false);
+            owo.StopSensation(sensationName, interrupt:false);
         }
 
         private void StopSensationInstance(AdvancedSensationStreamInstance instance)
         {
-            owo.StopSensation(instance.name, true);
+            owo.StopSensation(instance.name, interrupt: true);
 
             Log.Information("Stopped sensation {0}", instance.name);
             UpdateASMStatus();

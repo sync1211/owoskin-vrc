@@ -24,7 +24,7 @@ namespace OWOVRC.Classes.Settings
             { "Weight", 100 }
         };
 
-        public WorldIntegratorSettings() : base(true, 10) { }
+        public WorldIntegratorSettings() : base(enabled: true, priority: 10) { }
         [JsonConstructor]
         public WorldIntegratorSettings(bool enabled, int priority = 10, Dictionary<string, int>? enabledSensations = null) : base(enabled, priority)
         {

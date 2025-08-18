@@ -9,7 +9,7 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public Dictionary<string, OSCSensationPreset> Presets { get; }
 
-        public OSCPresetsSettings(Dictionary<string, OSCSensationPreset>? presets=null) : base(true, 10)
+        public OSCPresetsSettings(Dictionary<string, OSCSensationPreset>? presets = null) : base(enabled: true, priority: 10)
         {
             Presets = presets ?? [];
         }
