@@ -30,8 +30,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PresetsForm));
             dataGridView1 = new DataGridView();
+            presetContextMenuStrip = new ContextMenuStrip(components);
+            previewToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator2 = new ToolStripSeparator();
+            duplicateToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
+            deleteToolStripMenuItem = new ToolStripMenuItem();
             closeButton = new Button();
             importSensationButton = new Button();
             saveButton = new Button();
@@ -41,6 +48,7 @@
             oscPathLabel = new Label();
             presetsHelpLinkLabel = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            presetContextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
@@ -52,6 +60,7 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = SystemColors.Window;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.ContextMenuStrip = presetContextMenuStrip;
             dataGridView1.Location = new Point(12, 41);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
@@ -67,9 +76,47 @@
             dataGridView1.DragEnter += DataGridView1_DragEnter;
             dataGridView1.DragLeave += DataGridView1_DragLeave;
             // 
+            // presetContextMenuStrip
+            // 
+            presetContextMenuStrip.Items.AddRange(new ToolStripItem[] { previewToolStripMenuItem, toolStripSeparator2, duplicateToolStripMenuItem, toolStripSeparator1, deleteToolStripMenuItem });
+            presetContextMenuStrip.Name = "contextMenuStrip1";
+            presetContextMenuStrip.Size = new Size(125, 82);
+            // 
+            // previewToolStripMenuItem
+            // 
+            previewToolStripMenuItem.Name = "previewToolStripMenuItem";
+            previewToolStripMenuItem.Size = new Size(124, 22);
+            previewToolStripMenuItem.Text = "Preview";
+            previewToolStripMenuItem.Click += PreviewToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(121, 6);
+            // 
+            // duplicateToolStripMenuItem
+            // 
+            duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
+            duplicateToolStripMenuItem.Size = new Size(124, 22);
+            duplicateToolStripMenuItem.Text = "Duplicate";
+            duplicateToolStripMenuItem.Click += DuplicateToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(121, 6);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            deleteToolStripMenuItem.Size = new Size(124, 22);
+            deleteToolStripMenuItem.Text = "Remove";
+            deleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            // 
             // closeButton
             // 
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            closeButton.DialogResult = DialogResult.Cancel;
             closeButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             closeButton.Location = new Point(632, 415);
             closeButton.Name = "closeButton";
@@ -77,7 +124,6 @@
             closeButton.TabIndex = 1;
             closeButton.Text = "Close";
             closeButton.UseVisualStyleBackColor = true;
-            closeButton.Click += CloseButton_Click;
             // 
             // importSensationButton
             // 
@@ -181,6 +227,7 @@
             Text = "PresetsForm";
             Shown += PresetsForm_Shown;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            presetContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -196,5 +243,11 @@
         private Label oscPathHintLabel;
         private Label oscPathLabel;
         private LinkLabel presetsHelpLinkLabel;
+        private ContextMenuStrip presetContextMenuStrip;
+        private ToolStripMenuItem previewToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem duplicateToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
