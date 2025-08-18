@@ -5,7 +5,7 @@ permissions:
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "ConcurrentManager" ]
   pull_request:
     branches: [ "master" ]
 
