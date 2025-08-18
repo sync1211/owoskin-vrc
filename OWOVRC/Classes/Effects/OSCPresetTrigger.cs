@@ -87,7 +87,7 @@ namespace OWOVRC.Classes.Effects
             {
                 return sensationWithMuscles.muscles;
             }
-            else if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
+            if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
             {
                 return refSensationWithMuscles.muscles;
             }
