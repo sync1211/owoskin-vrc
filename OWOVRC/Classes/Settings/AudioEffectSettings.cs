@@ -9,14 +9,20 @@ namespace OWOVRC.Classes.Settings
     {
         [JsonInclude]
         public AudioEffectSpectrumSettings BassSettings { get; set; } =
-            new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, 55, 3, 4, 20, 15);
+            new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, 55, 5, 4, 20, 15);
 
         [JsonInclude] //NOTE: zero-width space (U+200B) is used to force a linebreak in the UI
         public AudioEffectSpectrumSettings SubBassSettings { get; set; } =
-            new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 25, 2, 3, 15, 5);
+            new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 25, 4, 3, 15, 5);
         [JsonInclude]
         public AudioEffectSpectrumSettings TrebleSettings { get; set; } =
-            new("Treble", AudioSpectrum.Brilliance, DefaultTrebleMuscles, 30, 1, 0.5f, 4, 75);
+            new("Treble", AudioSpectrum.Brilliance, DefaultTrebleMuscles, 30, 3, 0.5f, 4, 75);
+        [JsonInclude]
+        public AudioEffectSpectrumSettings LowMidSettings { get; set; } =
+            new("Low-​Mid", AudioSpectrum.LowMid, DefaultLowMidMuscles, 30, 2, 1, 4, 21);
+        [JsonInclude]  //NOTE: zero-width space (U+200B) is used to force a linebreak in the UI
+        public AudioEffectSpectrumSettings MidSettings { get; set; } =
+            new("Mid", AudioSpectrum.Mid, DefaultMidMuscles, 30, 1, 2, 10, 100);
         [JsonIgnore] //NOTE: This array is auto-sorted on priority changes via the OnPriorityChanged event
         public AudioEffectSpectrumSettings[] SpectrumSettings { get; private set; } = null!;
 
@@ -28,7 +34,9 @@ namespace OWOVRC.Classes.Settings
             [
                 SubBassSettings,
                 BassSettings,
-                TrebleSettings
+                TrebleSettings,
+                LowMidSettings,
+                MidSettings
             ];
         }
 

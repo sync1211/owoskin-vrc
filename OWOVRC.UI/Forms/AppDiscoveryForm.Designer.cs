@@ -56,13 +56,13 @@
             // closeButton
             // 
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            closeButton.DialogResult = DialogResult.Cancel;
             closeButton.Location = new Point(150, 341);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(76, 23);
             closeButton.TabIndex = 2;
             closeButton.Text = "Cancel";
             closeButton.UseVisualStyleBackColor = true;
-            closeButton.Click += CloseButton_Click;
             // 
             // AppDiscoveryForm
             // 

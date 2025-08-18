@@ -21,11 +21,6 @@ namespace OWOVRC.UI.Forms.Dialogs
             this.stringComparison = stringComparison;
         }
 
-        private void CloseWindow(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void AutoRenameButton_Click(object sender, EventArgs e)
         {
             string prefix = presetName;

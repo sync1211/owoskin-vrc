@@ -66,7 +66,6 @@
             importButton.TabIndex = 1;
             importButton.Text = "Import";
             importButton.UseVisualStyleBackColor = true;
-            importButton.Click += CloseWindow;
             // 
             // cancelButton
             // 
@@ -78,7 +77,6 @@
             cancelButton.TabIndex = 2;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += CloseWindow;
             // 
             // autoRenameButton
             // 

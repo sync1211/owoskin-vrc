@@ -16,11 +16,6 @@
             this.stringComparison = stringComparison;
         }
 
-        private void ControlButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void NameCollisionDialog_Shown(object sender, EventArgs e)
         {
             newNameInput.Focus();
@@ -40,6 +35,7 @@
                 return;
             }
 
+            DialogResult = DialogResult.OK;
             Close();
         }
 

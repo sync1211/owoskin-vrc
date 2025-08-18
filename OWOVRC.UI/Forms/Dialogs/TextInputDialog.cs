@@ -13,20 +13,10 @@
             textInput.Text = defaultText ?? String.Empty;
         }
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void TextInputDialog_Shown(object sender, EventArgs e)
         {
             textInput.Focus();
             textInput.Select(textInput.Text.Length, textInput.Text.Length);
-        }
-
-        private void OkButton_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         private void NewNameInput_TextChanged(object sender, EventArgs e)

@@ -10,6 +10,9 @@ namespace OWOVRC.UI.Controls
         [Description("The spacing between entries"), Category("Data")]
         public int itemSpacing = 2;
         [Localizable(true)]
+        [Description("The spacing between entries and scrollbar"), Category("Data")]
+        public int scrollbarSpacing = 17;
+        [Localizable(true)]
         [Description("If the elements should support reordering drag&drop"), Category("Data")]
         public bool DragReordering = true;
 
@@ -108,7 +111,7 @@ namespace OWOVRC.UI.Controls
                 }
 
                 item.Left = itemSpacing;
-                item.Width = Width - (itemSpacing * 2);
+                item.Width = Width - ((itemSpacing * 2) + scrollbarSpacing);
 
                 lastY += item.Height + itemSpacing;
             }

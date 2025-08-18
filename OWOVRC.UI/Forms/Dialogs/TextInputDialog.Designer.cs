@@ -46,7 +46,6 @@
             okButton.TabIndex = 2;
             okButton.Text = "Ok";
             okButton.UseVisualStyleBackColor = true;
-            okButton.Click += OkButton_Click;
             // 
             // cancelButton
             // 
@@ -58,7 +57,6 @@
             cancelButton.TabIndex = 3;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += CloseButton_Click;
             // 
             // descriptionLabel
             // 

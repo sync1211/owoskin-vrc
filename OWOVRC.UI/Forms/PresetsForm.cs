@@ -111,17 +111,11 @@ namespace OWOVRC.UI.Forms
             RefreshCollisionState();
         }
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
         private void ImportSensationButton_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new()
             {
-                Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (oscPresets.json)|oscPresets.json",
+                Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (*.json)|*.json",
                 Title = "Select a file to import",
                 Multiselect = true
             })
@@ -518,6 +512,68 @@ namespace OWOVRC.UI.Forms
             MessageBox.Show(e.Exception.Message, "Input error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             dataGridView1.CancelEdit();
+        }
+
+        private void PreviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int rowIndex = dataGridView1.SelectedCells[0].RowIndex;
+
+            TestSensation(presets[rowIndex]);
+        }
+
+        private void DuplicateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count != 1)
+            {
+                return;
+            }
+
+            int rowIndex = dataGridView1.SelectedCells[0].RowIndex;
+            OSCSensationPreset preset = presets[rowIndex];
+
+            using (NameCollisionDialog dialog = new(preset.Name))
+            {
+                dialog.ShowDialog();
+
+                if (dialog.DialogResult != DialogResult.OK)
+                {
+                    return;
+                }
+
+                // Duplicate preset
+                OSCSensationPreset newPreset = preset.Clone();
+                newPreset.Name = dialog.Value;
+                presets.Add(newPreset);
+            }
+        }
+
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RemovePresetButton_Click(sender, e);
+        }
+
+        // Select cells via right-click
+        private void DataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+            if (row.Selected)
+            {
+                return;
+            }
+
+            if (!ModifierKeys.HasFlag(Keys.Control))
+            {
+                dataGridView1.ClearSelection();
+            }
+
+            DataGridViewCell cell = row.Cells[e.ColumnIndex];
+            cell.Selected = true;
         }
     }
 }

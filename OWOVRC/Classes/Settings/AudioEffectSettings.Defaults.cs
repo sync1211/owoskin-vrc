@@ -28,5 +28,15 @@ namespace OWOVRC.Classes.Settings
             Muscle.Arm_R,
             Muscle.Arm_L
         ];
+        [JsonIgnore]
+        private static readonly Muscle[] DefaultLowMidMuscles = [
+            Muscle.Arm_R,
+            Muscle.Arm_L
+        ];
+        [JsonIgnore]
+        private static readonly Muscle[] DefaultMidMuscles = [
+            Muscle.Pectoral_L,
+            Muscle.Pectoral_R
+        ];
     }
 }

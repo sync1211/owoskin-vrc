@@ -49,5 +49,18 @@ namespace OWOVRC.Classes.Effects.OSCPresets
             SensationString = sensationString;
             SensationObject = Sensation.Parse(SensationString);
         }
+
+        public OSCSensationPreset Clone()
+        {
+            return new(
+                this.Enabled,
+                this.Name,
+                this.Priority,
+                this.Intensity,
+                this.Loop,
+                this.Interruptable,
+                this.SensationString
+            );
+        }
     }
 }

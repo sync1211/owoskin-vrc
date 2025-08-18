@@ -913,13 +913,7 @@ namespace OWOVRC.UI
                 return;
             }
 
-            float subBassThreshold = audioSettings.SubBassSettings.MinDB;
-            float bassThreshold = audioSettings.BassSettings.MinDB;
-            float trebleThreshold = audioSettings.TrebleSettings.MinDB;
-
-            audioMonitorForm.SubBassThreshold = subBassThreshold;
-            audioMonitorForm.BassThreshold = bassThreshold;
-            audioMonitorForm.TrebleThreshold = trebleThreshold;
+            audioMonitorForm.ImportThresholdsFromSettings();
         }
 
         private void AudioMonitorButton_Click(object sender, EventArgs e)
@@ -937,9 +931,8 @@ namespace OWOVRC.UI
 
             if (audioMonitorForm == null)
             {
-                audioMonitorForm = new AudioMonitorForm(audioEffect, 0, 0, 0);
+                audioMonitorForm = new AudioMonitorForm(audioEffect);
                 audioMonitorForm.FormClosed += AudioMonitorForm_Closed;
-                UpdateAudioMonitorThresholds();
                 audioMonitorForm.Show();
             }
 
