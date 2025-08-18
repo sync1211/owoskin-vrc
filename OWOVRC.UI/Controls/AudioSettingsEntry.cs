@@ -116,7 +116,7 @@ namespace OWOVRC.UI.Controls
             this.owoHelper = owoHelper;
 
             // Force newline on zero-width space (U+200B)
-            nameLabel.Text = Name.Replace("​", Environment.NewLine);
+            nameLabel.Text = Name.Replace("\u200B", Environment.NewLine);
 
             priorityInput.Value = priority;
 
