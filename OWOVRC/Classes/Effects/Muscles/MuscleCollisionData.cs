@@ -7,6 +7,7 @@
         public DateTime LastUpdate { get; private set; }
         public float VelocityMultiplier { get; set; }
         public float DecayFactor { get; private set; }
+        public bool StopOnNextCycle { get; set; }
 
         public MuscleCollisionData(string name, float proximity)
         {
