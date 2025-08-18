@@ -1,11 +1,12 @@
 ﻿using OWOGame;
+using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 
 namespace OWOVRC.Classes.OWOSuit
 {
     public static class OWOMuscles
     {
-        public static readonly Dictionary<string, Muscle> Muscles = new()
+        public static readonly ImmutableDictionary<string, Muscle> Muscles = new Dictionary<string, Muscle>()
         {
             // Shadoki-Style naming
             { "owo_suit_pectoral_r",  Muscle.Pectoral_R },
@@ -72,9 +73,9 @@ namespace OWOVRC.Classes.OWOSuit
             { "bosc_v1_vestback_16", Muscle.Lumbar_R },
             { "bosc_v1_vestback_19", Muscle.Lumbar_R },
             { "bosc_v1_vestback_20", Muscle.Lumbar_R },
-        };
+        }.ToImmutableDictionary();
 
-        public static readonly Dictionary<string, Muscle[]> MuscleGroups = new()
+        public static readonly ImmutableDictionary<string, Muscle[]> MuscleGroups = new Dictionary<string, Muscle[]>()
         {
             { "all", Muscle.All },
             { "upperChest", [Muscle.Pectoral_L, Muscle.Pectoral_R] },
@@ -82,7 +83,7 @@ namespace OWOVRC.Classes.OWOSuit
             { "backMuscles", Muscle.Back },
             { "leftMuscles", [Muscle.Arm_L, Muscle.Pectoral_L, Muscle.Dorsal_L, Muscle.Abdominal_L, Muscle.Lumbar_L] },
             { "rightMuscles", [Muscle.Arm_R, Muscle.Pectoral_R, Muscle.Dorsal_R, Muscle.Abdominal_R, Muscle.Lumbar_R] }
-        };
+        }.ToImmutableDictionary();
 
         //OPTIMIZATION: Cache muscle count
         // This is needed as Muscle.All creates a new array every time it's called.

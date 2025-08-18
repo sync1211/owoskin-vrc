@@ -1,6 +1,7 @@
 ﻿using OWOVRC.Classes.Helpers;
 using Serilog;
 using Serilog.Events;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -24,8 +25,8 @@ namespace OWOVRC.Classes.Commandline
          // ProcessPriorityClass.RealTime     // 3 (shouldn't be used)
         ];
 
-        private static readonly Dictionary<string, LogEventLevel> LogLevelMap = Logging.Levels
-            .ToDictionary(
+        private static readonly ImmutableDictionary<string, LogEventLevel> LogLevelMap = Logging.Levels
+            .ToImmutableDictionary(
                 level => level.ToString().ToLower(),
                 level => level
             );
