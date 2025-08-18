@@ -519,5 +519,29 @@ namespace OWOVRC.UI.Forms
 
             dataGridView1.CancelEdit();
         }
+
+        // Select cells via right-click
+        private void DataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+
+            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+            if (row.Selected)
+            {
+                return;
+            }
+
+            if (!ModifierKeys.HasFlag(Keys.Control))
+            {
+                dataGridView1.ClearSelection();
+            }
+
+            DataGridViewCell cell = row.Cells[e.ColumnIndex];
+            cell.Selected = true;
+        }
     }
 }

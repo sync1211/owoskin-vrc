@@ -55,10 +55,12 @@
             dataGridView1.Location = new Point(12, 41);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.ShowEditingIcon = false;
             dataGridView1.Size = new Size(776, 368);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += DataGridView1_CellContentClick;
+            dataGridView1.CellMouseDown += DataGridView1_CellMouseDown;
             dataGridView1.CellValueChanged += DataGridView1_CellValueChanged;
             dataGridView1.DataError += DataGridView1_DataError;
             dataGridView1.DragDrop += DataGridView1_DragDrop;
