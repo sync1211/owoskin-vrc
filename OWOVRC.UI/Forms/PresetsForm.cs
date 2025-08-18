@@ -256,7 +256,7 @@ namespace OWOVRC.UI.Forms
                     {
                         return dialog.Name;
                     }
-                    else if (result == DialogResult.Continue)
+                    if (result == DialogResult.Continue)
                     {
                         showCollisionDialog = false;
                     }
