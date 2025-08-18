@@ -134,51 +134,51 @@ namespace OWOVRC.UI
         private void LoadSettings()
         {
             // Connection settings
-            ConnectionSettings? connectionSettings = SettingsHelper
+            ConnectionSettings? loadedConnectionSettings = SettingsHelper
                 .LoadSettingsFromFile("connection.json", "connection", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
-            if (connectionSettings != null)
+            if (loadedConnectionSettings != null)
             {
-                this.connectionSettings = connectionSettings;
+                this.connectionSettings = loadedConnectionSettings;
             }
 
             // Colliders effect settings
-            CollidersEffectSettings? collidersSettings = SettingsHelper
+            CollidersEffectSettings? loadedCollidersSettings = SettingsHelper
                 .LoadSettingsFromFile("colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
-            if (collidersSettings != null)
+            if (loadedCollidersSettings != null)
             {
-                this.collidersSettings = collidersSettings;
+                this.collidersSettings = loadedCollidersSettings;
             }
 
             // Velocity effect settings
-            VelocityEffectSettings? velocitySettings = SettingsHelper
+            VelocityEffectSettings? loadedVelocitySettings = SettingsHelper
                 .LoadSettingsFromFile("velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
-            if (velocitySettings != null)
+            if (loadedVelocitySettings != null)
             {
-                this.velocitySettings = velocitySettings;
+                this.velocitySettings = loadedVelocitySettings;
             }
 
             // OWI settings
-            WorldIntegratorSettings? owiSettings = SettingsHelper
+            WorldIntegratorSettings? loadedOwiSettings = SettingsHelper
                 .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
-            if (owiSettings != null)
+            if (loadedOwiSettings != null)
             {
-                this.owiSettings = owiSettings;
+                this.owiSettings = loadedOwiSettings;
             }
 
             // OSC Presets settings
-            OSCPresetsSettings? oscPresetsSettings = SettingsHelper
+            OSCPresetsSettings? loadedOscPresetsSettings = SettingsHelper
                 .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
-            if (oscPresetsSettings != null)
+            if (loadedOscPresetsSettings != null)
             {
-                this.oscPresetsSettings = oscPresetsSettings;
+                this.oscPresetsSettings = loadedOscPresetsSettings;
             }
 
             // Audio settings
-            AudioEffectSettings? audioSettings = SettingsHelper
+            AudioEffectSettings? loadedAudioSettings = SettingsHelper
                 .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
-            if (audioSettings != null)
+            if (loadedAudioSettings != null)
             {
-                this.audioSettings = audioSettings;
+                this.audioSettings = loadedAudioSettings;
             }
         }
 
