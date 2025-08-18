@@ -125,11 +125,11 @@ namespace OWOVRC.Classes.Effects
         /// </summary>
         private void ProcessStopVelocity()
         {
-            TimeSpan decelerationDuration = DateTime.Now - LastSpeedPacket;
+            TimeSpan decelerationDuration = DateTime.UtcNow - LastSpeedPacket;
 
             if (!Settings.ImpactEnabled || (decelerationDuration >= Settings.StopVelocityTime) || (Speed > 1) || (SpeedLast <= 0))
             {
-                LastSpeedPacket = DateTime.Now;
+                LastSpeedPacket = DateTime.UtcNow;
                 SpeedLast = Speed;
                 return;
             }
@@ -140,7 +140,7 @@ namespace OWOVRC.Classes.Effects
 
             if (stopVelocity < Settings.StopVelocityThreshold)
             {
-                LastSpeedPacket = DateTime.Now;
+                LastSpeedPacket = DateTime.UtcNow;
                 SpeedLast = Speed;
                 return;
             }
@@ -200,7 +200,7 @@ namespace OWOVRC.Classes.Effects
             // Send sensation to vest
             PlayWindSensation(speedPercent);
 
-            LastSpeedPacket = DateTime.Now;
+            LastSpeedPacket = DateTime.UtcNow;
             SpeedLast = Speed;
         }
 
