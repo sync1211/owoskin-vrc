@@ -39,7 +39,6 @@
             // okButton
             // 
             okButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            okButton.DialogResult = DialogResult.OK;
             okButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             okButton.Location = new Point(237, 63);
             okButton.Name = "okButton";
@@ -59,7 +58,6 @@
             cancelButton.TabIndex = 3;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += ControlButton_Click;
             // 
             // descriptionLabel
             // 
