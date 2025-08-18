@@ -541,10 +541,8 @@
         private Label rightTrebleTitle;
         private Audio.WinForms.Controls.BarIndicator trebleIndicatorRight;
         private Label leftMidDBLabel;
-        private Label label5;
         private Audio.WinForms.Controls.BarIndicator midIndicatorLeft;
         private Label leftLowMidDBLabel;
-        private Label label3;
         private Audio.WinForms.Controls.BarIndicator lowMidIndicatorLeft;
         private Label rightMidDBLabel;
         private Label rightMidTitle;
