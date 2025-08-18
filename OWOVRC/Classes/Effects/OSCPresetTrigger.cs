@@ -118,7 +118,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Stop looped sensation
-            if (oscIntensity == 0)
+            if (oscIntensity <= 0)
             {
                 Log.Debug("Stopping preset {presetName}!", preset.Name);
 
