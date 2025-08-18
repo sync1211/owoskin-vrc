@@ -121,7 +121,7 @@ namespace OWOVRC.UI.Forms
         {
             using (OpenFileDialog openFileDialog = new()
             {
-                Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (oscPresets.json)|oscPresets.json",
+                Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (*.json)|*.json",
                 Title = "Select a file to import",
                 Multiselect = true
             })

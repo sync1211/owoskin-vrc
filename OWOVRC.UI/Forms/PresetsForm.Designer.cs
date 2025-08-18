@@ -84,7 +84,7 @@
             importSensationButton.Name = "importSensationButton";
             importSensationButton.Size = new Size(109, 23);
             importSensationButton.TabIndex = 2;
-            importSensationButton.Text = "Import sensation";
+            importSensationButton.Text = "Import sensations";
             importSensationButton.UseVisualStyleBackColor = true;
             importSensationButton.Click += ImportSensationButton_Click;
             // 
