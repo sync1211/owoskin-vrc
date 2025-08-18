@@ -1,5 +1,3 @@
-using OWOVRC.Audio.WinForms;
-
 namespace OWOVRC.Audio.Demo
 {
     internal static class Program
