@@ -51,7 +51,7 @@ namespace OWOVRC.Classes.Commandline
                     string argValue = arg.Substring(CPU_AFFINITY_ARG.Length).TrimStart('0', 'x');
                     if (!int.TryParse(argValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int affinity) || affinity <= 0)
                     {
-                        Log.Error("Invalid CPU affinity value: {arg}", argValue);
+                        Log.Error("Invalid CPU affinity value: {Arg}", argValue);
                         continue;
                     }
 
@@ -64,17 +64,17 @@ namespace OWOVRC.Classes.Commandline
                     string argValue = arg.Substring(REVERSE_AFFINITY_ARG.Length).TrimStart('0', 'x');
                     if (!int.TryParse(argValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int affinity) || affinity > CPUHelper.MaxAffinityValue)
                     {
-                        Log.Error("Invalid inverse CPU affinity value: {arg}", argValue);
+                        Log.Error("Invalid inverse CPU affinity value: {Arg}", argValue);
                         continue;
                     }
 
                     if (options.CpuAffinity != null)
                     {
-                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg:X}", options.CpuAffinity);
+                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {Arg:X}", options.CpuAffinity);
                     }
 
                     options.CpuAffinity = CPUHelper.InvertAffinityValue(affinity);
-                    Log.Information("VRChat's CPU affinity is {affinity:X}, setting own affinity to {invertedAffinity:X}", affinity, options.CpuAffinity);
+                    Log.Information("VRChat's CPU affinity is {Affinity:X}, setting own affinity to {InvertedAffinity:X}", affinity, options.CpuAffinity);
                 }
 
                 // Process priority
@@ -83,20 +83,20 @@ namespace OWOVRC.Classes.Commandline
                     string argValue = arg.Substring(PROCESS_PRIORITY_ARG.Length);
                     if (!int.TryParse(argValue, out int priority))
                     {
-                        Log.Error("Invalid process priority value: {arg}", argValue);
+                        Log.Error("Invalid process priority value: {Arg}", argValue);
                         continue;
                     }
 
                     ProcessPriorityClass? priorityClass = IntToPriorityClass(priority);
                     if (priorityClass == null)
                     {
-                        Log.Error("Invalid process priority value: {arg}", argValue);
+                        Log.Error("Invalid process priority value: {Arg}", argValue);
                         continue;
                     }
 
                     if (options.CpuAffinity != null)
                     {
-                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {arg:X}", options.CpuAffinity);
+                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {Arg:X}", options.CpuAffinity);
                     }
 
                     options.Priority = priorityClass.Value;
@@ -108,14 +108,14 @@ namespace OWOVRC.Classes.Commandline
                     string argValue = arg.Substring(LOG_LEVEL_ARG.Length).ToLower();
                     if (!LogLevelMap.TryGetValue(argValue, out LogEventLevel logLevel))
                     {
-                        Log.Error("Invalid log level value: {arg}", argValue);
+                        Log.Error("Invalid log level value: {Arg}", argValue);
                         continue;
                     }
                     options.LogLevel = logLevel;
                 }
                 else
                 {
-                    Log.Warning("Unknown commandline argument: {arg}", arg);
+                    Log.Warning("Unknown commandline argument: {Arg}", arg);
                 }
             }
 

@@ -94,7 +94,7 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             if (maxVelocity <= 0)
             {
-                Log.Debug("maxVelocity is <= 0! {x} {y} {z}", velocityX, velocityY, velocityZ);
+                Log.Debug("maxVelocity is <= 0! {X} {Y} {Z}", velocityX, velocityY, velocityZ);
                 return;
             }
 

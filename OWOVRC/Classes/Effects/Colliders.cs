@@ -91,7 +91,7 @@ namespace OWOVRC.Classes.Effects
             {
                 if (!activeMuscles.TryAdd(muscle, muscleData))
                 {
-                    Log.Warning("Unable to add muscle '{muscle}' to active muscles.", muscle);
+                    Log.Warning("Unable to add muscle '{Muscle}' to active muscles.", muscle);
                 }
                 return;
             }
@@ -118,10 +118,10 @@ namespace OWOVRC.Classes.Effects
         {
             if (activeMuscles.ContainsKey(muscle))
             {
-                Log.Debug("Stop: {muscle}", muscle);
+                Log.Debug("Stop: {Muscle}", muscle);
                 if (!activeMuscles.TryRemove(muscle, out MuscleCollisionData? _))
                 {
-                    Log.Warning("Muscle '{muscle}' could not be from active muscles.", muscle);
+                    Log.Warning("Muscle '{Muscle}' could not be from active muscles.", muscle);
                 }
             }
 
@@ -156,7 +156,7 @@ namespace OWOVRC.Classes.Effects
                 if (!OWOMuscles.Muscles.TryGetValue(muscleData.Name, out Muscle muscle))
                 {
                     Log.Warning(
-                        "Muscle '{muscle}' not found in muscle list. Skipping sensation.",
+                        "Muscle '{Muscle}' not found in muscle list. Skipping sensation.",
                         muscleData.Name
                     );
                     continue;
@@ -172,13 +172,13 @@ namespace OWOVRC.Classes.Effects
                 if (Settings.UseVelocity)
                 {
                     float increase = muscleData.VelocityMultiplier * Math.Max(Settings.MinIntensity, 1);
-                    Log.Debug("Increase: {inc}", increase);
+                    Log.Debug("Increase: {Inc}", increase);
                     intensity = Settings.MinIntensity + (int)increase;
                     intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
                 }
 
                 Log.Debug(
-                    "Muscle: {muscle}, Intensity: {intensity}% (Min: {base}%, Multiplier: {multiplier})",
+                    "Muscle: {Muscle}, Intensity: {Intensity}% (Min: {Base}%, Multiplier: {Multiplier})",
                     muscleData.Name,
                     intensity,
                     Settings.MinIntensity,

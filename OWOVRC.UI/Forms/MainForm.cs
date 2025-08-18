@@ -462,7 +462,7 @@ namespace OWOVRC.UI
             if (logLevelComboBox.SelectedItem is LogEventLevel level)
             {
                 logLevelSwitch.MinimumLevel = level;
-                Log.Information("Log level changed to {level}", level);
+                Log.Information("Log level changed to {Level}", level);
             }
         }
 
@@ -985,7 +985,7 @@ namespace OWOVRC.UI
                     if (result == DialogResult.OK)
                     {
                         audioEffect = new(owo, audioSettings, dialog.Value);
-                        Log.Information("Audio device changed to {device}", dialog.Value);
+                        Log.Information("Audio device changed to {Device}", dialog.Value);
                     }
                 }
             }

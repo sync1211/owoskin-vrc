@@ -113,7 +113,7 @@ namespace OWOVRC.Classes.Effects
                     ProcessStopVelocity();
                     break;
                 default:
-                    Log.Warning("Unknown velocity component '{message}' with value {value}", message.Address, value);
+                    Log.Warning("Unknown velocity component '{Message}' with value {Value}", message.Address, value);
                     break;
             }
             return true;
@@ -148,7 +148,7 @@ namespace OWOVRC.Classes.Effects
             owo.StopSensation(WindSensation._Name);
 
             // Play impact sensation
-            Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, decelerationDuration, velocityPercent);
+            Log.Debug("Stop velocity: {Speed}, Time: {Time} => {Percent}%", SpeedLast, decelerationDuration, velocityPercent);
             PlayStopSensation(velocityPercent);
 
             LastSpeedPacket = DateTime.MinValue;

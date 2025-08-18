@@ -27,7 +27,7 @@ namespace OWOVRC.Classes.Commandline
                 if (args.LogLevel != null)
                 {
                     logLevelSwitch.MinimumLevel = args.LogLevel.Value;
-                    Log.Information("Log level changed to: {newLevel}", logLevelSwitch.MinimumLevel);
+                    Log.Information("Log level changed to: {NewLevel}", logLevelSwitch.MinimumLevel);
                 }
 
                 return args;

@@ -76,7 +76,7 @@ namespace OWOVRC.Classes.Effects.OWI
                 // Not found
                 else
                 {
-                    Log.Warning("Muscle not found {muscleName}", muscleName);
+                    Log.Warning("Muscle not found {MuscleName}", muscleName);
                 }
             }
 

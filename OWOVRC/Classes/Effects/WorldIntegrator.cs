@@ -95,7 +95,7 @@ namespace OWOVRC.Classes.Effects
                 return null;
             }
 
-            Log.Debug("Found VRChat log at {log}", recentLogFile.FullName);
+            Log.Debug("Found VRChat log at {Log}", recentLogFile.FullName);
 
             return recentLogFile;
         }
@@ -166,7 +166,7 @@ namespace OWOVRC.Classes.Effects
                 int sensationIntensity = GetSensationIntensity(owiSensation.Sensation);
                 if (sensationIntensity == 0)
                 {
-                    Log.Verbose("Ignoring blacklisted sensation {sensation}", owiSensation.Sensation);
+                    Log.Verbose("Ignoring blacklisted sensation {Sensation}", owiSensation.Sensation);
                     continue;
                 }
 
