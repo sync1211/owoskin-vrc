@@ -200,7 +200,7 @@
             // collidersFrequencyTitle
             // 
             collidersFrequencyTitle.AutoSize = true;
-            collidersFrequencyTitle.Location = new Point(6, 88);
+            collidersFrequencyTitle.Location = new Point(6, 84);
             collidersFrequencyTitle.Name = "collidersFrequencyTitle";
             collidersFrequencyTitle.Size = new Size(62, 15);
             collidersFrequencyTitle.TabIndex = 13;
@@ -244,7 +244,7 @@
             // collidersPriorityLabel
             // 
             collidersPriorityLabel.AutoSize = true;
-            collidersPriorityLabel.Location = new Point(6, 30);
+            collidersPriorityLabel.Location = new Point(6, 32);
             collidersPriorityLabel.Name = "collidersPriorityLabel";
             collidersPriorityLabel.Size = new Size(45, 15);
             collidersPriorityLabel.TabIndex = 9;
@@ -445,7 +445,7 @@
             // velocitySpeedCapLabel
             // 
             velocitySpeedCapLabel.AutoSize = true;
-            velocitySpeedCapLabel.Location = new Point(6, 83);
+            velocitySpeedCapLabel.Location = new Point(6, 86);
             velocitySpeedCapLabel.Name = "velocitySpeedCapLabel";
             velocitySpeedCapLabel.Size = new Size(109, 15);
             velocitySpeedCapLabel.TabIndex = 11;
@@ -455,7 +455,7 @@
             // velocityPriorityLabel
             // 
             velocityPriorityLabel.AutoSize = true;
-            velocityPriorityLabel.Location = new Point(6, 30);
+            velocityPriorityLabel.Location = new Point(6, 32);
             velocityPriorityLabel.Name = "velocityPriorityLabel";
             velocityPriorityLabel.Size = new Size(45, 15);
             velocityPriorityLabel.TabIndex = 15;
@@ -465,7 +465,7 @@
             // velocitySpeedCapInput
             // 
             velocitySpeedCapInput.DecimalPlaces = 2;
-            velocitySpeedCapInput.Location = new Point(262, 83);
+            velocitySpeedCapInput.Location = new Point(262, 84);
             velocitySpeedCapInput.Name = "velocitySpeedCapInput";
             velocitySpeedCapInput.Size = new Size(89, 23);
             velocitySpeedCapInput.TabIndex = 10;
@@ -523,7 +523,7 @@
             // velocityThresholdLabel
             // 
             velocityThresholdLabel.AutoSize = true;
-            velocityThresholdLabel.Location = new Point(6, 58);
+            velocityThresholdLabel.Location = new Point(6, 57);
             velocityThresholdLabel.Name = "velocityThresholdLabel";
             velocityThresholdLabel.Size = new Size(107, 15);
             velocityThresholdLabel.TabIndex = 9;
@@ -619,7 +619,7 @@
             // owiIntensityLabel
             // 
             owiIntensityLabel.AutoSize = true;
-            owiIntensityLabel.Location = new Point(6, 89);
+            owiIntensityLabel.Location = new Point(6, 86);
             owiIntensityLabel.Name = "owiIntensityLabel";
             owiIntensityLabel.Size = new Size(73, 15);
             owiIntensityLabel.TabIndex = 25;
@@ -628,7 +628,7 @@
             // 
             // owiIntensityInput
             // 
-            owiIntensityInput.Location = new Point(262, 86);
+            owiIntensityInput.Location = new Point(262, 84);
             owiIntensityInput.Name = "owiIntensityInput";
             owiIntensityInput.Size = new Size(89, 23);
             owiIntensityInput.TabIndex = 24;
@@ -637,7 +637,7 @@
             // owiUpdateIntervalLabel
             // 
             owiUpdateIntervalLabel.AutoSize = true;
-            owiUpdateIntervalLabel.Location = new Point(6, 59);
+            owiUpdateIntervalLabel.Location = new Point(6, 57);
             owiUpdateIntervalLabel.Name = "owiUpdateIntervalLabel";
             owiUpdateIntervalLabel.Size = new Size(123, 15);
             owiUpdateIntervalLabel.TabIndex = 23;
@@ -692,7 +692,7 @@
             // owiPriorityLabel
             // 
             owiPriorityLabel.AutoSize = true;
-            owiPriorityLabel.Location = new Point(6, 30);
+            owiPriorityLabel.Location = new Point(6, 32);
             owiPriorityLabel.Name = "owiPriorityLabel";
             owiPriorityLabel.Size = new Size(45, 15);
             owiPriorityLabel.TabIndex = 19;

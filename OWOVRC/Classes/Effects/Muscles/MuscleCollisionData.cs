@@ -13,7 +13,7 @@
         {
             Name = name;
             Proximity = proximity;
-            LastUpdate = DateTime.Now;
+            LastUpdate = DateTime.UtcNow;
             VelocityMultiplier = 0;
         }
 

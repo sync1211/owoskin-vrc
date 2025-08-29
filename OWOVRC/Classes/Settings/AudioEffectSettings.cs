@@ -9,20 +9,20 @@ namespace OWOVRC.Classes.Settings
     {
         [JsonInclude]
         public AudioEffectSpectrumSettings BassSettings { get; set; } =
-            new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, 55, 5, 4, 20, 15);
+            new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, baseIntensity: 55, priority: 5, minDB: 4, maxDB: 20, sensationFrequency: 15);
 
         [JsonInclude] //NOTE: zero-width space (U+200B) is used to force a linebreak in the UI
         public AudioEffectSpectrumSettings SubBassSettings { get; set; } =
-            new("Sub-​Bass", AudioSpectrum.SubBass, DefaultSubBassMuscles, 25, 4, 3, 15, 5);
+            new("Sub-\u200BBass", AudioSpectrum.SubBass, DefaultSubBassMuscles, baseIntensity: 25, priority: 4, minDB: 3, maxDB: 15, sensationFrequency: 5);
         [JsonInclude]
         public AudioEffectSpectrumSettings TrebleSettings { get; set; } =
-            new("Treble", AudioSpectrum.Brilliance, DefaultTrebleMuscles, 30, 3, 0.5f, 4, 75);
+            new("Treble", AudioSpectrum.Brilliance, DefaultTrebleMuscles, baseIntensity: 30, priority: 3, minDB: 0.5f, maxDB: 4, sensationFrequency: 75);
         [JsonInclude]
         public AudioEffectSpectrumSettings LowMidSettings { get; set; } =
-            new("Low-​Mid", AudioSpectrum.LowMid, DefaultLowMidMuscles, 30, 2, 1, 4, 21);
+            new("Low-\u200BMid", AudioSpectrum.LowMid, DefaultLowMidMuscles, baseIntensity: 30, priority: 2, minDB: 1, maxDB: 4, sensationFrequency: 21);
         [JsonInclude]  //NOTE: zero-width space (U+200B) is used to force a linebreak in the UI
         public AudioEffectSpectrumSettings MidSettings { get; set; } =
-            new("Mid", AudioSpectrum.Mid, DefaultMidMuscles, 30, 1, 2, 10, 100);
+            new("Mid", AudioSpectrum.Mid, DefaultMidMuscles, baseIntensity: 30, priority: 1, minDB: 2, maxDB: 10, sensationFrequency: 100);
         [JsonIgnore] //NOTE: This array is auto-sorted on priority changes via the OnPriorityChanged event
         public AudioEffectSpectrumSettings[] SpectrumSettings { get; private set; } = null!;
 

@@ -1,6 +1,5 @@
 ﻿using OWOVRC.Audio.Classes;
 using OWOVRC.Audio.WinForms.Classes;
-using System.Diagnostics;
 
 namespace OWOVRC.Audio.Demo
 {

@@ -101,7 +101,7 @@ namespace OWOVRC.Classes.Effects
                 muscles[j] = muscle.WithIntensity(intensity);
             }
 
-            Log.Debug("Audio sensation created. Right {rightIntensity}% Left {leftIntensity}%", rightIntensity, leftIntensity);
+            Log.Debug("Audio sensation created. Right {RightIntensity}% Left {LeftIntensity}%", rightIntensity, leftIntensity);
             return spectrumSettings
                 .GetSensation()
                 .WithMuscles(muscles);

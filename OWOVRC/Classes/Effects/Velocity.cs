@@ -113,7 +113,7 @@ namespace OWOVRC.Classes.Effects
                     ProcessStopVelocity();
                     break;
                 default:
-                    Log.Warning("Unknown velocity component '{message}' with value {value}", message.Address, value);
+                    Log.Warning("Unknown velocity component '{Message}' with value {Value}", message.Address, value);
                     break;
             }
             return true;
@@ -125,11 +125,11 @@ namespace OWOVRC.Classes.Effects
         /// </summary>
         private void ProcessStopVelocity()
         {
-            TimeSpan decelerationDuration = DateTime.Now - LastSpeedPacket;
+            TimeSpan decelerationDuration = DateTime.UtcNow - LastSpeedPacket;
 
             if (!Settings.ImpactEnabled || (decelerationDuration >= Settings.StopVelocityTime) || (Speed > 1) || (SpeedLast <= 0))
             {
-                LastSpeedPacket = DateTime.Now;
+                LastSpeedPacket = DateTime.UtcNow;
                 SpeedLast = Speed;
                 return;
             }
@@ -140,7 +140,7 @@ namespace OWOVRC.Classes.Effects
 
             if (stopVelocity < Settings.StopVelocityThreshold)
             {
-                LastSpeedPacket = DateTime.Now;
+                LastSpeedPacket = DateTime.UtcNow;
                 SpeedLast = Speed;
                 return;
             }
@@ -148,7 +148,7 @@ namespace OWOVRC.Classes.Effects
             owo.StopSensation(WindSensation._Name);
 
             // Play impact sensation
-            Log.Debug("Stop velocity: {speed}, Time: {time} => {percent}%", SpeedLast, decelerationDuration, velocityPercent);
+            Log.Debug("Stop velocity: {Speed}, Time: {Time} => {Percent}%", SpeedLast, decelerationDuration, velocityPercent);
             PlayStopSensation(velocityPercent);
 
             LastSpeedPacket = DateTime.MinValue;
@@ -200,7 +200,7 @@ namespace OWOVRC.Classes.Effects
             // Send sensation to vest
             PlayWindSensation(speedPercent);
 
-            LastSpeedPacket = DateTime.Now;
+            LastSpeedPacket = DateTime.UtcNow;
             SpeedLast = Speed;
         }
 

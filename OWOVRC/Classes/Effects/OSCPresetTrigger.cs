@@ -60,7 +60,7 @@ namespace OWOVRC.Classes.Effects
             // Get preset
             if (!Settings.Presets.TryGetValue(presetName, out OSCSensationPreset? preset) || preset == null)
             {
-                Log.Warning("Preset {presetName} not found!", presetName);
+                Log.Warning("Preset {PresetName} not found!", presetName);
                 return null;
             }
 
@@ -87,7 +87,7 @@ namespace OWOVRC.Classes.Effects
             {
                 return sensationWithMuscles.muscles;
             }
-            else if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
+            if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
             {
                 return refSensationWithMuscles.muscles;
             }
@@ -113,14 +113,14 @@ namespace OWOVRC.Classes.Effects
 
             if (!preset.Enabled)
             {
-                Log.Debug("Disabled preset {presetName} called!", preset.Name);
+                Log.Debug("Disabled preset {PresetName} called!", preset.Name);
                 return;
             }
 
             // Stop looped sensation
-            if (oscIntensity == 0)
+            if (oscIntensity <= 0)
             {
-                Log.Debug("Stopping preset {presetName}!", preset.Name);
+                Log.Debug("Stopping preset {PresetName}!", preset.Name);
 
                 owo.StopSensation(preset.Name, preset.Interruptable);
                 return;
@@ -134,7 +134,7 @@ namespace OWOVRC.Classes.Effects
                 muscles[i] = muscles[i].WithIntensity((int)intensity);
             }
 
-            Log.Debug("Triggering preset {presetName} at {intensity} intensity!", preset.Name, intensity);
+            Log.Debug("Triggering preset {PresetName} at {Intensity} intensity!", preset.Name, intensity);
             Sensation sensation = preset.SensationObject;
 
             // Play sensation

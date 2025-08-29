@@ -24,7 +24,7 @@ namespace OWOVRC.Classes.OSC
                 case TypeTag.Int32:
                     return message.Values.ReadIntElement(index);
                 default:
-                    Log.Warning("No valid float value received in message for {address}!", message.Address);
+                    Log.Warning("No valid float value received in message for {Address}!", message.Address);
                     return 0f;
             }
         }

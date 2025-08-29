@@ -2,7 +2,7 @@
 using Serilog.Core;
 using Serilog.Events;
 
-namespace OWOVRC.Audio.WinForms.Classes
+namespace OWOVRC.Audio.Demo.Classes
 {
     public static class Logging
     {

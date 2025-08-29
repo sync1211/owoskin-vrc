@@ -141,7 +141,7 @@ namespace OWOVRC.UI.Forms
                 for (int i = 0; i < fileNames.Length; i++)
                 {
                     string filePath = fileNames[i];
-                    Log.Debug("Importing sensation from file: {file}", filePath);
+                    Log.Debug("Importing sensation from file: {File}", filePath);
 
                     bool success = false;
                     if (filePath.EndsWith(".owo"))
@@ -224,11 +224,11 @@ namespace OWOVRC.UI.Forms
 
         private bool ImportOWOSensationFromFile(string path)
         {
-            Log.Debug("Importing sensation from file: {path}", path);
+            Log.Debug("Importing sensation from file: {Path}", path);
 
             if (!path.EndsWith(".owo"))
             {
-                Log.Warning("Not importing file {path}: unsupported extension", path);
+                Log.Warning("Not importing file {Path}: unsupported extension", path);
                 MessageBox.Show($"Unsupported file type:{Environment.NewLine}{path}{Environment.NewLine}{Environment.NewLine}Only valid .owo files can be imported as presets!", "Unsupported file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
@@ -256,7 +256,7 @@ namespace OWOVRC.UI.Forms
                     {
                         return dialog.Name;
                     }
-                    else if (result == DialogResult.Continue)
+                    if (result == DialogResult.Continue)
                     {
                         showCollisionDialog = false;
                     }
@@ -289,7 +289,7 @@ namespace OWOVRC.UI.Forms
         {
             try
             {
-                Log.Verbose("Importing sensation {name}: {value}", name, sensationString);
+                Log.Verbose("Importing sensation {Name}: {Value}", name, sensationString);
 
                 // Fix potential name collisions
                 string? newName = ResolveNameCollisions(name);

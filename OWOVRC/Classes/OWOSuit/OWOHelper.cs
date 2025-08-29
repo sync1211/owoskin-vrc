@@ -128,7 +128,7 @@ namespace OWOVRC.Classes.OWOSuit
         private void InterruptSensation(string name)
         {
             sensationManager.stopSensation(name);
-            Log.Debug("Sensation {name} stopped!", name);
+            Log.Debug("Sensation {Name} stopped!", name);
         }
 
         private void StopSensationAfterPlay(string name)
@@ -152,7 +152,7 @@ namespace OWOVRC.Classes.OWOSuit
             instance.LastCalculationOfCycle -= StopSensationInstance;
 
             sensationManager.stopSensation(instance.name);
-            Log.Debug("Sensation {name} stopped!", instance.name);
+            Log.Debug("Sensation {Name} stopped!", instance.name);
         }
 
         //private void HandleSensationFirstTick(AdvancedSensationStreamInstance instance, bool firstCycle)

@@ -30,11 +30,11 @@ namespace OWOVRC.Classes.OSC
             }
             catch (Exception e)
             {
-                Log.Error(e, "Failed to start OSC listener on port {port}! Make sure the port is not in use!", Port);
+                Log.Error(e, "Failed to start OSC listener on port {Port}! Make sure the port is not in use!", Port);
                 return;
             }
             IsRunning = true;
-            Log.Information("OSC listener started on port {port}!", Port);
+            Log.Information("OSC listener started on port {Port}!", Port);
         }
 
         private void MessageReceived(BlobString address, OscMessageValues values)
@@ -42,7 +42,7 @@ namespace OWOVRC.Classes.OSC
             string addressString = address.ToString();
             if (!addressString.StartsWith(OSC_ADDRESS, StringComparison.CurrentCultureIgnoreCase))
             {
-                Log.Verbose("Ignoring non-vrchat message at {address}", addressString);
+                Log.Verbose("Ignoring non-vrchat message at {Address}", addressString);
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace OWOVRC.Classes.OSC
 
             if (values.ElementCount == 0)
             {
-                Log.Verbose("Message at {address} does not include any values, ignoring.", addressString);
+                Log.Verbose("Message at {Address} does not include any values, ignoring.", addressString);
                 return;
             }
 

@@ -84,7 +84,7 @@ namespace OWOVRC.Audio.Classes
                 else
                 {
                     // Not supported!
-                    throw new Exception("Unsupported PCM format!");
+                    throw new FormatException("Unsupported PCM format!");
                 }
             }
             else if (waveEncoding == WaveFormatEncoding.IeeeFloat && (bytesPerSampleChannel == 4))
@@ -96,7 +96,7 @@ namespace OWOVRC.Audio.Classes
             else
             {
                 // Not supported!
-                throw new Exception("Unsupported encoding!");
+                throw new FormatException("Unsupported encoding!");
             }
         }
 

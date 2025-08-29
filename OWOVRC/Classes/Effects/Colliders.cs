@@ -91,7 +91,7 @@ namespace OWOVRC.Classes.Effects
             {
                 if (!activeMuscles.TryAdd(muscle, muscleData))
                 {
-                    Log.Warning("Unable to add muscle '{muscle}' to active muscles.", muscle);
+                    Log.Warning("Unable to add muscle '{Muscle}' to active muscles.", muscle);
                 }
                 return;
             }
@@ -119,10 +119,10 @@ namespace OWOVRC.Classes.Effects
         {
             if (activeMuscles.ContainsKey(muscle))
             {
-                Log.Debug("Stop: {muscle} (Active muscles: {muscleCount}", muscle, activeMuscles.Count);
+                Log.Debug("Stop: {Muscle} (Active muscles: {MuscleCount}", muscle, activeMuscles.Count);
                 if (!activeMuscles.TryGetValue(muscle, out MuscleCollisionData? muscleData))
                 {
-                    Log.Warning("Muscle '{muscle}' could not be from active muscles.", muscle);
+                    Log.Warning("Muscle '{Muscle}' could not be from active muscles.", muscle);
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace OWOVRC.Classes.Effects
                 if (!OWOMuscles.Muscles.TryGetValue(muscleData.Name, out Muscle muscle))
                 {
                     Log.Warning(
-                        "Muscle '{muscle}' not found in muscle list. Skipping sensation.",
+                        "Muscle '{Muscle}' not found in muscle list. Skipping sensation.",
                         muscleData.Name
                     );
                     continue;
@@ -178,13 +178,14 @@ namespace OWOVRC.Classes.Effects
                 if (Settings.UseVelocity)
                 {
                     float increase = muscleData.VelocityMultiplier * Math.Max(Settings.MinIntensity, 1);
-                    Log.Verbose("Increase: {inc}", increase);
+                    Log.Verbose("Increase: {Inc}", increase);
+
                     intensity = Settings.MinIntensity + (int)increase;
                     intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
                 }
 
                 Log.Verbose(
-                    "Muscle: {muscle}, Intensity: {intensity}% (Min: {base}%, Multiplier: {multiplier})",
+                    "Muscle: {Muscle}, Intensity: {Intensity}% (Min: {Base}%, Multiplier: {Multiplier})",
                     muscleData.Name,
                     intensity,
                     Settings.MinIntensity,
