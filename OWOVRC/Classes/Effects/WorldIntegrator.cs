@@ -95,6 +95,12 @@ namespace OWOVRC.Classes.Effects
                 return null;
             }
 
+            string expectedFileName = $"output_log_{DateTime.Now:yyyy-MM-dd}";
+            if (!recentLogFile.Name.StartsWith(expectedFileName))
+            {
+                Log.Warning("The most recent log file does not match today's date! Make sure to start VRChat BEFORE connecting to OWO!");
+            }
+
             Log.Debug("Found VRChat log at {Log}", recentLogFile.FullName);
 
             return recentLogFile;
