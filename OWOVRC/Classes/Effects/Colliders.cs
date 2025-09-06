@@ -159,6 +159,13 @@ namespace OWOVRC.Classes.Effects
                         "Muscle '{Muscle}' not found in muscle list. Skipping sensation.",
                         muscleData.Name
                     );
+
+                    // Remove invalid muscle from active list
+                    if (!activeMuscles.TryRemove(muscleData.Name, out _))
+                    {
+                        Log.Warning("Muscle '{Muscle}' could not be from active muscles.", muscleData.Name);
+                    }
+
                     continue;
                 }
 
