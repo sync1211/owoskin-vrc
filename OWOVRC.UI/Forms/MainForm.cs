@@ -200,6 +200,7 @@ namespace OWOVRC.UI
         private void StartButton_Click(object sender, EventArgs e)
         {
             StartConnection();
+            UpdateASMStatus();
         }
 
         public void StartConnection()
@@ -217,6 +218,7 @@ namespace OWOVRC.UI
             uiUpdateTimer.Stop();
 
             UpdateConnectionStatus();
+            UpdateASMStatus();
         }
 
         private void UpdateConnectionStatus()
