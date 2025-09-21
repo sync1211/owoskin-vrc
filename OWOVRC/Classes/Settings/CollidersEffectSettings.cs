@@ -14,7 +14,7 @@ namespace OWOVRC.Classes.Settings
         public int MinIntensity { get; set; } = 50; // Min intensity when calculating speed
 #pragma warning disable IDE1006 // Naming conventions
         [JsonIgnore]
-        private int frequency { get; set; } = 50; // Set by Frequency property
+        private int frequency { get; set; } = 20; // Set by Frequency property
         [JsonIgnore]
         private float sensationSeconds { get; set; } = 0.2f; // Set by SensationSeconds property
 #pragma warning restore IDE1006 // Naming conventions

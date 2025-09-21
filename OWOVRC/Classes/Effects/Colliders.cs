@@ -108,7 +108,7 @@ namespace OWOVRC.Classes.Effects
 
             if (timediff < Settings.MaxTimeDiff)
             {
-                muscleData.VelocityMultiplier = speed * (Settings.SpeedMultiplier * 100);
+                muscleData.VelocityMultiplier = speed * Settings.SpeedMultiplier * 100;
                 muscleData.AddDecay(Settings.DecayCycleCount);
             }
             activeMuscles.AddOrUpdate(muscle, muscleData, (_, _) => muscleData);
