@@ -176,9 +176,14 @@ namespace OWOVRC.Classes.Effects
                     continue;
                 }
 
+                // Get intensity multiplier
+                if (Settings.MuscleIntensities.TryGetValue(owiSensation.Frequency, out int freqIntensity))
+                {
+                    sensationIntensity = (sensationIntensity * freqIntensity) / 100;
+                }
+
                 // Play sensation
-                int intensityMultiplier = (int) (Settings.Intensity / 100f) * sensationIntensity;
-                Muscle[] muscles = owiSensation.GetMusclesWithIntensity(intensityMultiplier / 100f);
+                Muscle[] muscles = owiSensation.GetMusclesWithIntensity(Settings.MuscleIntensities, sensationIntensity);
                 Sensation sensation = owiSensation.AsSensation();
 
                 owo.AddSensation($"{OWI_NAME_PREFIX}{owiSensation.Sensation}", sensation, muscles);
