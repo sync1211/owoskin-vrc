@@ -183,8 +183,9 @@ namespace OWOVRC.Classes.Effects
 
                     intensity = Settings.MinIntensity + (int)increase;
                     intensity = Math.Max(intensity, Settings.MinIntensity); // Lower limit
-                    intensity = Math.Min(intensity, maxIntensity);          // Upper limit
+                    intensity = Math.Min(intensity, 100);                   // Upper limit
                 }
+                intensity = (int) Math.Round(((float)intensity / 100f) * maxIntensity);
 
                 Log.Verbose(
                     "Muscle: {Muscle}, Intensity: {Intensity}% (Min: {Base}%, Multiplier: {Multiplier})",
