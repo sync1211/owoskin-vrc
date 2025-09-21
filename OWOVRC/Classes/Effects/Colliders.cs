@@ -168,20 +168,22 @@ namespace OWOVRC.Classes.Effects
                     continue;
                 }
 
-                // Velocity-based intensity
-                int intensity = 100;
-                if (Settings.MuscleIntensities.TryGetValue(muscle.id, out int baseIntensity))
+                // Maximum intensity
+                if (!Settings.MuscleIntensities.TryGetValue(muscle.id, out int maxIntensity))
                 {
-                    intensity = baseIntensity;
+                    maxIntensity = 100;
                 }
+                int intensity = maxIntensity;
 
+                // Velocity-based intensity
                 if (Settings.UseVelocity)
                 {
                     float increase = muscleData.VelocityMultiplier * Math.Max(Settings.MinIntensity, 1);
                     Log.Verbose("Increase: {Inc}", increase);
 
                     intensity = Settings.MinIntensity + (int)increase;
-                    intensity = Math.Min(Math.Max(intensity, Settings.MinIntensity), 100);
+                    intensity = Math.Max(intensity, Settings.MinIntensity); // Lower limit
+                    intensity = Math.Min(intensity, maxIntensity);          // Upper limit
                 }
 
                 Log.Verbose(
@@ -192,7 +194,7 @@ namespace OWOVRC.Classes.Effects
                     muscleData.VelocityMultiplier
                 );
 
-                musclesScaled[i] = muscle.WithIntensity(intensity);
+                musclesScaled[i] = muscle.WithIntensity(maxIntensity);
 
                 // Remove if requested
                 if (muscleData.StopOnNextCycle)

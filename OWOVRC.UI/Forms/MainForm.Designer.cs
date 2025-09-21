@@ -225,7 +225,7 @@
             configureCollidersIntensityButton.Size = new Size(89, 23);
             configureCollidersIntensityButton.TabIndex = 11;
             configureCollidersIntensityButton.Text = "Configure";
-            helpToolTip.SetToolTip(configureCollidersIntensityButton, "Configure muscle intensities for this effect");
+            helpToolTip.SetToolTip(configureCollidersIntensityButton, "Configure the maximum intensity for each muscle");
             configureCollidersIntensityButton.UseVisualStyleBackColor = true;
             configureCollidersIntensityButton.Click += ConfigureCollidersIntensityButton_Click;
             // 
@@ -280,7 +280,7 @@
             configureCollidersIntensityLabel.Size = new Size(73, 15);
             configureCollidersIntensityLabel.TabIndex = 7;
             configureCollidersIntensityLabel.Text = "Intensity (%)";
-            helpToolTip.SetToolTip(configureCollidersIntensityLabel, "Specifies the intensity of this effect");
+            helpToolTip.SetToolTip(configureCollidersIntensityLabel, "Configure the maximum intensity for each muscle\r\n");
             // 
             // velocityBasedGroupBox
             // 
@@ -349,7 +349,7 @@
             collidersMinIntensityLabel.Size = new Size(97, 15);
             collidersMinIntensityLabel.TabIndex = 9;
             collidersMinIntensityLabel.Text = "Min Intensity (%)";
-            helpToolTip.SetToolTip(collidersMinIntensityLabel, "The base intensity for velocity-based collisions. (Idle intensity)");
+            helpToolTip.SetToolTip(collidersMinIntensityLabel, "The base intensity for velocity-based collisions. (Intensity of collisions without movement)");
             // 
             // collidersMinIntensityInput
             // 
@@ -357,7 +357,7 @@
             collidersMinIntensityInput.Name = "collidersMinIntensityInput";
             collidersMinIntensityInput.Size = new Size(89, 23);
             collidersMinIntensityInput.TabIndex = 8;
-            helpToolTip.SetToolTip(collidersMinIntensityInput, "The base intensity for velocity-based collisions. (Idle intensity)");
+            helpToolTip.SetToolTip(collidersMinIntensityInput, "The base intensity for velocity-based collisions. (Intensity of collisions without movement)");
             // 
             // collidersAllowContinuousCheckbox
             // 
