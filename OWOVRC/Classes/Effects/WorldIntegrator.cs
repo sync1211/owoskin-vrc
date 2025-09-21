@@ -71,6 +71,12 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
+            if (!logWatcher.IsRunning)
+            {
+                Log.Debug("Not stopping OWI log watcher as it's not running!");
+                return;
+            }
+
             logWatcher.Stop();
             Log.Information("OWI log watcher stopped!");
         }

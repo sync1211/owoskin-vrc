@@ -40,9 +40,15 @@ namespace OWOVRC.Classes.Effects.OWI
 
         public void Stop()
         {
-            if (readerThread == null || cancellationTokenSource == null)
+            if (readerThread == null)
             {
-                Log.Warning("Unable to stop log reader thread: thread or cancellationTokenSource is null!");
+                Log.Warning("Unable to stop log reader thread: readerThread is null!");
+                return;
+            }
+
+            if (cancellationTokenSource == null)
+            {
+                Log.Warning("Unable to stop log reader thread: cancellationTokenSource is null!");
                 return;
             }
 
