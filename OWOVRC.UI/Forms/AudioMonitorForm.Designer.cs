@@ -71,14 +71,15 @@
             // closeButton
             // 
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            closeButton.DialogResult = DialogResult.OK;
+            closeButton.DialogResult = DialogResult.Cancel;
             closeButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             closeButton.Location = new Point(690, 265);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(75, 23);
-            closeButton.TabIndex = 0;
+            closeButton.TabIndex = 1;
             closeButton.Text = "Close";
             closeButton.UseVisualStyleBackColor = true;
+            closeButton.Click += CloseButton_Click;
             // 
             // leftSubBassTitle
             // 
