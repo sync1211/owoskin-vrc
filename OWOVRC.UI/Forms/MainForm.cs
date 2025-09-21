@@ -772,7 +772,6 @@ namespace OWOVRC.UI
             using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.GetSensation(), title: null, owoHelper: owo))
             {
                 intensityForm.ShowDialog();
-                collidersSettings.SaveToFile();
             }
         }
 
@@ -1005,7 +1004,6 @@ namespace OWOVRC.UI
             using (OWIIntensityListForm form = new(owiSettings.EnabledSensations))
             {
                 form.ShowDialog();
-                owiSettings.SaveToFile();
             }
         }
 
@@ -1029,7 +1027,6 @@ namespace OWOVRC.UI
             using (MuscleIntensityForm intensityForm = new(owiSettings.MuscleIntensities, Sensation.ShotBleeding, title: null, owoHelper: owo))
             {
                 intensityForm.ShowDialog();
-                owiSettings.SaveToFile();
             }
         }
     }
