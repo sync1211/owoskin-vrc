@@ -538,7 +538,6 @@ namespace OWOVRC.UI
             owiEnabledCheckbox.Checked = owiSettings.Enabled;
             owiPriorityInput.Text = owiSettings.Priority.ToString();
             owiUpdateIntervalInput.Text = owiSettings.UpdateInterval.ToString();
-            owiIntensityInput.Text = owiSettings.Intensity.ToString();
         }
 
         private void UpdateOSCPrestsSettings()
@@ -691,9 +690,6 @@ namespace OWOVRC.UI
             // Log update interval
             owiSettings.UpdateInterval = (int)owiUpdateIntervalInput.Value;
 
-            // Intensity
-            owiSettings.Intensity = (int)owiIntensityInput.Value; //TODO: Replace with dialog
-
             owiSettings.SaveToFile();
             EnableOrDisableOWI();
         }
@@ -833,7 +829,7 @@ namespace OWOVRC.UI
                 sensationName = String.Empty;
             }
 
-            owo.StopSensation(sensationName, interrupt:false);
+            owo.StopSensation(sensationName, interrupt: false);
         }
 
         private void StopSensationInstance(AdvancedSensationStreamInstance instance)
@@ -1026,6 +1022,15 @@ namespace OWOVRC.UI
         private void VelocityImpactEnabledCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             velocityImpactGroup.Enabled = velocityImpactEnabledCheckbox.Checked;
+        }
+
+        private void OwiConfigureIntensitiesButton_Click(object sender, EventArgs e)
+        {
+            using (MuscleIntensityForm intensityForm = new(owiSettings.MuscleIntensities, Sensation.ShotBleeding, title: null, owoHelper: owo))
+            {
+                intensityForm.ShowDialog();
+                owiSettings.SaveToFile();
+            }
         }
     }
 }

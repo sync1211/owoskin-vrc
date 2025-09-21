@@ -70,7 +70,6 @@
             owiConfigureSensationsButton = new Button();
             owiEnabledSensationsLabel = new Label();
             owiIntensityLabel = new Label();
-            owiIntensityInput = new NumericUpDown();
             owiUpdateIntervalLabel = new Label();
             owiUpdateIntervalInput = new NumericUpDown();
             owiInformationGroup = new GroupBox();
@@ -131,6 +130,7 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
+            owiConfigureIntensitiesButton = new Button();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
@@ -146,7 +146,6 @@
             ((System.ComponentModel.ISupportInitialize)velocityMinImpactInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).BeginInit();
             owiSettingsPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)owiIntensityInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).BeginInit();
             owiInformationGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)owiPriorityInput).BeginInit();
@@ -574,10 +573,10 @@
             // 
             // owiSettingsPage
             // 
+            owiSettingsPage.Controls.Add(owiConfigureIntensitiesButton);
             owiSettingsPage.Controls.Add(owiConfigureSensationsButton);
             owiSettingsPage.Controls.Add(owiEnabledSensationsLabel);
             owiSettingsPage.Controls.Add(owiIntensityLabel);
-            owiSettingsPage.Controls.Add(owiIntensityInput);
             owiSettingsPage.Controls.Add(owiUpdateIntervalLabel);
             owiSettingsPage.Controls.Add(owiUpdateIntervalInput);
             owiSettingsPage.Controls.Add(owiInformationGroup);
@@ -624,15 +623,7 @@
             owiIntensityLabel.Size = new Size(73, 15);
             owiIntensityLabel.TabIndex = 25;
             owiIntensityLabel.Text = "Intensity (%)";
-            helpToolTip.SetToolTip(owiIntensityLabel, "Specifies the intensity of this effect.\r\nThis intensity is applied on top of the configured intensity for each encountered sensation!");
-            // 
-            // owiIntensityInput
-            // 
-            owiIntensityInput.Location = new Point(262, 84);
-            owiIntensityInput.Name = "owiIntensityInput";
-            owiIntensityInput.Size = new Size(89, 23);
-            owiIntensityInput.TabIndex = 24;
-            helpToolTip.SetToolTip(owiIntensityInput, "Specifies the intensity of this effect");
+            helpToolTip.SetToolTip(owiIntensityLabel, "Configure the maximum intensity for each muscle\r\nThe configured intensity acts as a multiplier for each sensation intensity.");
             // 
             // owiUpdateIntervalLabel
             // 
@@ -1299,6 +1290,18 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
+            // owiConfigureIntensitiesButton
+            // 
+            owiConfigureIntensitiesButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            owiConfigureIntensitiesButton.Location = new Point(262, 84);
+            owiConfigureIntensitiesButton.Name = "owiConfigureIntensitiesButton";
+            owiConfigureIntensitiesButton.Size = new Size(89, 23);
+            owiConfigureIntensitiesButton.TabIndex = 29;
+            owiConfigureIntensitiesButton.Text = "Configure";
+            helpToolTip.SetToolTip(owiConfigureIntensitiesButton, "Configure the maximum intensity for each muscle");
+            owiConfigureIntensitiesButton.UseVisualStyleBackColor = true;
+            owiConfigureIntensitiesButton.Click += OwiConfigureIntensitiesButton_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1335,7 +1338,6 @@
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).EndInit();
             owiSettingsPage.ResumeLayout(false);
             owiSettingsPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)owiIntensityInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).EndInit();
             owiInformationGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)owiPriorityInput).EndInit();
@@ -1411,7 +1413,6 @@
         private Button applyOwiSettingsButton;
         private NumericUpDown owiUpdateIntervalInput;
         private Label owiIntensityLabel;
-        private NumericUpDown owiIntensityInput;
         private Label owiStatusLabel;
         private Label owiStatusTitle;
         private TabPage oscPresetsPage;
@@ -1459,5 +1460,6 @@
         private Button owiConfigureSensationsButton;
         private NumericUpDown collidersSpeedDecayInput;
         private CheckBox collidersSpeedDecayCheckbox;
+        private Button owiConfigureIntensitiesButton;
     }
 }

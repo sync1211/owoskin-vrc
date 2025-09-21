@@ -45,9 +45,22 @@ namespace OWOVRC.Classes.Effects.OWI
             return SensationsFactory.Create(Frequency, Duration, Intensity, Rampup, Rampdown, ExitDelay);
         }
 
-        public Muscle[] GetMusclesWithIntensity(float multiplier = 1)
+        private float GetScaledIntensity(int muscleID, Dictionary<int, int> muscleIntensities)
+        {
+            if (muscleIntensities.TryGetValue(muscleID, out int scaledIntensity))
+            {
+                return (Math.Min(Intensity, 100) / 100f) * scaledIntensity;
+            }
+            return Intensity;
+        }
+
+        public Muscle[] GetMusclesWithIntensity(Dictionary<int, int> muscleIntensities, int maxSensationIntensity)
         {
             List<Muscle> musclesScaled = [];
+
+            //NOTE: Intensity is applied like this:
+            // * Intensity from the received sensation is scaled by the muscle intensity setting
+            // * The result from this is then again scaled by the maximum intensity allowed for this sensation
 
             // Apply intensity for each muscle
             for (int i = 0; i < Muscles.Count; i++)
@@ -55,12 +68,10 @@ namespace OWOVRC.Classes.Effects.OWI
                 KeyValuePair<string, int> muscleData = Muscles.ElementAt(i);
                 string muscleName = muscleData.Key;
 
-                // Calculate intensity
-                int intensity = (int) (muscleData.Value * multiplier);
-
                 // Get Single muscle
                 if (OWOMuscles.Muscles.TryGetValue(muscleName.ToLower(), out Muscle muscle))
                 {
+                    int intensity = (int) Math.Round((GetScaledIntensity(muscle.id, muscleIntensities) / 100f) * maxSensationIntensity);
                     musclesScaled.Add(muscle.WithIntensity(intensity));
                 }
 
@@ -69,6 +80,7 @@ namespace OWOVRC.Classes.Effects.OWI
                 {
                     for (int j = 0; j < muscles.Length; j++)
                     {
+                        int intensity = (int) Math.Round((GetScaledIntensity(muscle.id, muscleIntensities) / 100f) * maxSensationIntensity);
                         musclesScaled.Add(muscles[j].WithIntensity(intensity));
                     }
                 }
