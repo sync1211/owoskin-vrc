@@ -16,7 +16,7 @@ namespace OWOVRC.Classes.Settings
         [JsonIgnore]
         private int frequency { get; set; } = 50; // Set by Frequency property
         [JsonIgnore]
-        private float sensationSeconds { get; set; } = 0.3f; // Set by SensationSeconds property
+        private float sensationSeconds { get; set; } = 0.2f; // Set by SensationSeconds property
 #pragma warning restore IDE1006 // Naming conventions
         [JsonInclude]
         public int Frequency
