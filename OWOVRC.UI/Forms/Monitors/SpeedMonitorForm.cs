@@ -16,12 +16,7 @@ namespace OWOVRC.UI.Forms.Monitors
 
         private readonly Font regularFont = new("Segoe UI", 9F, FontStyle.Regular);
         private readonly Font boldFont = new("Segoe UI", 9F, FontStyle.Bold);
-
-        //TODO: add some visualization for direction and speed
-        //TODO: display thresholds (and resulting sensation intensity?)
-        //public float ThresholdX = 0;
-        //public float ThresholdY = 0;
-        //public float ThresholdZ = 0;
+        
 
         public SpeedMonitorForm(Velocity velocityEffect)
         {
