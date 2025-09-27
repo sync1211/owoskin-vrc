@@ -66,14 +66,11 @@ namespace OWOVRC.UI.Forms
             leftBar.Value = scalingHelper.ToPercentage(dbLeft);
             rightBar.Value = scalingHelper.ToPercentage(dbRight);
 
-            double dbLeftRound = Math.Round(dbLeft, 2);
-            double dbRightRound = Math.Round(dbRight, 2);
+            leftLabel.Text = $"{dbLeft:0.00}db";
+            rightLabel.Text = $"{dbRight:0.00}db";
 
-            leftLabel.Text = $"{dbLeftRound}db";
-            rightLabel.Text = $"{dbRightRound}db";
-
-            leftLabel.Font = dbLeftRound >= threshold ? boldFont : regularFont;
-            rightLabel.Font = dbRightRound >= threshold ? boldFont : regularFont;
+            leftLabel.Font = dbLeft >= threshold ? boldFont : regularFont;
+            rightLabel.Font = dbRight >= threshold ? boldFont : regularFont;
 
             leftBar.IndicatorValue = scalingHelper.ToPercentage(threshold);
             rightBar.IndicatorValue = scalingHelper.ToPercentage(threshold);
