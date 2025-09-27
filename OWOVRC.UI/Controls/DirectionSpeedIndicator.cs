@@ -154,6 +154,14 @@ namespace OWOVRC.UI.Controls
         {
             InitializeComponent();
 
+            // Enable double buffering to reduce flickering
+            SetStyle(
+                ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.UserPaint |
+                ControlStyles.AllPaintingInWmPaint,
+                true
+            );
+
             CalculateContentScale();
 
             UpdateIndicator();
