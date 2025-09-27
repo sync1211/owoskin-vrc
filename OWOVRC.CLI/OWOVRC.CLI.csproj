@@ -15,6 +15,10 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(PublishTrimmed)' == 'true'">
+    <DefineConstants>$(DefineConstants);TRIMMING_ENABLED</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="owo.ico" />
   </ItemGroup>

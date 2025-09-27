@@ -45,9 +45,10 @@ namespace OWOVRC.CLI
                 .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings) ?? new();
             WorldIntegratorSettings owiSettings = SettingsHelper
                 .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings) ?? new();
-            // AudioEffectSettings audioSettings = SettingsHelper
-            //    .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings) ?? new();
-
+#if !TRIMMING_ENABLED
+            AudioEffectSettings audioSettings = SettingsHelper
+                .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings) ?? new();
+#endif
             // Prepare OWOHelper
             Log.Debug("Preparing OSC listener...");
             OWOHelper owo = new(settings.OWOAddress);
@@ -75,13 +76,17 @@ namespace OWOVRC.CLI
                 }
             }
 
+#if !TRIMMING_ENABLED
             // Set up audio effects
-            //Log.Debug("Preparing audio effects...");
-            //AudioEffect audio = new(owo, audioSettings);
-            //if (audioSettings.Enabled)
-            //{
-            //    audio.Start();
-            //}
+            Log.Debug("Preparing audio effects...");
+            AudioEffect audio = new(owo, audioSettings);
+            if (audioSettings.Enabled)
+            {
+                audio.Start();
+            }
+#else
+            Log.Information("Skipping audio effect initialization. If you want audio effects, compile without enabling trimming!");
+#endif
 
             // Start OSC listener
             Log.Information("Starting OSC receiver...");
@@ -104,13 +109,17 @@ namespace OWOVRC.CLI
 
                 // Stop everything
                 owi.Stop();
+#if !TRIMMING_ENABLED
                 //audio.Stop();
+#endif
 
                 // Clean up
                 receiver.Dispose();
                 owo.Dispose();
                 owi.Dispose();
-                //audio.Dispose();
+#if !TRIMMING_ENABLED
+                audio.Dispose();
+#endif
             }
         }
 
