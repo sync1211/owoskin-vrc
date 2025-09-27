@@ -49,11 +49,46 @@ namespace OWOVRC.UI.Controls
         [Localizable(true)]
         [Description("The minimum value of the element on the X-Axis"), Category("Data")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public float MaxX { get; set; } = 100f;
+        public float MaxX
+            {
+            get
+            {
+                return maxX;
+            }
+            set
+            {
+                if (maxX == value)
+                {
+                    return;
+                }
+                maxX = value;
+                UpdateIndicator();
+                UpdateThresholdIndicator();
+            }
+        }
+        private float maxX { get; set; } = 100f;
         [Localizable(true)]
         [Description("The maximum value of the element on the Y-Axis"), Category("Data")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public float MaxY { get; set; } = 100f;
+        public float MaxY
+        {
+            get 
+            {
+                return maxY;
+            }
+            set
+            {
+                if (maxY == value)
+                {
+                    return;
+                }
+                maxY = value;
+                UpdateIndicator();
+                UpdateThresholdIndicator();
+            }
+        }
+        private float maxY { get; set; } = 100f;
+
 
         // Indicator line
         [Localizable(true)]
@@ -178,8 +213,8 @@ namespace OWOVRC.UI.Controls
             int centerX = Width / 2;
             int centerY = Height / 2;
 
-            float valueXScaled = (int) (Math.Clamp(valueX / MaxX, -1f, 1f) * Width);
-            float valueYScaled = (int) (Math.Clamp(valueY / MaxY, -1f, 1f) * Height);
+            float valueXScaled = (int) (Math.Clamp(valueX / maxX, -1f, 1f) * Width);
+            float valueYScaled = (int) (Math.Clamp(valueY / maxY, -1f, 1f) * Height);
 
             int indicatorX = (int) (centerX + valueXScaled);
             int indicatorY = (int) (centerY - valueYScaled);
@@ -194,8 +229,8 @@ namespace OWOVRC.UI.Controls
             int centerX = Width / 2;
             int centerY = Height / 2;
 
-            int thresholdWidth = (int)(Math.Clamp(thresholdX / MaxX, -1f, 1f) * Width);
-            int thresholdHeight = (int)(Math.Clamp(thresholdY / MaxY, -1f, 1f) * Height);
+            int thresholdWidth = (int)(Math.Clamp(thresholdX / maxX, -1f, 1f) * Width);
+            int thresholdHeight = (int)(Math.Clamp(thresholdY / maxY, -1f, 1f) * Height);
 
             int thresholdOffsetX = centerX - thresholdWidth;
             int thresholdOffsetY = centerY - thresholdHeight;

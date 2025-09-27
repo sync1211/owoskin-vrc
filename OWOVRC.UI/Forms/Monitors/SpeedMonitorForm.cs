@@ -30,7 +30,7 @@ namespace OWOVRC.UI.Forms.Monitors
 
             refreshTimer.Elapsed += OnTimerElapsed;
 
-            UpdateVelocities();
+            UpdateVelocityDisplay();
             refreshTimer.Start();
         }
 
@@ -40,7 +40,7 @@ namespace OWOVRC.UI.Forms.Monitors
             {
                 try
                 {
-                    this.Invoke(UpdateVelocities);
+                    this.Invoke(UpdateVelocityDisplay);
                 }
                 catch (ObjectDisposedException)
                 {
@@ -49,7 +49,7 @@ namespace OWOVRC.UI.Forms.Monitors
             }
             else
             {
-                UpdateVelocities();
+                UpdateVelocityDisplay();
             }
         }
 
@@ -73,7 +73,7 @@ namespace OWOVRC.UI.Forms.Monitors
             sideDirectionIndicator.ThresholdY = velocityThreshold;
         }
 
-        private void UpdateVelocities()
+        private void UpdateVelocityDisplay()
         {
             float velocityX = velocityEffect.VelX;
             float velocityY = velocityEffect.VelY;
