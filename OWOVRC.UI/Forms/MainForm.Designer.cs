@@ -51,6 +51,7 @@
             collidersEnabledCheckbox = new CheckBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
+            speedMonitorButton = new Button();
             notVeryHelpfulLabel = new Label();
             velocityImpactEnabledCheckbox = new CheckBox();
             velocitySpeedCapLabel = new Label();
@@ -67,6 +68,7 @@
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             owiSettingsPage = new TabPage();
+            owiConfigureIntensitiesButton = new Button();
             owiConfigureSensationsButton = new Button();
             owiEnabledSensationsLabel = new Label();
             owiIntensityLabel = new Label();
@@ -130,7 +132,6 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
-            owiConfigureIntensitiesButton = new Button();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
@@ -394,6 +395,7 @@
             // 
             // velocitySettingsPage
             // 
+            velocitySettingsPage.Controls.Add(speedMonitorButton);
             velocitySettingsPage.Controls.Add(notVeryHelpfulLabel);
             velocitySettingsPage.Controls.Add(velocityImpactEnabledCheckbox);
             velocitySettingsPage.Controls.Add(velocitySpeedCapLabel);
@@ -416,12 +418,23 @@
             velocitySettingsPage.ToolTipText = "Player velocity-based effects";
             velocitySettingsPage.UseVisualStyleBackColor = true;
             // 
+            // speedMonitorButton
+            // 
+            speedMonitorButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            speedMonitorButton.Location = new Point(6, 246);
+            speedMonitorButton.Name = "speedMonitorButton";
+            speedMonitorButton.Size = new Size(89, 23);
+            speedMonitorButton.TabIndex = 32;
+            speedMonitorButton.Text = "Monitor";
+            speedMonitorButton.UseVisualStyleBackColor = true;
+            speedMonitorButton.Click += SpeedMonitorButton_Click;
+            // 
             // notVeryHelpfulLabel
             // 
             notVeryHelpfulLabel.AutoSize = true;
             notVeryHelpfulLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
             notVeryHelpfulLabel.ForeColor = SystemColors.ControlDarkDark;
-            notVeryHelpfulLabel.Location = new Point(6, 250);
+            notVeryHelpfulLabel.Location = new Point(106, 250);
             notVeryHelpfulLabel.Name = "notVeryHelpfulLabel";
             notVeryHelpfulLabel.Size = new Size(162, 15);
             notVeryHelpfulLabel.TabIndex = 16;
@@ -592,6 +605,18 @@
             owiSettingsPage.Text = "World";
             owiSettingsPage.ToolTipText = "OWOWorldIntegration connector";
             owiSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // owiConfigureIntensitiesButton
+            // 
+            owiConfigureIntensitiesButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            owiConfigureIntensitiesButton.Location = new Point(262, 84);
+            owiConfigureIntensitiesButton.Name = "owiConfigureIntensitiesButton";
+            owiConfigureIntensitiesButton.Size = new Size(89, 23);
+            owiConfigureIntensitiesButton.TabIndex = 29;
+            owiConfigureIntensitiesButton.Text = "Configure";
+            helpToolTip.SetToolTip(owiConfigureIntensitiesButton, "Configure the maximum intensity for each muscle");
+            owiConfigureIntensitiesButton.UseVisualStyleBackColor = true;
+            owiConfigureIntensitiesButton.Click += OwiConfigureIntensitiesButton_Click;
             // 
             // owiConfigureSensationsButton
             // 
@@ -1290,18 +1315,6 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
-            // owiConfigureIntensitiesButton
-            // 
-            owiConfigureIntensitiesButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            owiConfigureIntensitiesButton.Location = new Point(262, 84);
-            owiConfigureIntensitiesButton.Name = "owiConfigureIntensitiesButton";
-            owiConfigureIntensitiesButton.Size = new Size(89, 23);
-            owiConfigureIntensitiesButton.TabIndex = 29;
-            owiConfigureIntensitiesButton.Text = "Configure";
-            helpToolTip.SetToolTip(owiConfigureIntensitiesButton, "Configure the maximum intensity for each muscle");
-            owiConfigureIntensitiesButton.UseVisualStyleBackColor = true;
-            owiConfigureIntensitiesButton.Click += OwiConfigureIntensitiesButton_Click;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1461,5 +1474,6 @@
         private NumericUpDown collidersSpeedDecayInput;
         private CheckBox collidersSpeedDecayCheckbox;
         private Button owiConfigureIntensitiesButton;
+        private Button speedMonitorButton;
     }
 }

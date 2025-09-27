@@ -15,6 +15,7 @@ using Serilog.Events;
 using System.Net;
 using System.ComponentModel;
 using OWOVRC.Classes.Helpers;
+using OWOVRC.UI.Forms.Monitors;
 
 namespace OWOVRC.UI
 {
@@ -40,6 +41,7 @@ namespace OWOVRC.UI
         private OSCEffectBase[] oscEffects = [];
         private WorldIntegrator? owi;
         private AudioEffect? audioEffect;
+        private Velocity? velocityEffect;
 
         // Status
         private bool IsRunning;
@@ -57,8 +59,9 @@ namespace OWOVRC.UI
         // DataSource for activeSensationListBox
         private readonly BindingList<string> activeSensationList = [];
 
-        // Audio monitor form for AudioEffect
+        // Monitor forms (single-instance, not shown as dialogs)
         private AudioMonitorForm? audioMonitorForm;
+        private SpeedMonitorForm? speedMonitorForm;
 
         public MainForm(LoggingLevelSwitch? logLevelSwitch = null)
         {
@@ -421,6 +424,7 @@ namespace OWOVRC.UI
             Log.Information("Started OWOVRC");
 
             IsRunning = true;
+            speedMonitorForm?.SetOSCStatus(receiver.IsRunning);
         }
 
         private async Task StartOWOHelper()
@@ -457,6 +461,7 @@ namespace OWOVRC.UI
             Log.Information("Stopped OWOVRC");
 
             IsRunning = false;
+            speedMonitorForm?.SetOSCStatus(false);
         }
 
         private void ComboBox1_SelectedIndexChanged(object? sender, EventArgs e)
@@ -476,10 +481,12 @@ namespace OWOVRC.UI
 
             LoadSettings();
 
+            velocityEffect = new(owo, velocitySettings);
+
             // Set up effects
             oscEffects = [
+                velocityEffect,
                 new Colliders(owo, collidersSettings),
-                new Velocity(owo, velocitySettings),
                 new OSCPresetTrigger(owo, oscPresetsSettings),
             ];
 
@@ -594,6 +601,7 @@ namespace OWOVRC.UI
 
             // Close forms
             audioMonitorForm?.Close();
+            speedMonitorForm?.Close();
         }
 
         private void OwoIPInput_Exit(object sender, EventArgs e)
@@ -669,6 +677,11 @@ namespace OWOVRC.UI
             velocitySettings.SpeedCap = (float)velocitySpeedCapInput.Value;
 
             velocitySettings.SaveToFile();
+
+            speedMonitorButton.Enabled = velocitySettings.Enabled;
+
+            speedMonitorForm?.SetMaxVelocity(velocitySettings.SpeedCap);
+            speedMonitorForm?.SetMinVelocity(velocitySettings.Threshold);
         }
 
         private void StopSensationsButton_Click(object sender, EventArgs e)
@@ -1033,6 +1046,39 @@ namespace OWOVRC.UI
             {
                 intensityForm.ShowDialog();
             }
+        }
+
+        private void SpeedMonitorForm_Closed(object? sender, EventArgs e)
+        {
+            if (speedMonitorForm == null)
+            {
+                return;
+            }
+
+            speedMonitorForm.FormClosed -= SpeedMonitorForm_Closed;
+            speedMonitorForm = null;
+        }
+
+        private void SpeedMonitorButton_Click(object sender, EventArgs e)
+        {
+            if (velocityEffect == null)
+            {
+                Log.Error("Velocity effect is not initialized!");
+                return;
+            }
+
+            if (speedMonitorForm == null)
+            {
+                speedMonitorForm = new SpeedMonitorForm(velocityEffect);
+                speedMonitorForm.FormClosed += SpeedMonitorForm_Closed;
+                speedMonitorForm.Show();
+            }
+
+            speedMonitorForm.SetMaxVelocity(velocitySettings.SpeedCap);
+            speedMonitorForm.SetMinVelocity(velocitySettings.Threshold);
+            speedMonitorForm.SetOSCStatus(receiver?.IsRunning ?? false);
+
+            speedMonitorForm.Activate();
         }
     }
 }

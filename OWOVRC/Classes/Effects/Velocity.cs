@@ -13,9 +13,18 @@ namespace OWOVRC.Classes.Effects
         // https://creators.vrchat.com/avatars/animator-parameters/
         public bool IsGrounded { get; private set; }
         public bool IsSeated { get; private set; }
-        public float VelX { get; private set; } // LEFT/RIGHT (-1 to 1)
-        public float VelY { get; private set; } // DOWN/UP (-1 to 1)
-        public float VelZ { get; private set; } // BACK/FWD (-1 to 1)
+        /// <summary>
+        /// LEFT/Right (-1 to 1)
+        /// </summary>
+        public float VelX { get; private set; }
+        /// <summary>
+        /// DOWN/UP (-1 to 1)
+        /// </summary>
+        public float VelY { get; private set; }
+        /// <summary>
+        /// BACK/FWD (-1 to 1)
+        /// </summary>
+        public float VelZ { get; private set; }
         // public float VelAngularX { get; private set; } // Not implemented by VRChat
         // public float VelAngularY { get; private set; } // Not relevant to us
         // public float VelAngularZ { get; private set; } // Not implemented by VRChat
