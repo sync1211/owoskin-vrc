@@ -591,6 +591,9 @@ namespace OWOVRC.UI
 
             // Unregister UI events
             logLevelComboBox.SelectedIndexChanged -= ComboBox1_SelectedIndexChanged;
+
+            // Close forms
+            audioMonitorForm?.Close();
         }
 
         private void OwoIPInput_Exit(object sender, EventArgs e)
