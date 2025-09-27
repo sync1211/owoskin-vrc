@@ -89,12 +89,12 @@ namespace OWOVRC.UI.Forms.Monitors
             velZLabel.Font = Math.Abs(velocityZ) >= velocityThreshold ? boldFont : regularFont;
 
             // Top view
-            topDirectionIndicator.ValueX = velocityX;
-            topDirectionIndicator.ValueY = velocityZ;
+            topDirectionIndicator.ValueX = velocityX; // Left / Right
+            topDirectionIndicator.ValueY = velocityZ; // Forward / Backward
 
             // Side view
-            sideDirectionIndicator.ValueX = velocityZ;
-            sideDirectionIndicator.ValueY = velocityY;
+            sideDirectionIndicator.ValueX = velocityZ; // Forward / Backward
+            sideDirectionIndicator.ValueY = velocityY; // Up / Down
 
             notRunningIndicator.Visible = !oscActiveStatus;
         }
