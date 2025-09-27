@@ -41,7 +41,7 @@ namespace OWOVRC.Classes.Effects
             float range = spectrumSettings.MaxDB - spectrumSettings.MinDB;
             float intensityPercent = (level / range);
 
-            return (int)Math.Min(Math.Round(intensityPercent * 100, 0), 100);
+            return (int) Math.Clamp(intensityPercent, 0, 100);
         }
 
         private void ProcessAudioSample(AnalyzedAudioChannel leftSample, AnalyzedAudioChannel rightSample)
