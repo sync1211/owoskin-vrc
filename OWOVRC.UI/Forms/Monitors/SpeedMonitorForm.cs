@@ -16,7 +16,6 @@ namespace OWOVRC.UI.Forms.Monitors
 
         private readonly Font regularFont = new("Segoe UI", 9F, FontStyle.Regular);
         private readonly Font boldFont = new("Segoe UI", 9F, FontStyle.Bold);
-        
 
         public SpeedMonitorForm(Velocity velocityEffect)
         {
@@ -76,24 +75,26 @@ namespace OWOVRC.UI.Forms.Monitors
 
         private void UpdateVelocities()
         {
-            //NOTE: For reference:
+            float velocityX = velocityEffect.VelX;
+            float velocityY = velocityEffect.VelY;
+            float velocityZ = velocityEffect.VelZ;
 
-            velXLabel.Text = velocityEffect.VelX.ToString("0.00");
-            velYLabel.Text = velocityEffect.VelY.ToString("0.00");
-            velZLabel.Text = velocityEffect.VelZ.ToString("0.00");
+            velXLabel.Text = velocityX.ToString("0.00");
+            velYLabel.Text = velocityY.ToString("0.00");
+            velZLabel.Text = velocityZ.ToString("0.00");
 
             // Mark values above the minVelocity threshold in bold
-            velXLabel.Font = Math.Abs(velocityEffect.VelX) >= velocityThreshold ? boldFont : regularFont;
-            velYLabel.Font = Math.Abs(velocityEffect.VelY) >= velocityThreshold ? boldFont : regularFont;
-            velZLabel.Font = Math.Abs(velocityEffect.VelZ) >= velocityThreshold ? boldFont : regularFont;
+            velXLabel.Font = Math.Abs(velocityX) >= velocityThreshold ? boldFont : regularFont;
+            velYLabel.Font = Math.Abs(velocityY) >= velocityThreshold ? boldFont : regularFont;
+            velZLabel.Font = Math.Abs(velocityZ) >= velocityThreshold ? boldFont : regularFont;
 
             // Top view
-            topDirectionIndicator.ValueX = velocityEffect.VelX;
-            topDirectionIndicator.ValueY = velocityEffect.VelZ;
+            topDirectionIndicator.ValueX = velocityX;
+            topDirectionIndicator.ValueY = velocityZ;
 
             // Side view
-            sideDirectionIndicator.ValueX = velocityEffect.VelZ;
-            sideDirectionIndicator.ValueY = velocityEffect.VelY;
+            sideDirectionIndicator.ValueX = velocityZ;
+            sideDirectionIndicator.ValueY = velocityY;
 
             notRunningIndicator.Visible = !oscActiveStatus;
         }
