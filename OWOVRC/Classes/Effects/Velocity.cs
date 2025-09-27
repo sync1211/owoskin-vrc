@@ -68,62 +68,40 @@ namespace OWOVRC.Classes.Effects
             // Process OSC message
             if (ProcessMessage(message))
             {
+                //TODO: (Optimization) Use a timer instead of re-creating the sensation on message?
                 ProcessSensations();
             }
         }
 
         private bool ProcessMessage(OSCMessage message)
         {
-            // Grounded
-            if (message.Address.Equals("Grounded"))
-            {
-                IsGrounded = message.Values.ReadBooleanElement(0);
-                return true;
-            }
-
-            // Seated
-            if (message.Address.Equals("Seated"))
-            {
-                IsSeated = message.Values.ReadBooleanElement(0);
-                return true;
-            }
-
-            // Angular Velocity
-            if (message.Address.StartsWith("Angular"))
-            {
-                //Log.Verbose("Ignoring Angular velocity: This feature is not yet implemented!");
-                return true;
-            }
-
-            // Velocity
-            if (!message.Address.StartsWith("Velocity"))
-            {
-                return false;
-            }
-
-            float value = OSCHelpers.GetFloatValueFromMessage(message);
-
             switch (message.Address)
             {
                 case "VelocityX":
                     lastVelX = VelX;
-                    VelX = value;
+                    VelX = OSCHelpers.GetFloatValueFromMessage(message); ;
                     break;
                 case "VelocityY":
                     lastVelY = VelY;
-                    VelY = value;
+                    VelY = OSCHelpers.GetFloatValueFromMessage(message); ;
                     break;
                 case "VelocityZ":
                     lastVelZ = VelZ;
-                    VelZ = value;
+                    VelZ = OSCHelpers.GetFloatValueFromMessage(message); ;
                     break;
                 case "VelocityMagnitude":
-                    Speed = value;
+                    Speed = OSCHelpers.GetFloatValueFromMessage(message); ;
                     ProcessStopVelocity();
                     break;
-                default:
-                    Log.Warning("Unknown velocity component '{Message}' with value {Value}", message.Address, value);
+                case "Seated":
+                    IsSeated = message.Values.ReadBooleanElement(0);
                     break;
+                case "Grounded":
+                    IsGrounded = message.Values.ReadBooleanElement(0);
+                    break;
+                default:
+                    //Log.Warning("Unknown velocity component '{Message}' with value {Value}", message.Address, value);
+                    return false;
             }
             return true;
         }
