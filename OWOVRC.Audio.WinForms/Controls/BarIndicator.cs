@@ -88,16 +88,18 @@ namespace OWOVRC.Audio.WinForms.Controls
             set
             {
                 indicatorColor = value;
-                indicatorBrush = new SolidBrush(indicatorColor);
+                indicatorPen = new Pen(indicatorColor);
             }
         }
         private Color indicatorColor = Color.Orange;
 
         private readonly SolidBrush panelBGBrush = new(Color.White);
         private SolidBrush panelFGBrush = new(Color.Orange);
-        private SolidBrush indicatorBrush = new(Color.Black);
+        private Pen indicatorPen = new(Color.Black);
         private Rectangle barRectangle = new(0, 0, 0, 0);
         private Rectangle indicatorLine = new(0, 0, 0, 0);
+        private PointF indicatorStart = new(0, 0);
+        private PointF indicatorEnd = new(0, 0);
 
         // Re-calculate values on changes only to save time when redrawing
         private void UpdateValueRectangle()
@@ -111,7 +113,9 @@ namespace OWOVRC.Audio.WinForms.Controls
         {
             float indicatorPercentage = (IndicatorValue - Min) / (float)(Max - Min);
             int indicatorHeight = (int)(indicatorPercentage * Height);
-            indicatorLine = new(0, Height - indicatorHeight, Width, 1);
+
+            indicatorStart = new PointF(0, Height - indicatorHeight);
+            indicatorEnd = new PointF(Width, Height - indicatorHeight);
         }
 
         public BarIndicator()
@@ -130,7 +134,7 @@ namespace OWOVRC.Audio.WinForms.Controls
             pe.Graphics.FillRectangle(panelFGBrush, barRectangle);
 
             // Draw indicator line
-            pe.Graphics.FillRectangle(indicatorBrush, indicatorLine);
+            pe.Graphics.DrawLine(indicatorPen, indicatorStart, indicatorEnd);
         }
     }
 }
