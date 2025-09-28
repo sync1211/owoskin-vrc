@@ -66,13 +66,13 @@ namespace OWOVRC.UI.Controls
                 UpdateThresholdIndicator();
             }
         }
-        private float maxX { get; set; } = 100f;
+        private float maxX = 100f;
         [Localizable(true)]
         [Description("The maximum value of the element on the Y-Axis"), Category("Data")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public float MaxY
         {
-            get 
+            get
             {
                 return maxY;
             }
@@ -87,7 +87,7 @@ namespace OWOVRC.UI.Controls
                 UpdateThresholdIndicator();
             }
         }
-        private float maxY { get; set; } = 100f;
+        private float maxY = 100f;
 
 
         // Indicator line
@@ -248,7 +248,7 @@ namespace OWOVRC.UI.Controls
             axisStartY = new Point(Width / 2, 0);
             axisEndY = new Point(Width / 2, Height);
 
-            indicatorStart = new Point(Width / 2, Height / 2);;
+            indicatorStart = new Point(Width / 2, Height / 2);
         }
 
         protected override void OnPaint(PaintEventArgs pe)
