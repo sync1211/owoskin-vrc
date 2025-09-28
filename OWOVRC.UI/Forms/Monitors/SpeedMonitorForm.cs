@@ -78,15 +78,18 @@ namespace OWOVRC.UI.Forms.Monitors
             float velocityX = velocityEffect.VelX;
             float velocityY = velocityEffect.VelY;
             float velocityZ = velocityEffect.VelZ;
+            double speed = velocityEffect.Speed;
 
             velXLabel.Text = velocityX.ToString("0.00");
             velYLabel.Text = velocityY.ToString("0.00");
             velZLabel.Text = velocityZ.ToString("0.00");
+            speedLabel.Text = speed.ToString("0.00");
 
             // Mark values above the minVelocity threshold in bold
             velXLabel.Font = Math.Abs(velocityX) >= velocityThreshold ? boldFont : regularFont;
             velYLabel.Font = Math.Abs(velocityY) >= velocityThreshold ? boldFont : regularFont;
             velZLabel.Font = Math.Abs(velocityZ) >= velocityThreshold ? boldFont : regularFont;
+            speedLabel.Font = Math.Abs(speed) >= velocityThreshold ? boldFont : regularFont;
 
             // Top view
             topDirectionIndicator.ValueX = velocityX; // Left / Right

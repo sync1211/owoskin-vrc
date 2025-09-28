@@ -41,12 +41,14 @@
             topDirectionTitle = new Label();
             sideDirectionTitle = new Label();
             sideDirectionIndicator = new OWOVRC.UI.Controls.DirectionSpeedIndicator();
+            speedTitle = new Label();
+            speedLabel = new Label();
             SuspendLayout();
             // 
             // velXLabel
             // 
             velXLabel.AutoSize = true;
-            velXLabel.Location = new Point(76, 9);
+            velXLabel.Location = new Point(76, 22);
             velXLabel.Name = "velXLabel";
             velXLabel.Size = new Size(58, 15);
             velXLabel.TabIndex = 0;
@@ -55,7 +57,7 @@
             // velYLabel
             // 
             velYLabel.AutoSize = true;
-            velYLabel.Location = new Point(76, 24);
+            velYLabel.Location = new Point(76, 37);
             velYLabel.Name = "velYLabel";
             velYLabel.Size = new Size(58, 15);
             velYLabel.TabIndex = 1;
@@ -64,7 +66,7 @@
             // velZLabel
             // 
             velZLabel.AutoSize = true;
-            velZLabel.Location = new Point(76, 39);
+            velZLabel.Location = new Point(76, 52);
             velZLabel.Name = "velZLabel";
             velZLabel.Size = new Size(58, 15);
             velZLabel.TabIndex = 2;
@@ -74,7 +76,7 @@
             // 
             velZTitle.AutoSize = true;
             velZTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            velZTitle.Location = new Point(12, 39);
+            velZTitle.Location = new Point(12, 52);
             velZTitle.Name = "velZTitle";
             velZTitle.Size = new Size(61, 15);
             velZTitle.TabIndex = 5;
@@ -84,7 +86,7 @@
             // 
             velYTitle.AutoSize = true;
             velYTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            velYTitle.Location = new Point(12, 24);
+            velYTitle.Location = new Point(12, 37);
             velYTitle.Name = "velYTitle";
             velYTitle.Size = new Size(61, 15);
             velYTitle.TabIndex = 4;
@@ -94,7 +96,7 @@
             // 
             velXTitle.AutoSize = true;
             velXTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            velXTitle.Location = new Point(12, 9);
+            velXTitle.Location = new Point(12, 22);
             velXTitle.Name = "velXTitle";
             velXTitle.Size = new Size(62, 15);
             velXTitle.TabIndex = 3;
@@ -105,7 +107,7 @@
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             closeButton.DialogResult = DialogResult.Cancel;
             closeButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            closeButton.Location = new Point(192, 212);
+            closeButton.Location = new Point(192, 219);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(75, 23);
             closeButton.TabIndex = 6;
@@ -115,9 +117,10 @@
             // 
             // notRunningIndicator
             // 
+            notRunningIndicator.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             notRunningIndicator.AutoSize = true;
             notRunningIndicator.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            notRunningIndicator.Location = new Point(12, 209);
+            notRunningIndicator.Location = new Point(12, 216);
             notRunningIndicator.Name = "notRunningIndicator";
             notRunningIndicator.Size = new Size(166, 30);
             notRunningIndicator.TabIndex = 7;
@@ -125,22 +128,27 @@
             // 
             // topDirectionIndicator
             // 
+            topDirectionIndicator.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             topDirectionIndicator.DirectionIndicatorColor = Color.Red;
-            topDirectionIndicator.Location = new Point(12, 79);
-            topDirectionIndicator.MaxX = 100;
-            topDirectionIndicator.MaxY = 100;
+            topDirectionIndicator.Location = new Point(12, 86);
+            topDirectionIndicator.MaxX = 100F;
+            topDirectionIndicator.MaxY = 100F;
             topDirectionIndicator.Name = "topDirectionIndicator";
             topDirectionIndicator.Size = new Size(125, 125);
             topDirectionIndicator.TabIndex = 8;
             topDirectionIndicator.Text = "directionSpeedIndicator1";
-            topDirectionIndicator.ValueX = 0;
-            topDirectionIndicator.ValueY = 0;
+            topDirectionIndicator.ThresholdColor = Color.Orange;
+            topDirectionIndicator.ThresholdX = 100F;
+            topDirectionIndicator.ThresholdY = 100F;
+            topDirectionIndicator.ValueX = 0F;
+            topDirectionIndicator.ValueY = 0F;
             // 
             // topDirectionTitle
             // 
+            topDirectionTitle.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             topDirectionTitle.AutoSize = true;
             topDirectionTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            topDirectionTitle.Location = new Point(61, 61);
+            topDirectionTitle.Location = new Point(61, 68);
             topDirectionTitle.Name = "topDirectionTitle";
             topDirectionTitle.Size = new Size(27, 15);
             topDirectionTitle.TabIndex = 9;
@@ -149,9 +157,10 @@
             // 
             // sideDirectionTitle
             // 
+            sideDirectionTitle.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             sideDirectionTitle.AutoSize = true;
             sideDirectionTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            sideDirectionTitle.Location = new Point(195, 61);
+            sideDirectionTitle.Location = new Point(195, 68);
             sideDirectionTitle.Name = "sideDirectionTitle";
             sideDirectionTitle.Size = new Size(31, 15);
             sideDirectionTitle.TabIndex = 11;
@@ -160,22 +169,47 @@
             // 
             // sideDirectionIndicator
             // 
+            sideDirectionIndicator.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             sideDirectionIndicator.DirectionIndicatorColor = Color.Red;
-            sideDirectionIndicator.Location = new Point(143, 79);
-            sideDirectionIndicator.MaxX = 100;
-            sideDirectionIndicator.MaxY = 100;
+            sideDirectionIndicator.Location = new Point(143, 86);
+            sideDirectionIndicator.MaxX = 100F;
+            sideDirectionIndicator.MaxY = 100F;
             sideDirectionIndicator.Name = "sideDirectionIndicator";
             sideDirectionIndicator.Size = new Size(125, 125);
             sideDirectionIndicator.TabIndex = 10;
             sideDirectionIndicator.Text = "directionSpeedIndicator1";
-            sideDirectionIndicator.ValueX = 0;
-            sideDirectionIndicator.ValueY = 0;
+            sideDirectionIndicator.ThresholdColor = Color.Orange;
+            sideDirectionIndicator.ThresholdX = 100F;
+            sideDirectionIndicator.ThresholdY = 100F;
+            sideDirectionIndicator.ValueX = 0F;
+            sideDirectionIndicator.ValueY = 0F;
+            // 
+            // speedTitle
+            // 
+            speedTitle.AutoSize = true;
+            speedTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            speedTitle.Location = new Point(12, 7);
+            speedTitle.Name = "speedTitle";
+            speedTitle.Size = new Size(42, 15);
+            speedTitle.TabIndex = 13;
+            speedTitle.Text = "Speed";
+            // 
+            // speedLabel
+            // 
+            speedLabel.AutoSize = true;
+            speedLabel.Location = new Point(76, 7);
+            speedLabel.Name = "speedLabel";
+            speedLabel.Size = new Size(39, 15);
+            speedLabel.TabIndex = 12;
+            speedLabel.Text = "Speed";
             // 
             // SpeedMonitorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(279, 247);
+            ClientSize = new Size(279, 254);
+            Controls.Add(speedTitle);
+            Controls.Add(speedLabel);
             Controls.Add(sideDirectionTitle);
             Controls.Add(sideDirectionIndicator);
             Controls.Add(topDirectionTitle);
@@ -214,5 +248,7 @@
         private Label topDirectionTitle;
         private Label sideDirectionTitle;
         private Controls.DirectionSpeedIndicator sideDirectionIndicator;
+        private Label speedTitle;
+        private Label speedLabel;
     }
 }
