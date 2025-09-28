@@ -108,7 +108,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "SpeedHistoryForm";
-            Text = "SpeedHistoryForm";
+            Text = "Player Speed";
             ResumeLayout(false);
             PerformLayout();
         }
