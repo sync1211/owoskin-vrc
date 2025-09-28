@@ -49,7 +49,7 @@ namespace OWOVRC.Classes.Effects
             float deltaSpeedAbs = Math.Abs(deltaSpeed);
 
             // Check if trigger conditions are met (delta above threshold, respective sign of the speed delta enabled)
-            if ((deltaSpeedAbs < Settings.MinDelta) || (isAcceleration && Settings.AccelEnabled) || ((!isAcceleration) && Settings.DecelEnabled))
+            if ((deltaSpeedAbs < Settings.MinDelta) || (isAcceleration && !Settings.AccelEnabled) || ((!isAcceleration) && !Settings.DecelEnabled))
             {
                 return;
             }
