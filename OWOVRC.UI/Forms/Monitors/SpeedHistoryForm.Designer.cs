@@ -75,7 +75,7 @@
             // 
             // resumeGraphButton
             // 
-            resumeGraphButton.Image = Properties.Resources.Play;
+            resumeGraphButton.Image = Properties.Resources.Pause;
             resumeGraphButton.Location = new Point(1125, 12);
             resumeGraphButton.Name = "resumeGraphButton";
             resumeGraphButton.Size = new Size(22, 22);
@@ -85,7 +85,7 @@
             // 
             // pauseGraphButton
             // 
-            pauseGraphButton.Image = (Image)resources.GetObject("pauseGraphButton.Image");
+            pauseGraphButton.Image = Properties.Resources.Play;
             pauseGraphButton.Location = new Point(1125, 12);
             pauseGraphButton.Name = "pauseGraphButton";
             pauseGraphButton.Size = new Size(22, 22);
