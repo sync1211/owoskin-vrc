@@ -1149,6 +1149,7 @@ namespace OWOVRC.UI
             speedHistoryForm.SetMinDelta(inertiaSettings.MinDelta);
             speedHistoryForm.SetOSCStatus(receiver?.IsRunning ?? false);
 
+            speedHistoryForm.WindowState = FormWindowState.Normal; // Show if minimized
             speedHistoryForm.Activate();
         }
 
