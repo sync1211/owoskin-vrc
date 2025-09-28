@@ -32,6 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\SpeedHistoryGraph.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Forms\Dialogs\TextInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>

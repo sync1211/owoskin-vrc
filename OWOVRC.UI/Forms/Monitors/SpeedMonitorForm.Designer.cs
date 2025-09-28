@@ -127,14 +127,17 @@
             // 
             topDirectionIndicator.DirectionIndicatorColor = Color.Red;
             topDirectionIndicator.Location = new Point(12, 79);
-            topDirectionIndicator.MaxX = 100;
-            topDirectionIndicator.MaxY = 100;
+            topDirectionIndicator.MaxX = 100F;
+            topDirectionIndicator.MaxY = 100F;
             topDirectionIndicator.Name = "topDirectionIndicator";
             topDirectionIndicator.Size = new Size(125, 125);
             topDirectionIndicator.TabIndex = 8;
             topDirectionIndicator.Text = "directionSpeedIndicator1";
-            topDirectionIndicator.ValueX = 0;
-            topDirectionIndicator.ValueY = 0;
+            topDirectionIndicator.ThresholdColor = Color.Orange;
+            topDirectionIndicator.ThresholdX = 100F;
+            topDirectionIndicator.ThresholdY = 100F;
+            topDirectionIndicator.ValueX = 0F;
+            topDirectionIndicator.ValueY = 0F;
             // 
             // topDirectionTitle
             // 
@@ -162,19 +165,23 @@
             // 
             sideDirectionIndicator.DirectionIndicatorColor = Color.Red;
             sideDirectionIndicator.Location = new Point(143, 79);
-            sideDirectionIndicator.MaxX = 100;
-            sideDirectionIndicator.MaxY = 100;
+            sideDirectionIndicator.MaxX = 100F;
+            sideDirectionIndicator.MaxY = 100F;
             sideDirectionIndicator.Name = "sideDirectionIndicator";
             sideDirectionIndicator.Size = new Size(125, 125);
             sideDirectionIndicator.TabIndex = 10;
             sideDirectionIndicator.Text = "directionSpeedIndicator1";
-            sideDirectionIndicator.ValueX = 0;
-            sideDirectionIndicator.ValueY = 0;
+            sideDirectionIndicator.ThresholdColor = Color.Orange;
+            sideDirectionIndicator.ThresholdX = 100F;
+            sideDirectionIndicator.ThresholdY = 100F;
+            sideDirectionIndicator.ValueX = 0F;
+            sideDirectionIndicator.ValueY = 0F;
             // 
             // SpeedMonitorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = closeButton;
             ClientSize = new Size(279, 247);
             Controls.Add(sideDirectionTitle);
             Controls.Add(sideDirectionIndicator);

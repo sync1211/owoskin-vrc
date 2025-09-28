@@ -64,6 +64,7 @@ namespace OWOVRC.UI
         // Monitor forms (single-instance, not shown as dialogs)
         private AudioMonitorForm? audioMonitorForm;
         private SpeedMonitorForm? speedMonitorForm;
+        private SpeedHistoryForm? speedHistoryForm;
 
         public MainForm(LoggingLevelSwitch? logLevelSwitch = null)
         {
@@ -435,6 +436,7 @@ namespace OWOVRC.UI
 
             IsRunning = true;
             speedMonitorForm?.SetOSCStatus(receiver.IsRunning);
+            speedHistoryForm?.SetOSCStatus(receiver.IsRunning);
         }
 
         private async Task StartOWOHelper()
@@ -472,6 +474,7 @@ namespace OWOVRC.UI
 
             IsRunning = false;
             speedMonitorForm?.SetOSCStatus(false);
+            speedHistoryForm?.SetOSCStatus(false);
         }
 
         private void ComboBox1_SelectedIndexChanged(object? sender, EventArgs e)
@@ -629,6 +632,7 @@ namespace OWOVRC.UI
             // Close forms
             audioMonitorForm?.Close();
             speedMonitorForm?.Close();
+            speedHistoryForm?.Close();
         }
 
         private void OwoIPInput_Exit(object sender, EventArgs e)
@@ -816,6 +820,8 @@ namespace OWOVRC.UI
             inertiaSettings.DecelEnabled = inertiaDecelCheckbox.Checked;
 
             inertiaSettings.SaveToFile();
+
+            speedHistoryForm?.SetMinDelta(inertiaSettings.MinDelta);
         }
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1122,6 +1128,38 @@ namespace OWOVRC.UI
             speedMonitorForm.SetOSCStatus(receiver?.IsRunning ?? false);
 
             speedMonitorForm.Activate();
+        }
+
+        private void OpenHistoryWindowButton_Click(object sender, EventArgs e)
+        {
+            if (inertiaEffect == null)
+            {
+                Log.Error("Inertia effect is not initialized!");
+                return;
+            }
+
+            if (speedHistoryForm == null)
+            {
+                speedHistoryForm = new SpeedHistoryForm(inertiaEffect);
+                speedHistoryForm.FormClosed += SpeedHistoryForm_Closed;
+                speedHistoryForm.Show();
+            }
+
+            //speedHistoryForm.SetMaxVelocity(100f); // Idk what to use as max value, so I'm using the velocity max for now
+            speedHistoryForm.SetMinDelta(inertiaSettings.MinDelta);
+            speedHistoryForm.SetOSCStatus(receiver?.IsRunning ?? false);
+
+            speedHistoryForm.Activate();
+        }
+
+        private void SpeedHistoryForm_Closed(object? sender, EventArgs e)
+        {
+            if (speedHistoryForm == null)
+            {
+                return;
+            }
+            speedHistoryForm.FormClosed -= SpeedHistoryForm_Closed;
+            speedHistoryForm = null;
         }
     }
 }

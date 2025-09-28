@@ -8,6 +8,7 @@ namespace OWOVRC.Classes.Effects
     {
         private readonly InertiaSensation inertiaSensation;
         public readonly InertiaEffectSettings Settings;
+        public EventHandler<float>? OnInertiaUpdate;
 
         public InertiaEffect(OWOHelper owo, InertiaEffectSettings settings): base(owo, settings)
         {
@@ -40,6 +41,8 @@ namespace OWOVRC.Classes.Effects
             LastVelY = VelY;
             LastVelZ = VelZ;
             LastSpeed = Speed;
+
+            OnInertiaUpdate?.Invoke(this, Speed);
 
             bool isAcceleration = (deltaSpeed > 0);
 

@@ -65,18 +65,21 @@
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             inertiaSettingsPage = new TabPage();
+            openHistoryWindowButton = new Button();
+            inertiaIntensityLabel = new Label();
+            inertiaIntensityInput = new NumericUpDown();
+            inertiaIgnoreGroup = new GroupBox();
+            inertiaIgnoreWhenSeatedCheckbox = new CheckBox();
+            inertiaIgnoreWhenGroundedCheckbox = new CheckBox();
             inertiaActivationGroup = new GroupBox();
             inertiaAccelCheckbox = new CheckBox();
             inertiaDecelCheckbox = new CheckBox();
-            inertiaInfoLabel = new Label();
             inertiaMaxDeltaLabel = new Label();
             inertiaPriorityLabel = new Label();
             inertiaMaxDeltaInput = new NumericUpDown();
             inertiaPriorityInput = new NumericUpDown();
-            inertiaIgnoreWhenSeatedCheckbox = new CheckBox();
             inertiaMinDeltaLabel = new Label();
             inertiaMinDeltaInput = new NumericUpDown();
-            inertiaIgnoreWhenGroundedCheckbox = new CheckBox();
             inertiaEnabledCheckbox = new CheckBox();
             applyInertiaSettingsButton = new Button();
             owiSettingsPage = new TabPage();
@@ -144,9 +147,6 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
-            inertiaIgnoreGroup = new GroupBox();
-            inertiaIntensityLabel = new Label();
-            inertiaIntensityInput = new NumericUpDown();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
@@ -161,6 +161,8 @@
             ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).BeginInit();
             inertiaSettingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)inertiaIntensityInput).BeginInit();
+            inertiaIgnoreGroup.SuspendLayout();
             inertiaActivationGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)inertiaMaxDeltaInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)inertiaPriorityInput).BeginInit();
@@ -178,8 +180,6 @@
             logPage.SuspendLayout();
             sensationsPage.SuspendLayout();
             sensationInfoGroup.SuspendLayout();
-            inertiaIgnoreGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)inertiaIntensityInput).BeginInit();
             SuspendLayout();
             // 
             // effectsTabControl
@@ -573,11 +573,11 @@
             // 
             // inertiaSettingsPage
             // 
+            inertiaSettingsPage.Controls.Add(openHistoryWindowButton);
             inertiaSettingsPage.Controls.Add(inertiaIntensityLabel);
             inertiaSettingsPage.Controls.Add(inertiaIntensityInput);
             inertiaSettingsPage.Controls.Add(inertiaIgnoreGroup);
             inertiaSettingsPage.Controls.Add(inertiaActivationGroup);
-            inertiaSettingsPage.Controls.Add(inertiaInfoLabel);
             inertiaSettingsPage.Controls.Add(inertiaMaxDeltaLabel);
             inertiaSettingsPage.Controls.Add(inertiaPriorityLabel);
             inertiaSettingsPage.Controls.Add(inertiaMaxDeltaInput);
@@ -592,6 +592,69 @@
             inertiaSettingsPage.TabIndex = 6;
             inertiaSettingsPage.Text = "Inertia";
             inertiaSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // openHistoryWindowButton
+            // 
+            openHistoryWindowButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            openHistoryWindowButton.Location = new Point(6, 246);
+            openHistoryWindowButton.Name = "openHistoryWindowButton";
+            openHistoryWindowButton.Size = new Size(89, 23);
+            openHistoryWindowButton.TabIndex = 49;
+            openHistoryWindowButton.Text = "Monitor";
+            helpToolTip.SetToolTip(openHistoryWindowButton, "Show player speed monitor window");
+            openHistoryWindowButton.UseVisualStyleBackColor = true;
+            openHistoryWindowButton.Click += OpenHistoryWindowButton_Click;
+            // 
+            // inertiaIntensityLabel
+            // 
+            inertiaIntensityLabel.AutoSize = true;
+            inertiaIntensityLabel.Location = new Point(6, 115);
+            inertiaIntensityLabel.Name = "inertiaIntensityLabel";
+            inertiaIntensityLabel.Size = new Size(73, 15);
+            inertiaIntensityLabel.TabIndex = 48;
+            inertiaIntensityLabel.Text = "Intensity (%)";
+            helpToolTip.SetToolTip(inertiaIntensityLabel, "Intensity scale for the interia effect");
+            // 
+            // inertiaIntensityInput
+            // 
+            inertiaIntensityInput.Location = new Point(262, 113);
+            inertiaIntensityInput.Name = "inertiaIntensityInput";
+            inertiaIntensityInput.Size = new Size(89, 23);
+            inertiaIntensityInput.TabIndex = 47;
+            helpToolTip.SetToolTip(inertiaIntensityInput, "Intensity scale for the interia effect");
+            // 
+            // inertiaIgnoreGroup
+            // 
+            inertiaIgnoreGroup.Controls.Add(inertiaIgnoreWhenSeatedCheckbox);
+            inertiaIgnoreGroup.Controls.Add(inertiaIgnoreWhenGroundedCheckbox);
+            inertiaIgnoreGroup.Location = new Point(183, 163);
+            inertiaIgnoreGroup.Name = "inertiaIgnoreGroup";
+            inertiaIgnoreGroup.Size = new Size(171, 77);
+            inertiaIgnoreGroup.TabIndex = 46;
+            inertiaIgnoreGroup.TabStop = false;
+            inertiaIgnoreGroup.Text = "Ignore";
+            // 
+            // inertiaIgnoreWhenSeatedCheckbox
+            // 
+            inertiaIgnoreWhenSeatedCheckbox.AutoSize = true;
+            inertiaIgnoreWhenSeatedCheckbox.Location = new Point(6, 47);
+            inertiaIgnoreWhenSeatedCheckbox.Name = "inertiaIgnoreWhenSeatedCheckbox";
+            inertiaIgnoreWhenSeatedCheckbox.Size = new Size(93, 19);
+            inertiaIgnoreWhenSeatedCheckbox.TabIndex = 40;
+            inertiaIgnoreWhenSeatedCheckbox.Text = "While seated";
+            helpToolTip.SetToolTip(inertiaIgnoreWhenSeatedCheckbox, "Disables inertia effect when the player is sitting on a chair");
+            inertiaIgnoreWhenSeatedCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // inertiaIgnoreWhenGroundedCheckbox
+            // 
+            inertiaIgnoreWhenGroundedCheckbox.AutoSize = true;
+            inertiaIgnoreWhenGroundedCheckbox.Location = new Point(6, 22);
+            inertiaIgnoreWhenGroundedCheckbox.Name = "inertiaIgnoreWhenGroundedCheckbox";
+            inertiaIgnoreWhenGroundedCheckbox.Size = new Size(111, 19);
+            inertiaIgnoreWhenGroundedCheckbox.TabIndex = 35;
+            inertiaIgnoreWhenGroundedCheckbox.Text = "While grounded";
+            helpToolTip.SetToolTip(inertiaIgnoreWhenGroundedCheckbox, "Disables inertia effect when the player is standing on the ground\r\n");
+            inertiaIgnoreWhenGroundedCheckbox.UseVisualStyleBackColor = true;
             // 
             // inertiaActivationGroup
             // 
@@ -623,18 +686,6 @@
             inertiaDecelCheckbox.TabIndex = 44;
             inertiaDecelCheckbox.Text = "Deceleration";
             inertiaDecelCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // inertiaInfoLabel
-            // 
-            inertiaInfoLabel.FlatStyle = FlatStyle.Popup;
-            inertiaInfoLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            inertiaInfoLabel.ForeColor = SystemColors.ControlDarkDark;
-            inertiaInfoLabel.Location = new Point(6, 248);
-            inertiaInfoLabel.Name = "inertiaInfoLabel";
-            inertiaInfoLabel.Size = new Size(172, 19);
-            inertiaInfoLabel.TabIndex = 20;
-            inertiaInfoLabel.Text = "No additional setup required!\r\n";
-            inertiaInfoLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // inertiaMaxDeltaLabel
             // 
@@ -673,17 +724,6 @@
             inertiaPriorityInput.TabIndex = 41;
             helpToolTip.SetToolTip(inertiaPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
             // 
-            // inertiaIgnoreWhenSeatedCheckbox
-            // 
-            inertiaIgnoreWhenSeatedCheckbox.AutoSize = true;
-            inertiaIgnoreWhenSeatedCheckbox.Location = new Point(6, 47);
-            inertiaIgnoreWhenSeatedCheckbox.Name = "inertiaIgnoreWhenSeatedCheckbox";
-            inertiaIgnoreWhenSeatedCheckbox.Size = new Size(93, 19);
-            inertiaIgnoreWhenSeatedCheckbox.TabIndex = 40;
-            inertiaIgnoreWhenSeatedCheckbox.Text = "While seated";
-            helpToolTip.SetToolTip(inertiaIgnoreWhenSeatedCheckbox, "Disables inertia effect when the player is sitting on a chair");
-            inertiaIgnoreWhenSeatedCheckbox.UseVisualStyleBackColor = true;
-            // 
             // inertiaMinDeltaLabel
             // 
             inertiaMinDeltaLabel.AutoSize = true;
@@ -702,17 +742,6 @@
             inertiaMinDeltaInput.Size = new Size(89, 23);
             inertiaMinDeltaInput.TabIndex = 36;
             helpToolTip.SetToolTip(inertiaMinDeltaInput, "Minimum speed for triggering wind effects");
-            // 
-            // inertiaIgnoreWhenGroundedCheckbox
-            // 
-            inertiaIgnoreWhenGroundedCheckbox.AutoSize = true;
-            inertiaIgnoreWhenGroundedCheckbox.Location = new Point(6, 22);
-            inertiaIgnoreWhenGroundedCheckbox.Name = "inertiaIgnoreWhenGroundedCheckbox";
-            inertiaIgnoreWhenGroundedCheckbox.Size = new Size(111, 19);
-            inertiaIgnoreWhenGroundedCheckbox.TabIndex = 35;
-            inertiaIgnoreWhenGroundedCheckbox.Text = "While grounded";
-            helpToolTip.SetToolTip(inertiaIgnoreWhenGroundedCheckbox, "Disables inertia effect when the player is standing on the ground\r\n");
-            inertiaIgnoreWhenGroundedCheckbox.UseVisualStyleBackColor = true;
             // 
             // inertiaEnabledCheckbox
             // 
@@ -1468,35 +1497,6 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
-            // inertiaIgnoreGroup
-            // 
-            inertiaIgnoreGroup.Controls.Add(inertiaIgnoreWhenSeatedCheckbox);
-            inertiaIgnoreGroup.Controls.Add(inertiaIgnoreWhenGroundedCheckbox);
-            inertiaIgnoreGroup.Location = new Point(183, 163);
-            inertiaIgnoreGroup.Name = "inertiaIgnoreGroup";
-            inertiaIgnoreGroup.Size = new Size(171, 77);
-            inertiaIgnoreGroup.TabIndex = 46;
-            inertiaIgnoreGroup.TabStop = false;
-            inertiaIgnoreGroup.Text = "Ignore";
-            // 
-            // inertiaIntensityLabel
-            // 
-            inertiaIntensityLabel.AutoSize = true;
-            inertiaIntensityLabel.Location = new Point(6, 115);
-            inertiaIntensityLabel.Name = "inertiaIntensityLabel";
-            inertiaIntensityLabel.Size = new Size(73, 15);
-            inertiaIntensityLabel.TabIndex = 48;
-            inertiaIntensityLabel.Text = "Intensity (%)";
-            helpToolTip.SetToolTip(inertiaIntensityLabel, "Intensity scale for the interia effect");
-            // 
-            // inertiaIntensityInput
-            // 
-            inertiaIntensityInput.Location = new Point(262, 113);
-            inertiaIntensityInput.Name = "inertiaIntensityInput";
-            inertiaIntensityInput.Size = new Size(89, 23);
-            inertiaIntensityInput.TabIndex = 47;
-            helpToolTip.SetToolTip(inertiaIntensityInput, "Intensity scale for the interia effect");
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1531,6 +1531,9 @@
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).EndInit();
             inertiaSettingsPage.ResumeLayout(false);
             inertiaSettingsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)inertiaIntensityInput).EndInit();
+            inertiaIgnoreGroup.ResumeLayout(false);
+            inertiaIgnoreGroup.PerformLayout();
             inertiaActivationGroup.ResumeLayout(false);
             inertiaActivationGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)inertiaMaxDeltaInput).EndInit();
@@ -1555,9 +1558,6 @@
             sensationsPage.ResumeLayout(false);
             sensationInfoGroup.ResumeLayout(false);
             sensationInfoGroup.PerformLayout();
-            inertiaIgnoreGroup.ResumeLayout(false);
-            inertiaIgnoreGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)inertiaIntensityInput).EndInit();
             ResumeLayout(false);
         }
 
@@ -1663,7 +1663,6 @@
         private TabPage inertiaSettingsPage;
         private GroupBox velocityInformationGroup;
         private Label velocityInfoLabel;
-        private Label inertiaInfoLabel;
         private Label inertiaMaxDeltaLabel;
         private Label inertiaPriorityLabel;
         private NumericUpDown inertiaMaxDeltaInput;
@@ -1680,5 +1679,6 @@
         private GroupBox inertiaIgnoreGroup;
         private Label inertiaIntensityLabel;
         private NumericUpDown inertiaIntensityInput;
+        private Button openHistoryWindowButton;
     }
 }
