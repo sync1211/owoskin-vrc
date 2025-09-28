@@ -949,6 +949,7 @@ namespace OWOVRC.UI
                 audioMonitorForm.Show();
             }
 
+            audioMonitorForm.WindowState = FormWindowState.Normal; // Show if minimized
             audioMonitorForm.Activate();
         }
 
@@ -1078,6 +1079,7 @@ namespace OWOVRC.UI
             speedMonitorForm.SetMinVelocity(velocitySettings.Threshold);
             speedMonitorForm.SetOSCStatus(receiver?.IsRunning ?? false);
 
+            speedMonitorForm.WindowState = FormWindowState.Normal; // Show if minimized
             speedMonitorForm.Activate();
         }
     }

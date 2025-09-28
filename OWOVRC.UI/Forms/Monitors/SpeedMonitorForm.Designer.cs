@@ -225,7 +225,6 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            MinimizeBox = false;
             Name = "SpeedMonitorForm";
             Text = "Player Velocity";
             FormClosing += SpeedMonitorForm_FormClosing;

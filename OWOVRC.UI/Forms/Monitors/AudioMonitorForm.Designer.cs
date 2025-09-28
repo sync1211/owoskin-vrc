@@ -505,7 +505,6 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
-            MinimizeBox = false;
             Name = "AudioMonitorForm";
             Text = "Monitor";
             FormClosing += AudioMonitorForm_FormClosing;
