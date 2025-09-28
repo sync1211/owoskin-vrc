@@ -51,22 +51,34 @@
             collidersEnabledCheckbox = new CheckBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
-            speedMonitorButton = new Button();
-            notVeryHelpfulLabel = new Label();
-            velocityImpactEnabledCheckbox = new CheckBox();
+            velocityInformationGroup = new GroupBox();
+            velocityInfoLabel = new Label();
+            velocityMonitorButton = new Button();
             velocitySpeedCapLabel = new Label();
             velocityPriorityLabel = new Label();
             velocitySpeedCapInput = new NumericUpDown();
             velocityPriorityInput = new NumericUpDown();
             velocityIgnoreWhenSeatedCheckbox = new CheckBox();
-            velocityImpactGroup = new GroupBox();
-            velocityMinImpactLabel = new Label();
-            velocityMinImpactInput = new NumericUpDown();
             velocityThresholdLabel = new Label();
             velocityThresholdInput = new NumericUpDown();
             velocityIgnoreWhenGroundedCheckbox = new CheckBox();
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
+            inertiaSettingsPage = new TabPage();
+            inertiaActivationGroup = new GroupBox();
+            inertiaAccelCheckbox = new CheckBox();
+            inertiaDecelCheckbox = new CheckBox();
+            inertiaInfoLabel = new Label();
+            inertiaMaxDeltaLabel = new Label();
+            inertiaPriorityLabel = new Label();
+            inertiaMaxDeltaInput = new NumericUpDown();
+            inertiaPriorityInput = new NumericUpDown();
+            inertiaIgnoreWhenSeatedCheckbox = new CheckBox();
+            inertiaMinDeltaLabel = new Label();
+            inertiaMinDeltaInput = new NumericUpDown();
+            inertiaIgnoreWhenGroundedCheckbox = new CheckBox();
+            inertiaEnabledCheckbox = new CheckBox();
+            applyInertiaSettingsButton = new Button();
             owiSettingsPage = new TabPage();
             owiConfigureIntensitiesButton = new Button();
             owiConfigureSensationsButton = new Button();
@@ -132,6 +144,9 @@
             stopSelectedSensationLoopButton = new Button();
             stopSelectedSensationNowButton = new Button();
             activeSensationsListBox = new ListBox();
+            inertiaIgnoreGroup = new GroupBox();
+            inertiaIntensityLabel = new Label();
+            inertiaIntensityInput = new NumericUpDown();
             effectsTabControl.SuspendLayout();
             collidersSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)collidersFrequencyInput).BeginInit();
@@ -141,11 +156,15 @@
             ((System.ComponentModel.ISupportInitialize)collidersSpeedMultiplierInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)collidersMinIntensityInput).BeginInit();
             velocitySettingsPage.SuspendLayout();
+            velocityInformationGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)velocitySpeedCapInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).BeginInit();
-            velocityImpactGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)velocityMinImpactInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).BeginInit();
+            inertiaSettingsPage.SuspendLayout();
+            inertiaActivationGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)inertiaMaxDeltaInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)inertiaPriorityInput).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)inertiaMinDeltaInput).BeginInit();
             owiSettingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).BeginInit();
             owiInformationGroup.SuspendLayout();
@@ -159,12 +178,15 @@
             logPage.SuspendLayout();
             sensationsPage.SuspendLayout();
             sensationInfoGroup.SuspendLayout();
+            inertiaIgnoreGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)inertiaIntensityInput).BeginInit();
             SuspendLayout();
             // 
             // effectsTabControl
             // 
             effectsTabControl.Controls.Add(collidersSettingsPage);
             effectsTabControl.Controls.Add(velocitySettingsPage);
+            effectsTabControl.Controls.Add(inertiaSettingsPage);
             effectsTabControl.Controls.Add(owiSettingsPage);
             effectsTabControl.Controls.Add(oscPresetsPage);
             effectsTabControl.Controls.Add(audioResponsePage);
@@ -395,15 +417,13 @@
             // 
             // velocitySettingsPage
             // 
-            velocitySettingsPage.Controls.Add(speedMonitorButton);
-            velocitySettingsPage.Controls.Add(notVeryHelpfulLabel);
-            velocitySettingsPage.Controls.Add(velocityImpactEnabledCheckbox);
+            velocitySettingsPage.Controls.Add(velocityInformationGroup);
+            velocitySettingsPage.Controls.Add(velocityMonitorButton);
             velocitySettingsPage.Controls.Add(velocitySpeedCapLabel);
             velocitySettingsPage.Controls.Add(velocityPriorityLabel);
             velocitySettingsPage.Controls.Add(velocitySpeedCapInput);
             velocitySettingsPage.Controls.Add(velocityPriorityInput);
             velocitySettingsPage.Controls.Add(velocityIgnoreWhenSeatedCheckbox);
-            velocitySettingsPage.Controls.Add(velocityImpactGroup);
             velocitySettingsPage.Controls.Add(velocityThresholdLabel);
             velocitySettingsPage.Controls.Add(velocityThresholdInput);
             velocitySettingsPage.Controls.Add(velocityIgnoreWhenGroundedCheckbox);
@@ -418,41 +438,38 @@
             velocitySettingsPage.ToolTipText = "Player velocity-based effects";
             velocitySettingsPage.UseVisualStyleBackColor = true;
             // 
-            // speedMonitorButton
+            // velocityInformationGroup
             // 
-            speedMonitorButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            speedMonitorButton.Location = new Point(6, 246);
-            speedMonitorButton.Name = "speedMonitorButton";
-            speedMonitorButton.Size = new Size(89, 23);
-            speedMonitorButton.TabIndex = 32;
-            speedMonitorButton.Text = "Monitor";
-            speedMonitorButton.UseVisualStyleBackColor = true;
-            speedMonitorButton.Click += SpeedMonitorButton_Click;
+            velocityInformationGroup.Controls.Add(velocityInfoLabel);
+            velocityInformationGroup.Location = new Point(6, 163);
+            velocityInformationGroup.Name = "velocityInformationGroup";
+            velocityInformationGroup.Size = new Size(348, 77);
+            velocityInformationGroup.TabIndex = 33;
+            velocityInformationGroup.TabStop = false;
+            velocityInformationGroup.Text = "Information";
             // 
-            // notVeryHelpfulLabel
+            // velocityInfoLabel
             // 
-            notVeryHelpfulLabel.AutoSize = true;
-            notVeryHelpfulLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            notVeryHelpfulLabel.ForeColor = SystemColors.ControlDarkDark;
-            notVeryHelpfulLabel.Location = new Point(106, 250);
-            notVeryHelpfulLabel.Name = "notVeryHelpfulLabel";
-            notVeryHelpfulLabel.Size = new Size(162, 15);
-            notVeryHelpfulLabel.TabIndex = 16;
-            notVeryHelpfulLabel.Text = "No additional setup required!";
-            helpToolTip.SetToolTip(notVeryHelpfulLabel, "This effect uses built-in VRChat OSC messages.\r\nAs a result it will work with any Avatar without any setup. :)");
+            velocityInfoLabel.FlatStyle = FlatStyle.Popup;
+            velocityInfoLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            velocityInfoLabel.ForeColor = SystemColors.ControlDarkDark;
+            velocityInfoLabel.Location = new Point(6, 19);
+            velocityInfoLabel.Name = "velocityInfoLabel";
+            velocityInfoLabel.Size = new Size(336, 50);
+            velocityInfoLabel.TabIndex = 20;
+            velocityInfoLabel.Text = "This effect does something that still needs a description.\r\n\r\nNo additional setup required!\r\n";
             // 
-            // velocityImpactEnabledCheckbox
+            // velocityMonitorButton
             // 
-            velocityImpactEnabledCheckbox.AutoSize = true;
-            velocityImpactEnabledCheckbox.BackColor = SystemColors.ControlLightLight;
-            velocityImpactEnabledCheckbox.Location = new Point(16, 188);
-            velocityImpactEnabledCheckbox.Name = "velocityImpactEnabledCheckbox";
-            velocityImpactEnabledCheckbox.Size = new Size(116, 19);
-            velocityImpactEnabledCheckbox.TabIndex = 3;
-            velocityImpactEnabledCheckbox.Text = "Impact sensation";
-            helpToolTip.SetToolTip(velocityImpactEnabledCheckbox, "Enables impact sensation on sudden deceleration.\r\nThis effect plays whenever the speed falls under the Min. velocity within a second after moving faster than the Min. impact velocity.");
-            velocityImpactEnabledCheckbox.UseVisualStyleBackColor = false;
-            velocityImpactEnabledCheckbox.CheckedChanged += VelocityImpactEnabledCheckbox_CheckedChanged;
+            velocityMonitorButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            velocityMonitorButton.Location = new Point(6, 246);
+            velocityMonitorButton.Name = "velocityMonitorButton";
+            velocityMonitorButton.Size = new Size(89, 23);
+            velocityMonitorButton.TabIndex = 32;
+            velocityMonitorButton.Text = "Monitor";
+            helpToolTip.SetToolTip(velocityMonitorButton, "Show player speed monitor window");
+            velocityMonitorButton.UseVisualStyleBackColor = true;
+            velocityMonitorButton.Click += SpeedMonitorButton_Click;
             // 
             // velocitySpeedCapLabel
             // 
@@ -499,38 +516,8 @@
             velocityIgnoreWhenSeatedCheckbox.Size = new Size(129, 19);
             velocityIgnoreWhenSeatedCheckbox.TabIndex = 13;
             velocityIgnoreWhenSeatedCheckbox.Text = "Ignore when seated";
-            helpToolTip.SetToolTip(velocityIgnoreWhenSeatedCheckbox, "Disables velocity-based effects when the player is seated");
+            helpToolTip.SetToolTip(velocityIgnoreWhenSeatedCheckbox, "Disables wind effect when the player is sitting on a chair\r\n");
             velocityIgnoreWhenSeatedCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // velocityImpactGroup
-            // 
-            velocityImpactGroup.Controls.Add(velocityMinImpactLabel);
-            velocityImpactGroup.Controls.Add(velocityMinImpactInput);
-            velocityImpactGroup.Location = new Point(6, 188);
-            velocityImpactGroup.Name = "velocityImpactGroup";
-            velocityImpactGroup.Size = new Size(345, 52);
-            velocityImpactGroup.TabIndex = 12;
-            velocityImpactGroup.TabStop = false;
-            velocityImpactGroup.Text = "Impact";
-            // 
-            // velocityMinImpactLabel
-            // 
-            velocityMinImpactLabel.AutoSize = true;
-            velocityMinImpactLabel.Location = new Point(6, 22);
-            velocityMinImpactLabel.Name = "velocityMinImpactLabel";
-            velocityMinImpactLabel.Size = new Size(147, 15);
-            velocityMinImpactLabel.TabIndex = 11;
-            velocityMinImpactLabel.Text = "Min. impact velocity (m/s)";
-            helpToolTip.SetToolTip(velocityMinImpactLabel, "Minimum velocity to reach to trigger the impact effect on deceleration");
-            // 
-            // velocityMinImpactInput
-            // 
-            velocityMinImpactInput.DecimalPlaces = 2;
-            velocityMinImpactInput.Location = new Point(250, 19);
-            velocityMinImpactInput.Name = "velocityMinImpactInput";
-            velocityMinImpactInput.Size = new Size(89, 23);
-            velocityMinImpactInput.TabIndex = 10;
-            helpToolTip.SetToolTip(velocityMinImpactInput, "Minimum velocity to reach to trigger the impact effect on deceleration");
             // 
             // velocityThresholdLabel
             // 
@@ -559,7 +546,7 @@
             velocityIgnoreWhenGroundedCheckbox.Size = new Size(147, 19);
             velocityIgnoreWhenGroundedCheckbox.TabIndex = 4;
             velocityIgnoreWhenGroundedCheckbox.Text = "Ignore when grounded";
-            helpToolTip.SetToolTip(velocityIgnoreWhenGroundedCheckbox, "Disables velocity-based effects when the player is standing on the ground\r\n");
+            helpToolTip.SetToolTip(velocityIgnoreWhenGroundedCheckbox, "Disables wind effect when the player is standing on the ground\r\n");
             velocityIgnoreWhenGroundedCheckbox.UseVisualStyleBackColor = true;
             // 
             // velocityEnabledCheckbox
@@ -583,6 +570,171 @@
             helpToolTip.SetToolTip(applyVelocitySettingsButton, "Save and apply settings");
             applyVelocitySettingsButton.UseVisualStyleBackColor = true;
             applyVelocitySettingsButton.Click += ApplyVelocitySettingsButton_Click;
+            // 
+            // inertiaSettingsPage
+            // 
+            inertiaSettingsPage.Controls.Add(inertiaIntensityLabel);
+            inertiaSettingsPage.Controls.Add(inertiaIntensityInput);
+            inertiaSettingsPage.Controls.Add(inertiaIgnoreGroup);
+            inertiaSettingsPage.Controls.Add(inertiaActivationGroup);
+            inertiaSettingsPage.Controls.Add(inertiaInfoLabel);
+            inertiaSettingsPage.Controls.Add(inertiaMaxDeltaLabel);
+            inertiaSettingsPage.Controls.Add(inertiaPriorityLabel);
+            inertiaSettingsPage.Controls.Add(inertiaMaxDeltaInput);
+            inertiaSettingsPage.Controls.Add(inertiaPriorityInput);
+            inertiaSettingsPage.Controls.Add(inertiaMinDeltaLabel);
+            inertiaSettingsPage.Controls.Add(inertiaMinDeltaInput);
+            inertiaSettingsPage.Controls.Add(inertiaEnabledCheckbox);
+            inertiaSettingsPage.Controls.Add(applyInertiaSettingsButton);
+            inertiaSettingsPage.Location = new Point(4, 24);
+            inertiaSettingsPage.Name = "inertiaSettingsPage";
+            inertiaSettingsPage.Size = new Size(360, 275);
+            inertiaSettingsPage.TabIndex = 6;
+            inertiaSettingsPage.Text = "Inertia";
+            inertiaSettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // inertiaActivationGroup
+            // 
+            inertiaActivationGroup.Controls.Add(inertiaAccelCheckbox);
+            inertiaActivationGroup.Controls.Add(inertiaDecelCheckbox);
+            inertiaActivationGroup.Location = new Point(6, 163);
+            inertiaActivationGroup.Name = "inertiaActivationGroup";
+            inertiaActivationGroup.Size = new Size(171, 77);
+            inertiaActivationGroup.TabIndex = 45;
+            inertiaActivationGroup.TabStop = false;
+            inertiaActivationGroup.Text = "Activate on";
+            // 
+            // inertiaAccelCheckbox
+            // 
+            inertiaAccelCheckbox.AutoSize = true;
+            inertiaAccelCheckbox.Location = new Point(6, 22);
+            inertiaAccelCheckbox.Name = "inertiaAccelCheckbox";
+            inertiaAccelCheckbox.Size = new Size(92, 19);
+            inertiaAccelCheckbox.TabIndex = 43;
+            inertiaAccelCheckbox.Text = "Acceleration";
+            inertiaAccelCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // inertiaDecelCheckbox
+            // 
+            inertiaDecelCheckbox.AutoSize = true;
+            inertiaDecelCheckbox.Location = new Point(6, 47);
+            inertiaDecelCheckbox.Name = "inertiaDecelCheckbox";
+            inertiaDecelCheckbox.Size = new Size(92, 19);
+            inertiaDecelCheckbox.TabIndex = 44;
+            inertiaDecelCheckbox.Text = "Deceleration";
+            inertiaDecelCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // inertiaInfoLabel
+            // 
+            inertiaInfoLabel.FlatStyle = FlatStyle.Popup;
+            inertiaInfoLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            inertiaInfoLabel.ForeColor = SystemColors.ControlDarkDark;
+            inertiaInfoLabel.Location = new Point(6, 248);
+            inertiaInfoLabel.Name = "inertiaInfoLabel";
+            inertiaInfoLabel.Size = new Size(172, 19);
+            inertiaInfoLabel.TabIndex = 20;
+            inertiaInfoLabel.Text = "No additional setup required!\r\n";
+            inertiaInfoLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // inertiaMaxDeltaLabel
+            // 
+            inertiaMaxDeltaLabel.AutoSize = true;
+            inertiaMaxDeltaLabel.Location = new Point(6, 86);
+            inertiaMaxDeltaLabel.Name = "inertiaMaxDeltaLabel";
+            inertiaMaxDeltaLabel.Size = new Size(109, 15);
+            inertiaMaxDeltaLabel.TabIndex = 39;
+            inertiaMaxDeltaLabel.Text = "Max. velocity (m/s)";
+            helpToolTip.SetToolTip(inertiaMaxDeltaLabel, "Maximum speed difference for inertia effects (used for scaling)");
+            // 
+            // inertiaPriorityLabel
+            // 
+            inertiaPriorityLabel.AutoSize = true;
+            inertiaPriorityLabel.Location = new Point(6, 32);
+            inertiaPriorityLabel.Name = "inertiaPriorityLabel";
+            inertiaPriorityLabel.Size = new Size(45, 15);
+            inertiaPriorityLabel.TabIndex = 42;
+            inertiaPriorityLabel.Text = "Priority";
+            helpToolTip.SetToolTip(inertiaPriorityLabel, "Speicifies the priority of this effect (0 = lowest)");
+            // 
+            // inertiaMaxDeltaInput
+            // 
+            inertiaMaxDeltaInput.DecimalPlaces = 2;
+            inertiaMaxDeltaInput.Location = new Point(262, 84);
+            inertiaMaxDeltaInput.Name = "inertiaMaxDeltaInput";
+            inertiaMaxDeltaInput.Size = new Size(89, 23);
+            inertiaMaxDeltaInput.TabIndex = 38;
+            helpToolTip.SetToolTip(inertiaMaxDeltaInput, "Maximum speed for wind effects (used for scaling)");
+            // 
+            // inertiaPriorityInput
+            // 
+            inertiaPriorityInput.Location = new Point(262, 26);
+            inertiaPriorityInput.Name = "inertiaPriorityInput";
+            inertiaPriorityInput.Size = new Size(89, 23);
+            inertiaPriorityInput.TabIndex = 41;
+            helpToolTip.SetToolTip(inertiaPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
+            // 
+            // inertiaIgnoreWhenSeatedCheckbox
+            // 
+            inertiaIgnoreWhenSeatedCheckbox.AutoSize = true;
+            inertiaIgnoreWhenSeatedCheckbox.Location = new Point(6, 47);
+            inertiaIgnoreWhenSeatedCheckbox.Name = "inertiaIgnoreWhenSeatedCheckbox";
+            inertiaIgnoreWhenSeatedCheckbox.Size = new Size(93, 19);
+            inertiaIgnoreWhenSeatedCheckbox.TabIndex = 40;
+            inertiaIgnoreWhenSeatedCheckbox.Text = "While seated";
+            helpToolTip.SetToolTip(inertiaIgnoreWhenSeatedCheckbox, "Disables inertia effect when the player is sitting on a chair");
+            inertiaIgnoreWhenSeatedCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // inertiaMinDeltaLabel
+            // 
+            inertiaMinDeltaLabel.AutoSize = true;
+            inertiaMinDeltaLabel.Location = new Point(6, 57);
+            inertiaMinDeltaLabel.Name = "inertiaMinDeltaLabel";
+            inertiaMinDeltaLabel.Size = new Size(107, 15);
+            inertiaMinDeltaLabel.TabIndex = 37;
+            inertiaMinDeltaLabel.Text = "Min. velocity (m/s)";
+            helpToolTip.SetToolTip(inertiaMinDeltaLabel, "Minimum speed difference for triggering inertia effects");
+            // 
+            // inertiaMinDeltaInput
+            // 
+            inertiaMinDeltaInput.DecimalPlaces = 2;
+            inertiaMinDeltaInput.Location = new Point(262, 55);
+            inertiaMinDeltaInput.Name = "inertiaMinDeltaInput";
+            inertiaMinDeltaInput.Size = new Size(89, 23);
+            inertiaMinDeltaInput.TabIndex = 36;
+            helpToolTip.SetToolTip(inertiaMinDeltaInput, "Minimum speed for triggering wind effects");
+            // 
+            // inertiaIgnoreWhenGroundedCheckbox
+            // 
+            inertiaIgnoreWhenGroundedCheckbox.AutoSize = true;
+            inertiaIgnoreWhenGroundedCheckbox.Location = new Point(6, 22);
+            inertiaIgnoreWhenGroundedCheckbox.Name = "inertiaIgnoreWhenGroundedCheckbox";
+            inertiaIgnoreWhenGroundedCheckbox.Size = new Size(111, 19);
+            inertiaIgnoreWhenGroundedCheckbox.TabIndex = 35;
+            inertiaIgnoreWhenGroundedCheckbox.Text = "While grounded";
+            helpToolTip.SetToolTip(inertiaIgnoreWhenGroundedCheckbox, "Disables inertia effect when the player is standing on the ground\r\n");
+            inertiaIgnoreWhenGroundedCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // inertiaEnabledCheckbox
+            // 
+            inertiaEnabledCheckbox.AutoSize = true;
+            inertiaEnabledCheckbox.Location = new Point(6, 6);
+            inertiaEnabledCheckbox.Name = "inertiaEnabledCheckbox";
+            inertiaEnabledCheckbox.Size = new Size(68, 19);
+            inertiaEnabledCheckbox.TabIndex = 34;
+            inertiaEnabledCheckbox.Text = "Enabled";
+            inertiaEnabledCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // applyInertiaSettingsButton
+            // 
+            applyInertiaSettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            applyInertiaSettingsButton.Location = new Point(279, 246);
+            applyInertiaSettingsButton.Name = "applyInertiaSettingsButton";
+            applyInertiaSettingsButton.Size = new Size(75, 23);
+            applyInertiaSettingsButton.TabIndex = 33;
+            applyInertiaSettingsButton.Text = "Apply";
+            helpToolTip.SetToolTip(applyInertiaSettingsButton, "Save and apply settings");
+            applyInertiaSettingsButton.UseVisualStyleBackColor = true;
+            applyInertiaSettingsButton.Click += ApplyInertiaSettingsButton_Click;
             // 
             // owiSettingsPage
             // 
@@ -860,6 +1012,7 @@
             audioMonitorButton.Size = new Size(89, 23);
             audioMonitorButton.TabIndex = 31;
             audioMonitorButton.Text = "Monitor";
+            helpToolTip.SetToolTip(audioMonitorButton, "Open audio monitor window");
             audioMonitorButton.UseVisualStyleBackColor = true;
             audioMonitorButton.Click += AudioMonitorButton_Click;
             // 
@@ -1315,6 +1468,35 @@
             helpToolTip.SetToolTip(activeSensationsListBox, "Currently playing sensations");
             activeSensationsListBox.SelectedIndexChanged += ActiveSensationsListBox_SelectedIndexChanged;
             // 
+            // inertiaIgnoreGroup
+            // 
+            inertiaIgnoreGroup.Controls.Add(inertiaIgnoreWhenSeatedCheckbox);
+            inertiaIgnoreGroup.Controls.Add(inertiaIgnoreWhenGroundedCheckbox);
+            inertiaIgnoreGroup.Location = new Point(183, 163);
+            inertiaIgnoreGroup.Name = "inertiaIgnoreGroup";
+            inertiaIgnoreGroup.Size = new Size(171, 77);
+            inertiaIgnoreGroup.TabIndex = 46;
+            inertiaIgnoreGroup.TabStop = false;
+            inertiaIgnoreGroup.Text = "Ignore";
+            // 
+            // inertiaIntensityLabel
+            // 
+            inertiaIntensityLabel.AutoSize = true;
+            inertiaIntensityLabel.Location = new Point(6, 115);
+            inertiaIntensityLabel.Name = "inertiaIntensityLabel";
+            inertiaIntensityLabel.Size = new Size(73, 15);
+            inertiaIntensityLabel.TabIndex = 48;
+            inertiaIntensityLabel.Text = "Intensity (%)";
+            helpToolTip.SetToolTip(inertiaIntensityLabel, "Intensity scale for the interia effect");
+            // 
+            // inertiaIntensityInput
+            // 
+            inertiaIntensityInput.Location = new Point(262, 113);
+            inertiaIntensityInput.Name = "inertiaIntensityInput";
+            inertiaIntensityInput.Size = new Size(89, 23);
+            inertiaIntensityInput.TabIndex = 47;
+            helpToolTip.SetToolTip(inertiaIntensityInput, "Intensity scale for the interia effect");
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1343,12 +1525,17 @@
             ((System.ComponentModel.ISupportInitialize)collidersMinIntensityInput).EndInit();
             velocitySettingsPage.ResumeLayout(false);
             velocitySettingsPage.PerformLayout();
+            velocityInformationGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)velocitySpeedCapInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).EndInit();
-            velocityImpactGroup.ResumeLayout(false);
-            velocityImpactGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)velocityMinImpactInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).EndInit();
+            inertiaSettingsPage.ResumeLayout(false);
+            inertiaSettingsPage.PerformLayout();
+            inertiaActivationGroup.ResumeLayout(false);
+            inertiaActivationGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)inertiaMaxDeltaInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)inertiaPriorityInput).EndInit();
+            ((System.ComponentModel.ISupportInitialize)inertiaMinDeltaInput).EndInit();
             owiSettingsPage.ResumeLayout(false);
             owiSettingsPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)owiUpdateIntervalInput).EndInit();
@@ -1368,6 +1555,9 @@
             sensationsPage.ResumeLayout(false);
             sensationInfoGroup.ResumeLayout(false);
             sensationInfoGroup.PerformLayout();
+            inertiaIgnoreGroup.ResumeLayout(false);
+            inertiaIgnoreGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)inertiaIntensityInput).EndInit();
             ResumeLayout(false);
         }
 
@@ -1405,12 +1595,8 @@
         private CheckBox velocityEnabledCheckbox;
         private Label velocityThresholdLabel;
         private NumericUpDown velocityThresholdInput;
-        private Label velocityMinImpactLabel;
-        private NumericUpDown velocityMinImpactInput;
-        private GroupBox velocityImpactGroup;
         private Label velocitySpeedCapLabel;
         private NumericUpDown velocitySpeedCapInput;
-        private CheckBox velocityImpactEnabledCheckbox;
         private CheckBox velocityIgnoreWhenGroundedCheckbox;
         private CheckBox velocityIgnoreWhenSeatedCheckbox;
         private Button stopSensationsButton;
@@ -1437,7 +1623,6 @@
         private ToolTip helpToolTip;
         private LinkLabel collidersHelpLinkLabel;
         private LinkLabel presetsHelpLinkLabel;
-        private Label notVeryHelpfulLabel;
         private Button configureCollidersIntensityButton;
         private Button openDiscoveryButton;
         private TabPage audioResponsePage;
@@ -1474,6 +1659,26 @@
         private NumericUpDown collidersSpeedDecayInput;
         private CheckBox collidersSpeedDecayCheckbox;
         private Button owiConfigureIntensitiesButton;
-        private Button speedMonitorButton;
+        private Button velocityMonitorButton;
+        private TabPage inertiaSettingsPage;
+        private GroupBox velocityInformationGroup;
+        private Label velocityInfoLabel;
+        private Label inertiaInfoLabel;
+        private Label inertiaMaxDeltaLabel;
+        private Label inertiaPriorityLabel;
+        private NumericUpDown inertiaMaxDeltaInput;
+        private NumericUpDown inertiaPriorityInput;
+        private CheckBox inertiaIgnoreWhenSeatedCheckbox;
+        private Label inertiaMinDeltaLabel;
+        private NumericUpDown inertiaMinDeltaInput;
+        private CheckBox inertiaIgnoreWhenGroundedCheckbox;
+        private CheckBox inertiaEnabledCheckbox;
+        private Button applyInertiaSettingsButton;
+        private CheckBox inertiaDecelCheckbox;
+        private CheckBox inertiaAccelCheckbox;
+        private GroupBox inertiaActivationGroup;
+        private GroupBox inertiaIgnoreGroup;
+        private Label inertiaIntensityLabel;
+        private NumericUpDown inertiaIntensityInput;
     }
 }

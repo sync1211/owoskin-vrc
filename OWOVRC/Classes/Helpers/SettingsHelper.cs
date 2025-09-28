@@ -14,6 +14,8 @@ namespace OWOVRC.Classes.Helpers
 
         [JsonSerializable(typeof(VelocityEffectSettings))]
         public partial class VelocityEffectSettingsContext : JsonSerializerContext;
+        [JsonSerializable(typeof(InertiaEffectSettings))]
+        public partial class InertiaEffectSettingsContext : JsonSerializerContext;
 
         [JsonSerializable(typeof(CollidersEffectSettings))]
         public partial class CollidersEffectSettingsContext : JsonSerializerContext;
