@@ -8,7 +8,7 @@ namespace OWOVRC.Classes.Effects.Sensations
         public static readonly string _Name = "WindSensation";
         private const int _frequency = 100;
 
-        public WindSensation(float durationSeconds = 0.2f): base(_Name, _frequency, durationSeconds, 0, 0, 0, true, new MuscleDirectionGroups(down: Muscle.All)) { }
+        public WindSensation(float durationSeconds = 0.2f): base(name: _Name, frequency: _frequency, durationSeconds: durationSeconds, loop: true, directions: new MuscleDirectionGroups(down: Muscle.All)) { }
 
         /// <summary>
         /// Creates a sensation from the wind velocity.

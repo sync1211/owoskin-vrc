@@ -10,9 +10,6 @@ namespace OWOVRC.Classes.Effects.Sensations
     {
         public readonly int Frequency;
         public float Duration;
-        public readonly float RampUp;
-        public readonly float RampDown;
-        public readonly float ExitDelay;
         public readonly bool IsLoop;
         public readonly string Name;
         private readonly Muscle[] musclesScaled = Muscle.All;
@@ -21,14 +18,11 @@ namespace OWOVRC.Classes.Effects.Sensations
         // Muscles to apply the sensation
         protected readonly MuscleDirectionGroups directions = new();
 
-        protected DirectionalSensation(string name, int frequency, float durationSeconds = 0.2f, float rampUp = 0, float rampDown = 0, float exitDelay = 0, bool loop = false, MuscleDirectionGroups? directions = null)
+        protected DirectionalSensation(string name, int frequency, float durationSeconds = 0.2f, bool loop = false, MuscleDirectionGroups? directions = null)
         {
             Name = name;
             Frequency = frequency;
             Duration = durationSeconds;
-            RampUp = rampUp;
-            RampDown = rampDown;
-            ExitDelay = exitDelay;
             IsLoop = loop;
 
             this.directions = directions ?? this.directions;
