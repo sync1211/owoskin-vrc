@@ -58,13 +58,6 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            // Empty message
-            if (message.Values.ElementCount == 0)
-            {
-                //Log.Verbose("Ignoring empty message: {message}", message.Address);
-                return;
-            }
-
             // Process OSC message
             if (ProcessMessage(message))
             {
