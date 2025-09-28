@@ -17,10 +17,10 @@ namespace OWOVRC.Classes.Settings
         public VelocityEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority) { }
 
         [JsonConstructor]
-        public VelocityEffectSettings(bool enabled, int priority, float threshold, float speedCap, bool ignoreWhenGrounded, bool ignoreWhenSeated) : base(enabled, priority)
+        public VelocityEffectSettings(bool enabled, int priority, float minSpeed, float maxSpeed, bool ignoreWhenGrounded, bool ignoreWhenSeated) : base(enabled, priority)
         {
-            MinSpeed = threshold;
-            MaxSpeed = speedCap;
+            MinSpeed = minSpeed;
+            MaxSpeed = maxSpeed;
             IgnoreWhenGrounded = ignoreWhenGrounded;
             IgnoreWhenSeated = ignoreWhenSeated;
         }
