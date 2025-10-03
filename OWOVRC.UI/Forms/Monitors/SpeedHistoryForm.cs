@@ -72,6 +72,7 @@ namespace OWOVRC.UI.Forms.Monitors
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
+            Close();
         }
 
         private void ResumeGraphButton_Click(object sender, EventArgs e)
