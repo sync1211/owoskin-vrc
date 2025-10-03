@@ -451,13 +451,13 @@
             // velocityInfoLabel
             // 
             velocityInfoLabel.FlatStyle = FlatStyle.Popup;
-            velocityInfoLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            velocityInfoLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
             velocityInfoLabel.ForeColor = SystemColors.ControlDarkDark;
-            velocityInfoLabel.Location = new Point(6, 19);
+            velocityInfoLabel.Location = new Point(6, 20);
             velocityInfoLabel.Name = "velocityInfoLabel";
-            velocityInfoLabel.Size = new Size(336, 50);
+            velocityInfoLabel.Size = new Size(339, 56);
             velocityInfoLabel.TabIndex = 20;
-            velocityInfoLabel.Text = "This effect does something that still needs a description.\r\n\r\nNo additional setup required!\r\n";
+            velocityInfoLabel.Text = "This effect simulates wind resistance when moving fast.\r\n\r\nNo additional setup required!\r\n";
             // 
             // velocityMonitorButton
             // 
