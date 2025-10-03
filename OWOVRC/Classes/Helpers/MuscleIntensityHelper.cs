@@ -11,7 +11,13 @@ namespace OWOVRC.Classes.Helpers
             for (int i = 0; i <= muscles.Length; i++)
             {
                 // Add value if the key doesn't already exist
-                muscleIntensities.TryAdd(muscles[i].id, 100);
+                int muscleID = muscles[i].id;
+                if (muscleIntensities.ContainsKey(muscleID))
+                {
+                    continue;
+                }
+
+                muscleIntensities[muscleID] = 100;
             }
         }
     }
