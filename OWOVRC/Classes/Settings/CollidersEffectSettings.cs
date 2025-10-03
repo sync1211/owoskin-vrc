@@ -91,10 +91,7 @@ namespace OWOVRC.Classes.Settings
 
         public CollidersEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority)
         {
-            foreach (Muscle muscle in Muscle.All)
-            {
-                MuscleIntensities[muscle.id] = 100;
-            }
+            AddMissingMuscles();
             UpdateSensation();
         }
 
@@ -112,6 +109,13 @@ namespace OWOVRC.Classes.Settings
             this.decayEnabled = decayEnabled;
             this.decayTime = decayTime;
 
+            AddMissingMuscles();
+            UpdateSensation();
+            UpdateCycleCount();
+        }
+
+        private void AddMissingMuscles()
+        {
             foreach (Muscle muscle in Muscle.All)
             {
                 if (!MuscleIntensities.ContainsKey(muscle.id))
@@ -119,8 +123,6 @@ namespace OWOVRC.Classes.Settings
                     MuscleIntensities[muscle.id] = 100;
                 }
             }
-            UpdateSensation();
-            UpdateCycleCount();
         }
 
         private void UpdateCycleCount()
