@@ -32,7 +32,7 @@ namespace OWOVRC.Classes.Settings
             DecelEnabled = decelEnabled;
         }
 
-        public InertiaEffectSettings() : base(true, 10) { }
+        public InertiaEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority) { }
 
         public override void SaveToFile()
         {
