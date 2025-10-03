@@ -28,7 +28,7 @@ namespace OWOVRC.Classes.Settings
 
         public WorldIntegratorSettings() : base(enabled: true, priority: 10)
         {
-            AddMissingMuscles();
+            MuscleIntensityHelper.AddMissingMuscles(MuscleIntensities);
         }
 
         [JsonConstructor]
@@ -37,19 +37,10 @@ namespace OWOVRC.Classes.Settings
             MuscleIntensities = muscleIntensities ?? MuscleIntensities;
             EnabledSensations = enabledSensations ?? EnabledSensations;
 
-            AddMissingMuscles();
+            MuscleIntensityHelper.AddMissingMuscles(MuscleIntensities);
         }
 
-        private void AddMissingMuscles()
-        {
-            foreach (Muscle muscle in Muscle.All)
-            {
-                if (!MuscleIntensities.ContainsKey(muscle.id))
-                {
-                    MuscleIntensities[muscle.id] = 100;
-                }
-            }
-        }
+
 
         public override void SaveToFile()
         {
