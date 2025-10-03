@@ -197,6 +197,9 @@ namespace OWOVRC.UI.Forms
             {
                 muscleIntensities[key] = intensity;
             }
+
+            intensityValueInput.Value = intensity;
+
             ShowFrontButton_Click(sender, e);
         }
 
