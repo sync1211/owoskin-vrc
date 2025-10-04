@@ -7,7 +7,9 @@ namespace OWOVRC.Classes.Effects
     {
         protected readonly OWOHelper owo = owo;
 
-        public abstract void OnOSCMessageReceived(object? sender, OSCMessage message);
+        public abstract void RegisterCallbacks(OSCReceiver receiver);
+        public abstract void UnregisterCallbacks(OSCReceiver receiver);
+
         public abstract void Stop();
     }
 }

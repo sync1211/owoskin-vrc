@@ -32,9 +32,19 @@ namespace OWOVRC.Classes.Effects
             Settings.Presets.Clear();
         }
 
-        public override void OnOSCMessageReceived(object? sender, OSCMessage message)
+        public void OnOSCMessageReceived(object? sender, OSCMessage message)
         {
             ProcessMessage(message);
+        }
+
+        public override void RegisterCallbacks(OSCReceiver receiver)
+        {
+            receiver.OnMessageReceived += OnOSCMessageReceived;
+        }
+
+        public override void UnregisterCallbacks(OSCReceiver receiver)
+        {
+            receiver.OnMessageReceived -= OnOSCMessageReceived;
         }
 
         public OSCSensationPreset? GetPresetFromMessage(OSCMessage message, out Muscle[] muscles)
@@ -102,7 +112,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Get intensity
-            float oscIntensity = OSCHelpers.GetFloatValueFromMessage(message);
+            float oscIntensity = OSCHelpers.GetFloatValueFromMessageValues(message.Values);
 
             // Get preset
             OSCSensationPreset? preset = GetPresetFromMessage(message, out Muscle[] muscles);
