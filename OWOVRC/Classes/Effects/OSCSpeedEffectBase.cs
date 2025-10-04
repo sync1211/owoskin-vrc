@@ -49,12 +49,12 @@ namespace OWOVRC.Classes.Effects.Sensations
 
         public override void RegisterCallbacks(OSCReceiver receiver)
         {
-            bool onVelocityXMsgSuccess = receiver.TryAddMessageCallback("VelocityX", OnVelocityXMsg);
-            bool onVelocityYMsgSuccess = receiver.TryAddMessageCallback("VelocityY", OnVelocityYMsg);
-            bool onVelocityZMsgSuccess = receiver.TryAddMessageCallback("VelocityZ", OnVelocityZMsg);
-            bool onGroundedMsgSuccess = receiver.TryAddMessageCallback("Grounded", OnGroundedMsg);
-            bool onSeatedMsgSuccess = receiver.TryAddMessageCallback("Seated", OnSeatedMsg);
-            bool onVelocityMagnitudeMsgSuccess = receiver.TryAddMessageCallback("VelocityMagnitude", OnVelocityMagnitudeMsg);
+            receiver.TryAddMessageCallback("VelocityX", OnVelocityXMsg);
+            receiver.TryAddMessageCallback("VelocityY", OnVelocityYMsg);
+            receiver.TryAddMessageCallback("VelocityZ", OnVelocityZMsg);
+            receiver.TryAddMessageCallback("Grounded", OnGroundedMsg);
+            receiver.TryAddMessageCallback("Seated", OnSeatedMsg);
+            receiver.TryAddMessageCallback("VelocityMagnitude", OnVelocityMagnitudeMsg);
         }
 
         public override void UnregisterCallbacks(OSCReceiver receiver)
