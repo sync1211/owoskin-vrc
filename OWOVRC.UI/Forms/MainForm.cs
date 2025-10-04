@@ -27,6 +27,7 @@ namespace OWOVRC.UI
         // Settings
         private ConnectionSettings connectionSettings = new();
         private VelocityEffectSettings velocitySettings = new();
+        private InertiaEffectSettings inertiaSettings = new();
         private CollidersEffectSettings collidersSettings = new();
         private WorldIntegratorSettings owiSettings = new();
         private OSCPresetsSettings oscPresetsSettings = new();
@@ -41,7 +42,8 @@ namespace OWOVRC.UI
         private OSCEffectBase[] oscEffects = [];
         private WorldIntegrator? owi;
         private AudioEffect? audioEffect;
-        private Velocity? velocityEffect;
+        private VelocityEffect? velocityEffect;
+        private InertiaEffect? inertiaEffect;
 
         // Status
         private bool IsRunning;
@@ -62,6 +64,7 @@ namespace OWOVRC.UI
         // Monitor forms (single-instance, not shown as dialogs)
         private AudioMonitorForm? audioMonitorForm;
         private SpeedMonitorForm? speedMonitorForm;
+        private SpeedHistoryForm? speedHistoryForm;
 
         public MainForm(LoggingLevelSwitch? logLevelSwitch = null)
         {
@@ -160,6 +163,14 @@ namespace OWOVRC.UI
                 this.velocitySettings = loadedVelocitySettings;
             }
 
+            // Velocity effect settings
+            InertiaEffectSettings? loadedInertiaSettings = SettingsHelper
+                .LoadSettingsFromFile("inertia.json", "inertia effect", SettingsHelper.InertiaEffectSettingsContext.Default.InertiaEffectSettings);
+            if (loadedInertiaSettings != null)
+            {
+                this.inertiaSettings = loadedInertiaSettings;
+            }
+
             // OWI settings
             WorldIntegratorSettings? loadedOwiSettings = SettingsHelper
                 .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
@@ -183,6 +194,10 @@ namespace OWOVRC.UI
             {
                 this.audioSettings = loadedAudioSettings;
             }
+
+            // Update buttons
+            UpdateVelocityMonitorButtonState();
+            UpdateInertiaMonitorButtonState();
         }
 
         private void UpdateControlAvailability()
@@ -425,6 +440,7 @@ namespace OWOVRC.UI
 
             IsRunning = true;
             speedMonitorForm?.SetOSCStatus(receiver.IsRunning);
+            speedHistoryForm?.SetOSCStatus(receiver.IsRunning);
         }
 
         private async Task StartOWOHelper()
@@ -462,6 +478,7 @@ namespace OWOVRC.UI
 
             IsRunning = false;
             speedMonitorForm?.SetOSCStatus(false);
+            speedHistoryForm?.SetOSCStatus(false);
         }
 
         private void ComboBox1_SelectedIndexChanged(object? sender, EventArgs e)
@@ -481,10 +498,12 @@ namespace OWOVRC.UI
 
             LoadSettings();
 
+            inertiaEffect = new(owo, inertiaSettings);
             velocityEffect = new(owo, velocitySettings);
 
             // Set up effects
             oscEffects = [
+                inertiaEffect,
                 velocityEffect,
                 new Colliders(owo, collidersSettings),
                 new OSCPresetTrigger(owo, oscPresetsSettings),
@@ -534,12 +553,26 @@ namespace OWOVRC.UI
         {
             velocityEnabledCheckbox.Checked = velocitySettings.Enabled;
             velocityPriorityInput.Text = velocitySettings.Priority.ToString();
-            velocityThresholdInput.Text = velocitySettings.Threshold.ToString();
-            velocityImpactEnabledCheckbox.Checked = velocitySettings.ImpactEnabled;
-            velocityMinImpactInput.Text = velocitySettings.StopVelocityThreshold.ToString();
-            velocitySpeedCapInput.Text = velocitySettings.SpeedCap.ToString();
+            velocityThresholdInput.Text = velocitySettings.MinSpeed.ToString();
+            velocitySpeedCapInput.Text = velocitySettings.MaxSpeed.ToString();
             velocityIgnoreWhenGroundedCheckbox.Checked = velocitySettings.IgnoreWhenGrounded;
             velocityIgnoreWhenSeatedCheckbox.Checked = velocitySettings.IgnoreWhenSeated;
+        }
+
+        private void UpdateInertiaEffectSettings()
+        {
+            inertiaEnabledCheckbox.Checked = inertiaSettings.Enabled;
+            inertiaPriorityInput.Text = inertiaSettings.Priority.ToString();
+
+            inertiaMinDeltaInput.Text = inertiaSettings.MinDelta.ToString();
+            inertiaMaxDeltaInput.Text = inertiaSettings.MaxDelta.ToString();
+            inertiaIntensityInput.Text = inertiaSettings.Intensity.ToString();
+
+            inertiaIgnoreWhenGroundedCheckbox.Checked = inertiaSettings.IgnoreWhenGrounded;
+            inertiaIgnoreWhenSeatedCheckbox.Checked = inertiaSettings.IgnoreWhenSeated;
+
+            inertiaAccelCheckbox.Checked = inertiaSettings.AccelEnabled;
+            inertiaDecelCheckbox.Checked = inertiaSettings.DecelEnabled;
         }
 
         private void UpdateOWISettings()
@@ -568,6 +601,7 @@ namespace OWOVRC.UI
             UpdateConnectionSettings();
             UpdateCollidersEffectSettings();
             UpdateVelocityEffectSettings();
+            UpdateInertiaEffectSettings();
             UpdateOWISettings();
             UpdateOSCPrestsSettings();
 
@@ -602,6 +636,7 @@ namespace OWOVRC.UI
             // Close forms
             audioMonitorForm?.Close();
             speedMonitorForm?.Close();
+            speedHistoryForm?.Close();
         }
 
         private void OwoIPInput_Exit(object sender, EventArgs e)
@@ -660,7 +695,6 @@ namespace OWOVRC.UI
         private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
         {
             velocitySettings.Enabled = velocityEnabledCheckbox.Checked;
-            velocitySettings.ImpactEnabled = velocityImpactEnabledCheckbox.Checked;
             velocitySettings.IgnoreWhenGrounded = velocityIgnoreWhenGroundedCheckbox.Checked;
             velocitySettings.IgnoreWhenSeated = velocityIgnoreWhenSeatedCheckbox.Checked;
 
@@ -668,20 +702,22 @@ namespace OWOVRC.UI
             velocitySettings.Priority = (int)velocityPriorityInput.Value;
 
             // Threshold
-            velocitySettings.Threshold = (float)velocityThresholdInput.Value;
-
-            // Min impact
-            velocitySettings.StopVelocityThreshold = (float)velocityMinImpactInput.Value;
+            velocitySettings.MinSpeed = (float)velocityThresholdInput.Value;
 
             // Speed cap
-            velocitySettings.SpeedCap = (float)velocitySpeedCapInput.Value;
+            velocitySettings.MaxSpeed = (float)velocitySpeedCapInput.Value;
 
             velocitySettings.SaveToFile();
 
-            speedMonitorButton.Enabled = velocitySettings.Enabled;
+            UpdateVelocityMonitorButtonState();
 
-            speedMonitorForm?.SetMaxVelocity(velocitySettings.SpeedCap);
-            speedMonitorForm?.SetMinVelocity(velocitySettings.Threshold);
+            speedMonitorForm?.SetMaxVelocity(velocitySettings.MaxSpeed);
+            speedMonitorForm?.SetMinVelocity(velocitySettings.MinSpeed);
+        }
+
+        private void UpdateVelocityMonitorButtonState()
+        {
+            velocityMonitorButton.Enabled = velocitySettings.Enabled;
         }
 
         private void StopSensationsButton_Click(object sender, EventArgs e)
@@ -768,6 +804,40 @@ namespace OWOVRC.UI
             audioSettings.SaveToFile();
             EnableOrDisableAudio();
             UpdateAudioMonitorThresholds();
+        }
+
+        private void ApplyInertiaSettingsButton_Click(object sender, EventArgs e)
+        {
+            inertiaSettings.Enabled = inertiaEnabledCheckbox.Checked;
+
+            // Priority
+            inertiaSettings.Priority = (int)inertiaPriorityInput.Value;
+
+            // Delta bounds
+            inertiaSettings.MinDelta = (float)inertiaMinDeltaInput.Value;
+            inertiaSettings.MaxDelta = (float)inertiaMaxDeltaInput.Value;
+
+            // Intensity scale
+            inertiaSettings.Intensity = (int)inertiaIntensityInput.Value;
+
+            // Ignore conditions
+            inertiaSettings.IgnoreWhenGrounded = inertiaIgnoreWhenGroundedCheckbox.Checked;
+            inertiaSettings.IgnoreWhenSeated = inertiaIgnoreWhenSeatedCheckbox.Checked;
+
+            // Activation conditions
+            inertiaSettings.AccelEnabled = inertiaAccelCheckbox.Checked;
+            inertiaSettings.DecelEnabled = inertiaDecelCheckbox.Checked;
+
+            inertiaSettings.SaveToFile();
+
+            UpdateInertiaMonitorButtonState();
+
+            speedHistoryForm?.SetMinDelta(inertiaSettings.MinDelta);
+        }
+
+        private void UpdateInertiaMonitorButtonState()
+        {
+            inertiaMonitorButton.Enabled = inertiaSettings.Enabled;
         }
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1036,11 +1106,6 @@ namespace OWOVRC.UI
             velocityBasedGroupBox.Enabled = collidersUseVelocityCheckbox.Checked;
         }
 
-        private void VelocityImpactEnabledCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            velocityImpactGroup.Enabled = velocityImpactEnabledCheckbox.Checked;
-        }
-
         private void OwiConfigureIntensitiesButton_Click(object sender, EventArgs e)
         {
             using (MuscleIntensityForm intensityForm = new(owiSettings.MuscleIntensities, Sensation.ShotBleeding, title: null, owoHelper: owo))
@@ -1075,12 +1140,45 @@ namespace OWOVRC.UI
                 speedMonitorForm.Show();
             }
 
-            speedMonitorForm.SetMaxVelocity(velocitySettings.SpeedCap);
-            speedMonitorForm.SetMinVelocity(velocitySettings.Threshold);
+            speedMonitorForm.SetMaxVelocity(velocitySettings.MaxSpeed);
+            speedMonitorForm.SetMinVelocity(velocitySettings.MinSpeed);
             speedMonitorForm.SetOSCStatus(receiver?.IsRunning ?? false);
 
             speedMonitorForm.WindowState = FormWindowState.Normal; // Show if minimized
             speedMonitorForm.Activate();
+        }
+
+        private void InertiaMonitorButton_Click(object sender, EventArgs e)
+        {
+            if (inertiaEffect == null)
+            {
+                Log.Error("Inertia effect is not initialized!");
+                return;
+            }
+
+            if (speedHistoryForm == null)
+            {
+                speedHistoryForm = new SpeedHistoryForm(inertiaEffect);
+                speedHistoryForm.FormClosed += SpeedHistoryForm_Closed;
+                speedHistoryForm.Show();
+            }
+
+            //speedHistoryForm.SetMaxVelocity(100f); // Idk what to use as max value, so I'm using the velocity max for now
+            speedHistoryForm.SetMinDelta(inertiaSettings.MinDelta);
+            speedHistoryForm.SetOSCStatus(receiver?.IsRunning ?? false);
+
+            speedHistoryForm.WindowState = FormWindowState.Normal; // Show if minimized
+            speedHistoryForm.Activate();
+        }
+
+        private void SpeedHistoryForm_Closed(object? sender, EventArgs e)
+        {
+            if (speedHistoryForm == null)
+            {
+                return;
+            }
+            speedHistoryForm.FormClosed -= SpeedHistoryForm_Closed;
+            speedHistoryForm = null;
         }
     }
 }

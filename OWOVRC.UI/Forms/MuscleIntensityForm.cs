@@ -142,12 +142,12 @@ namespace OWOVRC.UI.Forms
             }
 
             muscleIntensityTrackBar.Value = Math.Clamp(intensity, 0, 200);
-            intensityValueInput.Text = muscleIntensityTrackBar.Value.ToString();
+            intensityValueInput.Value = muscleIntensityTrackBar.Value;
         }
 
         private void MuscleIntensityTrackBar_Scroll(object sender, EventArgs e)
         {
-            intensityValueInput.Text = muscleIntensityTrackBar.Value.ToString();
+            intensityValueInput.Value = muscleIntensityTrackBar.Value;
 
             muscleIntensities[currentMuscleID] = muscleIntensityTrackBar.Value;
         }
@@ -162,7 +162,7 @@ namespace OWOVRC.UI.Forms
         {
             if (!int.TryParse(intensityValueInput.Text, out int value) || value < 0 || value > 200)
             {
-                intensityValueInput.Text = muscleIntensityTrackBar.Value.ToString();
+                intensityValueInput.Value = muscleIntensityTrackBar.Value;
             }
 
             muscleIntensities[currentMuscleID] = value;
@@ -197,6 +197,9 @@ namespace OWOVRC.UI.Forms
             {
                 muscleIntensities[key] = intensity;
             }
+
+            intensityValueInput.Value = intensity;
+
             ShowFrontButton_Click(sender, e);
         }
 

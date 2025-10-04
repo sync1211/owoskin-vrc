@@ -6,7 +6,7 @@ namespace OWOVRC.UI.Forms.Monitors
 {
     public partial class SpeedMonitorForm : Form
     {
-        private readonly Velocity velocityEffect;
+        private readonly VelocityEffect velocityEffect;
 
         private const int UPDATE_INVERVAL = 50;
         private readonly System.Timers.Timer refreshTimer;
@@ -17,7 +17,7 @@ namespace OWOVRC.UI.Forms.Monitors
         private readonly Font regularFont = new("Segoe UI", 9F, FontStyle.Regular);
         private readonly Font boldFont = new("Segoe UI", 9F, FontStyle.Bold);
 
-        public SpeedMonitorForm(Velocity velocityEffect)
+        public SpeedMonitorForm(VelocityEffect velocityEffect)
         {
             InitializeComponent();
             this.velocityEffect = velocityEffect;

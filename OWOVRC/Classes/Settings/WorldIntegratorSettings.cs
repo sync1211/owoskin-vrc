@@ -26,21 +26,21 @@ namespace OWOVRC.Classes.Settings
             { "Weight", 100 }
         };
 
-        public WorldIntegratorSettings() : base(enabled: true, priority: 10) { }
+        public WorldIntegratorSettings() : base(enabled: true, priority: 10)
+        {
+            MuscleIntensityHelper.AddMissingMuscles(MuscleIntensities);
+        }
+
         [JsonConstructor]
         public WorldIntegratorSettings(bool enabled, int priority = 10, Dictionary<string, int>? enabledSensations = null, Dictionary<int, int>? muscleIntensities = null) : base(enabled, priority)
         {
             MuscleIntensities = muscleIntensities ?? MuscleIntensities;
             EnabledSensations = enabledSensations ?? EnabledSensations;
 
-            foreach (Muscle muscle in Muscle.All)
-            {
-                if (!MuscleIntensities.ContainsKey(muscle.id))
-                {
-                    MuscleIntensities[muscle.id] = 100;
-                }
-            }
+            MuscleIntensityHelper.AddMissingMuscles(MuscleIntensities);
         }
+
+
 
         public override void SaveToFile()
         {

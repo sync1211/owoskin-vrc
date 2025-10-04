@@ -57,7 +57,7 @@ namespace OWOVRC.CLI
             Log.Debug("Preparing effects...");
             OSCEffectBase[] effects = [
                 new Colliders(owo, collisionSettings),
-                new Velocity(owo, velocitySettings),
+                new VelocityEffect(owo, velocitySettings),
                 new OSCPresetTrigger(owo, presetsSettings)
             ];
 
