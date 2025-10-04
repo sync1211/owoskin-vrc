@@ -19,7 +19,6 @@ namespace OWOVRC.Classes.Effects
             windSensation = new WindSensation(0.3f);
 
             timer.Elapsed += OnTimerElapsed;
-            timer.Start();
         }
 
         private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)

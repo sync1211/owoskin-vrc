@@ -16,7 +16,6 @@ namespace OWOVRC.Classes.Effects
             inertiaSensation = new InertiaSensation(0.2f);
 
             timer.Elapsed += OnTimerElapsed;
-            timer.Start();
         }
 
         private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)

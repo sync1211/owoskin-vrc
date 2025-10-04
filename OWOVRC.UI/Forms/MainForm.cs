@@ -695,7 +695,11 @@ namespace OWOVRC.UI
 
         private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
         {
+            // Enabled
+            bool oldState = velocitySettings.Enabled;
             velocitySettings.Enabled = velocityEnabledCheckbox.Checked;
+
+            // Ignore conditions
             velocitySettings.IgnoreWhenGrounded = velocityIgnoreWhenGroundedCheckbox.Checked;
             velocitySettings.IgnoreWhenSeated = velocityIgnoreWhenSeatedCheckbox.Checked;
 
@@ -720,7 +724,20 @@ namespace OWOVRC.UI
                 speedMonitorForm?.Close();
             }
 
-            //TODO: (Optimization) Unregister callbacks when disabled
+            // (Optimization) Unregister callbacks when disabled
+            if (!IsRunning || velocityEffect == null || receiver == null || oldState == velocitySettings.Enabled)
+            {
+                return;
+            }
+
+            if (velocitySettings.Enabled)
+            {
+                velocityEffect.RegisterCallbacks(receiver);
+            }
+            else
+            {
+                velocityEffect.UnregisterCallbacks(receiver);
+            }
         }
 
         private void UpdateVelocityMonitorButtonState()
@@ -816,6 +833,8 @@ namespace OWOVRC.UI
 
         private void ApplyInertiaSettingsButton_Click(object sender, EventArgs e)
         {
+            // Enabled
+            bool oldState = inertiaSettings.Enabled;
             inertiaSettings.Enabled = inertiaEnabledCheckbox.Checked;
 
             // Priority
@@ -842,7 +861,25 @@ namespace OWOVRC.UI
 
             speedHistoryForm?.SetMinDelta(inertiaSettings.MinDelta);
 
-            //TODO: (Optimization) Unregister callbacks when disabled
+            if (!inertiaSettings.Enabled)
+            {
+                speedHistoryForm?.Close();
+            }
+
+            // (Optimization) Unregister callbacks when disabled
+            if (!IsRunning || receiver == null || inertiaEffect == null || oldState == inertiaSettings.Enabled)
+            {
+                return;
+            }
+
+            if (inertiaSettings.Enabled)
+            {
+                inertiaEffect.RegisterCallbacks(receiver);
+            }
+            else
+            {
+                inertiaEffect.UnregisterCallbacks(receiver);
+            }
         }
 
         private void UpdateInertiaMonitorButtonState()
@@ -852,17 +889,17 @@ namespace OWOVRC.UI
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            URLHelper.OpenURL(WorldIntegrator.OWI_GITHUB_URL);
+            WikiHelper.OpenURL(WorldIntegrator.OWI_GITHUB_URL);
         }
 
         private void CollidersHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            URLHelper.OpenURL(URLHelper.COLLIDERS_WIKI_URL);
+            WikiHelper.OpenURL(WikiHelper.COLLIDERS_WIKI_URL);
         }
 
         private void PresetsHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            URLHelper.OpenURL(URLHelper.OSC_PRESETS_WIKI_URL);
+            WikiHelper.OpenURL(WikiHelper.OSC_PRESETS_WIKI_URL);
         }
 
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)

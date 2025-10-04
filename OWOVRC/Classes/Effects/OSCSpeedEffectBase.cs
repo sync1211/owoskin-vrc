@@ -64,16 +64,27 @@ namespace OWOVRC.Classes.Effects
 
         public override void RegisterCallbacks(OSCReceiver receiver)
         {
+            if (!settings.Enabled)
+            {
+                return;
+            }
+
             for (int i = 0; i < oscCallbacks.Count; i++)
             {
                 KeyValuePair<string, Action<OscMessageValues>> callbackKvp = oscCallbacks.ElementAt(i);
                 bool result = receiver.TryAddMessageCallback(callbackKvp.Key, callbackKvp.Value);
 
-                if (!result)
+                if (result)
+                {
+                   Log.Debug("Registered OSC callback for {Param}.", callbackKvp.Key);
+                }
+                else
                 {
                     Log.Warning("Failed to register OSC callback for {Param}!", callbackKvp.Key);
                 }
             }
+
+            timer.Start();
         }
 
         public override void UnregisterCallbacks(OSCReceiver receiver)
@@ -83,12 +94,17 @@ namespace OWOVRC.Classes.Effects
                 KeyValuePair<string, Action<OscMessageValues>> callbackKvp = oscCallbacks.ElementAt(i);
                 bool result = receiver.TryRemoveMessageCallback(callbackKvp.Key, callbackKvp.Value);
 
-                if (!result)
+                if (result)
+                {
+                    Log.Debug("Unregistered OSC callback for {Param}.", callbackKvp.Key);
+                }
+                else
                 {
                     Log.Warning("Failed to unregister OSC callback for {Param}!", callbackKvp.Key);
                 }
-
             }
+
+            timer.Stop();
         }
 
         private void OnVelocityXMsg(OscMessageValues values)
