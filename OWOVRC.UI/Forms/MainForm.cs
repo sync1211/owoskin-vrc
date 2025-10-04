@@ -194,6 +194,10 @@ namespace OWOVRC.UI
             {
                 this.audioSettings = loadedAudioSettings;
             }
+
+            // Update buttons
+            UpdateVelocityMonitorButtonState();
+            UpdateInertiaMonitorButtonState();
         }
 
         private void UpdateControlAvailability()
@@ -705,10 +709,15 @@ namespace OWOVRC.UI
 
             velocitySettings.SaveToFile();
 
-            velocityMonitorButton.Enabled = velocitySettings.Enabled;
+            UpdateVelocityMonitorButtonState();
 
             speedMonitorForm?.SetMaxVelocity(velocitySettings.MaxSpeed);
             speedMonitorForm?.SetMinVelocity(velocitySettings.MinSpeed);
+        }
+
+        private void UpdateVelocityMonitorButtonState()
+        {
+            velocityMonitorButton.Enabled = velocitySettings.Enabled;
         }
 
         private void StopSensationsButton_Click(object sender, EventArgs e)
@@ -821,7 +830,14 @@ namespace OWOVRC.UI
 
             inertiaSettings.SaveToFile();
 
+            UpdateInertiaMonitorButtonState();
+
             speedHistoryForm?.SetMinDelta(inertiaSettings.MinDelta);
+        }
+
+        private void UpdateInertiaMonitorButtonState()
+        {
+            inertiaMonitorButton.Enabled = inertiaSettings.Enabled;
         }
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
