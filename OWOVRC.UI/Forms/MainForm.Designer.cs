@@ -65,7 +65,7 @@
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             inertiaSettingsPage = new TabPage();
-            openHistoryWindowButton = new Button();
+            inertiaMonitorButton = new Button();
             inertiaIntensityLabel = new Label();
             inertiaIntensityInput = new NumericUpDown();
             inertiaIgnoreGroup = new GroupBox();
@@ -573,7 +573,7 @@
             // 
             // inertiaSettingsPage
             // 
-            inertiaSettingsPage.Controls.Add(openHistoryWindowButton);
+            inertiaSettingsPage.Controls.Add(inertiaMonitorButton);
             inertiaSettingsPage.Controls.Add(inertiaIntensityLabel);
             inertiaSettingsPage.Controls.Add(inertiaIntensityInput);
             inertiaSettingsPage.Controls.Add(inertiaIgnoreGroup);
@@ -593,17 +593,17 @@
             inertiaSettingsPage.Text = "Inertia";
             inertiaSettingsPage.UseVisualStyleBackColor = true;
             // 
-            // openHistoryWindowButton
+            // inertiaMonitorButton
             // 
-            openHistoryWindowButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            openHistoryWindowButton.Location = new Point(6, 246);
-            openHistoryWindowButton.Name = "openHistoryWindowButton";
-            openHistoryWindowButton.Size = new Size(89, 23);
-            openHistoryWindowButton.TabIndex = 49;
-            openHistoryWindowButton.Text = "Monitor";
-            helpToolTip.SetToolTip(openHistoryWindowButton, "Show player speed monitor window");
-            openHistoryWindowButton.UseVisualStyleBackColor = true;
-            openHistoryWindowButton.Click += OpenHistoryWindowButton_Click;
+            inertiaMonitorButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            inertiaMonitorButton.Location = new Point(6, 246);
+            inertiaMonitorButton.Name = "inertiaMonitorButton";
+            inertiaMonitorButton.Size = new Size(89, 23);
+            inertiaMonitorButton.TabIndex = 49;
+            inertiaMonitorButton.Text = "Monitor";
+            helpToolTip.SetToolTip(inertiaMonitorButton, "Show player speed monitor window");
+            inertiaMonitorButton.UseVisualStyleBackColor = true;
+            inertiaMonitorButton.Click += InertiaMonitorButton_Click;
             // 
             // inertiaIntensityLabel
             // 
@@ -1679,6 +1679,6 @@
         private GroupBox inertiaIgnoreGroup;
         private Label inertiaIntensityLabel;
         private NumericUpDown inertiaIntensityInput;
-        private Button openHistoryWindowButton;
+        private Button inertiaMonitorButton;
     }
 }

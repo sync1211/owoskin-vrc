@@ -1130,7 +1130,7 @@ namespace OWOVRC.UI
             speedMonitorForm.Activate();
         }
 
-        private void OpenHistoryWindowButton_Click(object sender, EventArgs e)
+        private void InertiaMonitorButton_Click(object sender, EventArgs e)
         {
             if (inertiaEffect == null)
             {
