@@ -43,6 +43,10 @@
             sideDirectionIndicator = new OWOVRC.UI.Controls.DirectionSpeedIndicator();
             speedTitle = new Label();
             speedLabel = new Label();
+            groundedIndicator = new CheckBox();
+            seatedIndicator = new CheckBox();
+            playerStateGroup = new GroupBox();
+            playerStateGroup.SuspendLayout();
             SuspendLayout();
             // 
             // velXLabel
@@ -203,12 +207,44 @@
             speedLabel.TabIndex = 12;
             speedLabel.Text = "Speed";
             // 
+            // groundedIndicator
+            // 
+            groundedIndicator.AutoSize = true;
+            groundedIndicator.Location = new Point(10, 15);
+            groundedIndicator.Name = "groundedIndicator";
+            groundedIndicator.Size = new Size(79, 19);
+            groundedIndicator.TabIndex = 16;
+            groundedIndicator.Text = "Grounded";
+            groundedIndicator.UseVisualStyleBackColor = true;
+            // 
+            // seatedIndicator
+            // 
+            seatedIndicator.AutoSize = true;
+            seatedIndicator.Location = new Point(10, 36);
+            seatedIndicator.Name = "seatedIndicator";
+            seatedIndicator.Size = new Size(61, 19);
+            seatedIndicator.TabIndex = 17;
+            seatedIndicator.Text = "Seated";
+            seatedIndicator.UseVisualStyleBackColor = true;
+            // 
+            // playerStateGroup
+            // 
+            playerStateGroup.Controls.Add(seatedIndicator);
+            playerStateGroup.Controls.Add(groundedIndicator);
+            playerStateGroup.Location = new Point(162, 7);
+            playerStateGroup.Name = "playerStateGroup";
+            playerStateGroup.Size = new Size(105, 61);
+            playerStateGroup.TabIndex = 18;
+            playerStateGroup.TabStop = false;
+            playerStateGroup.Text = "Player state";
+            // 
             // SpeedMonitorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = closeButton;
             ClientSize = new Size(279, 266);
+            Controls.Add(playerStateGroup);
             Controls.Add(speedTitle);
             Controls.Add(speedLabel);
             Controls.Add(sideDirectionTitle);
@@ -230,6 +266,8 @@
             Text = "Player Velocity";
             FormClosing += SpeedMonitorForm_FormClosing;
             Shown += SpeedMonitorForm_Shown;
+            playerStateGroup.ResumeLayout(false);
+            playerStateGroup.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -250,5 +288,8 @@
         private Controls.DirectionSpeedIndicator sideDirectionIndicator;
         private Label speedTitle;
         private Label speedLabel;
+        private CheckBox groundedIndicator;
+        private CheckBox seatedIndicator;
+        private GroupBox playerStateGroup;
     }
 }

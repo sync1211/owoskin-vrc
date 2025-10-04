@@ -100,6 +100,10 @@ namespace OWOVRC.UI.Forms.Monitors
             sideDirectionIndicator.ValueY = velocityY; // Up / Down
 
             notRunningIndicator.Visible = !oscActiveStatus;
+
+            // Grounded / Seated indicators
+            groundedIndicator.Checked = velocityEffect.IsGrounded;
+            seatedIndicator.Checked = velocityEffect.IsSeated;
         }
 
         public void SetOSCStatus(bool isActive)
