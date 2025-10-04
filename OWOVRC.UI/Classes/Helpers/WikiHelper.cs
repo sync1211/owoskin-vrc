@@ -1,6 +1,6 @@
 ﻿namespace OWOVRC.UI.Classes.Helpers
 {
-    public static class URLHelper
+    public static class WikiHelper
     {
         // Wiki links
         public static readonly string COLLIDERS_WIKI_URL = "https://github.com/sync1211/owoskin-vrc/wiki/VRChat-Avatar-Setup#setting-up-owosuit-colliders-owovrc";
