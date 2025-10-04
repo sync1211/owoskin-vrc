@@ -21,12 +21,16 @@ namespace OWOVRC.Classes.Effects
 
         private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
+            if (!Settings.Enabled)
+            {
+                return;
+            }
             ProcessInertiaHaptics();
         }
 
         private void ProcessInertiaHaptics()
         {
-            if (!Settings.Enabled || (IsGrounded && Settings.IgnoreWhenGrounded) || (IsSeated && Settings.IgnoreWhenSeated))
+            if ((IsGrounded && Settings.IgnoreWhenGrounded) || (IsSeated && Settings.IgnoreWhenSeated))
             {
                 owo.StopSensation(InertiaSensation._Name, true);
                 return;
