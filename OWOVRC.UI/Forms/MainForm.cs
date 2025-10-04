@@ -16,6 +16,7 @@ using System.Net;
 using System.ComponentModel;
 using OWOVRC.Classes.Helpers;
 using OWOVRC.UI.Forms.Monitors;
+using OWOVRC.UI.Classes.Helpers;
 
 namespace OWOVRC.UI
 {
@@ -718,6 +719,8 @@ namespace OWOVRC.UI
             {
                 speedMonitorForm?.Close();
             }
+
+            //TODO: (Optimization) Unregister callbacks when disabled
         }
 
         private void UpdateVelocityMonitorButtonState()
@@ -838,6 +841,8 @@ namespace OWOVRC.UI
             UpdateInertiaMonitorButtonState();
 
             speedHistoryForm?.SetMinDelta(inertiaSettings.MinDelta);
+
+            //TODO: (Optimization) Unregister callbacks when disabled
         }
 
         private void UpdateInertiaMonitorButtonState()
@@ -847,17 +852,17 @@ namespace OWOVRC.UI
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            WikiHelper.OpenURL(WorldIntegrator.OWI_GITHUB_URL);
+            URLHelper.OpenURL(WorldIntegrator.OWI_GITHUB_URL);
         }
 
         private void CollidersHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            WikiHelper.OpenURL(WikiHelper.COLLIDERS_WIKI_URL);
+            URLHelper.OpenURL(URLHelper.COLLIDERS_WIKI_URL);
         }
 
         private void PresetsHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            WikiHelper.OpenURL(WikiHelper.OSC_PRESETS_WIKI_URL);
+            URLHelper.OpenURL(URLHelper.OSC_PRESETS_WIKI_URL);
         }
 
         private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)

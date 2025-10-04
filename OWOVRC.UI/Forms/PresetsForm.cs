@@ -4,7 +4,7 @@ using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
-using OWOVRC.UI.Classes;
+using OWOVRC.UI.Classes.Helpers;
 using OWOVRC.UI.Forms.Dialogs;
 using Serilog;
 using System.ComponentModel;
