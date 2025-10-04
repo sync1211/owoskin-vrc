@@ -2,8 +2,10 @@
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
+using Serilog;
+using System.Collections.Immutable;
 
-namespace OWOVRC.Classes.Effects.Sensations
+namespace OWOVRC.Classes.Effects
 {
     public abstract class OSCSpeedEffectBase: OSCEffectBase
     {
@@ -36,6 +38,9 @@ namespace OWOVRC.Classes.Effects.Sensations
         // Settings
         protected readonly EffectSettingsBase settings;
 
+        // Callback functions
+        private readonly ImmutableDictionary<string, Action<OscMessageValues>> oscCallbacks;
+
         protected OSCSpeedEffectBase(OWOHelper owo, EffectSettingsBase settings) : base(owo)
         {
             this.settings = settings;
@@ -44,27 +49,46 @@ namespace OWOVRC.Classes.Effects.Sensations
                 Interval = INTERVAL,
                 AutoReset = true
             };
+
+            oscCallbacks = new Dictionary<string, Action<OscMessageValues>>()
+            {
+                { "VelocityX", OnVelocityXMsg },
+                { "VelocityY", OnVelocityYMsg },
+                { "VelocityZ", OnVelocityZMsg },
+                { "Grounded", OnGroundedMsg },
+                { "Seated", OnSeatedMsg },
+                { "VelocityMagnitude", OnVelocityMagnitudeMsg }
+            }.ToImmutableDictionary();
         }
 
 
         public override void RegisterCallbacks(OSCReceiver receiver)
         {
-            receiver.TryAddMessageCallback("VelocityX", OnVelocityXMsg);
-            receiver.TryAddMessageCallback("VelocityY", OnVelocityYMsg);
-            receiver.TryAddMessageCallback("VelocityZ", OnVelocityZMsg);
-            receiver.TryAddMessageCallback("Grounded", OnGroundedMsg);
-            receiver.TryAddMessageCallback("Seated", OnSeatedMsg);
-            receiver.TryAddMessageCallback("VelocityMagnitude", OnVelocityMagnitudeMsg);
+            for (int i = 0; i < oscCallbacks.Count; i++)
+            {
+                KeyValuePair<string, Action<OscMessageValues>> callbackKvp = oscCallbacks.ElementAt(i);
+                bool result = receiver.TryAddMessageCallback(callbackKvp.Key, callbackKvp.Value);
+
+                if (!result)
+                {
+                    Log.Warning("Failed to register OSC callback for {Param}!", callbackKvp.Key);
+                }
+            }
         }
 
         public override void UnregisterCallbacks(OSCReceiver receiver)
         {
-            receiver.TryRemoveMessageCallback("VelocityX", OnVelocityXMsg);
-            receiver.TryRemoveMessageCallback("VelocityY", OnVelocityYMsg);
-            receiver.TryRemoveMessageCallback("VelocityZ", OnVelocityZMsg);
-            receiver.TryRemoveMessageCallback("Grounded", OnGroundedMsg);
-            receiver.TryRemoveMessageCallback("Seated", OnSeatedMsg);
-            receiver.TryRemoveMessageCallback("VelocityMagnitude", OnVelocityMagnitudeMsg);
+            for (int i = 0; i < oscCallbacks.Count; i++)
+            {
+                KeyValuePair<string, Action<OscMessageValues>> callbackKvp = oscCallbacks.ElementAt(i);
+                bool result = receiver.TryRemoveMessageCallback(callbackKvp.Key, callbackKvp.Value);
+
+                if (!result)
+                {
+                    Log.Warning("Failed to unregister OSC callback for {Param}!", callbackKvp.Key);
+                }
+
+            }
         }
 
         private void OnVelocityXMsg(OscMessageValues values)
