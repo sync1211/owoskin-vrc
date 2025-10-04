@@ -713,6 +713,11 @@ namespace OWOVRC.UI
 
             speedMonitorForm?.SetMaxVelocity(velocitySettings.MaxSpeed);
             speedMonitorForm?.SetMinVelocity(velocitySettings.MinSpeed);
+
+            if (!velocitySettings.Enabled)
+            {
+                speedMonitorForm?.Close();
+            }
         }
 
         private void UpdateVelocityMonitorButtonState()
@@ -1169,6 +1174,11 @@ namespace OWOVRC.UI
 
             speedHistoryForm.WindowState = FormWindowState.Normal; // Show if minimized
             speedHistoryForm.Activate();
+
+            if (!velocitySettings.Enabled)
+            {
+                speedMonitorForm?.Close();
+            }
         }
 
         private void SpeedHistoryForm_Closed(object? sender, EventArgs e)
