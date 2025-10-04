@@ -44,9 +44,19 @@ namespace OWOVRC.Classes.Effects
             timer.Elapsed += OnTimerElapsed;
         }
 
-        public override void OnOSCMessageReceived(object? sender, OSCMessage message)
+        public void OnOSCMessageReceived(object? sender, OSCMessage message)
         {
             ProcessMessage(message);
+        }
+
+        public override void RegisterCallbacks(OSCReceiver receiver)
+        {
+            receiver.OnMessageReceived += OnOSCMessageReceived;
+        }
+
+        public override void UnregisterCallbacks(OSCReceiver receiver)
+        {
+            receiver.OnMessageReceived -= OnOSCMessageReceived;
         }
 
         private void ProcessMessage(OSCMessage message)
@@ -63,7 +73,7 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            float proximity = OSCHelpers.GetFloatValueFromMessage(message);
+            float proximity = OSCHelpers.GetFloatValueFromMessageValues(message.Values);
 
             if (proximity > 0)
             {

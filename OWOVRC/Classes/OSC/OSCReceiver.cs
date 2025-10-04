@@ -69,6 +69,22 @@ namespace OWOVRC.Classes.OSC
             disposed = true;
         }
 
+        private string PrependPath(string path)
+        {
+            return $"{OSC_ADDRESS}{path}";
+        }
+
+        public bool TryAddMessageCallback(string path, Action<OscMessageValues> callback)
+        {
+            string address = PrependPath(path);
+            return receiver.TryAddMethod(address, callback);
+        }
+
+        public bool TryRemoveMessageCallback(string path, Action<OscMessageValues> callback)
+        {
+            return receiver.RemoveMethod($"{OSC_ADDRESS}{path}", callback);
+        }
+
         public void Dispose()
         {
             IsRunning = false;

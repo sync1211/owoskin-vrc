@@ -396,7 +396,7 @@ namespace OWOVRC.UI
             // Register effects
             foreach (OSCEffectBase effect in oscEffects)
             {
-                receiver.OnMessageReceived += effect.OnOSCMessageReceived;
+                effect.RegisterCallbacks(receiver);
             }
 
             // Start OSC receiver
@@ -456,7 +456,7 @@ namespace OWOVRC.UI
             {
                 foreach (OSCEffectBase effect in oscEffects)
                 {
-                    receiver.OnMessageReceived -= effect.OnOSCMessageReceived;
+                    effect.UnregisterCallbacks(receiver);
                     effect.Stop();
                 }
             }

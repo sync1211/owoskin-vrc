@@ -142,7 +142,7 @@ namespace OWOVRC.CLI
         {
             foreach (OSCEffectBase effect in effects)
             {
-                receiver.OnMessageReceived -= effect.OnOSCMessageReceived;
+                effect.RegisterCallbacks(receiver);
             }
         }
 
@@ -150,7 +150,7 @@ namespace OWOVRC.CLI
         {
             foreach (OSCEffectBase effect in effects)
             {
-                receiver.OnMessageReceived += effect.OnOSCMessageReceived;
+                effect.RegisterCallbacks(receiver);
             }
         }
     }

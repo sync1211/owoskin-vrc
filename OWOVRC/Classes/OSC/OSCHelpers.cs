@@ -1,30 +1,30 @@
 ﻿using BuildSoft.OscCore;
 using Serilog;
+using Windows.Perception.Spatial;
 
 namespace OWOVRC.Classes.OSC
 {
     public static class OSCHelpers
-    {
-        public static float GetFloatValueFromMessage(OSCMessage message, int index = 0)
+    {       
+        public static float GetFloatValueFromMessageValues(OscMessageValues values, int index = 0)
         {
-            TypeTag typeTag = message.Values.GetTypeTag(index);
-
+            TypeTag typeTag = values.GetTypeTag(index);
             switch (typeTag)
             {
                 case TypeTag.Float64:
-                    return (float) message.Values.ReadFloat64Element(index);
+                    return (float) values.ReadFloat64Element(index);
                 case TypeTag.Float32:
-                    return message.Values.ReadFloatElement(index);
+                    return values.ReadFloatElement(index);
                 case TypeTag.False:
                     return 0f;
                 case TypeTag.True:
                     return 1f;
                 case TypeTag.Int64:
-                    return message.Values.ReadInt64Element(index);
+                    return values.ReadInt64Element(index);
                 case TypeTag.Int32:
-                    return message.Values.ReadIntElement(index);
+                    return values.ReadIntElement(index);
                 default:
-                    Log.Warning("No valid float value received in message for {Address}!", message.Address);
+                    Log.Warning("No valid float value received in message values!");
                     return 0f;
             }
         }

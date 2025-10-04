@@ -1,4 +1,5 @@
-﻿using OWOVRC.Classes.OSC;
+﻿using BuildSoft.OscCore;
+using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 
@@ -46,34 +47,54 @@ namespace OWOVRC.Classes.Effects.Sensations
         }
 
 
-        public override void OnOSCMessageReceived(object? sender, OSCMessage message)
+        public override void RegisterCallbacks(OSCReceiver receiver)
         {
-            if (!settings.Enabled)
-            {
-                return;
-            }
+            bool onVelocityXMsgSuccess = receiver.TryAddMessageCallback("VelocityX", OnVelocityXMsg);
+            bool onVelocityYMsgSuccess = receiver.TryAddMessageCallback("VelocityY", OnVelocityYMsg);
+            bool onVelocityZMsgSuccess = receiver.TryAddMessageCallback("VelocityZ", OnVelocityZMsg);
+            bool onGroundedMsgSuccess = receiver.TryAddMessageCallback("Grounded", OnGroundedMsg);
+            bool onSeatedMsgSuccess = receiver.TryAddMessageCallback("Seated", OnSeatedMsg);
+            bool onVelocityMagnitudeMsgSuccess = receiver.TryAddMessageCallback("VelocityMagnitude", OnVelocityMagnitudeMsg);
+        }
 
-            switch (message.Address)
-            {
-                case "VelocityX":
-                    VelX = OSCHelpers.GetFloatValueFromMessage(message);
-                    break;
-                case "VelocityY":
-                    VelY = OSCHelpers.GetFloatValueFromMessage(message);
-                    break;
-                case "VelocityZ":
-                    VelZ = OSCHelpers.GetFloatValueFromMessage(message);
-                    break;
-                case "Grounded":
-                    IsGrounded = message.Values.ReadBooleanElement(0);
-                    break;
-                case "Seated":
-                    IsSeated = message.Values.ReadBooleanElement(0);
-                    break;
-                case "VelocityMagnitude":
-                    Speed = OSCHelpers.GetFloatValueFromMessage(message);
-                    break;
-            }
+        public override void UnregisterCallbacks(OSCReceiver receiver)
+        {
+            receiver.TryRemoveMessageCallback("VelocityX", OnVelocityXMsg);
+            receiver.TryRemoveMessageCallback("VelocityY", OnVelocityYMsg);
+            receiver.TryRemoveMessageCallback("VelocityZ", OnVelocityZMsg);
+            receiver.TryRemoveMessageCallback("Grounded", OnGroundedMsg);
+            receiver.TryRemoveMessageCallback("Seated", OnSeatedMsg);
+            receiver.TryRemoveMessageCallback("VelocityMagnitude", OnVelocityMagnitudeMsg);
+        }
+
+        private void OnVelocityXMsg(OscMessageValues values)
+        {
+            VelX = OSCHelpers.GetFloatValueFromMessageValues(values);
+        }
+
+        private void OnVelocityYMsg(OscMessageValues values)
+        {
+            VelY = OSCHelpers.GetFloatValueFromMessageValues(values);
+        }
+
+        private void OnVelocityZMsg(OscMessageValues values)
+        {
+            VelZ = OSCHelpers.GetFloatValueFromMessageValues(values);
+        }
+
+        private void OnGroundedMsg(OscMessageValues values)
+        {
+            IsGrounded = values.ReadBooleanElement(0);
+        }
+
+        private void OnSeatedMsg(OscMessageValues values)
+        {
+            IsSeated = values.ReadBooleanElement(0);
+        }
+
+        private void OnVelocityMagnitudeMsg(OscMessageValues values)
+        {
+            Speed = OSCHelpers.GetFloatValueFromMessageValues(values);
         }
 
         public override void Stop()
