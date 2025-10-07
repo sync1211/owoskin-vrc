@@ -839,7 +839,7 @@ namespace OWOVRC.UI
             if (!inertiaAccelCheckbox.Checked && !inertiaDecelCheckbox.Checked && inertiaEnabledCheckbox.Checked)
             {
                 // Show a message to inform the user that their current settings are stupid, then fix it for them
-                Log.Warning("Both acceleration and deceleration are disabled for inertia effect! If only we had added a way to disable effects...");
+                Log.Warning("Both acceleration and deceleration are disabled for the inertia effect! If only we had added a way to disable effects...");
                 inertiaAccelCheckbox.Checked = true;
                 inertiaDecelCheckbox.Checked = true;
                 inertiaEnabledCheckbox.Checked = false;
