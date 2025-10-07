@@ -833,8 +833,19 @@ namespace OWOVRC.UI
 
         private void ApplyInertiaSettingsButton_Click(object sender, EventArgs e)
         {
-            // Enabled
             bool oldState = inertiaSettings.Enabled;
+
+            // Invalid state: Both acceleration and deceleration disabled => Enable both and disable the effect
+            if (!inertiaAccelCheckbox.Checked && !inertiaDecelCheckbox.Checked && inertiaEnabledCheckbox.Checked)
+            {
+                // Show a message to inform the user that their current settings are stupid, then fix it for them
+                Log.Warning("Both acceleration and deceleration are disabled for inertia effect! If only we had added a way to disable effects...");
+                inertiaAccelCheckbox.Checked = true;
+                inertiaDecelCheckbox.Checked = true;
+                inertiaEnabledCheckbox.Checked = false;
+            }
+
+            // Enabled
             inertiaSettings.Enabled = inertiaEnabledCheckbox.Checked;
 
             // Priority
@@ -854,12 +865,6 @@ namespace OWOVRC.UI
             // Activation conditions
             inertiaSettings.AccelEnabled = inertiaAccelCheckbox.Checked;
             inertiaSettings.DecelEnabled = inertiaDecelCheckbox.Checked;
-            if (!inertiaSettings.AccelEnabled && !inertiaSettings.DecelEnabled)
-            {
-                // Adding a message to inform the user if they disable both options
-                //NOTE: In this case the effect is pretty much in a "stupid" state, where it's enabled but told to do nothing. This will definitely confuse users if they do this by accident!
-                Log.Warning("Both acceleration and deceleration are disabled for inertia effect! This makes this effect useless. If only we had added a way to disable effects...");
-            }
 
             inertiaSettings.SaveToFile();
 
