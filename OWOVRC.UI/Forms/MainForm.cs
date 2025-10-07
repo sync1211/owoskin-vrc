@@ -854,6 +854,12 @@ namespace OWOVRC.UI
             // Activation conditions
             inertiaSettings.AccelEnabled = inertiaAccelCheckbox.Checked;
             inertiaSettings.DecelEnabled = inertiaDecelCheckbox.Checked;
+            if (!inertiaSettings.AccelEnabled && !inertiaSettings.DecelEnabled)
+            {
+                // Adding a message to inform the user if they disable both options
+                //NOTE: In this case the effect is pretty much in a "stupid" state, where it's enabled but told to do nothing. This will definitely confuse users if they do this by accident!
+                Log.Warning("Both acceleration and deceleration are disabled for inertia effect! This makes this effect useless. If only we had added a way to disable effects...");
+            }
 
             inertiaSettings.SaveToFile();
 
