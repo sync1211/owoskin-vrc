@@ -79,7 +79,7 @@ namespace OWOVRC.Classes.Effects
             {
                 muscles = muscleGroup;
             }
-            else if (OWOMuscles.Muscles.TryGetValue($"owo_suit_{muscleGroupName.ToLower()}", out Muscle muscle))
+            else if (OWOMuscles.MusclesLowercase.TryGetValue($"owo_suit_{muscleGroupName.ToLower()}", out Muscle muscle))
             {
                 muscles = [muscle];
             }

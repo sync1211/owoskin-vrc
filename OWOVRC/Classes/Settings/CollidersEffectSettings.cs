@@ -83,9 +83,9 @@ namespace OWOVRC.Classes.Settings
             }
         }
         [JsonIgnore]
-        private bool decayEnabled { get; set; } = true;
+        private bool decayEnabled = true;
         [JsonIgnore]
-        private int decayTime { get; set; } = 2000; // Decay time in ms
+        private int decayTime = 2000; // Decay time in ms
         [JsonIgnore]
         public int DecayCycleCount { get; private set; } = 1; // Decay time converted to timer cycles (use UpdateCycleCount to update)
 

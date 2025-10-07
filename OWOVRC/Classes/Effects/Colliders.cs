@@ -1,4 +1,5 @@
-﻿using OWOGame;
+﻿using BuildSoft.OscCore;
+using OWOGame;
 using OWOVRC.Classes.Effects.Muscles;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -19,10 +20,6 @@ namespace OWOVRC.Classes.Effects
         // Timer for haptic updates without OSC messages
         private readonly System.Timers.Timer timer;
 
-        // Param base
-        private const string OWO_ADDRESS_BASE = "owo_suit_";
-        private const string BHAPTICS_ADDRESS_BASE = "bosc_v1_";
-
         // Dictionary to keep track of active haptic effects
         private readonly ConcurrentDictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
 
@@ -31,6 +28,9 @@ namespace OWOVRC.Classes.Effects
 
         // Settings
         public readonly CollidersEffectSettings Settings;
+
+        // Callbacks for OSC messages
+        private readonly Dictionary<string, Action<OscMessageValues>> messageCallbacks = [];
 
         public Colliders(OWOHelper owo, CollidersEffectSettings settings): base(owo)
         {
@@ -42,38 +42,30 @@ namespace OWOVRC.Classes.Effects
                 AutoReset = true
             };
             timer.Elapsed += OnTimerElapsed;
+
+            PopulateCallbacks();
         }
 
-        public void OnOSCMessageReceived(object? sender, OSCMessage message)
+        private void PopulateCallbacks()
         {
-            ProcessMessage(message);
+            for (int i = 0; i < OWOMuscles.MusclesCaptialized.Count; i++)
+            {
+                string muscle = OWOMuscles.MusclesCaptialized.ElementAt(i).Key;
+                string muscleLower = muscle.ToLower();
+
+                messageCallbacks[muscle] = (values) => ProcessMessage(muscle, values);
+                messageCallbacks[muscleLower] = (values) => ProcessMessage(muscle, values); //NOTE: Needs to be a new function to avoid an exception as the method is used as a key when registering message handlers
+            }
         }
 
-        public override void RegisterCallbacks(OSCReceiver receiver)
-        {
-            receiver.OnMessageReceived += OnOSCMessageReceived;
-        }
-
-        public override void UnregisterCallbacks(OSCReceiver receiver)
-        {
-            receiver.OnMessageReceived -= OnOSCMessageReceived;
-        }
-
-        private void ProcessMessage(OSCMessage message)
+        private void ProcessMessage(string muscle, OscMessageValues values)
         {
             if (!Settings.Enabled)
             {
                 return;
             }
 
-            // Non-OWO or bHaptics message
-            string muscle = message.Address.ToLower();
-            if (!(muscle.StartsWith(OWO_ADDRESS_BASE) || muscle.StartsWith(BHAPTICS_ADDRESS_BASE)))
-            {
-                return;
-            }
-
-            float proximity = OSCHelpers.GetFloatValueFromMessageValues(message.Values);
+            float proximity = OSCHelpers.GetFloatValueFromMessageValues(values);
 
             if (proximity > 0)
             {
@@ -85,10 +77,51 @@ namespace OWOVRC.Classes.Effects
             }
         }
 
+        public override void RegisterCallbacks(OSCReceiver receiver)
+        {
+            for (int i = 0; i < messageCallbacks.Count; i++)
+            {
+                KeyValuePair<string, Action<OscMessageValues>> pair = messageCallbacks.ElementAt(i);
+                string muscleName = pair.Key;
+                Action<OscMessageValues> callback = pair.Value;
+
+                bool result = receiver.TryAddMessageCallback(muscleName, callback);
+                if (result)
+                {
+                    Log.Debug("Registered OSC callback for muscle {Muscle}.", muscleName);
+                }
+                else
+                {
+                    Log.Warning("Failed to register OSC callback for muscle {Muscle}!", muscleName);
+                }
+            }
+        }
+
+        public override void UnregisterCallbacks(OSCReceiver receiver)
+        {
+            for (int i = 0; i < messageCallbacks.Count; i++)
+            {
+                KeyValuePair<string, Action<OscMessageValues>> pair = messageCallbacks.ElementAt(i);
+                string muscleName = pair.Key;
+                Action<OscMessageValues> callback = pair.Value;
+
+                bool result = receiver.TryRemoveMessageCallback(muscleName, callback);
+                if (result)
+                {
+                    Log.Debug("Unregistered OSC callback for muscle {Muscle}.", muscleName);
+                }
+                else
+                {
+                    Log.Warning("Failed to unregister OSC callback for muscle {Muscle}!", muscleName);
+                }
+            }
+        }
+
+
         private void OnCollisionEnter(string muscle, float proxmimity)
         {
             // Make sure the timer is running
-            if (!timer.Enabled && Settings.AllowContinuous)
+            if (!timer.Enabled)
             {
                 Log.Debug("Timer started!");
                 timer.Start();
@@ -144,9 +177,9 @@ namespace OWOVRC.Classes.Effects
             // Stop timer to preserve resources
             if (activeMuscles.IsEmpty)
             {
-                Log.Debug("No sensations playing, timer stopped.");
                 owo.StopSensation(SENSATION_NAME, false);
                 timer.Stop();
+                Log.Debug("No sensations playing, timer stopped.");
             }
         }
 
@@ -160,6 +193,8 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.IsEmpty)
             {
                 owo.StopSensation(SENSATION_NAME, false);
+                timer.Stop();
+                Log.Debug("Colliders timer stopped, no active muscles!");
                 return;
             }
 
@@ -169,7 +204,7 @@ namespace OWOVRC.Classes.Effects
             for (int i = 0; i < muscleCollisionData.Length; i++)
             {
                 MuscleCollisionData muscleData = muscleCollisionData[i];
-                if (!OWOMuscles.Muscles.TryGetValue(muscleData.Name, out Muscle muscle))
+                if (!OWOMuscles.MusclesCaptialized.TryGetValue(muscleData.Name, out Muscle muscle))
                 {
                     Log.Warning(
                         "Muscle '{Muscle}' not found in muscle list. Skipping sensation.",
@@ -236,14 +271,28 @@ namespace OWOVRC.Classes.Effects
 
         public void OnTimerElapsed(object? sender, ElapsedEventArgs e)
         {
-            UpdateHaptics();
+            try
+            {
+                UpdateHaptics();
+            } catch (Exception)
+            {
+                Log.Error("Error");
+            }
 
             // Apply decay to velocity-based multiplier
             //NOTE: The decayFactor needs to be determined when VelocityMultiplier is set
             for (int i = 0; i < activeMuscles.Count; i++)
             {
                 MuscleCollisionData muscleData = activeMuscles.ElementAt(i).Value;
-                muscleData.ApplyDecay();
+
+                if (Settings.AllowContinuous)
+                {
+                    muscleData.ApplyDecay();
+                }
+                else
+                {
+                    muscleData.StopOnNextCycle = true;
+                }
             }
         }
 
