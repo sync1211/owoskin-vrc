@@ -29,7 +29,7 @@ MonoBehaviour:
     saved: 0
     defaultValue: 0
     networkSynced: 0
-  - name: owo_suit_Abdominal_l
+  - name: owo_suit_Abdominal_L
     valueType: 1
     saved: 0
     defaultValue: 0
