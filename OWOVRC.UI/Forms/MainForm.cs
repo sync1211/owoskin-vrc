@@ -45,6 +45,7 @@ namespace OWOVRC.UI
         private AudioEffect? audioEffect;
         private VelocityEffect? velocityEffect;
         private InertiaEffect? inertiaEffect;
+        private OSCPresetTrigger? presetsEffect;
 
         // Status
         private bool IsRunning;
@@ -501,13 +502,14 @@ namespace OWOVRC.UI
 
             inertiaEffect = new(owo, inertiaSettings);
             velocityEffect = new(owo, velocitySettings);
+            presetsEffect = new OSCPresetTrigger(owo, oscPresetsSettings);
 
             // Set up effects
             oscEffects = [
                 inertiaEffect,
                 velocityEffect,
+                presetsEffect,
                 new Colliders(owo, collidersSettings),
-                new OSCPresetTrigger(owo, oscPresetsSettings),
             ];
 
             // Set up OWI
@@ -806,7 +808,13 @@ namespace OWOVRC.UI
 
         private void OpenOscPresetsFormButton_Click(object sender, EventArgs e)
         {
-            using (PresetsForm presetsForm = new(oscPresetsSettings, owo))
+            if (presetsEffect == null)
+            {
+                Log.Warning("Cannot open presets form: Presets effect not initialized!");
+                return;
+            }
+
+            using (PresetsForm presetsForm = new(oscPresetsSettings, presetsEffect, receiver, owo))
             {
                 DialogResult result = presetsForm.ShowDialog();
 

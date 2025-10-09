@@ -1,4 +1,6 @@
-﻿using OWOGame;
+﻿using BuildSoft.OscCore;
+using OWOGame;
+using OWOVRC.Classes.OWOSuit;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
@@ -36,6 +38,9 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         [JsonIgnore]
         [Browsable(false)]
         public readonly Sensation SensationObject;
+        [JsonIgnore]
+        [Browsable(false)]
+        public readonly Dictionary<string, Action<OscMessageValues>> MessageCallbacks = [];
 
         [JsonConstructor]
         public OSCSensationPreset(bool enabled, string name, int priority, int intensity, bool loop, bool interruptable, string sensationString)
