@@ -13,6 +13,7 @@ Yet another [VRChat](https://vrchat.com) integration for the [OWO Skin](https://
 * Triggering custom sensations via OSC
 * Audio-reactive feedback
 * Velocity-based wind simulation
+* Haptic feedback for sudden acceleration and deceleration
 * Support for [OWO World Integrator](https://github.com/RevoForge/Vrchat-OWO-Integration)
 * Performant and lightweight
 
