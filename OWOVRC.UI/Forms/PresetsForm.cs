@@ -102,7 +102,7 @@ namespace OWOVRC.UI.Forms
             }
 
             // Apply intensity
-            Muscle[] muscles = OSCPresetTrigger.GetMusclesFromSensation(preset.SensationObject);
+            Muscle[] muscles = OWOMuscles.GetMusclesFromSensation(preset.SensationObject);
             for (int i = 0; i < muscles.Length; i++)
             {
                 muscles[i] = muscles[i].WithIntensity(preset.Intensity);
