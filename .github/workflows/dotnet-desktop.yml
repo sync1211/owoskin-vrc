@@ -45,8 +45,6 @@ jobs:
       run: dotnet test
 
     # Build the app
-    - name: Publish OWOVRC.CLI.NoAudio
-      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:PublishAOT=true -p:AssemblyName=OWOVRC.CLI.NoAudio --self-contained true 
     - name: Publish OWOVRC.CLI
       run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:PublishAOT=false --self-contained true
     - name: Publish OWOVRC.UI
