@@ -27,7 +27,7 @@ namespace OWOVRC.Test.Classes.OWI
         [TestMethod]
         public void TestDeserializeMuscles()
         {
-            string data = "{ \"priority\": 2,\"sensation\": \"Recoil\",\"frequency\": 1,\"duration\": 1,\"intensity\": 70,\"rampup\":0,\"rampdown\":1.5,\"exitdelay\":0,\"Muscles\": { \"arm_R\": 25,\"pectoral_R\": 50}}";
+            const string data = "{ \"priority\": 2,\"sensation\": \"Recoil\",\"frequency\": 1,\"duration\": 1,\"intensity\": 70,\"rampup\":0,\"rampdown\":1.5,\"exitdelay\":0,\"Muscles\": { \"arm_R\": 25,\"pectoral_R\": 50}}";
             Dictionary<string, int> muscles = new()
             {
                 { "arm_R", 25 },

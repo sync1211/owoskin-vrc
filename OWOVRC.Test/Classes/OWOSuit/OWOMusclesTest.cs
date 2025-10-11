@@ -32,5 +32,30 @@ namespace OWOVRC.Test.Classes.OWOSuit
                 Assert.AreEqual(expected, result, $"Muscle {prop.Name} (ID: {muscle.id}): Side detection incorrect!");
             }
         }
+
+        [DataTestMethod]
+        public void TestGetMusclesFromSensation()
+        {
+            // Normal sensation
+            Sensation sensation = Sensation.ShotBleeding;
+            Muscle[] musclesExpected = [Muscle.Pectoral_R, Muscle.Pectoral_L];
+
+            Muscle[] musclesResult = OWOMuscles.GetMusclesFromSensation(sensation);
+            CollectionAssert.AreEquivalent(musclesExpected, musclesResult, "Muscles for Sensation do not match expected.");
+
+            // Micro sensation
+            sensation = Sensation.Dart;
+            musclesExpected = Muscle.All;
+
+            musclesResult = OWOMuscles.GetMusclesFromSensation(sensation);
+            CollectionAssert.AreEquivalent(musclesExpected, musclesResult, "Muscles for MicroSensation do not match expected.");
+
+            // Baked sensation
+            sensation = Sensation.Parse("0~Cast Fire~26,25,60,0,1000,0,|0%100,1%100,2%100,3%100,4%100~weapon-0~");
+            musclesExpected = Muscle.Front;
+
+            musclesResult = OWOMuscles.GetMusclesFromSensation(sensation);
+            CollectionAssert.AreEquivalent(musclesExpected, musclesResult, "Muscles for BakedSensation do not match expected.");
+        }
     }
 }

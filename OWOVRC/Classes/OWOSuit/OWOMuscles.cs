@@ -89,6 +89,19 @@ namespace OWOVRC.Classes.OWOSuit
             { "rightMuscles", [Muscle.Arm_R, Muscle.Pectoral_R, Muscle.Dorsal_R, Muscle.Abdominal_R, Muscle.Lumbar_R] }
         }.ToImmutableDictionary();
 
+        public static Muscle[] GetMusclesFromSensation(Sensation sensation)
+        {
+            if (sensation is SensationWithMuscles sensationWithMuscles)
+            {
+                return sensationWithMuscles.muscles;
+            }
+            if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
+            {
+                return refSensationWithMuscles.muscles;
+            }
+            return Muscle.All;
+        }
+
         //OPTIMIZATION: Cache muscle count
         // This is needed as Muscle.All creates a new array every time it's called.
         // So every time we call MuscleGroups.MusclesCount, we're creating a new array and discarding it again!

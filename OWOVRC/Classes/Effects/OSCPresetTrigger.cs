@@ -74,7 +74,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Base sensation without any muscles specified
-            Muscle[] sensationMuscles = GetMusclesFromSensation(preset.SensationObject);
+            Muscle[] sensationMuscles = OWOMuscles.GetMusclesFromSensation(preset.SensationObject);
             preset.MessageCallbacks.Add(preset.Name, (values) => ProcessMessage(values, preset, sensationMuscles));
 
             Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, preset.Name);
@@ -143,19 +143,6 @@ namespace OWOVRC.Classes.Effects
                     Log.Warning("Failed to unregister OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
                 }
             }
-        }
-
-        public static Muscle[] GetMusclesFromSensation(Sensation sensation)
-        {
-            if (sensation is SensationWithMuscles sensationWithMuscles)
-            {
-                return sensationWithMuscles.muscles;
-            }
-            if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
-            {
-                return refSensationWithMuscles.muscles;
-            }
-            return Muscle.All;
         }
 
         public void ProcessMessage(OscMessageValues values, OSCSensationPreset preset, Muscle[] muscles)
