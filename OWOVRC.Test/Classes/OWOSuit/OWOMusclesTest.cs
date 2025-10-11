@@ -51,7 +51,7 @@ namespace OWOVRC.Test.Classes.OWOSuit
             CollectionAssert.AreEquivalent(musclesExpected, musclesResult, "Muscles for MicroSensation do not match expected.");
 
             // Baked sensation
-            sensation = Sensation.Parse("0~Cast Fire~26,25,60,0,1000,0,|0%100,1%100,2%100,3%100,4%100~weapon-0~");
+            sensation = Sensation.Parse("12~Cast Fire~26,25,60,0,1000,0,|0%100,1%100,2%100,3%100,4%100,5%100~weapon-0~");
             musclesExpected = Muscle.Front;
 
             musclesResult = OWOMuscles.GetMusclesFromSensation(sensation);
