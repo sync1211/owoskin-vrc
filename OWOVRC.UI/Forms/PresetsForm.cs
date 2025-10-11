@@ -2,6 +2,7 @@
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Helpers;
+using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes.Helpers;
@@ -21,12 +22,18 @@ namespace OWOVRC.UI.Forms
         private const string PLAY_BUTTON_COLUMN_NAME = "PlaySensationButtonColumn";
         private readonly OWOHelper? owo;
 
-        public PresetsForm(OSCPresetsSettings settings, OWOHelper? owo = null)
+        private readonly OSCReceiver? receiver;
+        private readonly OSCPresetTrigger presetEffect;
+
+        public PresetsForm(OSCPresetsSettings settings, OSCPresetTrigger presetsEffect, OSCReceiver? receiver = null, OWOHelper? owo = null)
         {
             InitializeComponent();
             this.owo = owo;
             this.settings = settings;
             presets = new([.. settings.Presets.Values]);
+
+            this.receiver = receiver;
+            this.presetEffect = presetsEffect;
 
             dataGridView1.DataSource = presets;
             presets.ListChanged += OnListChange;
@@ -104,7 +111,7 @@ namespace OWOVRC.UI.Forms
             owo.AddSensation(preset.Name, preset.SensationObject, muscles);
         }
 
-        private void OnListChange(object? sender, EventArgs args)
+        private void OnListChange(object? sender, ListChangedEventArgs args)
         {
             //NOTE: This method may be called after trying to import sensations from a file
             //      REGARDLESS of whether there were any changes made to the list!
@@ -334,11 +341,27 @@ namespace OWOVRC.UI.Forms
                 }
             }
 
-            settings.Presets.Clear();
+            // Clear all existing presets
+            if (receiver?.IsRunning ?? false)
+            {
+                presetEffect.ClearPresets(receiver);
+            }
+            else
+            {
+                settings.Presets.Clear();
+            }
+
+            // Copy presets into settings
             for (int i = 0; i < presets.Count; i++)
             {
                 OSCSensationPreset preset = presets[i];
-                settings.Presets.Add(preset.Name, preset);
+                settings.Presets.TryAdd(preset.Name, preset);
+            }
+
+            // Register all presets
+            if (receiver?.IsRunning ?? false)
+            {
+                presetEffect.RegisterCallbacks(receiver);
             }
 
             DialogResult = DialogResult.OK;

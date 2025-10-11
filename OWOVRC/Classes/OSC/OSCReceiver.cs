@@ -1,5 +1,4 @@
-﻿using BlobHandles;
-using BuildSoft.OscCore;
+﻿using BuildSoft.OscCore;
 using Serilog;
 
 namespace OWOVRC.Classes.OSC
@@ -12,14 +11,12 @@ namespace OWOVRC.Classes.OSC
         private const string OSC_ADDRESS = "/avatar/parameters/";
         private readonly OscServer receiver;
 
-        public EventHandler<OSCMessage>? OnMessageReceived;
         public int Port = 9001;
 
         public OSCReceiver(int port = 9001)
         {
             Port = port;
             receiver = OscServer.GetOrCreate(Port);
-            receiver.AddMonitorCallback(MessageReceived);
         }
 
         public void Start()
@@ -35,27 +32,6 @@ namespace OWOVRC.Classes.OSC
             }
             IsRunning = true;
             Log.Information("OSC listener started on port {Port}!", Port);
-        }
-
-        private void MessageReceived(BlobString address, OscMessageValues values)
-        {
-            string addressString = address.ToString();
-            if (!addressString.StartsWith(OSC_ADDRESS, StringComparison.CurrentCultureIgnoreCase))
-            {
-                Log.Verbose("Ignoring non-vrchat message at {Address}", addressString);
-                return;
-            }
-
-            // Remove OSC prefix
-            addressString = addressString[OSC_ADDRESS.Length..];
-
-            if (values.ElementCount == 0)
-            {
-                Log.Verbose("Message at {Address} does not include any values, ignoring.", addressString);
-                return;
-            }
-
-            OnMessageReceived?.Invoke(this, new OSCMessage(addressString, values));
         }
 
         protected virtual void Dispose(bool disposing)
