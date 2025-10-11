@@ -34,7 +34,7 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         public bool Interruptable { get; set; }
         [JsonInclude]
         [Browsable(false)]
-        public readonly string SensationString;
+        public string SensationString { get; }
         [JsonIgnore]
         [Browsable(false)]
         public readonly Sensation SensationObject;
