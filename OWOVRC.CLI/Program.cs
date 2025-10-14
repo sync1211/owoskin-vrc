@@ -120,6 +120,12 @@ namespace OWOVRC.CLI
 #if !TRIMMING_ENABLED
                 audio.Dispose();
 #endif
+
+                // Dispose effects
+                for (int i = 0; i < effects.Length; i++)
+                {
+                    effects[i].Dispose();
+                }
             }
         }
 

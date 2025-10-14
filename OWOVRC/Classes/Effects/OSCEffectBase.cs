@@ -3,7 +3,7 @@ using OWOVRC.Classes.OWOSuit;
 
 namespace OWOVRC.Classes.Effects
 {
-    public abstract class OSCEffectBase(OWOHelper owo)
+    public abstract class OSCEffectBase(OWOHelper owo): IDisposable
     {
         protected readonly OWOHelper owo = owo;
 
@@ -11,5 +11,7 @@ namespace OWOVRC.Classes.Effects
         public abstract void UnregisterCallbacks(OSCReceiver receiver);
 
         public abstract void Stop();
+
+        public abstract void Dispose();
     }
 }

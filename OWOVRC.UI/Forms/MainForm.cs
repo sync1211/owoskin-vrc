@@ -640,6 +640,12 @@ namespace OWOVRC.UI
             audioMonitorForm?.Close();
             speedMonitorForm?.Close();
             speedHistoryForm?.Close();
+
+            // Dispose effects
+            for (int i = 0; i < oscEffects.Length; i++)
+            {
+                oscEffects[i].Dispose();
+            }
         }
 
         private void OwoIPInput_Exit(object sender, EventArgs e)

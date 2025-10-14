@@ -17,9 +17,6 @@ namespace OWOVRC.Classes.Effects
         //public EventHandler? OnCollisionChange;
         //public string[] ActiveMuscles => [.. activeMuscles.Keys];
 
-        // Timer for haptic updates without OSC messages
-        private readonly System.Timers.Timer timer;
-
         // Dictionary to keep track of active haptic effects
         private readonly ConcurrentDictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
 
@@ -36,12 +33,7 @@ namespace OWOVRC.Classes.Effects
         {
             Settings = settings;
 
-            timer = new System.Timers.Timer()
-            {
-                Interval = (Settings.SensationSeconds * 1000) - 100, // Subtract 100ms to reduce "gaps" between sensations
-                AutoReset = true
-            };
-            timer.Elapsed += OnTimerElapsed;
+            owo.OnCalculationCycle += OnTimerElapsed;
 
             PopulateCallbacks();
         }
@@ -120,13 +112,6 @@ namespace OWOVRC.Classes.Effects
 
         private void OnCollisionEnter(string muscle, float proxmimity)
         {
-            // Make sure the timer is running
-            if (!timer.Enabled)
-            {
-                Log.Debug("Timer started!");
-                timer.Start();
-            }
-
             MuscleCollisionData muscleData = new(muscle, proxmimity);
 
             // Muscle does not exist yet, skip velocity calculation
@@ -174,12 +159,9 @@ namespace OWOVRC.Classes.Effects
                 }
             }
 
-            // Stop timer to preserve resources
             if (activeMuscles.IsEmpty)
             {
                 owo.StopSensation(SENSATION_NAME, false);
-                timer.Stop();
-                Log.Debug("No sensations playing, timer stopped.");
             }
         }
 
@@ -193,8 +175,7 @@ namespace OWOVRC.Classes.Effects
             if (activeMuscles.IsEmpty)
             {
                 owo.StopSensation(SENSATION_NAME, false);
-                timer.Stop();
-                Log.Debug("Colliders timer stopped, no active muscles!");
+                Log.Debug("No active muscles!");
                 return;
             }
 
@@ -269,7 +250,7 @@ namespace OWOVRC.Classes.Effects
             }
         }
 
-        public void OnTimerElapsed(object? sender, ElapsedEventArgs e)
+        public void OnTimerElapsed(object? sender, EventArgs e)
         {
             try
             {
@@ -300,6 +281,12 @@ namespace OWOVRC.Classes.Effects
         {
             activeMuscles.Clear();
             Log.Debug("Collision effect reset!");
+        }
+
+        public override void Dispose()
+        {
+            owo.OnCalculationCycle -= OnTimerElapsed;
+            GC.SuppressFinalize(this);
         }
     }
 }

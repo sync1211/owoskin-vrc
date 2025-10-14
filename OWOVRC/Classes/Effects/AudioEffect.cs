@@ -4,7 +4,6 @@ using OWOVRC.Audio.Classes;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
-using System.Runtime.CompilerServices;
 
 namespace OWOVRC.Classes.Effects
 {
