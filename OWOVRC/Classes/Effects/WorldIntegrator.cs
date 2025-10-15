@@ -83,6 +83,7 @@ namespace OWOVRC.Classes.Effects
 
         private FileInfo? GetVRCLogFile()
         {
+            Log.Debug("VRChat log directory: ", VRC_LOG_DIR);
             // Log directory
             if (!Directory.Exists(VRC_LOG_DIR))
             {
