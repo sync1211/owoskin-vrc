@@ -5,7 +5,7 @@ permissions:
 
 on:
   push:
-    branches: [ "master", "ConcurrentManager" ]
+    branches: [ "master", "ConcurrentManager", "LinuxSupport" ]
   pull_request:
     branches: [ "master" ]
 
@@ -54,5 +54,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: OWOVRC
+        name: OWOVRC-win64
         path: "OWOVRC/bin/publish/win-x64/"
