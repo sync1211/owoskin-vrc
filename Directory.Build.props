@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup Condition="$(RuntimeIdentifier.Contains('linux'))">
+    <DefineConstants>$(DefineConstants);TARGET_LINUX</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(PublishTrimmed)' == 'true'">
+    <DefineConstants>$(DefineConstants);TRIMMING_ENABLED</DefineConstants>
+  </PropertyGroup>
+</Project>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Serilog;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 
 namespace OWOVRC.Classes.Helpers
@@ -7,6 +8,16 @@ namespace OWOVRC.Classes.Helpers
     public static class AdminDetection
     {
         public static bool IsRunningAsAdmin()
+        {
+#if !TARGET_LINUX
+            return IsRunningAsWindowsAdmin();
+#else
+            return IsRunningAsRoot();
+#endif
+        }
+
+#if !TARGET_LINUX
+        private static bool IsRunningAsWindowsAdmin()
         {
             if (IsRunningViaWine())
             {
@@ -22,5 +33,14 @@ namespace OWOVRC.Classes.Helpers
         {
             return Registry.LocalMachine.OpenSubKey("Software\\Wine", false) != null;
         }
+#else
+        [DllImport("libc")]
+        private static extern uint getuid();
+
+        private static bool IsRunningAsRoot()
+        {
+            return getuid() == 0;
+        }
+#endif
     }
 }

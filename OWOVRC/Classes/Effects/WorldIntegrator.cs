@@ -27,7 +27,12 @@ namespace OWOVRC.Classes.Effects
 
         // Strings
         private const string OWI_PREFIX = "VRC_OWO_WorldIntegration:";
-        private readonly string VRC_LOG_DIR = $"{Environment.GetEnvironmentVariable("USERPROFILE")}\\AppData\\LocalLow\\VRChat\\VRChat";
+        private readonly string VRC_LOG_DIR =
+#if !TARGET_LINUX
+            $"{Environment.GetEnvironmentVariable("USERPROFILE")}\\AppData\\LocalLow\\VRChat\\VRChat";
+#else
+            $"{Environment.GetEnvironmentVariable("HOME")}/.local/share/Steam/steamapps/compatdata/438100/pfx/drive_c/users/steamuser/AppData/LocalLow/VRChat/VRChat";
+#endif
 
         // Log watcher
         private readonly LogWatcher logWatcher;
