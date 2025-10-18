@@ -20,7 +20,9 @@ namespace OWOVRC.Test.Classes.Settings
                 speedMultiplier: 2.0f,
                 maxTimeDiff: TimeSpan.FromSeconds(2),
                 muscleIntensities: intensities,
-                decayTime: 2500
+                decayTime: 2500,
+                decayOnExit: true,
+                decayOnChanges: false
             );
 
             string json = JsonSerializer.Serialize(settings);
@@ -37,7 +39,11 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.UseVelocity, decodedSettings.UseVelocity);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
             Assert.AreEqual(settings.DecayTime, decodedSettings.DecayTime);
+            Assert.AreEqual(settings.DecayOnChanges, decodedSettings.DecayOnChanges);
+            Assert.AreEqual(settings.DecayOnExit, decodedSettings.DecayOnExit);
+
             Assert.AreEqual(settings.MuscleIntensities.Count, decodedSettings.MuscleIntensities.Count);
+
             foreach (KeyValuePair<int, int> intensity in settings.MuscleIntensities)
             {
                 Assert.IsTrue(decodedSettings.MuscleIntensities.ContainsKey(intensity.Key));

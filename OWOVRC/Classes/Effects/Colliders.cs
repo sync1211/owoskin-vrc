@@ -114,8 +114,23 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Apply decay
+            intensity = ApplyDecay(intensity, intensityIncrease, muscleData);
+
+            // Update decay counter and other values
+            muscleData.ProcessCycle();
+
+            return intensity;
+        }
+
+        private int ApplyDecay(int intensity, int intensityIncrease, MuscleCollisionData muscleData)
+        {
             if (muscleData.CurrentProximity > 0)
             {
+                if (!Settings.DecayOnChanges)
+                {
+                    return intensity + intensityIncrease;
+                }
+
                 if (muscleData.DecayStartIntensity < intensityIncrease)
                 {
                     muscleData.DecayStartIntensity = intensityIncrease;
@@ -123,18 +138,18 @@ namespace OWOVRC.Classes.Effects
                 }
 
                 // Decay towards minimum intensity
-                intensity += (int)(intensityIncrease * muscleData.DecayPercent);
+                return intensity + (int)(muscleData.DecayStartIntensity * muscleData.DecayPercent);
             }
             else
             {
+                if (!Settings.DecayOnExit)
+                {
+                    muscleData.Disable();
+                    return 0;
+                }
                 // Decay towards 0
-                intensity = (int)((intensity + intensityIncrease) * muscleData.DecayPercent);
+                return (int)((intensity + intensityIncrease) * muscleData.DecayPercent);
             }
-
-            // Update decay counter and other values
-            muscleData.ProcessCycle();
-
-            return intensity;
         }
 
         private void UpdateHaptics()

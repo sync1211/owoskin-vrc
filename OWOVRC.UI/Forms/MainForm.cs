@@ -543,8 +543,9 @@ namespace OWOVRC.UI
             collidersUseVelocityCheckbox.Checked = collidersSettings.UseVelocity;
             collidersMinIntensityInput.Text = collidersSettings.MinIntensity.ToString();
             collidersSpeedMultiplierInput.Text = collidersSettings.SpeedMultiplier.ToString();
-            collidersFrequencyInput.Text = collidersSettings.Frequency.ToString();
-            collidersSpeedDecayInput.Value = collidersSettings.DecayTime;
+            collidersDecayInput.Value = collidersSettings.DecayTime;
+            collidersDecayOnChangeCheckbox.Checked = collidersSettings.DecayOnChanges;
+            collidersDecayOnExitCheckbox.Checked = collidersSettings.DecayOnExit;
 
             velocityBasedGroupBox.Enabled = collidersUseVelocityCheckbox.Checked;
         }
@@ -687,11 +688,12 @@ namespace OWOVRC.UI
             // Speed multiplier
             collidersSettings.SpeedMultiplier = (float)collidersSpeedMultiplierInput.Value;
 
-            // Frequency
-            collidersSettings.Frequency = (int)collidersFrequencyInput.Value;
-
             // Decay Factor
-            collidersSettings.DecayTime = (int)collidersSpeedDecayInput.Value;
+            collidersSettings.DecayTime = (int)collidersDecayInput.Value;
+
+            // Decay conditions
+            collidersSettings.DecayOnExit = collidersDecayOnExitCheckbox.Checked;
+            collidersSettings.DecayOnChanges = collidersDecayOnChangeCheckbox.Checked;
 
             collidersSettings.SaveToFile();
         }
