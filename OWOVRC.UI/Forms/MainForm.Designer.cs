@@ -41,13 +41,12 @@
             collidersUseVelocityCheckbox = new CheckBox();
             configureCollidersIntensityLabel = new Label();
             velocityBasedGroupBox = new GroupBox();
-            collidersSpeedDecayCheckbox = new CheckBox();
+            collidersSpeedDecayTitle = new Label();
             collidersSpeedDecayInput = new NumericUpDown();
             collidersSpeedMultiplierLabel = new Label();
             collidersSpeedMultiplierInput = new NumericUpDown();
             collidersMinIntensityLabel = new Label();
             collidersMinIntensityInput = new NumericUpDown();
-            collidersAllowContinuousCheckbox = new CheckBox();
             collidersEnabledCheckbox = new CheckBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
@@ -285,7 +284,7 @@
             // 
             collidersUseVelocityCheckbox.AutoSize = true;
             collidersUseVelocityCheckbox.BackColor = SystemColors.ControlLightLight;
-            collidersUseVelocityCheckbox.Location = new Point(16, 109);
+            collidersUseVelocityCheckbox.Location = new Point(16, 128);
             collidersUseVelocityCheckbox.Name = "collidersUseVelocityCheckbox";
             collidersUseVelocityCheckbox.Size = new Size(103, 19);
             collidersUseVelocityCheckbox.TabIndex = 3;
@@ -306,36 +305,33 @@
             // 
             // velocityBasedGroupBox
             // 
-            velocityBasedGroupBox.Controls.Add(collidersSpeedDecayCheckbox);
+            velocityBasedGroupBox.Controls.Add(collidersSpeedDecayTitle);
             velocityBasedGroupBox.Controls.Add(collidersSpeedDecayInput);
             velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierLabel);
             velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierInput);
             velocityBasedGroupBox.Controls.Add(collidersMinIntensityLabel);
             velocityBasedGroupBox.Controls.Add(collidersMinIntensityInput);
-            velocityBasedGroupBox.Controls.Add(collidersAllowContinuousCheckbox);
-            velocityBasedGroupBox.Location = new Point(6, 109);
+            velocityBasedGroupBox.Location = new Point(6, 128);
             velocityBasedGroupBox.Name = "velocityBasedGroupBox";
-            velocityBasedGroupBox.Size = new Size(348, 131);
+            velocityBasedGroupBox.Size = new Size(348, 112);
             velocityBasedGroupBox.TabIndex = 5;
             velocityBasedGroupBox.TabStop = false;
             velocityBasedGroupBox.Text = " Velocity-Based";
             // 
-            // collidersSpeedDecayCheckbox
+            // collidersSpeedDecayTitle
             // 
-            collidersSpeedDecayCheckbox.AutoSize = true;
-            collidersSpeedDecayCheckbox.Location = new Point(10, 100);
-            collidersSpeedDecayCheckbox.Name = "collidersSpeedDecayCheckbox";
-            collidersSpeedDecayCheckbox.Size = new Size(112, 19);
-            collidersSpeedDecayCheckbox.TabIndex = 14;
-            collidersSpeedDecayCheckbox.Text = "Decay time (ms)";
-            helpToolTip.SetToolTip(collidersSpeedDecayCheckbox, "The times it takes for the sensation intensity to return the rest sensation (or 0, if the rest sensation is disabled)");
-            collidersSpeedDecayCheckbox.UseVisualStyleBackColor = true;
-            collidersSpeedDecayCheckbox.CheckedChanged += CollidersSpeedDecayCheckbox_CheckedChanged;
+            collidersSpeedDecayTitle.AutoSize = true;
+            collidersSpeedDecayTitle.Location = new Point(6, 78);
+            collidersSpeedDecayTitle.Name = "collidersSpeedDecayTitle";
+            collidersSpeedDecayTitle.Size = new Size(93, 15);
+            collidersSpeedDecayTitle.TabIndex = 14;
+            collidersSpeedDecayTitle.Text = "Decay time (ms)";
+            helpToolTip.SetToolTip(collidersSpeedDecayTitle, "The times it takes for the sensation intensity to return the rest sensation (or 0, if the rest sensation is disabled)");
             // 
             // collidersSpeedDecayInput
             // 
             collidersSpeedDecayInput.Increment = new decimal(new int[] { 100, 0, 0, 0 });
-            collidersSpeedDecayInput.Location = new Point(247, 99);
+            collidersSpeedDecayInput.Location = new Point(247, 77);
             collidersSpeedDecayInput.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             collidersSpeedDecayInput.Name = "collidersSpeedDecayInput";
             collidersSpeedDecayInput.Size = new Size(89, 23);
@@ -345,7 +341,7 @@
             // collidersSpeedMultiplierLabel
             // 
             collidersSpeedMultiplierLabel.AutoSize = true;
-            collidersSpeedMultiplierLabel.Location = new Point(6, 73);
+            collidersSpeedMultiplierLabel.Location = new Point(6, 51);
             collidersSpeedMultiplierLabel.Name = "collidersSpeedMultiplierLabel";
             collidersSpeedMultiplierLabel.Size = new Size(93, 15);
             collidersSpeedMultiplierLabel.TabIndex = 11;
@@ -356,7 +352,7 @@
             // 
             collidersSpeedMultiplierInput.DecimalPlaces = 2;
             collidersSpeedMultiplierInput.Increment = new decimal(new int[] { 5, 0, 0, 65536 });
-            collidersSpeedMultiplierInput.Location = new Point(247, 70);
+            collidersSpeedMultiplierInput.Location = new Point(247, 48);
             collidersSpeedMultiplierInput.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             collidersSpeedMultiplierInput.Name = "collidersSpeedMultiplierInput";
             collidersSpeedMultiplierInput.Size = new Size(89, 23);
@@ -366,7 +362,7 @@
             // collidersMinIntensityLabel
             // 
             collidersMinIntensityLabel.AutoSize = true;
-            collidersMinIntensityLabel.Location = new Point(6, 44);
+            collidersMinIntensityLabel.Location = new Point(6, 22);
             collidersMinIntensityLabel.Name = "collidersMinIntensityLabel";
             collidersMinIntensityLabel.Size = new Size(97, 15);
             collidersMinIntensityLabel.TabIndex = 9;
@@ -375,22 +371,11 @@
             // 
             // collidersMinIntensityInput
             // 
-            collidersMinIntensityInput.Location = new Point(247, 41);
+            collidersMinIntensityInput.Location = new Point(247, 19);
             collidersMinIntensityInput.Name = "collidersMinIntensityInput";
             collidersMinIntensityInput.Size = new Size(89, 23);
             collidersMinIntensityInput.TabIndex = 8;
             helpToolTip.SetToolTip(collidersMinIntensityInput, "The base intensity for velocity-based collisions. (Intensity of collisions without movement)");
-            // 
-            // collidersAllowContinuousCheckbox
-            // 
-            collidersAllowContinuousCheckbox.AutoSize = true;
-            collidersAllowContinuousCheckbox.Location = new Point(10, 22);
-            collidersAllowContinuousCheckbox.Name = "collidersAllowContinuousCheckbox";
-            collidersAllowContinuousCheckbox.Size = new Size(195, 19);
-            collidersAllowContinuousCheckbox.TabIndex = 4;
-            collidersAllowContinuousCheckbox.Text = "Continuous sensation when idle";
-            helpToolTip.SetToolTip(collidersAllowContinuousCheckbox, "Enables feedback on collision while the intersecting collider is not moving. (Zero velocity)");
-            collidersAllowContinuousCheckbox.UseVisualStyleBackColor = true;
             // 
             // collidersEnabledCheckbox
             // 
@@ -856,7 +841,7 @@
             // owiInformationGroup
             // 
             owiInformationGroup.Controls.Add(owiInfoLabel);
-            owiInformationGroup.Location = new Point(6, 144);
+            owiInformationGroup.Location = new Point(6, 148);
             owiInformationGroup.Name = "owiInformationGroup";
             owiInformationGroup.Size = new Size(348, 92);
             owiInformationGroup.TabIndex = 21;
@@ -1587,7 +1572,6 @@
         private Label configureCollidersIntensityLabel;
         private GroupBox velocityBasedGroupBox;
         private CheckBox collidersUseVelocityCheckbox;
-        private CheckBox collidersAllowContinuousCheckbox;
         private Label collidersMinIntensityLabel;
         private NumericUpDown collidersMinIntensityInput;
         private Label collidersSpeedMultiplierLabel;
@@ -1657,7 +1641,7 @@
         private Label owiEnabledSensationsLabel;
         private Button owiConfigureSensationsButton;
         private NumericUpDown collidersSpeedDecayInput;
-        private CheckBox collidersSpeedDecayCheckbox;
+        private Label collidersSpeedDecayTitle;
         private Button owiConfigureIntensitiesButton;
         private Button velocityMonitorButton;
         private TabPage inertiaSettingsPage;

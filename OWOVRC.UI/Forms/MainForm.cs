@@ -541,14 +541,11 @@ namespace OWOVRC.UI
             collidersEnabledCheckbox.Checked = collidersSettings.Enabled;
             collidersPriorityInput.Text = collidersSettings.Priority.ToString();
             collidersUseVelocityCheckbox.Checked = collidersSettings.UseVelocity;
-            collidersAllowContinuousCheckbox.Checked = collidersSettings.AllowContinuous;
             collidersMinIntensityInput.Text = collidersSettings.MinIntensity.ToString();
             collidersSpeedMultiplierInput.Text = collidersSettings.SpeedMultiplier.ToString();
             collidersFrequencyInput.Text = collidersSettings.Frequency.ToString();
-            collidersSpeedDecayCheckbox.Checked = collidersSettings.DecayEnabled;
             collidersSpeedDecayInput.Value = collidersSettings.DecayTime;
 
-            collidersSpeedDecayInput.Enabled = collidersSpeedDecayCheckbox.Checked;
             velocityBasedGroupBox.Enabled = collidersUseVelocityCheckbox.Checked;
         }
 
@@ -680,7 +677,6 @@ namespace OWOVRC.UI
         {
             collidersSettings.Enabled = collidersEnabledCheckbox.Checked;
             collidersSettings.UseVelocity = collidersUseVelocityCheckbox.Checked;
-            collidersSettings.AllowContinuous = collidersAllowContinuousCheckbox.Checked;
 
             // Priority
             collidersSettings.Priority = (int)collidersPriorityInput.Value;
@@ -695,7 +691,6 @@ namespace OWOVRC.UI
             collidersSettings.Frequency = (int)collidersFrequencyInput.Value;
 
             // Decay Factor
-            collidersSettings.DecayEnabled = collidersSpeedDecayCheckbox.Checked;
             collidersSettings.DecayTime = (int)collidersSpeedDecayInput.Value;
 
             collidersSettings.SaveToFile();
@@ -1166,11 +1161,6 @@ namespace OWOVRC.UI
             {
                 form.ShowDialog();
             }
-        }
-
-        private void CollidersSpeedDecayCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            collidersSpeedDecayInput.Enabled = collidersSpeedDecayCheckbox.Checked;
         }
 
         private void CollidersUseVelocityCheckbox_CheckedChanged(object sender, EventArgs e)

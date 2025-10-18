@@ -15,14 +15,11 @@ namespace OWOVRC.Test.Classes.Settings
                 enabled: false,
                 priority: 2,
                 useVelocity: false,
-                allowContinuous: false,
                 minIntensity: 100,
                 frequency: 100,
-                sensationSeconds: 0.5f,
                 speedMultiplier: 2.0f,
                 maxTimeDiff: TimeSpan.FromSeconds(2),
                 muscleIntensities: intensities,
-                decayEnabled: false,
                 decayTime: 2500
             );
 
@@ -32,16 +29,13 @@ namespace OWOVRC.Test.Classes.Settings
             CollidersEffectSettings? decodedSettings = JsonSerializer.Deserialize<CollidersEffectSettings>(json);
             Assert.IsNotNull(decodedSettings);
 
-            Assert.AreEqual(settings.AllowContinuous, decodedSettings.AllowContinuous);
             Assert.AreEqual(settings.Frequency, decodedSettings.Frequency);
             Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);
             Assert.AreEqual(settings.MaxTimeDiff, decodedSettings.MaxTimeDiff);
             Assert.AreEqual(settings.MinIntensity, decodedSettings.MinIntensity);
-            Assert.AreEqual(settings.SensationSeconds, decodedSettings.SensationSeconds);
             Assert.AreEqual(settings.SpeedMultiplier, decodedSettings.SpeedMultiplier);
             Assert.AreEqual(settings.UseVelocity, decodedSettings.UseVelocity);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
-            Assert.AreEqual(settings.DecayEnabled, decodedSettings.DecayEnabled);
             Assert.AreEqual(settings.DecayTime, decodedSettings.DecayTime);
             Assert.AreEqual(settings.MuscleIntensities.Count, decodedSettings.MuscleIntensities.Count);
             foreach (KeyValuePair<int, int> intensity in settings.MuscleIntensities)

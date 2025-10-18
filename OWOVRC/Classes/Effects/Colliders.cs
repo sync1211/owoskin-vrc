@@ -6,6 +6,7 @@ using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 using System.Timers;
 
 namespace OWOVRC.Classes.Effects
@@ -18,7 +19,8 @@ namespace OWOVRC.Classes.Effects
         //public string[] ActiveMuscles => [.. activeMuscles.Keys];
 
         // Dictionary to keep track of active haptic effects
-        private readonly ConcurrentDictionary<string, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
+        //TODO: Optimization: Could be implemented as an array as Muscle IDs are squential numbers. (However, if OWO every changes this, things may get weird)
+        private readonly ConcurrentDictionary<int, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
 
         // Name for looping sensation
         public const string SENSATION_NAME = "Colliders";
@@ -29,7 +31,7 @@ namespace OWOVRC.Classes.Effects
         // Callbacks for OSC messages
         private readonly Dictionary<string, Action<OscMessageValues>> messageCallbacks = [];
 
-        public Colliders(OWOHelper owo, CollidersEffectSettings settings): base(owo)
+        public Colliders(OWOHelper owo, CollidersEffectSettings settings) : base(owo)
         {
             Settings = settings;
 
@@ -42,15 +44,18 @@ namespace OWOVRC.Classes.Effects
         {
             for (int i = 0; i < OWOMuscles.MusclesCaptialized.Count; i++)
             {
-                string muscle = OWOMuscles.MusclesCaptialized.ElementAt(i).Key;
-                string muscleLower = muscle.ToLower();
+                KeyValuePair<string, Muscle> kvp = OWOMuscles.MusclesCaptialized.ElementAt(i);
+                string muscleName = kvp.Key;
+                string muscleNameLower = muscleName.ToLower();
 
-                messageCallbacks[muscle] = (values) => ProcessMessage(muscle, values);
-                messageCallbacks[muscleLower] = (values) => ProcessMessage(muscle, values); //NOTE: Needs to be a new function to avoid an exception as the method is used as a key when registering message handlers
+                Muscle muscle = kvp.Value;
+
+                messageCallbacks[muscleName] = (values) => ProcessMessage(muscle.id, values);
+                messageCallbacks[muscleNameLower] = (values) => ProcessMessage(muscle.id, values); //NOTE: Needs to be a new function to avoid an exception as the method is used as a key when registering message handlers
             }
         }
 
-        private void ProcessMessage(string muscle, OscMessageValues values)
+        private void ProcessMessage(int muscleID, OscMessageValues values)
         {
             if (!Settings.Enabled)
             {
@@ -59,13 +64,109 @@ namespace OWOVRC.Classes.Effects
 
             float proximity = OSCHelpers.GetFloatValueFromMessageValues(values);
 
-            if (proximity > 0)
+            MuscleCollisionData muscleData = activeMuscles.GetOrAdd(
+                muscleID,
+                new MuscleCollisionData(Settings.MaxSensationCycles)
+            );
+
+            muscleData.UpdateProximity(proximity, Settings.DecayCycleCount);
+        }
+
+        private int GetMuscleIntensity(int muscleID)
+        {
+            MuscleCollisionData? muscleData = activeMuscles.GetValueOrDefault(muscleID);
+            if (muscleData == null || muscleData.MaxCyclesLeft <= 0)
             {
-                OnCollisionEnter(muscle, proximity);
+                return 0;
+            }
+
+            // No proximity change and no objects in collider -> remove entry
+            if (muscleData.ProximityDelta == 0 && muscleData.CurrentProximity == 0 && (Settings.DecayCycleCount == 0))
+            {
+                // Removal unnecessary as we can update the entry in-place on the next update
+                muscleData.Disable();
+                return 0;
+            }
+
+            int maxIntensity = Settings.MuscleIntensities.GetValueOrDefault(muscleID);
+            int intensity = Settings.MinIntensity;
+
+            // The range between min and max intensity
+            int intensityIncrease = maxIntensity - Settings.MinIntensity;
+
+            // Proximity calculation
+            if (Settings.SpeedMultiplier > 0)
+            {
+                // Intensity increase based on collision speed
+                float multiplier = Math.Min(1f, muscleData.ProximityDelta * Settings.SpeedMultiplier);
+                intensityIncrease = (int)(intensityIncrease * multiplier);
             }
             else
             {
-                OnCollisionExit(muscle);
+                // Intensity increase based on proximity only
+                intensityIncrease = (int)(intensityIncrease * muscleData.CurrentProximity);
+            }
+
+            // No decay
+            if (Settings.DecayCycleCount == 0)
+            {
+                return intensity + intensityIncrease;
+            }
+
+            // Apply decay
+            if (muscleData.CurrentProximity > 0)
+            {
+                // Decay towards minimum intensity
+                intensity += (int)(intensityIncrease * muscleData.DecayPercent);
+            }
+            else
+            {
+                // Decay towards 0
+                intensity = (int)((intensity + intensityIncrease) * muscleData.DecayPercent);
+            }
+
+            // Update decay counter and other values
+            muscleData.ProcessCycle();
+
+            return intensity;
+        }
+
+        private void UpdateHaptics()
+        {
+            if (!Settings.Enabled)
+            {
+                return;
+            }
+
+            Muscle[] musclesScaled = OWOMuscles.MuscleGroups["all"];
+
+            bool musclesIdle = true; // Flag to check if any muscles have an intensity > 0, if not we stop the sensation
+            for (int i = 0; i < musclesScaled.Length; i++)
+            {
+                Muscle muscle = musclesScaled[i];
+                int muscleIntensity = GetMuscleIntensity(muscle.id);
+                musclesScaled[i] = muscle.WithIntensity(muscleIntensity);
+
+                musclesIdle = (musclesIdle && muscleIntensity <= 0);
+            }
+
+            if (musclesIdle)
+            {
+                owo.StopSensation(SENSATION_NAME, false);
+                Log.Debug("Colliders sensation stopped, no active muscles!");
+                return;
+            }
+
+            Sensation sensation = Settings.GetSensation();
+
+            // Run or update sensation
+            if (owo.GetRunningSensations().ContainsKey(SENSATION_NAME))
+            {
+                owo.UpdateLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
+            }
+            else
+            {
+                owo.AddLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
             }
         }
 
@@ -109,172 +210,9 @@ namespace OWOVRC.Classes.Effects
             }
         }
 
-
-        private void OnCollisionEnter(string muscle, float proxmimity)
-        {
-            MuscleCollisionData muscleData = new(muscle, proxmimity);
-
-            // Muscle does not exist yet, skip velocity calculation
-            if (!activeMuscles.TryGetValue(muscle, out MuscleCollisionData? muscleDataPrev) || muscleDataPrev == null)
-            {
-                if (!activeMuscles.TryAdd(muscle, muscleData))
-                {
-                    Log.Warning("Unable to add muscle '{Muscle}' to active muscles.", muscle);
-                }
-                return;
-            }
-
-            // Calculate speed
-            //NOTE: I am using a delta of the proximity value as well as a time delta from the last received message to calculate the speed
-            //      This is not very ideal, but it's the best I've got so far
-            float distance = Math.Abs(muscleDataPrev.Proximity - proxmimity);
-
-            TimeSpan timediff = muscleData.LastUpdate - muscleDataPrev.LastUpdate;
-
-            float time = (float)timediff.TotalMilliseconds;
-            float speed = distance / time;
-
-            if (timediff < Settings.MaxTimeDiff)
-            {
-                muscleData.VelocityMultiplier = speed * Settings.SpeedMultiplier * 100;
-                muscleData.AddDecay(Settings.DecayCycleCount);
-            }
-            activeMuscles.AddOrUpdate(muscle, muscleData, (_, _) => muscleData);
-            Log.Debug("Add/Update muscle {muscle} (Active: {muscleCount})", muscleData.Name, activeMuscles.Count);
-        }
-
-        private void OnCollisionExit(string muscle)
-        {
-            if (activeMuscles.ContainsKey(muscle))
-            {
-                Log.Debug("Stop: {Muscle} (Active muscles: {MuscleCount}", muscle, activeMuscles.Count);
-                if (!activeMuscles.TryGetValue(muscle, out MuscleCollisionData? muscleData))
-                {
-                    Log.Warning("Muscle '{Muscle}' could not be from active muscles.", muscle);
-                }
-                else
-                {
-                    // Mark muscle to stop on next calculation cycle
-                    muscleData.StopOnNextCycle = true;
-                }
-            }
-
-            if (activeMuscles.IsEmpty)
-            {
-                owo.StopSensation(SENSATION_NAME, false);
-            }
-        }
-
-        private void UpdateHaptics()
-        {
-            if (!Settings.Enabled)
-            {
-                return;
-            }
-
-            if (activeMuscles.IsEmpty)
-            {
-                owo.StopSensation(SENSATION_NAME, false);
-                Log.Debug("No active muscles!");
-                return;
-            }
-
-            Span<MuscleCollisionData> muscleCollisionData = [.. activeMuscles.Values];
-            Muscle[] musclesScaled = new Muscle[muscleCollisionData.Length];
-
-            for (int i = 0; i < muscleCollisionData.Length; i++)
-            {
-                MuscleCollisionData muscleData = muscleCollisionData[i];
-                if (!OWOMuscles.MusclesCaptialized.TryGetValue(muscleData.Name, out Muscle muscle))
-                {
-                    Log.Warning(
-                        "Muscle '{Muscle}' not found in muscle list. Skipping sensation.",
-                        muscleData.Name
-                    );
-
-                    // Remove invalid muscle from active list
-                    if (!activeMuscles.TryRemove(muscleData.Name, out _))
-                    {
-                        Log.Warning("Muscle '{Muscle}' could not be from active muscles.", muscleData.Name);
-                    }
-
-                    continue;
-                }
-
-                // Maximum intensity
-                if (!Settings.MuscleIntensities.TryGetValue(muscle.id, out int maxIntensity))
-                {
-                    maxIntensity = 100;
-                }
-                int intensity = maxIntensity;
-
-                // Velocity-based intensity
-                if (Settings.UseVelocity)
-                {
-                    float increase = muscleData.VelocityMultiplier * Math.Max(Settings.MinIntensity, 1);
-                    Log.Verbose("Increase: {Inc}", increase);
-
-                    intensity = Settings.MinIntensity + (int)increase;
-                    intensity = Math.Max(intensity, Settings.MinIntensity); // Lower limit
-                    intensity = Math.Min(intensity, 100);                   // Upper limit
-                }
-                intensity = (int) Math.Round(((float)intensity / 100f) * maxIntensity);
-
-                Log.Verbose(
-                    "Muscle: {Muscle}, Intensity: {Intensity}% (Min: {Base}%, Multiplier: {Multiplier})",
-                    muscleData.Name,
-                    intensity,
-                    Settings.MinIntensity,
-                    muscleData.VelocityMultiplier
-                );
-
-                musclesScaled[i] = muscle.WithIntensity(maxIntensity);
-
-                // Remove if requested
-                if (muscleData.StopOnNextCycle)
-                {
-                    activeMuscles.TryRemove(muscleData.Name, out _);
-                }
-            }
-
-            Sensation sensation = Settings.GetSensation();
-
-            // Run or update sensation
-            if (owo.GetRunningSensations().ContainsKey(SENSATION_NAME))
-            {
-                owo.UpdateLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
-            }
-            else
-            {
-                owo.AddLoopedSensation(SENSATION_NAME, sensation, musclesScaled);
-            }
-        }
-
         public void OnTimerElapsed(object? sender, EventArgs e)
         {
-            try
-            {
-                UpdateHaptics();
-            } catch (Exception)
-            {
-                Log.Error("Error");
-            }
-
-            // Apply decay to velocity-based multiplier
-            //NOTE: The decayFactor needs to be determined when VelocityMultiplier is set
-            for (int i = 0; i < activeMuscles.Count; i++)
-            {
-                MuscleCollisionData muscleData = activeMuscles.ElementAt(i).Value;
-
-                if (Settings.AllowContinuous)
-                {
-                    muscleData.ApplyDecay();
-                }
-                else
-                {
-                    muscleData.StopOnNextCycle = true;
-                }
-            }
+            UpdateHaptics();
         }
 
         public override void Stop()
