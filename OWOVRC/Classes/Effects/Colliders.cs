@@ -19,7 +19,6 @@ namespace OWOVRC.Classes.Effects
         //public string[] ActiveMuscles => [.. activeMuscles.Keys];
 
         // Dictionary to keep track of active haptic effects
-        //TODO: Optimization: Could be implemented as an array as Muscle IDs are squential numbers. (However, if OWO every changes this, things may get weird)
         private readonly ConcurrentDictionary<int, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
 
         // Name for looping sensation
