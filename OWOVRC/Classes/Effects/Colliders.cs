@@ -116,6 +116,12 @@ namespace OWOVRC.Classes.Effects
             // Apply decay
             if (muscleData.CurrentProximity > 0)
             {
+                if (muscleData.DecayStartIntensity < intensityIncrease)
+                {
+                    muscleData.DecayStartIntensity = intensityIncrease;
+                    muscleData.ResetDecay();
+                }
+
                 // Decay towards minimum intensity
                 intensity += (int)(intensityIncrease * muscleData.DecayPercent);
             }

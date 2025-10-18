@@ -13,6 +13,7 @@
                 return (float)DecayCyclesLeft / (float)DecayCyclesTotal;
             }
         }
+        public int DecayStartIntensity { get; set; }
 
         public int MaxCyclesLeft { get; private set; } // Failsafe to prevent stuck muscles, decreased each calculation cycle, resets on every update
         private readonly int MaxCycles = 100;
@@ -36,6 +37,11 @@
 
             DecayCyclesTotal = DecayCycleCount;
             DecayCyclesLeft = DecayCycleCount;
+        }
+
+        public void ResetDecay()
+        {
+            DecayCyclesLeft = DecayCyclesTotal;
         }
 
         public void ProcessCycle()
