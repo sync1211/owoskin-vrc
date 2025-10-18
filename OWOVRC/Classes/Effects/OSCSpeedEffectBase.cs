@@ -31,10 +31,6 @@ namespace OWOVRC.Classes.Effects
         public bool IsGrounded { get; protected set; }
         public bool IsSeated { get; protected set; }
 
-        // Timer
-        protected const int INTERVAL = 100;
-        protected readonly System.Timers.Timer timer;
-
         // Settings
         protected readonly EffectSettingsBase settings;
 
@@ -44,11 +40,6 @@ namespace OWOVRC.Classes.Effects
         protected OSCSpeedEffectBase(OWOHelper owo, EffectSettingsBase settings) : base(owo)
         {
             this.settings = settings;
-            timer = new System.Timers.Timer()
-            {
-                Interval = INTERVAL,
-                AutoReset = true
-            };
 
             oscCallbacks = new Dictionary<string, Action<OscMessageValues>>()
             {
@@ -83,8 +74,6 @@ namespace OWOVRC.Classes.Effects
                     Log.Warning("Failed to register OSC callback for {Param}!", callbackKvp.Key);
                 }
             }
-
-            timer.Start();
         }
 
         public override void UnregisterCallbacks(OSCReceiver receiver)
@@ -103,8 +92,6 @@ namespace OWOVRC.Classes.Effects
                     Log.Warning("Failed to unregister OSC callback for {Param}!", callbackKvp.Key);
                 }
             }
-
-            timer.Stop();
         }
 
         private void OnVelocityXMsg(OscMessageValues values)
@@ -150,5 +137,7 @@ namespace OWOVRC.Classes.Effects
             Speed = 0;
             LastSpeed = 0;
         }
+
+        public override abstract void Dispose();
     }
 }

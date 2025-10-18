@@ -15,10 +15,10 @@ namespace OWOVRC.Classes.Effects
             Settings = settings;
             inertiaSensation = new InertiaSensation(0.2f);
 
-            timer.Elapsed += OnTimerElapsed;
+            owo.OnCalculationCycle += OnTimerElapsed;
         }
 
-        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        private void OnTimerElapsed(object? sender, EventArgs e)
         {
             if (!Settings.Enabled)
             {
@@ -74,6 +74,12 @@ namespace OWOVRC.Classes.Effects
 
             // Stop sensation
             owo.StopSensation(InertiaSensation._Name, true);
+        }
+
+        public override void Dispose()
+        {
+            owo.OnCalculationCycle -= OnTimerElapsed;
+            GC.SuppressFinalize(this);
         }
     }
 }

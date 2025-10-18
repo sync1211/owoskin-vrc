@@ -203,5 +203,11 @@ namespace OWOVRC.Classes.Effects
                 owo.StopSensation(preset.Name);
             }
         }
+
+        public override void Dispose()
+        {
+            Stop();
+            GC.SuppressFinalize(this);
+        }
     }
 }

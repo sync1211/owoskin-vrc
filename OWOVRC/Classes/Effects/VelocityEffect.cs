@@ -18,10 +18,10 @@ namespace OWOVRC.Classes.Effects
             this.Settings = settings;
             windSensation = new WindSensation(0.3f);
 
-            timer.Elapsed += OnTimerElapsed;
+            owo.OnCalculationCycle += OnTimerElapsed;
         }
 
-        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        private void OnTimerElapsed(object? sender, EventArgs e)
         {
             if (!Settings.Enabled)
             {
@@ -85,6 +85,12 @@ namespace OWOVRC.Classes.Effects
             owo.StopSensation(WindSensation._Name);
 
             Log.Debug("Velocity effect reset!");
+        }
+
+        public override void Dispose()
+        {
+            owo.OnCalculationCycle -= OnTimerElapsed;
+            GC.SuppressFinalize(this);
         }
     }
 }

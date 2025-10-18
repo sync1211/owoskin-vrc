@@ -124,6 +124,12 @@ Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with t
 #if !TRIMMING_ENABLED && !TARGET_LINUX
                 audio.Dispose();
 #endif
+
+                // Dispose effects
+                for (int i = 0; i < effects.Length; i++)
+                {
+                    effects[i].Dispose();
+                }
             }
         }
 
