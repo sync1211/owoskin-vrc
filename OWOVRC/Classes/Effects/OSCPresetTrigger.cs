@@ -56,7 +56,13 @@ namespace OWOVRC.Classes.Effects
                 KeyValuePair<string, Muscle[]> muscleGroup = OWOMuscles.MuscleGroups.ElementAt(i);
 
                 string address = $"{preset.Name}/{muscleGroup.Key}";
-                preset.MessageCallbacks.Add(address, (values) => ProcessMessage(values, preset, muscleGroup.Value));
+                if (preset.MessageCallbacks.ContainsKey(address))
+                {
+                    Log.Warning("Trying to create callback for {Address} in preset {Preset} failed as it already exists!", address, preset.Name);
+                    continue;
+                }
+
+                preset.MessageCallbacks.Add(address, (values) => ProcessMessage(values, preset, muscleGroup.Value)); //TODO: Collision handling
 
                 Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
             }
@@ -101,12 +107,18 @@ namespace OWOVRC.Classes.Effects
         {
             foreach (OSCSensationPreset preset in Settings.Presets.Values)
             {
+                AddCallbackToPreset(preset);
                 RegisterCallbackForPreset(receiver, preset);
             }
         }
 
-        public static void RegisterCallbackForPreset(OSCReceiver receiver, OSCSensationPreset preset)
+        public void RegisterCallbackForPreset(OSCReceiver receiver, OSCSensationPreset preset)
         {
+            if (preset.MessageCallbacks.Count == 0)
+            {
+                AddCallbackToPreset(preset);
+            }
+
             foreach (KeyValuePair<string, Action<OscMessageValues>> kvp in preset.MessageCallbacks)
             {
                 bool result = receiver.TryAddMessageCallback(kvp.Key, kvp.Value);
