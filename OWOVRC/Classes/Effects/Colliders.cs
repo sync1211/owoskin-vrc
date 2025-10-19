@@ -18,8 +18,8 @@ namespace OWOVRC.Classes.Effects
         //public EventHandler? OnCollisionChange;
         //public string[] ActiveMuscles => [.. activeMuscles.Keys];
 
-        // Dictionary to keep track of active haptic effects
-        private readonly ConcurrentDictionary<int, MuscleCollisionData> activeMuscles = new(); // Dictionary of active muscles and their intensity
+        // Dictionary of active muscles and their intensity (may contain entries ignored due to decay/max cycles)
+        private readonly ConcurrentDictionary<int, MuscleCollisionData> activeMuscles = new();
 
         // Name for looping sensation
         public const string SENSATION_NAME = "Colliders";
