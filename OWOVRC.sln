@@ -27,7 +27,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{8A9D8DE1-DEC1-4B7E-862F-6B938021B310}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\create-unitypackages.yml = .github\workflows\create-unitypackages.yml
-		.github\workflows\dotnet-desktop.yml = .github\workflows\dotnet-desktop.yml
+		.github\workflows\dotnet-cli-linux.yml = .github\workflows\dotnet-cli-linux.yml
+		.github\workflows\dotnet-desktop-windows.yml = .github\workflows\dotnet-desktop-windows.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.UI.Test", "OWOVRC.UI.Test\OWOVRC.UI.Test.csproj", "{875E4846-F964-497C-9C80-056F30F260C4}"
@@ -38,8 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		LICENSE.md = LICENSE.md
 		Directory.Build.props = Directory.Build.props
+		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
 EndProject
