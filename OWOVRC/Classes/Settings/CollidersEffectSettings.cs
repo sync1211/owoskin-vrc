@@ -54,7 +54,7 @@ namespace OWOVRC.Classes.Settings
             }
         }
         [JsonIgnore]
-        private int decayTime = 1000; // Decay time in ms
+        private int decayTime = 500; // Decay time in ms
         [JsonIgnore]
         public int DecayCycleCount { get; private set; } = 1; // Decay time converted to timer cycles (use UpdateCycleCount to update)
         [JsonInclude]
@@ -69,7 +69,7 @@ namespace OWOVRC.Classes.Settings
         }
 
         [JsonConstructor]
-        public CollidersEffectSettings(bool enabled, int priority, bool useVelocity, int minIntensity, int frequency, float speedMultiplier, TimeSpan maxTimeDiff, Dictionary<int, int> muscleIntensities, int decayTime = 1000, bool decayOnExit = true, bool decayOnChanges = true) : base(enabled, priority)
+        public CollidersEffectSettings(bool enabled, int priority, bool useVelocity, int minIntensity, int frequency, float speedMultiplier, TimeSpan maxTimeDiff, Dictionary<int, int> muscleIntensities, int decayTime = 500, bool decayOnExit = true, bool decayOnChanges = true) : base(enabled, priority)
         {
             UseVelocity = useVelocity;
             MinIntensity = minIntensity;
