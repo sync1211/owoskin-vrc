@@ -10,6 +10,7 @@ namespace OWOVRC.Classes.Effects
 {
     public class OSCPresetTrigger : OSCEffectBase
     {
+        private const string PATH_BASE = "OWO/SensationsTrigger";
         public readonly OSCPresetsSettings Settings;
 
         public OSCPresetTrigger(OWOHelper owo, OSCPresetsSettings settings) : base(owo)
@@ -55,7 +56,7 @@ namespace OWOVRC.Classes.Effects
             {
                 KeyValuePair<string, Muscle[]> muscleGroup = OWOMuscles.MuscleGroups.ElementAt(i);
 
-                string address = $"{preset.Name}/{muscleGroup.Key}";
+                string address = $"{PATH_BASE}/{preset.Name}/{muscleGroup.Key}";
                 if (preset.MessageCallbacks.ContainsKey(address))
                 {
                     Log.Warning("Trying to create callback for {Address} in preset {Preset} failed as it already exists!", address, preset.Name);
@@ -72,7 +73,7 @@ namespace OWOVRC.Classes.Effects
             {
                 KeyValuePair<string, Muscle> muscleInfo = OWOMuscles.MusclesCaptialized.ElementAt(i);
 
-                string address = $"{preset.Name}/{muscleInfo.Key}";
+                string address = $"{PATH_BASE}/{preset.Name}/{muscleInfo.Key}";
                 Muscle[] muscles = [muscleInfo.Value];
                 preset.MessageCallbacks.Add(address, (values) => ProcessMessage(values, preset, muscles));
 
@@ -81,7 +82,7 @@ namespace OWOVRC.Classes.Effects
 
             // Base sensation without any muscles specified
             Muscle[] sensationMuscles = OWOMuscles.GetMusclesFromSensation(preset.SensationObject);
-            preset.MessageCallbacks.Add(preset.Name, (values) => ProcessMessage(values, preset, sensationMuscles));
+            preset.MessageCallbacks.Add($"{PATH_BASE}/{preset.Name}", (values) => ProcessMessage(values, preset, sensationMuscles));
 
             Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, preset.Name);
         }
