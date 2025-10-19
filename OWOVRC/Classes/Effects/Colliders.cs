@@ -91,7 +91,7 @@ namespace OWOVRC.Classes.Effects
             int intensity = Settings.MinIntensity;
 
             // The range between min and max intensity
-            int intensityIncrease = maxIntensity - Settings.MinIntensity;
+            int intensityIncrease = Math.Max(0, maxIntensity - Settings.MinIntensity);
 
             // Proximity calculation
             if (Settings.SpeedMultiplier > 0)
