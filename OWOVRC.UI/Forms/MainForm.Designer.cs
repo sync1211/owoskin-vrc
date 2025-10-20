@@ -238,6 +238,7 @@
             collidersDecayOnChangeCheckbox.Size = new Size(116, 19);
             collidersDecayOnChangeCheckbox.TabIndex = 16;
             collidersDecayOnChangeCheckbox.Text = "Apply on change";
+            helpToolTip.SetToolTip(collidersDecayOnChangeCheckbox, "When enabled, it applies a smoothing effect to collisions by gradually decreasing the intensity between collider updates instead of jumping to a lower intensity value.");
             collidersDecayOnChangeCheckbox.UseVisualStyleBackColor = true;
             // 
             // collidersDecayOnExitCheckbox
@@ -248,6 +249,7 @@
             collidersDecayOnExitCheckbox.Size = new Size(96, 19);
             collidersDecayOnExitCheckbox.TabIndex = 15;
             collidersDecayOnExitCheckbox.Text = "Apply on exit";
+            helpToolTip.SetToolTip(collidersDecayOnExitCheckbox, resources.GetString("collidersDecayOnExitCheckbox.ToolTip"));
             collidersDecayOnExitCheckbox.UseVisualStyleBackColor = true;
             // 
             // collidersDecayTitle
