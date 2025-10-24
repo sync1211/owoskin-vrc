@@ -533,16 +533,18 @@ namespace OWOVRC.UI
         {
             oscPortInput_SkipValueChanged = true;
             owoIPInput.Text = connectionSettings.OWOAddress;
-            oscPortInput.Text = connectionSettings.OSCPort.ToString();
+            oscPortInput.Value = connectionSettings.OSCPort;
         }
 
         private void UpdateCollidersEffectSettings()
         {
             collidersEnabledCheckbox.Checked = collidersSettings.Enabled;
-            collidersPriorityInput.Text = collidersSettings.Priority.ToString();
+            collidersPriorityInput.Value = collidersSettings.Priority;
+
             collidersUseVelocityCheckbox.Checked = collidersSettings.UseVelocity;
-            collidersMinIntensityInput.Text = collidersSettings.MinIntensity.ToString();
-            collidersSpeedMultiplierInput.Text = collidersSettings.SpeedMultiplier.ToString();
+            collidersMinIntensityInput.Value = collidersSettings.MinIntensity;
+            collidersSpeedMultiplierInput.Value = (decimal) collidersSettings.SpeedMultiplier;
+
             collidersDecayInput.Value = collidersSettings.DecayTime;
             collidersDecayOnChangeCheckbox.Checked = collidersSettings.DecayOnChanges;
             collidersDecayOnExitCheckbox.Checked = collidersSettings.DecayOnExit;
@@ -553,10 +555,12 @@ namespace OWOVRC.UI
         private void UpdateVelocityEffectSettings()
         {
             velocityEnabledCheckbox.Checked = velocitySettings.Enabled;
-            velocityPriorityInput.Text = velocitySettings.Priority.ToString();
-            velocityThresholdInput.Text = velocitySettings.MinSpeed.ToString();
-            velocitySpeedCapInput.Text = velocitySettings.MaxSpeed.ToString();
-            velocityIntensityInput.Text = velocitySettings.Intensity.ToString();
+
+            velocityPriorityInput.Value = velocitySettings.Priority;
+            velocityThresholdInput.Value = (decimal) velocitySettings.MinSpeed;
+            velocitySpeedCapInput.Value = (decimal) velocitySettings.MaxSpeed;
+            velocityIntensityInput.Value = velocitySettings.Intensity;
+
             velocityIgnoreWhenGroundedCheckbox.Checked = velocitySettings.IgnoreWhenGrounded;
             velocityIgnoreWhenSeatedCheckbox.Checked = velocitySettings.IgnoreWhenSeated;
         }
@@ -564,11 +568,11 @@ namespace OWOVRC.UI
         private void UpdateInertiaEffectSettings()
         {
             inertiaEnabledCheckbox.Checked = inertiaSettings.Enabled;
-            inertiaPriorityInput.Text = inertiaSettings.Priority.ToString();
+            inertiaPriorityInput.Value = inertiaSettings.Priority;
 
-            inertiaMinDeltaInput.Text = inertiaSettings.MinDelta.ToString();
-            inertiaMaxDeltaInput.Text = inertiaSettings.MaxDelta.ToString();
-            inertiaIntensityInput.Text = inertiaSettings.Intensity.ToString();
+            inertiaMinDeltaInput.Value = (decimal) inertiaSettings.MinDelta;
+            inertiaMaxDeltaInput.Value = (decimal) inertiaSettings.MaxDelta;
+            inertiaIntensityInput.Value = inertiaSettings.Intensity;
 
             inertiaIgnoreWhenGroundedCheckbox.Checked = inertiaSettings.IgnoreWhenGrounded;
             inertiaIgnoreWhenSeatedCheckbox.Checked = inertiaSettings.IgnoreWhenSeated;
@@ -580,14 +584,14 @@ namespace OWOVRC.UI
         private void UpdateOWISettings()
         {
             owiEnabledCheckbox.Checked = owiSettings.Enabled;
-            owiPriorityInput.Text = owiSettings.Priority.ToString();
-            owiUpdateIntervalInput.Text = owiSettings.UpdateInterval.ToString();
+            owiPriorityInput.Value = owiSettings.Priority;
+            owiUpdateIntervalInput.Value = owiSettings.UpdateInterval;
         }
 
         private void UpdateOSCPrestsSettings()
         {
             oscPresetsEnabledCheckbox.Checked = oscPresetsSettings.Enabled;
-            oscPresetsPriorityInput.Text = oscPresetsSettings.Priority.ToString();
+            oscPresetsPriorityInput.Value = oscPresetsSettings.Priority;
         }
 
         private void UpdateAudioSettings()
