@@ -61,7 +61,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             double speedCapped = Math.Min(Speed, Settings.MaxSpeed);
-            int speedPercent = (int)(100 * (speedCapped / Settings.MaxSpeed));
+            int speedPercent = (int)(Settings.Intensity * (speedCapped / Settings.MaxSpeed));
 
             // Send sensation to vest
             PlayWindSensation(speedPercent);

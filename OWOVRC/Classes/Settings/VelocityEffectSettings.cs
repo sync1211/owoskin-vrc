@@ -13,6 +13,8 @@ namespace OWOVRC.Classes.Settings
         public bool IgnoreWhenGrounded { get; set; }
         [JsonInclude]
         public bool IgnoreWhenSeated { get; set; }
+        [JsonInclude]
+        public int Intensity { get; set; }
 
         public VelocityEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority) { }
 

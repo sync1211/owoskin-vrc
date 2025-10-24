@@ -51,17 +51,18 @@
             collidersEnabledCheckbox = new CheckBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
-            velocityInformationGroup = new GroupBox();
-            velocityInfoLabel = new Label();
+            velocityIntensityLabel = new Label();
+            velocityIntensityInput = new NumericUpDown();
+            velocityIgnoreGroup = new GroupBox();
+            velocityIgnoreWhenSeatedCheckbox = new CheckBox();
+            velocityIgnoreWhenGroundedCheckbox = new CheckBox();
             velocityMonitorButton = new Button();
             velocitySpeedCapLabel = new Label();
             velocityPriorityLabel = new Label();
             velocitySpeedCapInput = new NumericUpDown();
             velocityPriorityInput = new NumericUpDown();
-            velocityIgnoreWhenSeatedCheckbox = new CheckBox();
             velocityThresholdLabel = new Label();
             velocityThresholdInput = new NumericUpDown();
-            velocityIgnoreWhenGroundedCheckbox = new CheckBox();
             velocityEnabledCheckbox = new CheckBox();
             applyVelocitySettingsButton = new Button();
             inertiaSettingsPage = new TabPage();
@@ -156,7 +157,8 @@
             ((System.ComponentModel.ISupportInitialize)collidersSpeedMultiplierInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)collidersMinIntensityInput).BeginInit();
             velocitySettingsPage.SuspendLayout();
-            velocityInformationGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)velocityIntensityInput).BeginInit();
+            velocityIgnoreGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)velocitySpeedCapInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).BeginInit();
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).BeginInit();
@@ -415,16 +417,16 @@
             // 
             // velocitySettingsPage
             // 
-            velocitySettingsPage.Controls.Add(velocityInformationGroup);
+            velocitySettingsPage.Controls.Add(velocityIntensityLabel);
+            velocitySettingsPage.Controls.Add(velocityIntensityInput);
+            velocitySettingsPage.Controls.Add(velocityIgnoreGroup);
             velocitySettingsPage.Controls.Add(velocityMonitorButton);
             velocitySettingsPage.Controls.Add(velocitySpeedCapLabel);
             velocitySettingsPage.Controls.Add(velocityPriorityLabel);
             velocitySettingsPage.Controls.Add(velocitySpeedCapInput);
             velocitySettingsPage.Controls.Add(velocityPriorityInput);
-            velocitySettingsPage.Controls.Add(velocityIgnoreWhenSeatedCheckbox);
             velocitySettingsPage.Controls.Add(velocityThresholdLabel);
             velocitySettingsPage.Controls.Add(velocityThresholdInput);
-            velocitySettingsPage.Controls.Add(velocityIgnoreWhenGroundedCheckbox);
             velocitySettingsPage.Controls.Add(velocityEnabledCheckbox);
             velocitySettingsPage.Controls.Add(applyVelocitySettingsButton);
             velocitySettingsPage.Location = new Point(4, 24);
@@ -436,26 +438,56 @@
             velocitySettingsPage.ToolTipText = "Player velocity-based effects";
             velocitySettingsPage.UseVisualStyleBackColor = true;
             // 
-            // velocityInformationGroup
+            // velocityIntensityLabel
             // 
-            velocityInformationGroup.Controls.Add(velocityInfoLabel);
-            velocityInformationGroup.Location = new Point(6, 163);
-            velocityInformationGroup.Name = "velocityInformationGroup";
-            velocityInformationGroup.Size = new Size(348, 77);
-            velocityInformationGroup.TabIndex = 33;
-            velocityInformationGroup.TabStop = false;
-            velocityInformationGroup.Text = "Information";
+            velocityIntensityLabel.AutoSize = true;
+            velocityIntensityLabel.Location = new Point(6, 115);
+            velocityIntensityLabel.Name = "velocityIntensityLabel";
+            velocityIntensityLabel.Size = new Size(73, 15);
+            velocityIntensityLabel.TabIndex = 50;
+            velocityIntensityLabel.Text = "Intensity (%)";
+            helpToolTip.SetToolTip(velocityIntensityLabel, "Intensity scale for the interia effect");
             // 
-            // velocityInfoLabel
+            // velocityIntensityInput
             // 
-            velocityInfoLabel.FlatStyle = FlatStyle.Popup;
-            velocityInfoLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
-            velocityInfoLabel.ForeColor = SystemColors.ControlDarkDark;
-            velocityInfoLabel.Location = new Point(6, 20);
-            velocityInfoLabel.Name = "velocityInfoLabel";
-            velocityInfoLabel.Size = new Size(339, 56);
-            velocityInfoLabel.TabIndex = 20;
-            velocityInfoLabel.Text = "This effect simulates wind resistance when moving fast.\r\n\r\nNo additional setup required!\r\n";
+            velocityIntensityInput.Location = new Point(262, 113);
+            velocityIntensityInput.Name = "velocityIntensityInput";
+            velocityIntensityInput.Size = new Size(89, 23);
+            velocityIntensityInput.TabIndex = 49;
+            helpToolTip.SetToolTip(velocityIntensityInput, "Intensity scale for the interia effect");
+            // 
+            // velocityIgnoreGroup
+            // 
+            velocityIgnoreGroup.Controls.Add(velocityIgnoreWhenSeatedCheckbox);
+            velocityIgnoreGroup.Controls.Add(velocityIgnoreWhenGroundedCheckbox);
+            velocityIgnoreGroup.Location = new Point(6, 163);
+            velocityIgnoreGroup.Name = "velocityIgnoreGroup";
+            velocityIgnoreGroup.Size = new Size(348, 77);
+            velocityIgnoreGroup.TabIndex = 47;
+            velocityIgnoreGroup.TabStop = false;
+            velocityIgnoreGroup.Text = "Ignore";
+            // 
+            // velocityIgnoreWhenSeatedCheckbox
+            // 
+            velocityIgnoreWhenSeatedCheckbox.AutoSize = true;
+            velocityIgnoreWhenSeatedCheckbox.Location = new Point(6, 47);
+            velocityIgnoreWhenSeatedCheckbox.Name = "velocityIgnoreWhenSeatedCheckbox";
+            velocityIgnoreWhenSeatedCheckbox.Size = new Size(93, 19);
+            velocityIgnoreWhenSeatedCheckbox.TabIndex = 13;
+            velocityIgnoreWhenSeatedCheckbox.Text = "While seated";
+            helpToolTip.SetToolTip(velocityIgnoreWhenSeatedCheckbox, "Disables wind effect when the player is sitting on a chair\r\n");
+            velocityIgnoreWhenSeatedCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // velocityIgnoreWhenGroundedCheckbox
+            // 
+            velocityIgnoreWhenGroundedCheckbox.AutoSize = true;
+            velocityIgnoreWhenGroundedCheckbox.Location = new Point(6, 22);
+            velocityIgnoreWhenGroundedCheckbox.Name = "velocityIgnoreWhenGroundedCheckbox";
+            velocityIgnoreWhenGroundedCheckbox.Size = new Size(111, 19);
+            velocityIgnoreWhenGroundedCheckbox.TabIndex = 4;
+            velocityIgnoreWhenGroundedCheckbox.Text = "While grounded";
+            helpToolTip.SetToolTip(velocityIgnoreWhenGroundedCheckbox, "Disables wind effect when the player is standing on the ground\r\n");
+            velocityIgnoreWhenGroundedCheckbox.UseVisualStyleBackColor = true;
             // 
             // velocityMonitorButton
             // 
@@ -506,17 +538,6 @@
             velocityPriorityInput.TabIndex = 14;
             helpToolTip.SetToolTip(velocityPriorityInput, "Speicifies the priority of this effect (0 = lowest)");
             // 
-            // velocityIgnoreWhenSeatedCheckbox
-            // 
-            velocityIgnoreWhenSeatedCheckbox.AutoSize = true;
-            velocityIgnoreWhenSeatedCheckbox.Location = new Point(6, 138);
-            velocityIgnoreWhenSeatedCheckbox.Name = "velocityIgnoreWhenSeatedCheckbox";
-            velocityIgnoreWhenSeatedCheckbox.Size = new Size(129, 19);
-            velocityIgnoreWhenSeatedCheckbox.TabIndex = 13;
-            velocityIgnoreWhenSeatedCheckbox.Text = "Ignore when seated";
-            helpToolTip.SetToolTip(velocityIgnoreWhenSeatedCheckbox, "Disables wind effect when the player is sitting on a chair\r\n");
-            velocityIgnoreWhenSeatedCheckbox.UseVisualStyleBackColor = true;
-            // 
             // velocityThresholdLabel
             // 
             velocityThresholdLabel.AutoSize = true;
@@ -535,17 +556,6 @@
             velocityThresholdInput.Size = new Size(89, 23);
             velocityThresholdInput.TabIndex = 8;
             helpToolTip.SetToolTip(velocityThresholdInput, "Minimum speed for triggering wind effects");
-            // 
-            // velocityIgnoreWhenGroundedCheckbox
-            // 
-            velocityIgnoreWhenGroundedCheckbox.AutoSize = true;
-            velocityIgnoreWhenGroundedCheckbox.Location = new Point(6, 113);
-            velocityIgnoreWhenGroundedCheckbox.Name = "velocityIgnoreWhenGroundedCheckbox";
-            velocityIgnoreWhenGroundedCheckbox.Size = new Size(147, 19);
-            velocityIgnoreWhenGroundedCheckbox.TabIndex = 4;
-            velocityIgnoreWhenGroundedCheckbox.Text = "Ignore when grounded";
-            helpToolTip.SetToolTip(velocityIgnoreWhenGroundedCheckbox, "Disables wind effect when the player is standing on the ground\r\n");
-            velocityIgnoreWhenGroundedCheckbox.UseVisualStyleBackColor = true;
             // 
             // velocityEnabledCheckbox
             // 
@@ -1524,7 +1534,9 @@
             ((System.ComponentModel.ISupportInitialize)collidersMinIntensityInput).EndInit();
             velocitySettingsPage.ResumeLayout(false);
             velocitySettingsPage.PerformLayout();
-            velocityInformationGroup.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)velocityIntensityInput).EndInit();
+            velocityIgnoreGroup.ResumeLayout(false);
+            velocityIgnoreGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)velocitySpeedCapInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)velocityPriorityInput).EndInit();
             ((System.ComponentModel.ISupportInitialize)velocityThresholdInput).EndInit();
@@ -1657,8 +1669,6 @@
         private Button owiConfigureIntensitiesButton;
         private Button velocityMonitorButton;
         private TabPage inertiaSettingsPage;
-        private GroupBox velocityInformationGroup;
-        private Label velocityInfoLabel;
         private Label inertiaMaxDeltaLabel;
         private Label inertiaPriorityLabel;
         private NumericUpDown inertiaMaxDeltaInput;
@@ -1679,5 +1689,8 @@
         private GroupBox decayGroupBox;
         private CheckBox collidersDecayOnChangeCheckbox;
         private CheckBox collidersDecayOnExitCheckbox;
+        private GroupBox velocityIgnoreGroup;
+        private Label velocityIntensityLabel;
+        private NumericUpDown velocityIntensityInput;
     }
 }

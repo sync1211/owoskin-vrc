@@ -556,6 +556,7 @@ namespace OWOVRC.UI
             velocityPriorityInput.Text = velocitySettings.Priority.ToString();
             velocityThresholdInput.Text = velocitySettings.MinSpeed.ToString();
             velocitySpeedCapInput.Text = velocitySettings.MaxSpeed.ToString();
+            velocityIntensityInput.Text = velocitySettings.Intensity.ToString();
             velocityIgnoreWhenGroundedCheckbox.Checked = velocitySettings.IgnoreWhenGrounded;
             velocityIgnoreWhenSeatedCheckbox.Checked = velocitySettings.IgnoreWhenSeated;
         }
@@ -716,6 +717,9 @@ namespace OWOVRC.UI
 
             // Speed cap
             velocitySettings.MaxSpeed = (float)velocitySpeedCapInput.Value;
+
+            // Intensity
+            velocitySettings.Intensity = (int)velocityIntensityInput.Value;
 
             velocitySettings.SaveToFile();
 
