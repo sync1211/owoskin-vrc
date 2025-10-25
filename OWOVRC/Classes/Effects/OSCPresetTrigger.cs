@@ -57,15 +57,15 @@ namespace OWOVRC.Classes.Effects
                 KeyValuePair<string, Muscle[]> muscleGroup = OWOMuscles.MuscleGroups.ElementAt(i);
 
                 string address = $"{PATH_BASE}/{preset.Name}/{muscleGroup.Key}";
-                if (preset.MessageCallbacks.ContainsKey(address))
+
+                if (preset.MessageCallbacks.TryAdd(address, (values) => ProcessMessage(values, preset, muscleGroup.Value)))
                 {
-                    Log.Warning("Trying to create callback for {Address} in preset {Preset} failed as it already exists!", address, preset.Name);
-                    continue;
+                    Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
                 }
-
-                preset.MessageCallbacks.Add(address, (values) => ProcessMessage(values, preset, muscleGroup.Value)); //TODO: Collision handling
-
-                Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                else
+                {
+                    Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                }
             }
 
             // Individual muscles
@@ -75,16 +75,29 @@ namespace OWOVRC.Classes.Effects
 
                 string address = $"{PATH_BASE}/{preset.Name}/{muscleInfo.Key}";
                 Muscle[] muscles = [muscleInfo.Value];
-                preset.MessageCallbacks.Add(address, (values) => ProcessMessage(values, preset, muscles));
-
-                Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                
+                if (preset.MessageCallbacks.TryAdd(address, (values) => ProcessMessage(values, preset, muscles)))
+                {
+                    Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                }
+                else
+                {
+                    Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                }
             }
 
             // Base sensation without any muscles specified
             Muscle[] sensationMuscles = OWOMuscles.GetMusclesFromSensation(preset.SensationObject);
-            preset.MessageCallbacks.Add($"{PATH_BASE}/{preset.Name}", (values) => ProcessMessage(values, preset, sensationMuscles));
-
-            Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, preset.Name);
+            
+            string presetBaseAddr = $"{PATH_BASE}/{preset.Name}";
+            if (preset.MessageCallbacks.TryAdd(presetBaseAddr, (values) => ProcessMessage(values, preset, sensationMuscles)))
+            {
+                Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, presetBaseAddr);
+            }
+            else
+            {
+                Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, presetBaseAddr);
+            }
         }
 
         public bool RemovePreset(string name, OSCReceiver receiver)
@@ -108,7 +121,6 @@ namespace OWOVRC.Classes.Effects
         {
             foreach (OSCSensationPreset preset in Settings.Presets.Values)
             {
-                AddCallbackToPreset(preset);
                 RegisterCallbackForPreset(receiver, preset);
             }
         }
@@ -142,7 +154,7 @@ namespace OWOVRC.Classes.Effects
             }
         }
 
-        public static void UnregisterCallbackForPreset(OSCReceiver receiver, OSCSensationPreset preset)
+        public static void UnregisterCallbackForPreset(OSCReceiver receiver, OSCSensationPreset preset, bool clear=false)
         {
             foreach (KeyValuePair<string, Action<OscMessageValues>> kvp in preset.MessageCallbacks)
             {
@@ -155,6 +167,11 @@ namespace OWOVRC.Classes.Effects
                 {
                     Log.Warning("Failed to unregister OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
                 }
+            }
+
+            if (clear)
+            {
+                preset.MessageCallbacks.Clear();
             }
         }
 
