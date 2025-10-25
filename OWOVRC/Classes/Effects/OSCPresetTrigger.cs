@@ -32,10 +32,7 @@ namespace OWOVRC.Classes.Effects
         public void UpdatePresetRegistration(OSCReceiver receiver, OSCSensationPreset preset)
         {
             // Remove registration
-            UnregisterCallbackForPreset(receiver, preset);
-
-            // Re-create callback with new values
-            AddCallbackToPreset(preset);
+            UnregisterCallbackForPreset(receiver, preset, clear: true);
 
             // Re-register
             RegisterCallbackForPreset(receiver, preset);
