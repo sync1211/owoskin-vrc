@@ -36,7 +36,7 @@ namespace OWOVRC.Classes.Settings
 
         public override void SaveToFile()
         {
-            SettingsHelper.SaveSettingsToFile(this, "inertia.json", "inertia effect", SettingsHelper.InertiaEffectSettingsContext.Default.InertiaEffectSettings);
+            SettingsHelper.SaveSettingsToFile(this, "inertia.json", "Inertia effect", SettingsHelper.InertiaEffectSettingsContext.Default.InertiaEffectSettings);
         }
     }
 }

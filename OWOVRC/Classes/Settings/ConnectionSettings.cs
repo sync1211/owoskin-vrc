@@ -22,7 +22,7 @@ namespace OWOVRC.Classes.Settings
 
         public void SaveToFile()
         {
-            SettingsHelper.SaveSettingsToFile(this, "connection.json", "connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
+            SettingsHelper.SaveSettingsToFile(this, "connection.json", "Connection settings", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
         }
     }
 }
