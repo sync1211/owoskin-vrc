@@ -14,17 +14,18 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public bool IgnoreWhenSeated { get; set; }
         [JsonInclude]
-        public int Intensity { get; set; }
+        public int Intensity { get; set; } = 100;
 
         public VelocityEffectSettings(bool enabled = true, int priority = 10) : base(enabled, priority) { }
 
         [JsonConstructor]
-        public VelocityEffectSettings(bool enabled, int priority, float minSpeed, float maxSpeed, bool ignoreWhenGrounded, bool ignoreWhenSeated) : base(enabled, priority)
+        public VelocityEffectSettings(bool enabled, int priority, float minSpeed, float maxSpeed, bool ignoreWhenGrounded, bool ignoreWhenSeated, int intensity) : base(enabled, priority)
         {
             MinSpeed = minSpeed;
             MaxSpeed = maxSpeed;
             IgnoreWhenGrounded = ignoreWhenGrounded;
             IgnoreWhenSeated = ignoreWhenSeated;
+            Intensity = intensity;
         }
 
         public override void SaveToFile()

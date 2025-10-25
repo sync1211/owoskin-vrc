@@ -16,6 +16,7 @@ namespace OWOVRC.Test.Classes.Settings
                 MaxSpeed = 201.0f,
                 IgnoreWhenGrounded = true,
                 IgnoreWhenSeated = true,
+                Intensity = 22
             };
 
             string json = JsonSerializer.Serialize(settings);
@@ -29,6 +30,7 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.IgnoreWhenGrounded, decodedSettings.IgnoreWhenGrounded);
             Assert.AreEqual(settings.IgnoreWhenSeated, decodedSettings.IgnoreWhenSeated);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
+            Assert.AreEqual(settings.Intensity, decodedSettings.Intensity);
         }
     }
 }
