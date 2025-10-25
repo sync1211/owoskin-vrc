@@ -209,6 +209,7 @@
             // 
             // groundedIndicator
             // 
+            groundedIndicator.AutoCheck = false;
             groundedIndicator.AutoSize = true;
             groundedIndicator.Location = new Point(10, 15);
             groundedIndicator.Name = "groundedIndicator";
@@ -219,6 +220,7 @@
             // 
             // seatedIndicator
             // 
+            seatedIndicator.AutoCheck = false;
             seatedIndicator.AutoSize = true;
             seatedIndicator.Location = new Point(10, 36);
             seatedIndicator.Name = "seatedIndicator";
