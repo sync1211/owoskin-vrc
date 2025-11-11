@@ -1,4 +1,4 @@
-﻿using OWOVRC.UI.Classes.Helpers;
+﻿using OWOVRC.UI.Classes.Proxies;
 
 namespace OWOVRC.UI.Forms
 {
