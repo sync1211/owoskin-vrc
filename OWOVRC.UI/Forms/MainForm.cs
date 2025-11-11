@@ -17,6 +17,7 @@ using System.ComponentModel;
 using OWOVRC.Classes.Helpers;
 using OWOVRC.UI.Forms.Monitors;
 using OWOVRC.UI.Classes.Helpers;
+using OWOVRC.UI.Classes.Proxies;
 
 namespace OWOVRC.UI
 {
@@ -946,13 +947,16 @@ namespace OWOVRC.UI
             {
                 DialogResult result = discoveryForm.ShowDialog();
 
-                if (result != DialogResult.OK || discoveryForm.SelectedApp == null)
+                HostEntry? selectedApp = discoveryForm.SelectedApp;
+                if (result != DialogResult.OK || selectedApp == null)
                 {
                     return;
                 }
 
-                owoIPInput.Text = discoveryForm.SelectedApp;
-                connectionSettings.OWOAddress = discoveryForm.SelectedApp;
+                owoIPInput.Text = selectedApp.IP;
+                Log.Information("OWO app found at {HostInfo}", selectedApp);
+
+                connectionSettings.OWOAddress = owoIPInput.Text;
                 connectionSettings.SaveToFile();
             }
         }
