@@ -39,6 +39,7 @@
             appListBox.Size = new Size(294, 319);
             appListBox.TabIndex = 0;
             appListBox.SelectedValueChanged += ListBox1_SelectedValueChanged;
+            appListBox.DoubleClick += AppListBox_DoubleClick;
             // 
             // selectEntryButton
             // 

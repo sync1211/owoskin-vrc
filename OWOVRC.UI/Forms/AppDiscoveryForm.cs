@@ -158,5 +158,15 @@ namespace OWOVRC.UI.Forms
             timer.Stop();
             timer.Dispose();
         }
+
+        private void AppListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (!selectEntryButton.Enabled)
+            {
+                return;
+            }
+
+            SelectEntryButton_Click(sender, e);
+        }
     }
 }
