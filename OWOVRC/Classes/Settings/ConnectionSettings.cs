@@ -17,7 +17,7 @@ namespace OWOVRC.Classes.Settings
         public ConnectionSettings() {}
 
         [JsonConstructor]
-        public ConnectionSettings(string owoAddress, int oscPort, bool resolveHostnames)
+        public ConnectionSettings(string owoAddress, int oscPort, bool resolveHostnames = true)
         {
             OWOAddress = owoAddress;
             OSCPort = oscPort;

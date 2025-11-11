@@ -9,7 +9,7 @@ namespace OWOVRC.Test.Classes.Settings
         [TestMethod]
         public void TestJsonEncodeDecode()
         {
-            ConnectionSettings settings = new("192.168.178.1", 9999);
+            ConnectionSettings settings = new("192.168.178.1", 9999, false);
 
             string json = JsonSerializer.Serialize(settings);
             Assert.AreNotEqual(0, json.Length);
@@ -19,6 +19,7 @@ namespace OWOVRC.Test.Classes.Settings
 
             Assert.AreEqual(settings.OSCPort, decodedSettings.OSCPort);
             Assert.AreEqual(settings.OWOAddress, decodedSettings.OWOAddress);
+            Assert.AreEqual(settings.ResolveHostnames, decodedSettings.ResolveHostnames);
         }
     }
 }
