@@ -28,12 +28,12 @@
             appListBox = new ListBox();
             selectEntryButton = new Button();
             closeButton = new Button();
+            resolveHostsCheckbox = new CheckBox();
             SuspendLayout();
             // 
             // appListBox
             // 
             appListBox.FormattingEnabled = true;
-            appListBox.ItemHeight = 15;
             appListBox.Location = new Point(12, 12);
             appListBox.Name = "appListBox";
             appListBox.Size = new Size(294, 319);
@@ -64,11 +64,22 @@
             closeButton.Text = "Cancel";
             closeButton.UseVisualStyleBackColor = true;
             // 
+            // resolveHostsCheckbox
+            // 
+            resolveHostsCheckbox.AutoSize = true;
+            resolveHostsCheckbox.Location = new Point(12, 344);
+            resolveHostsCheckbox.Name = "resolveHostsCheckbox";
+            resolveHostsCheckbox.Size = new Size(127, 19);
+            resolveHostsCheckbox.TabIndex = 3;
+            resolveHostsCheckbox.Text = "Resolve hostnames";
+            resolveHostsCheckbox.UseVisualStyleBackColor = true;
+            // 
             // AppDiscoveryForm
             // 
             AcceptButton = selectEntryButton;
             CancelButton = closeButton;
             ClientSize = new Size(318, 376);
+            Controls.Add(resolveHostsCheckbox);
             Controls.Add(closeButton);
             Controls.Add(selectEntryButton);
             Controls.Add(appListBox);
@@ -79,6 +90,7 @@
             FormClosing += AppDiscoveryForm_FormClosing;
             Shown += AppDiscoveryForm_Shown;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         private Button selectEntryButton;
@@ -86,5 +98,7 @@
         private ListBox appListBox;
 
         #endregion
+
+        private CheckBox resolveHostsCheckbox;
     }
 }

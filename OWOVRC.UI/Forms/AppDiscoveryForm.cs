@@ -5,24 +5,27 @@ using Serilog;
 using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
+using Windows.Networking;
 
 namespace OWOVRC.UI.Forms
 {
     public partial class AppDiscoveryForm : Form
     {
         public HostEntry? SelectedApp { get; private set; }
-        private readonly bool ResolveHostnames = true;
 
         private const int TIMER_INTERVAL = 500;
         private readonly System.Timers.Timer timer;
 
         private readonly BindingList<HostEntry> discoveredApps;
+        private bool resolveHostNames;
 
-        public AppDiscoveryForm(bool resolveHostnames = true)
+        public AppDiscoveryForm(bool resolveHostNames = true)
         {
             InitializeComponent();
             discoveredApps = [];
             appListBox.DataSource = discoveredApps;
+
+            resolveHostsCheckbox.Checked = resolveHostNames;
 
             timer = new()
             {
@@ -30,7 +33,6 @@ namespace OWOVRC.UI.Forms
                 AutoReset = true
             };
             timer.Elapsed += TimerElapsed;
-            ResolveHostnames = resolveHostnames;
         }
 
         private void AppDiscoveryForm_Shown(object sender, EventArgs e)
@@ -72,17 +74,37 @@ namespace OWOVRC.UI.Forms
             }
         }
 
+        private HostEntry CreateHostEntry(string ip)
+        {
+            string? hostName = null;
+            if (resolveHostNames)
+            {
+                hostName = GetHostName(ip);
+            }
+
+            return new(ip, hostName);
+        }
+
         private void RefreshItems()
         {
-            string? selectedIP= null;
+            string? selectedIP = null;
             int selectedIndex = -1;
             if (appListBox.SelectedItem is HostEntry entry)
             {
                 selectedIP = entry.IP;
             }
 
-            // Save old enteries to avoid creating new objects
-            Dictionary<string, HostEntry> oldEntries = discoveredApps.ToDictionary(host => host.IP, host => host);
+            // Save old enteries to avoid creating new objects unless we have to
+            Dictionary<string, HostEntry> oldEntries;
+            if (resolveHostsCheckbox.Checked == resolveHostNames)
+            {
+                oldEntries = discoveredApps.ToDictionary(host => host.IP, host => host);
+            }
+            else
+            {
+                oldEntries = [];
+            }
+            resolveHostNames = resolveHostsCheckbox.Checked;
 
             discoveredApps.RaiseListChangedEvents = false;
             discoveredApps.Clear();
@@ -91,15 +113,10 @@ namespace OWOVRC.UI.Forms
             for (int i = 0; i < newDiscoveredApps.Length; i++)
             {
                 string ip = newDiscoveredApps[i];
-                string? hostName = null;
-                if (ResolveHostnames)
-                {
-                    hostName = GetHostName(ip);
-                }
 
                 HostEntry hostEntry =
                     oldEntries.GetValueOrDefault(ip)
-                    ?? new(ip, hostName);
+                    ?? CreateHostEntry(ip);
 
                 discoveredApps.Add(hostEntry);
 
