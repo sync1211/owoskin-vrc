@@ -1,23 +1,21 @@
-﻿using NAudio.SoundFont;
-using OWOGame;
+﻿using OWOGame;
 using OWOVRC.UI.Classes.Proxies;
 using Serilog;
 using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
-using Windows.Networking;
 
 namespace OWOVRC.UI.Forms
 {
     public partial class AppDiscoveryForm : Form
     {
         public HostEntry? SelectedApp { get; private set; }
+        public bool ResolveHostNames { get; private set; }
 
         private const int TIMER_INTERVAL = 500;
         private readonly System.Timers.Timer timer;
 
         private readonly BindingList<HostEntry> discoveredApps;
-        private bool resolveHostNames;
 
         public AppDiscoveryForm(bool resolveHostNames = true)
         {
@@ -77,7 +75,7 @@ namespace OWOVRC.UI.Forms
         private HostEntry CreateHostEntry(string ip)
         {
             string? hostName = null;
-            if (resolveHostNames)
+            if (ResolveHostNames)
             {
                 hostName = GetHostName(ip);
             }
@@ -96,7 +94,7 @@ namespace OWOVRC.UI.Forms
 
             // Save old enteries to avoid creating new objects unless we have to
             Dictionary<string, HostEntry> oldEntries;
-            if (resolveHostsCheckbox.Checked == resolveHostNames)
+            if (resolveHostsCheckbox.Checked == ResolveHostNames)
             {
                 oldEntries = discoveredApps.ToDictionary(host => host.IP, host => host);
             }
@@ -104,7 +102,7 @@ namespace OWOVRC.UI.Forms
             {
                 oldEntries = [];
             }
-            resolveHostNames = resolveHostsCheckbox.Checked;
+            ResolveHostNames = resolveHostsCheckbox.Checked;
 
             discoveredApps.RaiseListChangedEvents = false;
             discoveredApps.Clear();

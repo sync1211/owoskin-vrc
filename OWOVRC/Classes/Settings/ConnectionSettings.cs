@@ -11,13 +11,17 @@ namespace OWOVRC.Classes.Settings
         // OWO
         public string OWOAddress { get; set; } = "127.0.0.1";
 
+        // Additional settings
+        public bool ResolveHostnames { get; set; } = true;
+
         public ConnectionSettings() {}
 
         [JsonConstructor]
-        public ConnectionSettings(string owoAddress, int oscPort)
+        public ConnectionSettings(string owoAddress, int oscPort, bool resolveHostnames)
         {
             OWOAddress = owoAddress;
             OSCPort = oscPort;
+            ResolveHostnames = resolveHostnames;
         }
 
         public void SaveToFile()

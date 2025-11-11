@@ -34,7 +34,7 @@ namespace OWOVRC.UI
         private WorldIntegratorSettings owiSettings = new();
         private OSCPresetsSettings oscPresetsSettings = new();
         private AudioEffectSettings audioSettings = new();
-
+        
         // OWO
         private OSCReceiver? receiver;
         private readonly OWOHelper owo = new();
@@ -943,13 +943,17 @@ namespace OWOVRC.UI
 
         private void OpenDiscoveryButtom_Click(object sender, EventArgs e)
         {
-            using (AppDiscoveryForm discoveryForm = new())
+            using (AppDiscoveryForm discoveryForm = new(connectionSettings.ResolveHostnames))
             {
                 DialogResult result = discoveryForm.ShowDialog();
-
                 HostEntry? selectedApp = discoveryForm.SelectedApp;
                 if (result != DialogResult.OK || selectedApp == null)
                 {
+                    if (connectionSettings.ResolveHostnames != discoveryForm.ResolveHostNames)
+                    {
+                        connectionSettings.ResolveHostnames = discoveryForm.ResolveHostNames;
+                        connectionSettings.SaveToFile();
+                    }
                     return;
                 }
 
@@ -957,6 +961,7 @@ namespace OWOVRC.UI
                 Log.Information("OWO app found at {HostInfo}", selectedApp);
 
                 connectionSettings.OWOAddress = owoIPInput.Text;
+                connectionSettings.ResolveHostnames = discoveryForm.ResolveHostNames;
                 connectionSettings.SaveToFile();
             }
         }
