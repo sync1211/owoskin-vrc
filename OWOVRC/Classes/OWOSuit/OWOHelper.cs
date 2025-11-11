@@ -38,7 +38,7 @@ namespace OWOVRC.Classes.OWOSuit
             OnCalculationCycle?.Invoke(this, EventArgs.Empty);
         }
 
-        public async Task Connect()
+        public async Task<bool> Connect()
         {
             Log.Information("Connecting to OWO...");
 
@@ -54,7 +54,7 @@ namespace OWOVRC.Classes.OWOSuit
             catch (Exception e)
             {
                 Log.Error(e, "Failed to start OWO connection!");
-                return;
+                return false;
             }
 
             if (IsConnected)
@@ -65,6 +65,7 @@ namespace OWOVRC.Classes.OWOSuit
             {
                 Log.Information("Connection to OWO failed!");
             }
+            return true;
         }
 
         public void Disconnect()

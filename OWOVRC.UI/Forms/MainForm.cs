@@ -18,6 +18,7 @@ using OWOVRC.Classes.Helpers;
 using OWOVRC.UI.Forms.Monitors;
 using OWOVRC.UI.Classes.Helpers;
 using OWOVRC.UI.Classes.Proxies;
+using System.Net.Sockets;
 
 namespace OWOVRC.UI
 {
@@ -438,6 +439,7 @@ namespace OWOVRC.UI
 
             // Start OWO connection
             owo.Address = connectionSettings.OWOAddress;
+
             _ = Task.Run(StartOWOHelper);
             Log.Information("Started OWOVRC");
 
@@ -448,8 +450,40 @@ namespace OWOVRC.UI
 
         private async Task StartOWOHelper()
         {
-            await owo.Connect()
+            bool result = await owo.Connect()
                 .ConfigureAwait(false);
+
+            if (result)
+            {
+                return;
+            }
+
+            // Connection error
+            if (InvokeRequired)
+            {
+                try
+                {
+                    this.Invoke(ShowOWOConnectionError);
+                }
+                catch (ObjectDisposedException)
+                {
+                    this.Close();
+                }
+            }
+            else
+            {
+                ShowOWOConnectionError();
+            }
+        }
+
+        private void ShowOWOConnectionError()
+        {
+            MessageBox.Show(
+                $"An unexpected error occurred while trying to connect to the MyOWO app.{Environment.NewLine}See log output for more info.",
+                "Failed to connect",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
         }
 
         private void StopOWO()
@@ -656,6 +690,17 @@ namespace OWOVRC.UI
         {
             if (IPAddress.TryParse(owoIPInput.Text, out IPAddress? ipAddress) && ipAddress != null)
             {
+                if (ipAddress.AddressFamily != AddressFamily.InterNetwork)
+                {
+                    MessageBox.Show(
+                        "The format of the entered IP-Address is not supported. OWOVRC currently only supports IPv4 addresses.",
+                        "Unsupported address format",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    owoIPInput.Text = connectionSettings.OWOAddress;
+                    return;
+                }
                 connectionSettings.OWOAddress = ipAddress.ToString();
             }
             else
