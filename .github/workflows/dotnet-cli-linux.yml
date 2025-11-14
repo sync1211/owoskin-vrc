@@ -40,7 +40,7 @@ jobs:
 
     # Publish OWOVRC
     - name: Publish OWOVRC.CLI
-      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r linux-x64 -o "OWOVRC/bin/publish/linux-x64/" -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:PublishAOT=true --self-contained true
+      run: dotnet publish "OWOVRC.UI/OWOVRC.UI.csproj" -r linux-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishProfile=OWOVRC.UI/Properties/PublishProfiles/Linux-x64.pubxml
 
     # Upload the EXE https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
