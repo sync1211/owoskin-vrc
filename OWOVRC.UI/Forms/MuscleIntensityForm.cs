@@ -79,6 +79,8 @@ namespace OWOVRC.UI.Forms
                 return;
             }
 
+            muscle.Focus();
+
             // Save intensity of the currently selected muscle
             SaveIntensityValue();
 
