@@ -116,6 +116,9 @@
             logLevelTitle = new Label();
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
+            useOSCQueryCheckbox = new CheckBox();
+            registerHandlersButton = new Button();
+            oscQueryTestButton = new Button();
             audioStatusLabel = new Label();
             audioStatusTitle = new Label();
             openDiscoveryButton = new Button();
@@ -1134,6 +1137,9 @@
             // 
             // connectionGroup
             // 
+            connectionGroup.Controls.Add(useOSCQueryCheckbox);
+            connectionGroup.Controls.Add(registerHandlersButton);
+            connectionGroup.Controls.Add(oscQueryTestButton);
             connectionGroup.Controls.Add(audioStatusLabel);
             connectionGroup.Controls.Add(audioStatusTitle);
             connectionGroup.Controls.Add(openDiscoveryButton);
@@ -1156,6 +1162,37 @@
             connectionGroup.TabIndex = 1;
             connectionGroup.TabStop = false;
             connectionGroup.Text = "Connection";
+            // 
+            // useOSCQueryCheckbox
+            // 
+            useOSCQueryCheckbox.AutoSize = true;
+            useOSCQueryCheckbox.Location = new Point(194, 45);
+            useOSCQueryCheckbox.Name = "useOSCQueryCheckbox";
+            useOSCQueryCheckbox.Size = new Size(52, 19);
+            useOSCQueryCheckbox.TabIndex = 18;
+            useOSCQueryCheckbox.Text = "Auto";
+            useOSCQueryCheckbox.UseVisualStyleBackColor = true;
+            useOSCQueryCheckbox.CheckedChanged += UseOSCQueryCheckbox_CheckedChanged;
+            // 
+            // registerHandlersButton
+            // 
+            registerHandlersButton.Location = new Point(319, 45);
+            registerHandlersButton.Name = "registerHandlersButton";
+            registerHandlersButton.Size = new Size(215, 23);
+            registerHandlersButton.TabIndex = 17;
+            registerHandlersButton.Text = "OSC GetVRChat";
+            registerHandlersButton.UseVisualStyleBackColor = true;
+            registerHandlersButton.Click += registerHandlersButton_Click;
+            // 
+            // oscQueryTestButton
+            // 
+            oscQueryTestButton.Location = new Point(319, 19);
+            oscQueryTestButton.Name = "oscQueryTestButton";
+            oscQueryTestButton.Size = new Size(215, 23);
+            oscQueryTestButton.TabIndex = 16;
+            oscQueryTestButton.Text = "OSC Advertise";
+            oscQueryTestButton.UseVisualStyleBackColor = true;
+            oscQueryTestButton.Click += oscQueryTestButton_Click;
             // 
             // audioStatusLabel
             // 
@@ -1692,5 +1729,8 @@
         private GroupBox velocityIgnoreGroup;
         private Label velocityIntensityLabel;
         private NumericUpDown velocityIntensityInput;
+        private Button oscQueryTestButton;
+        private Button registerHandlersButton;
+        private CheckBox useOSCQueryCheckbox;
     }
 }
