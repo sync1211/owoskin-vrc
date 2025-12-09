@@ -489,6 +489,34 @@ namespace OWOVRC.UI
             return true;
         }
 
+        private async Task<IEnumerable<OSCQueryServiceProfile>> WaitForVRChat()
+        {
+            DateTime startTime = DateTime.Now;
+
+            while ((startTime - DateTime.Now).TotalSeconds <= connectionSettings.OSCQuery_MaxWait)
+            {
+                IEnumerable<OSCQueryServiceProfile> services = oscQueryHelper!.GetVRChatClients();
+
+                if (services.Any())
+                {
+                    Log.Information("VRChat client(s) found!");
+                    return services;
+                }
+
+                await Task.Delay(connectionSettings.OSCQuery_RefreshInterval);
+            }
+
+            Log.Warning("Failed to detect VRChat client!");
+            MessageBox.Show(
+                $"No VRChat clients found!{Environment.NewLine}Please launch VRChat before starting OWOVRC!",
+                "VRChat not found!",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning
+            );
+
+            return [];
+        }
+
         private async Task<bool> ConnectToVRChat()
         {
             if (oscQueryHelper == null)
@@ -500,15 +528,15 @@ namespace OWOVRC.UI
 
             if (!services.Any())
             {
-                Log.Warning("No VRChat OSCQuery services found!");
-                //TODO: Wait for VRChat to be detected?
-                MessageBox.Show(
-                    $"No VRChat clients found!{Environment.NewLine}Please launch VRChat before starting OWOVRC!",
-                    "VRChat not found!",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-                return false;
+                // Wait for VRChat to be detected
+                Log.Information("No VRChat clients found, waiting for VRChat to be detected! (Max: {Maxwait} seconds)", connectionSettings.OSCQuery_MaxWait / 1000);
+
+                services = await WaitForVRChat();
+
+                if (!services.Any())
+                {
+                    return false;
+                }
             }
 
             if (services.Skip(1).Any())
@@ -522,6 +550,9 @@ namespace OWOVRC.UI
             }
 
             OSCQueryServiceProfile serviceProfile = services.First();
+
+            Log.Debug("Selected VRChat client: {ClientName}", serviceProfile.name);
+
             bool result = await oscQueryHelper.ConnectToService(serviceProfile)
                 .ConfigureAwait(false);
 
