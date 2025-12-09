@@ -65,7 +65,9 @@ namespace OWOVRC.Classes.OSC
 
             DateTime startTime = DateTime.Now;
 
-            while ((startTime - DateTime.Now).TotalSeconds <= maxwait)
+            string[] spinner = ["/", "-", "\\", "|"];
+            int i = 0;
+
             while ((DateTime.Now - startTime).TotalMilliseconds <= maxwait)
             {
                 IEnumerable<OSCQueryServiceProfile> services = GetVRChatClients();
@@ -76,7 +78,12 @@ namespace OWOVRC.Classes.OSC
                     return services;
                 }
 
+
+                Console.Write($"{spinner[i % spinner.Length]} Searching...");
+                i++;
+
                 await Task.Delay(refreshInterval);
+                Console.Write("\r");
             }
 
             Log.Warning("Failed to detect VRChat client!");
