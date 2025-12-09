@@ -5,6 +5,7 @@ using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
+using VRC.OSCQuery;
 using Serilog.Core;
 
 namespace OWOVRC.CLI
@@ -92,9 +93,18 @@ Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with t
             }
 #endif
 
+            // Create OSCQueryHelper if enabled
+            int oscPort = settings.OSCPort;
+            OSCQueryHelper? oscQueryHelper = null;
+            if (settings.UseOSCQuery)
+            {
+                oscPort = Extensions.GetAvailableUdpPort();
+                oscQueryHelper = new OSCQueryHelper(oscPort, "OWOVRC.CLI");
+            }
+
             // Start OSC listener
             Log.Information("Starting OSC receiver...");
-            OSCReceiver receiver = new(settings.OSCPort);
+            OSCReceiver receiver = new(oscPort);
             receiver.Start();
 
             // Register OSC effects
@@ -103,6 +113,18 @@ Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with t
             // Start main task
             try
             {
+                // Start OSCQuery if enabled
+                if (oscQueryHelper != null)
+                {
+                    Task<bool> task = ConnectToVRChat(oscQueryHelper, settings.OSCQuery_MaxWait, settings.OSCQuery_RefreshInterval);
+                    task.Wait();
+
+                    if (!task.Result)
+                    {
+                        return;
+                    }
+                }
+
                 Log.Information("Starting MainLoop...");
                 Task.Run(() => MainLoop(owo)).Wait();
             }
@@ -131,6 +153,27 @@ Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with t
                     effects[i].Dispose();
                 }
             }
+        }
+
+        public static async Task<bool> ConnectToVRChat(OSCQueryHelper helper, int maxwait, int refreshInterval)
+        {
+            IEnumerable<OSCQueryServiceProfile> clients = await helper.WaitForVRChat(maxwait, refreshInterval);
+
+            OSCQueryServiceProfile? chosenClient = clients.FirstOrDefault();
+            if (chosenClient == null)
+            {
+                Log.Error("Unable to find any VRChat clients via OSCQuery!");
+                return false;
+            }
+
+            if (!await helper.ConnectToService(chosenClient))
+            {
+                Log.Error("Failed to connect to VRChat!");
+                return false;
+            }
+
+            Log.Information("Connected to VRChat!");
+            return true;
         }
 
         public static async Task MainLoop(OWOHelper owo)

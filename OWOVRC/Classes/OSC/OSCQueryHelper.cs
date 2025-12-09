@@ -59,6 +59,30 @@ namespace OWOVRC.Classes.OSC
             }
         }
 
+        public async Task<IEnumerable<OSCQueryServiceProfile>> WaitForVRChat(int maxwait, int refreshInterval)
+        {
+            Log.Information("Searching for VRChat client... (Max: {Maxwait} seconds)", maxwait / 1000);
+
+            DateTime startTime = DateTime.Now;
+
+            while ((startTime - DateTime.Now).TotalSeconds <= maxwait)
+            {
+                IEnumerable<OSCQueryServiceProfile> services = GetVRChatClients();
+
+                if (services.Any())
+                {
+                    Log.Information("VRChat client(s) found!");
+                    return services;
+                }
+
+                await Task.Delay(refreshInterval);
+            }
+
+            Log.Warning("Failed to detect VRChat client!");
+
+            return [];
+        }
+
         public void AddEndpoint(string path, string type)
         {
             service.AddEndpoint(path, type, Attributes.AccessValues.WriteOnly);

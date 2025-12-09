@@ -17,7 +17,6 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.ComponentModel;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using VRC.OSCQuery;
@@ -407,7 +406,7 @@ namespace OWOVRC.UI
             if (connectionSettings.UseOSCQuery)
             {
                 oscPort = Extensions.GetAvailableUdpPort();
-                oscQueryHelper = new(oscPort);
+                oscQueryHelper = new(oscPort, "OWOVRC.UI");
             }
 
             try
@@ -489,34 +488,6 @@ namespace OWOVRC.UI
             return true;
         }
 
-        private async Task<IEnumerable<OSCQueryServiceProfile>> WaitForVRChat()
-        {
-            DateTime startTime = DateTime.Now;
-
-            while ((startTime - DateTime.Now).TotalSeconds <= connectionSettings.OSCQuery_MaxWait)
-            {
-                IEnumerable<OSCQueryServiceProfile> services = oscQueryHelper!.GetVRChatClients();
-
-                if (services.Any())
-                {
-                    Log.Information("VRChat client(s) found!");
-                    return services;
-                }
-
-                await Task.Delay(connectionSettings.OSCQuery_RefreshInterval);
-            }
-
-            Log.Warning("Failed to detect VRChat client!");
-            MessageBox.Show(
-                $"No VRChat clients found!{Environment.NewLine}Please launch VRChat before starting OWOVRC!",
-                "VRChat not found!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning
-            );
-
-            return [];
-        }
-
         private async Task<bool> ConnectToVRChat()
         {
             if (oscQueryHelper == null)
@@ -524,23 +495,23 @@ namespace OWOVRC.UI
                 return false;
             }
 
-            IEnumerable<OSCQueryServiceProfile> services = oscQueryHelper.GetVRChatClients();
+            // Wait for VRChat to be detected
+            IEnumerable<OSCQueryServiceProfile> services = await oscQueryHelper.WaitForVRChat(connectionSettings.OSCQuery_MaxWait, connectionSettings.OSCQuery_RefreshInterval);
 
             if (!services.Any())
             {
-                // Wait for VRChat to be detected
-                Log.Information("No VRChat clients found, waiting for VRChat to be detected! (Max: {Maxwait} seconds)", connectionSettings.OSCQuery_MaxWait / 1000);
-
-                services = await WaitForVRChat();
-
-                if (!services.Any())
-                {
-                    return false;
-                }
+                MessageBox.Show(
+                    $"No VRChat clients found!{Environment.NewLine}Please launch VRChat before starting OWOVRC!",
+                    "VRChat not found!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return false;
             }
 
             if (services.Skip(1).Any())
             {
+                //TODO: Create a dialog for this!
                 MessageBox.Show(
                     $"Multiple VRChat clients found.{Environment.NewLine}Unfortunately the selection dialog is not implemented yet, so we'll just choose the first one.",
                     "More than one VRChat instance detected!",
