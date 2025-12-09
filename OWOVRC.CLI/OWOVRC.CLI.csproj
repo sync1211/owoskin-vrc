@@ -15,6 +15,10 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="!$(DefineConstants.Contains('TARGET_LINUX')) and !$(DefineContants.Contains('TRIMMING_ENABLED'))">
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+  </PropertyGroup>
+
   <ItemGroup>
     <Content Include="owo.ico" />
   </ItemGroup>
