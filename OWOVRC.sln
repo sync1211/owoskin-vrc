@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vrc-oscquery-lib", "vrc-osc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vrc-oscquery-tests", "vrc-oscquery-lib\Tests\vrc-oscquery-tests\vrc-oscquery-tests.csproj", "{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.AvaloniaUI", "OWOVRC.AvaloniaUI\OWOVRC.AvaloniaUI.csproj", "{A01FCBCB-F477-4803-8AC8-F18B5618B01A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -221,6 +223,18 @@ Global
 		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|x64.Build.0 = Release|Any CPU
 		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|x86.ActiveCfg = Release|Any CPU
 		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|x86.Build.0 = Release|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Debug|x64.Build.0 = Debug|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Debug|x86.Build.0 = Debug|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Release|x64.ActiveCfg = Release|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Release|x64.Build.0 = Release|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Release|x86.ActiveCfg = Release|Any CPU
+		{A01FCBCB-F477-4803-8AC8-F18B5618B01A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
