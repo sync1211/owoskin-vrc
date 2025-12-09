@@ -62,37 +62,6 @@ namespace OWOVRC.CLI
                 new OSCPresetTrigger(owo, presetsSettings)
             ];
 
-            // Set up World Integrator
-            Log.Debug("Preparing OWI...");
-            WorldIntegrator owi = new(owiSettings, owo);
-            if (owiSettings.Enabled)
-            {
-                try
-                {
-                    owi.Start();
-                }
-                catch (FileNotFoundException)
-                {
-                    Log.Warning("OWI client failed to initialize!");
-                }
-            }
-
-#if TARGET_LINUX
-#warning Audio effect is disabled for Linux targets!
-Log.Information("Audio effect is not yet supported on Linux!");
-#elif TRIMMING_ENABLED
-#warning Audio effect is disabled due to trimming being enabled!
-Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with trimming enabled!");
-#else
-            // Set up audio effects
-            Log.Debug("Preparing audio effects...");
-            AudioEffect audio = new(owo, audioSettings);
-            if (audioSettings.Enabled)
-            {
-                audio.Start();
-            }
-#endif
-
             // Create OSCQueryHelper if enabled
             int oscPort = settings.OSCPort;
             OSCQueryHelper? oscQueryHelper = null;
@@ -110,7 +79,26 @@ Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with t
             // Register OSC effects
             RegisterEffects(effects, receiver);
 
-            // Start main task
+            // Set up World Integrator
+            Log.Debug("Preparing OWI...");
+            WorldIntegrator owi = new(owiSettings, owo);
+
+            // Set up Audio effect
+            AudioEffect? audio = null;
+
+#if TARGET_LINUX
+#warning Audio effect is disabled for Linux targets!
+Log.Information("Audio effect is not yet supported on Linux!");
+#elif TRIMMING_ENABLED
+#warning Audio effect is disabled due to trimming being enabled!
+Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with trimming enabled!");
+#else
+            // Set up audio effects
+            Log.Debug("Preparing audio effects...");
+            audio = new(owo, audioSettings);
+#endif
+
+
             try
             {
                 // Start OSCQuery if enabled
@@ -125,6 +113,26 @@ Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with t
                     }
                 }
 
+                // Start World Integrator
+                if (owiSettings.Enabled)
+                {
+                    try
+                    {
+                        owi.Start();
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        Log.Warning("OWI client failed to initialize!");
+                    }
+                }
+
+                // Start Audio effect
+                if (audioSettings.Enabled)
+                {
+                    audio?.Start();
+                }
+
+                // Start main task
                 Log.Information("Starting MainLoop...");
                 Task.Run(() => MainLoop(owo)).Wait();
             }
