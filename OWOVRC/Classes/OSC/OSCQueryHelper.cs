@@ -1,61 +1,83 @@
 using Serilog;
 using VRC.OSCQuery;
 
-public class OSCQueryHelper: IDisposable
+namespace OWOVRC.Classes.OSC
 {
-    private readonly OSCQueryService oscQueryService;
-    private readonly string name;
-    public OSCQueryHelper(string name = "OWOVRC")
+    public class OSCQueryHelper : IDisposable
     {
-        this.name = name;
-        int udpPort = Extensions.GetAvailableUdpPort();
+        public readonly string Name;
+        private readonly OSCQueryService service;
 
-        oscQueryService = new OSCQueryServiceBuilder()
+        public OSCQueryHelper(int udpPort, string name = "OWOVRC")
+        {
+            this.Name = name;
+            int tcpPort = Extensions.GetAvailableTcpPort();
+            Log.Debug("OSCQuery TCP port: {Port}", tcpPort);
+
+            service = new OSCQueryServiceBuilder()
+                .WithTcpPort(tcpPort)
                 .WithUdpPort(udpPort)
-                .WithServiceName(this.name)
+                .WithServiceName(name)
                 .WithDefaults()
                 .Build();
-    }
+        }
 
-    public HashSet<OSCQueryServiceProfile> GetServices()
-    {
-        oscQueryService.RefreshServices();
-        return oscQueryService.GetOSCQueryServices();
-    }
-
-    public OSCQueryServiceProfile? GetFirstVRChatService()
-    {
-        Log.Warning("OSCQuery service initialized with {IP}:{Port} ({A}, {B})", oscQueryService.HostInfo.oscIP, oscQueryService.TcpPort, oscQueryService.HostInfo.oscTransport, oscQueryService.HostInfo.name);
-        var services = GetServices();
-
-        foreach (OSCQueryServiceProfile profile in services)
+        public HashSet<OSCQueryServiceProfile> GetServices()
         {
-            Log.Debug("Found OSC service: {Name} ({ServiceType}): {IP}:{Port}", profile.name, profile.serviceType, profile.address, profile.port);
+            service.RefreshServices();
+            return service.GetOSCQueryServices();
+        }
 
-            if (profile.name.StartsWith("VRChat") && profile.serviceType == OSCQueryServiceProfile.ServiceType.OSCQuery)
+        private static bool IsVRChatService(OSCQueryServiceProfile profile)
+        {
+            return profile.name.StartsWith("VRChat")
+                && profile.serviceType == OSCQueryServiceProfile.ServiceType.OSCQuery;
+        }
+
+        public IEnumerable<OSCQueryServiceProfile> GetVRChatClients()
+        {
+            return GetServices().Where(IsVRChatService);
+        }
+
+        public async Task<bool> ConnectToService(OSCQueryServiceProfile profile)
+        {
+            string vrcURL = $"http://{profile.address}:{profile.port}/";
+            Log.Debug("Connecting to {URL}...", vrcURL);
+
+            using (HttpClient httpClient = new())
             {
-                return profile;
+                HttpResponseMessage response = await httpClient.GetAsync(vrcURL);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Log.Warning("Unable to connect! Status code: {Status} - ", response.StatusCode, await response.Content.ReadAsStringAsync());
+                    return false;
+                }
+
+                Log.Debug("OSCQuery connected!");
+                return true;
             }
         }
 
-        Log.Warning("VRChat client not found!");
+        public void AddEndpoint(string path, string type)
+        {
+            service.AddEndpoint(path, type, Attributes.AccessValues.WriteOnly);
+        }
 
-        return null;
-    }
+        public void RemoveEndpoint(string path)
+        {
+            service.RemoveEndpoint(path);
+        }
 
-    public void RegisterHandlers()
-    {
-        oscQueryService.AddEndpoint("/avatar/Test", "int", Attributes.AccessValues.ReadWrite);
-    }
+        public void AdvertiseService()
+        {
+            service.AdvertiseOSCService(this.Name);
+        }
 
-    public void AdvertiseService()
-    {
-        oscQueryService.AdvertiseOSCService(this.name);
-    }
-
-    public void Dispose()
-    {
-        oscQueryService.Dispose();
-        GC.SuppressFinalize(this);
+        public void Dispose()
+        {
+            service.Dispose();
+            GC.SuppressFinalize(this);
+        }
     }
 }

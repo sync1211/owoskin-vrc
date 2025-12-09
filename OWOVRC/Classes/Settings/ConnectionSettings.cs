@@ -13,17 +13,17 @@ namespace OWOVRC.Classes.Settings
 
         // Additional settings
         public bool ResolveHostnames { get; set; } = true;
-        public bool UseOSCQueryForPort { get; set; } = false;
+        public bool UseOSCQuery { get; set; } = false;
 
         public ConnectionSettings() {}
 
         [JsonConstructor]
-        public ConnectionSettings(string owoAddress, int oscPort, bool resolveHostnames = true, bool useOscQueryForPort = false)
+        public ConnectionSettings(string owoAddress, int oscPort, bool resolveHostnames = true, bool useOscQuery = false)
         {
             OWOAddress = owoAddress;
             OSCPort = oscPort;
             ResolveHostnames = resolveHostnames;
-            UseOSCQueryForPort = useOscQueryForPort;
+            UseOSCQuery = useOscQuery;
         }
 
         public void SaveToFile()

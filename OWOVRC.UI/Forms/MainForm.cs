@@ -17,6 +17,7 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using VRC.OSCQuery;
@@ -37,8 +38,11 @@ namespace OWOVRC.UI
         private OSCPresetsSettings oscPresetsSettings = new();
         private AudioEffectSettings audioSettings = new();
 
-        // OWO
+        // OSC
         private OSCReceiver? receiver;
+        private OSCQueryHelper? oscQueryHelper;
+
+        // OWO
         private readonly OWOHelper owo = new();
         private const string UnnamedSensationName = "<Unnamed>";
 
@@ -213,11 +217,31 @@ namespace OWOVRC.UI
 
         }
 
-        public void StartConnection()
+        public async void StartConnection()
         {
-            StartOWO();
-            UpdateControlAvailability();
-            uiUpdateTimer.Start();
+            try
+            {
+                bool result = await StartOWO();
+                if (!result)
+                {
+                    StopOWO(); // Clean up anything that's not fully started
+                    return;
+                }
+                UpdateControlAvailability();
+                uiUpdateTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "An unexpected error occurred while starting the connection!");
+                MessageBox.Show(
+                    $"An unexpected error occurred while starting the connection.{Environment.NewLine}See log output for more info.",
+                    "Failed to start connection",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
+                StopOWO();
+            }
         }
 
         private void StopButton_Click(object sender, EventArgs e)
@@ -359,48 +383,36 @@ namespace OWOVRC.UI
             stopSelectedSensationLoopButton.Enabled = itemSelected;
         }
 
+        private void ClearOSCQueryHelper()
+        {
+            oscQueryHelper?.Dispose();
+            oscQueryHelper = null;
+        }
+
         private void ClearOSCReceiver()
         {
             receiver?.Dispose();
             receiver = null;
+            ClearOSCQueryHelper();
         }
 
-        private async Task<int> TryAutodetectOSCPort()
-        {
-            helper.RegisterHandlers();
-            helper.AdvertiseService();
-            OSCQueryServiceProfile? vrchatService = helper.GetFirstVRChatService();
-
-            if (vrchatService != null)
-            {
-                var tree = await Extensions.GetOSCTree(vrchatService.address, vrchatService.port);
-                var node = tree.GetNodeWithPath("/avatar/");
-                Log.Information("{Node}", node);
-            }
-
-            return vrchatService?.port ?? -1;
-        }
-
-        private readonly OSCQueryHelper helper = new("OWOVRC.UI");
-        private async void StartOWO()
+        private async Task<bool> StartOWO()
         {
             // Create OSC receiver
             ClearOSCReceiver(); // The receiver does not have a stop method, so we're re-creating it on launch
 
             int oscPort = connectionSettings.OSCPort;
-            if (connectionSettings.UseOSCQueryForPort)
+
+            // Create OSCQuery helper
+            if (connectionSettings.UseOSCQuery)
             {
-                int autoPort = await TryAutodetectOSCPort();
-                if (autoPort != -1)
-                {
-                    Log.Information("Found VRChat client with OSC port {Port}!", autoPort);
-                    oscPort = autoPort;
-                }
+                oscPort = Extensions.GetAvailableUdpPort();
+                oscQueryHelper = new(oscPort);
             }
 
             try
             {
-                receiver = new(oscPort);
+                receiver = new(oscPort, oscQueryHelper);
             }
             catch (System.Net.Sockets.SocketException)
             {
@@ -410,7 +422,7 @@ namespace OWOVRC.UI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
-                return;
+                return false;
             }
 
             // Register effects
@@ -421,6 +433,17 @@ namespace OWOVRC.UI
 
             // Start OSC receiver
             receiver.Start();
+
+            // Connect to VRChat via OSCQuery
+            if (connectionSettings.UseOSCQuery)
+            {
+                bool result = await ConnectToVRChat();
+                if (!result)
+                {
+                    StopOWO();
+                    return false;
+                }
+            }
 
             // Start OWI
             if (owi == null)
@@ -462,6 +485,47 @@ namespace OWOVRC.UI
             IsRunning = true;
             speedMonitorForm?.SetOSCStatus(receiver.IsRunning);
             speedHistoryForm?.SetOSCStatus(receiver.IsRunning);
+
+            return true;
+        }
+
+        private async Task<bool> ConnectToVRChat()
+        {
+            if (oscQueryHelper == null)
+            {
+                return false;
+            }
+
+            IEnumerable<OSCQueryServiceProfile> services = oscQueryHelper.GetVRChatClients();
+
+            if (!services.Any())
+            {
+                Log.Warning("No VRChat OSCQuery services found!");
+                //TODO: Wait for VRChat to be detected?
+                MessageBox.Show(
+                    $"No VRChat clients found!{Environment.NewLine}Please launch VRChat before starting OWOVRC!",
+                    "VRChat not found!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return false;
+            }
+
+            if (services.Skip(1).Any())
+            {
+                MessageBox.Show(
+                    $"Multiple VRChat clients found.{Environment.NewLine}Unfortunately the selection dialog is not implemented yet, so we'll just choose the first one.",
+                    "More than one VRChat instance detected!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+            }
+
+            OSCQueryServiceProfile serviceProfile = services.First();
+            bool result = await oscQueryHelper.ConnectToService(serviceProfile)
+                .ConfigureAwait(false);
+
+            return result;
         }
 
         private async Task StartOWOHelper()
@@ -578,7 +642,7 @@ namespace OWOVRC.UI
             oscPortInput_SkipValueChanged = true;
             owoIPInput.Text = connectionSettings.OWOAddress;
             oscPortInput.Value = connectionSettings.OSCPort;
-            useOSCQueryCheckbox.Checked = connectionSettings.UseOSCQueryForPort;
+            useOSCQueryCheckbox.Checked = connectionSettings.UseOSCQuery;
         }
 
         private void UpdateCollidersEffectSettings()
@@ -1325,19 +1389,8 @@ namespace OWOVRC.UI
         private void UseOSCQueryCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             oscPortInput.Enabled = !useOSCQueryCheckbox.Checked;
-            connectionSettings.UseOSCQueryForPort = useOSCQueryCheckbox.Checked;
+            connectionSettings.UseOSCQuery = useOSCQueryCheckbox.Checked;
             connectionSettings.SaveToFile();
-        }
-
-
-        private void oscQueryTestButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void registerHandlersButton_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
