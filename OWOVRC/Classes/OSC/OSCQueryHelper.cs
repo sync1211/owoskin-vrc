@@ -66,6 +66,7 @@ namespace OWOVRC.Classes.OSC
             DateTime startTime = DateTime.Now;
 
             while ((startTime - DateTime.Now).TotalSeconds <= maxwait)
+            while ((DateTime.Now - startTime).TotalMilliseconds <= maxwait)
             {
                 IEnumerable<OSCQueryServiceProfile> services = GetVRChatClients();
 
