@@ -152,7 +152,7 @@ Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with t
         {
             foreach (OSCEffectBase effect in effects)
             {
-                effect.RegisterCallbacks(receiver);
+                effect.UnregisterCallbacks(receiver);
             }
         }
 
