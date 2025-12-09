@@ -220,12 +220,12 @@ namespace OWOVRC.UI
         {
             try
             {
-                bool result = await StartOWO();
-                if (!result)
+                if (!await StartOWO())
                 {
                     StopOWO(); // Clean up anything that's not fully started
                     return;
                 }
+
                 UpdateControlAvailability();
                 uiUpdateTimer.Start();
             }
