@@ -74,6 +74,9 @@ namespace OWOVRC.UI
         private SpeedMonitorForm? speedMonitorForm;
         private SpeedHistoryForm? speedHistoryForm;
 
+        // Token for cancelling the start/connection process
+        private CancellationTokenSource cancellationTokenSource = new();
+
         public MainForm(LoggingLevelSwitch? logLevelSwitch = null)
         {
             InitializeComponent();
@@ -393,6 +396,7 @@ namespace OWOVRC.UI
         {
             receiver?.Dispose();
             receiver = null;
+
             ClearOSCQueryHelper();
         }
 
@@ -437,7 +441,10 @@ namespace OWOVRC.UI
             // Connect to VRChat via OSCQuery
             if (connectionSettings.UseOSCQuery)
             {
-                bool result = await ConnectToVRChat();
+                IsRunning = true;
+                UpdateControlAvailability();
+
+                bool result = await ConnectToVRChat(cancellationTokenSource.Token);
                 if (!result)
                 {
                     StopOWO();
@@ -482,14 +489,13 @@ namespace OWOVRC.UI
             _ = Task.Run(StartOWOHelper);
             Log.Information("Started OWOVRC");
 
-            IsRunning = true;
             speedMonitorForm?.SetOSCStatus(receiver.IsRunning);
             speedHistoryForm?.SetOSCStatus(receiver.IsRunning);
 
             return true;
         }
 
-        private async Task<bool> ConnectToVRChat()
+        private async Task<bool> ConnectToVRChat(CancellationToken cancellationToken = default)
         {
             if (oscQueryHelper == null)
             {
@@ -497,7 +503,12 @@ namespace OWOVRC.UI
             }
 
             // Wait for VRChat to be detected
-            IEnumerable<OSCQueryServiceProfile> services = await oscQueryHelper.WaitForVRChat(connectionSettings.OSCQuery_MaxWait, connectionSettings.OSCQuery_RefreshInterval);
+            IEnumerable<OSCQueryServiceProfile> services = await oscQueryHelper.WaitForVRChat(connectionSettings.OSCQuery_MaxWait, connectionSettings.OSCQuery_RefreshInterval, cancellationToken);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return false;
+            }
 
             if (!services.Any())
             {
@@ -564,6 +575,9 @@ namespace OWOVRC.UI
 
         private void StopOWO()
         {
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.TryReset();
+
             // Unregister effects
             if (receiver != null)
             {

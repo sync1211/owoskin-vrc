@@ -59,7 +59,7 @@ namespace OWOVRC.Classes.OSC
             }
         }
 
-        public async Task<IEnumerable<OSCQueryServiceProfile>> WaitForVRChat(int maxwait, int refreshInterval)
+        public async Task<IEnumerable<OSCQueryServiceProfile>> WaitForVRChat(int maxwait, int refreshInterval, CancellationToken cancellationToken = default)
         {
             Log.Information("Searching for VRChat client... (Max: {Maxwait} seconds)", maxwait / 1000);
 
@@ -84,6 +84,11 @@ namespace OWOVRC.Classes.OSC
 
                 await Task.Delay(refreshInterval);
                 Console.Write("\r");
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
             }
 
             Log.Warning("Failed to detect VRChat client!");
