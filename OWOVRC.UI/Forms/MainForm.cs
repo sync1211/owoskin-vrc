@@ -7,6 +7,7 @@ using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
+using OWOVRC.UI.Classes.Extensions;
 using OWOVRC.UI.Classes.Helpers;
 using OWOVRC.UI.Classes.Proxies;
 using OWOVRC.UI.Controls;
