@@ -261,7 +261,7 @@ namespace OWOVRC.UI.Forms
                     DialogResult result = dialog.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        return dialog.Name;
+                        return dialog.Value;
                     }
                     if (result == DialogResult.Continue)
                     {
