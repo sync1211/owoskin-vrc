@@ -499,6 +499,8 @@ namespace OWOVRC.UI
             speedMonitorForm?.SetOSCStatus(receiver.IsRunning);
             speedHistoryForm?.SetOSCStatus(receiver.IsRunning);
 
+            IsRunning = true;
+
             return true;
         }
 
