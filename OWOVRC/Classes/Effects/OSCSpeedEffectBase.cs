@@ -78,6 +78,11 @@ namespace OWOVRC.Classes.Effects
 
         public override void UnregisterCallbacks(OSCReceiver receiver)
         {
+            if (!settings.Enabled)
+            {
+                return;
+            }
+
             for (int i = 0; i < oscCallbacks.Count; i++)
             {
                 KeyValuePair<string, Action<OscMessageValues>> callbackKvp = oscCallbacks.ElementAt(i);
