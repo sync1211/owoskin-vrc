@@ -222,9 +222,15 @@ namespace OWOVRC.UI
 
         public async void StartConnection()
         {
+            if (!cancellationTokenSource.TryReset())
+            {
+                cancellationTokenSource.Dispose();
+                cancellationTokenSource = new();
+            }
+
             try
             {
-                if (!await StartOWO())
+                if (!await StartOWO(cancellationTokenSource.Token))
                 {
                     StopOWO(); // Clean up anything that's not fully started
                     return;
@@ -400,7 +406,7 @@ namespace OWOVRC.UI
             ClearOSCQueryHelper();
         }
 
-        private async Task<bool> StartOWO()
+        private async Task<bool> StartOWO(CancellationToken cancellationToken = default)
         {
             // Create OSC receiver
             ClearOSCReceiver(); // The receiver does not have a stop method, so we're re-creating it on launch
@@ -411,7 +417,7 @@ namespace OWOVRC.UI
             if (connectionSettings.UseOSCQuery)
             {
                 oscPort = Extensions.GetAvailableUdpPort();
-                oscQueryHelper = new(oscPort, "OWOVRC.UI");
+                oscQueryHelper = new(oscPort, "OWOVRC-UI");
             }
 
             try
@@ -444,7 +450,7 @@ namespace OWOVRC.UI
                 IsRunning = true;
                 UpdateControlAvailability();
 
-                bool result = await ConnectToVRChat(cancellationTokenSource.Token);
+                bool result = await ConnectToVRChat(cancellationToken);
                 if (!result)
                 {
                     StopOWO();
@@ -576,7 +582,6 @@ namespace OWOVRC.UI
         private void StopOWO()
         {
             cancellationTokenSource.Cancel();
-            cancellationTokenSource.TryReset();
 
             // Unregister effects
             if (receiver != null)

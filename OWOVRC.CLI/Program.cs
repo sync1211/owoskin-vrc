@@ -68,7 +68,7 @@ namespace OWOVRC.CLI
             if (settings.UseOSCQuery)
             {
                 oscPort = Extensions.GetAvailableUdpPort();
-                oscQueryHelper = new OSCQueryHelper(oscPort, "OWOVRC.CLI");
+                oscQueryHelper = new OSCQueryHelper(oscPort, "OWOVRC-CLI");
             }
 
             // Start OSC listener

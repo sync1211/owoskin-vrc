@@ -8,11 +8,16 @@ namespace OWOVRC.Classes.OSC
         public readonly string Name;
         private readonly OSCQueryService service;
 
+        //WARNING: DO NOT put any "." in the service name or else VRChat will ignore it!
         public OSCQueryHelper(int udpPort, string name = "OWOVRC")
         {
-            this.Name = name;
+            Random random = new();
+            int suffix = random.Next(1000, 9999);
+            this.Name = $"{name}-{suffix}";
+
             int tcpPort = Extensions.GetAvailableTcpPort();
             Log.Debug("OSCQuery TCP port: {Port}", tcpPort);
+            Log.Information("OSCQuery started with name: {Name}", this.Name);
 
             service = new OSCQueryServiceBuilder()
                 .WithTcpPort(tcpPort)
@@ -41,6 +46,8 @@ namespace OWOVRC.Classes.OSC
 
         public async Task<bool> ConnectToService(OSCQueryServiceProfile profile)
         {
+            Log.Information("Connecting to service {ServiceName}...", profile.name);
+
             string vrcURL = $"http://{profile.address}:{profile.port}/";
             Log.Debug("Connecting to {URL}...", vrcURL);
 
