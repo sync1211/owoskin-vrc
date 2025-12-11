@@ -91,7 +91,7 @@ namespace OWOVRC.CLI
 Log.Information("Audio effect is not yet supported on Linux!");
 #elif TRIMMING_ENABLED
 #warning Audio effect is disabled due to trimming being enabled!
-Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with trimming enabled!");
+Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with trimming enabled!");
 #else
             // Set up audio effects
             Log.Debug("Preparing audio effects...");
@@ -127,10 +127,12 @@ Log.Information("Audio effect is disabled as OWOVRC.Cli has been compiled with t
                 }
 
                 // Start Audio effect
+#if !TRIMMING_ENABLED && !TARGET_LINUX
                 if (audioSettings.Enabled)
                 {
                     audio?.Start();
                 }
+#endif
 
                 // Start main task
                 Log.Information("Starting MainLoop...");
