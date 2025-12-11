@@ -1,0 +1,266 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1506855854, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: Combat_Expressions
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  parameters:
+  - name: 'OWO/SensationsTrigger/Damage/Arm_R '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Damage/Arm_L '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Damage/Dorsal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Damage/Dorsal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Damage/Pectoral_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Damage/Pectoral_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Damage/Abdominal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Damage/Abdominal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Damage/Lumbar_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Damage/Lumbar_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/DamageBlunt/Arm_R '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/DamageBlunt/Arm_L '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageBlunt/Dorsal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageBlunt/Dorsal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageBlunt/Pectoral_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageBlunt/Pectoral_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageBlunt/Abdominal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageBlunt/Abdominal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageBlunt/Lumbar_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageBlunt/Lumbar_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/DamageSharp/Arm_R '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/DamageSharp/Arm_L '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageSharp/Dorsal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageSharp/Dorsal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageSharp/Pectoral_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageSharp/Pectoral_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageSharp/Abdominal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageSharp/Abdominal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageSharp/Lumbar_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/DamageSharp/Lumbar_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Shot/Arm_R '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Shot/Arm_L '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Shot/Dorsal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Shot/Dorsal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Shot/Pectoral_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Shot/Pectoral_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Shot/Abdominal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Shot/Abdominal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Shot/Lumbar_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Shot/Lumbar_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Projectile/Arm_R '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Projectile/Arm_L '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Projectile/Dorsal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Projectile/Dorsal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Projectile/Pectoral_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Projectile/Pectoral_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Projectile/Abdominal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Projectile/Abdominal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Projectile/Lumbar_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Projectile/Lumbar_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0

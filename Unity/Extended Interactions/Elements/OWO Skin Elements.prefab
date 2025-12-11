@@ -1,0 +1,753 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7071286806716191735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3077877381271334678}
+  m_Layer: 0
+  m_Name: OWO Skin Elements
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3077877381271334678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071286806716191735}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4215024999198586453}
+  - {fileID: 3884695763463829619}
+  - {fileID: 7818982599496092883}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1846512577201953627
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3077877381271334678}
+    m_Modifications:
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Pectoral_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Abdominal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Dorsal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Lumbar_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Arm_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[1]
+      value: Torso
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[2]
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[3]
+      value: Foot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766443731308567500, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_Name
+      value: OWO Skin - Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Arm_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Lumbar_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Pectoral_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Dorsal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Fire/Abdominal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Fire
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0028d64407dc4e4181080f8d4ca9510, type: 3}
+--- !u!4 &7818982599496092883 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+    type: 3}
+  m_PrefabInstance: {fileID: 1846512577201953627}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4668979849337827323
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3077877381271334678}
+    m_Modifications:
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Pectoral_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Abdominal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Dorsal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Lumbar_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Arm_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[1]
+      value: Torso
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[2]
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[3]
+      value: Foot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766443731308567500, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_Name
+      value: OWO Skin - Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Arm_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Lumbar_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Pectoral_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Dorsal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Wind/Abdominal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Wind
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0028d64407dc4e4181080f8d4ca9510, type: 3}
+--- !u!4 &3884695763463829619 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+    type: 3}
+  m_PrefabInstance: {fileID: 4668979849337827323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5718582786938003933
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3077877381271334678}
+    m_Modifications:
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Pectoral_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Abdominal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Dorsal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Lumbar_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Arm_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[1]
+      value: Torso
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[2]
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[3]
+      value: Foot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766443731308567500, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_Name
+      value: OWO Skin - Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Arm_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Lumbar_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Pectoral_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Dorsal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Water/Abdominal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Water
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0028d64407dc4e4181080f8d4ca9510, type: 3}
+--- !u!4 &4215024999198586453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+    type: 3}
+  m_PrefabInstance: {fileID: 5718582786938003933}
+  m_PrefabAsset: {fileID: 0}

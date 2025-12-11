@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1506855854, guid: 67cc4cb7839cd3741b63733d5adf0442, type: 3}
+  m_Name: Elements_Expressions
+  m_EditorClassIdentifier: 
+  isEmpty: 0
+  parameters:
+  - name: 'OWO/SensationsTrigger/Water/Arm_R '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Water/Arm_L '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Water/Dorsal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Water/Dorsal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Water/Pectoral_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Water/Pectoral_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Water/Abdominal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Water/Abdominal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Water/Lumbar_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Water/Lumbar_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Wind/Arm_R '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Wind/Arm_L '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Wind/Dorsal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Wind/Dorsal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Wind/Pectoral_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Wind/Pectoral_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Wind/Abdominal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Wind/Abdominal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Wind/Lumbar_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Wind/Lumbar_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Fire/Arm_R '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: 'OWO/SensationsTrigger/Fire/Arm_L '
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Fire/Dorsal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Fire/Dorsal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Fire/Pectoral_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Fire/Pectoral_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Fire/Abdominal_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Fire/Abdominal_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Fire/Lumbar_R
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0
+  - name: OWO/SensationsTrigger/Fire/Lumbar_L
+    valueType: 1
+    saved: 0
+    defaultValue: 0
+    networkSynced: 0

@@ -1,0 +1,1233 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7071286806716191735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3077877381271334678}
+  m_Layer: 0
+  m_Name: OWO Skin Combat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3077877381271334678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071286806716191735}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4215024999198586453}
+  - {fileID: 2421033881759098505}
+  - {fileID: 4691890314308933610}
+  - {fileID: 2332083262537532276}
+  - {fileID: 7566779314640518238}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2026659323206101974
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3077877381271334678}
+    m_Modifications:
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Pectoral_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Abdominal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Dorsal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Lumbar_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Arm_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[1]
+      value: Torso
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[2]
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[3]
+      value: Foot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766443731308567500, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_Name
+      value: OWO Skin - Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Arm_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Lumbar_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Pectoral_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Dorsal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Projectile/Abdominal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Projectile
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0028d64407dc4e4181080f8d4ca9510, type: 3}
+--- !u!4 &7566779314640518238 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+    type: 3}
+  m_PrefabInstance: {fileID: 2026659323206101974}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3764529048122802274
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3077877381271334678}
+    m_Modifications:
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Pectoral_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Abdominal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Dorsal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Lumbar_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Arm_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[1]
+      value: Torso
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[2]
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[3]
+      value: Foot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766443731308567500, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_Name
+      value: OWO Skin - Damage Sharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Arm_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Lumbar_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Pectoral_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Dorsal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageSharp/Abdominal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageSharp
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0028d64407dc4e4181080f8d4ca9510, type: 3}
+--- !u!4 &4691890314308933610 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+    type: 3}
+  m_PrefabInstance: {fileID: 3764529048122802274}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5718582786938003933
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3077877381271334678}
+    m_Modifications:
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Pectoral_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Abdominal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Dorsal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Lumbar_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Arm_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[1]
+      value: Torso
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[2]
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[3]
+      value: Foot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766443731308567500, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_Name
+      value: OWO Skin - Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Arm_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Lumbar_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Pectoral_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Dorsal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Damage/Abdominal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Damage
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0028d64407dc4e4181080f8d4ca9510, type: 3}
+--- !u!4 &4215024999198586453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+    type: 3}
+  m_PrefabInstance: {fileID: 5718582786938003933}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6105622310564835585
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3077877381271334678}
+    m_Modifications:
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Pectoral_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Abdominal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Dorsal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Lumbar_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Arm_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[1]
+      value: Torso
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[2]
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[3]
+      value: Foot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766443731308567500, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_Name
+      value: OWO Skin - Damage Blunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Arm_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Lumbar_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Pectoral_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Dorsal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/DamageBlunt/Abdominal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: DamageBlunt
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0028d64407dc4e4181080f8d4ca9510, type: 3}
+--- !u!4 &2421033881759098505 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+    type: 3}
+  m_PrefabInstance: {fileID: 6105622310564835585}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6160786883848312060
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3077877381271334678}
+    m_Modifications:
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Pectoral_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 126104867682146425, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Abdominal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272656845723026362, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Dorsal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184553244420635536, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Lumbar_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2405619025089403571, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Arm_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[1]
+      value: Torso
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[2]
+      value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 3607562055066329798, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[3]
+      value: Foot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766443731308567500, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_Name
+      value: OWO Skin - Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Arm_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843419385893033437, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Lumbar_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023790035575624524, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Pectoral_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6630439920431047701, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Dorsal_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311199639957209393, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: parameter
+      value: OWO/SensationsTrigger/Shot/Abdominal_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9040362212338729829, guid: a0028d64407dc4e4181080f8d4ca9510,
+        type: 3}
+      propertyPath: collisionTags.Array.data[0]
+      value: Ammunition
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0028d64407dc4e4181080f8d4ca9510, type: 3}
+--- !u!4 &2332083262537532276 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8440513541022488456, guid: a0028d64407dc4e4181080f8d4ca9510,
+    type: 3}
+  m_PrefabInstance: {fileID: 6160786883848312060}
+  m_PrefabAsset: {fileID: 0}
