@@ -1,4 +1,5 @@
 ﻿using OWOVRC.Classes.Effects;
+using OWOVRC.UI.Classes.Extensions;
 
 
 namespace OWOVRC.UI.Forms.Monitors
@@ -26,20 +27,13 @@ namespace OWOVRC.UI.Forms.Monitors
                 return;
             }
 
-            if (InvokeRequired)
+            try
             {
-                try
-                {
-                    this.Invoke(AddSpeedItem, [value]);
-                }
-                catch (ObjectDisposedException)
-                {
-                    this.Close();
-                }
+                this.InvokeIfRequired(AddSpeedItem, [value]);
             }
-            else
+            catch (ObjectDisposedException)
             {
-                AddSpeedItem(value);
+                this.InvokeIfRequired(Close);
             }
         }
 

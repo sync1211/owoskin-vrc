@@ -19,6 +19,7 @@ using OWOVRC.UI.Forms.Monitors;
 using OWOVRC.UI.Classes.Helpers;
 using OWOVRC.UI.Classes.Proxies;
 using System.Net.Sockets;
+using OWOVRC.UI.Classes.Extensions;
 
 namespace OWOVRC.UI
 {
@@ -35,7 +36,7 @@ namespace OWOVRC.UI
         private WorldIntegratorSettings owiSettings = new();
         private OSCPresetsSettings oscPresetsSettings = new();
         private AudioEffectSettings audioSettings = new();
-        
+
         // OWO
         private OSCReceiver? receiver;
         private readonly OWOHelper owo = new();
@@ -102,39 +103,25 @@ namespace OWOVRC.UI
             }
 
             // Update status panel
-            if (InvokeRequired)
+            try
             {
-                try
-                {
-                    this.Invoke(UpdateConnectionStatus);
-                }
-                catch (ObjectDisposedException)
-                {
-                    Close();
-                }
+                this.InvokeIfRequired(UpdateConnectionStatus);
             }
-            else
+            catch (ObjectDisposedException)
             {
-                UpdateConnectionStatus();
+                this.InvokeIfRequired(Close);
             }
 
             // Update sensations panel
             if (sensationsChanged)
             {
-                if (InvokeRequired)
+                try
                 {
-                    try
-                    {
-                        this.Invoke(UpdateASMStatus);
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        Close();
-                    }
+                    this.InvokeIfRequired(UpdateASMStatus);
                 }
-                else
+                catch (ObjectDisposedException)
                 {
-                    UpdateASMStatus();
+                    this.InvokeIfRequired(Close);
                 }
 
                 sensationsChanged = false;
@@ -459,20 +446,13 @@ namespace OWOVRC.UI
             }
 
             // Connection error
-            if (InvokeRequired)
+            try
             {
-                try
-                {
-                    this.Invoke(ShowOWOConnectionError);
-                }
-                catch (ObjectDisposedException)
-                {
-                    this.Close();
-                }
+                this.InvokeIfRequired(ShowOWOConnectionError);
             }
-            else
+            catch (ObjectDisposedException)
             {
-                ShowOWOConnectionError();
+                this.InvokeIfRequired(Close);
             }
         }
 

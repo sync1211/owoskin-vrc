@@ -1,6 +1,7 @@
 ﻿using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
+using OWOVRC.UI.Classes.Extensions;
 
 namespace OWOVRC.UI.Forms.Monitors
 {
@@ -36,20 +37,13 @@ namespace OWOVRC.UI.Forms.Monitors
 
         private void OnTimerElapsed(object? sender, EventArgs e)
         {
-            if (InvokeRequired)
+            try
             {
-                try
-                {
-                    this.Invoke(UpdateVelocityDisplay);
-                }
-                catch (ObjectDisposedException)
-                {
-                    this.Close();
-                }
+                this.InvokeIfRequired(UpdateVelocityDisplay);
             }
-            else
+            catch (ObjectDisposedException)
             {
-                UpdateVelocityDisplay();
+                this.InvokeIfRequired(Close);
             }
         }
 

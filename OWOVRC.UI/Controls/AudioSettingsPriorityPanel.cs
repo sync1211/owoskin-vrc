@@ -1,5 +1,6 @@
 ﻿using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
+using OWOVRC.UI.Classes.Extensions;
 using System.ComponentModel;
 
 namespace OWOVRC.UI.Controls
@@ -36,14 +37,7 @@ namespace OWOVRC.UI.Controls
 
         private void HandlePriorityChanged(object? sender, EventArgs e)
         {
-            if (InvokeRequired)
-            {
-                Invoke(UpdateItems);
-            }
-            else
-            {
-                UpdateItems();
-            }
+            this.InvokeIfRequired(UpdateItems);
         }
 
         private void UpdateItems()

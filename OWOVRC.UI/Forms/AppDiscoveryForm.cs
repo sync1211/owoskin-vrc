@@ -1,4 +1,5 @@
 ﻿using OWOGame;
+using OWOVRC.UI.Classes.Extensions;
 using OWOVRC.UI.Classes.Proxies;
 using Serilog;
 using System.ComponentModel;
@@ -43,14 +44,7 @@ namespace OWOVRC.UI.Forms
         {
             try
             {
-                if (InvokeRequired)
-                {
-                    this.Invoke(RefreshItems);
-                }
-                else
-                {
-                    RefreshItems();
-                }
+                this.InvokeIfRequired(RefreshItems);
             }
             catch (ObjectDisposedException)
             {
