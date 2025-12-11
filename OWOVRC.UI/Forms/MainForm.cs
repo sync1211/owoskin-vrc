@@ -492,7 +492,7 @@ namespace OWOVRC.UI
             // Start OWO connection
             owo.Address = connectionSettings.OWOAddress;
 
-            _ = Task.Run(StartOWOHelper);
+            _ = Task.Run(StartOWOHelper, CancellationToken.None);
             Log.Information("Started OWOVRC");
 
             speedMonitorForm?.SetOSCStatus(receiver.IsRunning);

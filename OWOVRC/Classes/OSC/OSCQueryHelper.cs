@@ -86,11 +86,14 @@ namespace OWOVRC.Classes.OSC
                 }
 
 
-                Console.Write($"{spinner[i % spinner.Length]} Searching...");
-                i++;
-
-                await Task.Delay(refreshInterval);
-                Console.Write("\r");
+                try
+                {
+                    await Task.Delay(refreshInterval, cancellationToken);
+                }
+                catch (TaskCanceledException)
+                {
+                    break;
+                }
 
                 if (cancellationToken.IsCancellationRequested)
                 {
