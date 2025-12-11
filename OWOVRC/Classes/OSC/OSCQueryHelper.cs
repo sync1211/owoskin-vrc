@@ -1,3 +1,4 @@
+using OWOVRC.Classes.Commandline;
 using Serilog;
 using VRC.OSCQuery;
 
@@ -72,8 +73,7 @@ namespace OWOVRC.Classes.OSC
 
             DateTime startTime = DateTime.Now;
 
-            string[] spinner = ["/", "-", "\\", "|"];
-            int i = 0;
+            Spinner spinner = new("Searching for client...");
 
             while ((DateTime.Now - startTime).TotalMilliseconds <= maxwait)
             {
@@ -81,10 +81,12 @@ namespace OWOVRC.Classes.OSC
 
                 if (services.Any())
                 {
+                    Console.Write("\r");
                     Log.Information("VRChat client(s) found!");
                     return services;
                 }
 
+                spinner.WriteToConsole();
 
                 try
                 {
@@ -101,6 +103,7 @@ namespace OWOVRC.Classes.OSC
                 }
             }
 
+            Console.Write("\r");
             Log.Warning("Failed to detect VRChat client!");
 
             return [];
