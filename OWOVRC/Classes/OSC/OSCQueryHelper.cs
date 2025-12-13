@@ -45,28 +45,6 @@ namespace OWOVRC.Classes.OSC
             return GetServices().Where(IsVRChatService);
         }
 
-        public async Task<bool> ConnectToService(OSCQueryServiceProfile profile)
-        {
-            Log.Information("Connecting to service {ServiceName}...", profile.name);
-
-            string vrcURL = $"http://{profile.address}:{profile.port}/";
-            Log.Debug("Connecting to {URL}...", vrcURL);
-
-            using (HttpClient httpClient = new())
-            {
-                HttpResponseMessage response = await httpClient.GetAsync(vrcURL);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    Log.Warning("Unable to connect! Status code: {Status} - ", response.StatusCode, await response.Content.ReadAsStringAsync());
-                    return false;
-                }
-
-                Log.Debug("OSCQuery connected!");
-                return true;
-            }
-        }
-
         public async Task<IEnumerable<OSCQueryServiceProfile>> WaitForVRChat(int maxwait, int refreshInterval, CancellationToken cancellationToken = default)
         {
             Log.Information("Searching for VRChat client... (Max: {Maxwait} seconds)", maxwait / 1000);

@@ -176,12 +176,6 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
                 return false;
             }
 
-            if (!await helper.ConnectToService(chosenClient))
-            {
-                Log.Error("Failed to connect to VRChat!");
-                return false;
-            }
-
             Log.Information("Connected to VRChat!");
             return true;
         }

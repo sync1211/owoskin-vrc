@@ -530,25 +530,7 @@ namespace OWOVRC.UI
                 return false;
             }
 
-            if (services.Skip(1).Any())
-            {
-                //TODO: Create a dialog for this!
-                MessageBox.Show(
-                    $"Multiple VRChat clients found.{Environment.NewLine}Unfortunately the selection dialog is not implemented yet, so we'll just choose the first one.",
-                    "More than one VRChat instance detected!",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-            }
-
-            OSCQueryServiceProfile serviceProfile = services.First();
-
-            Log.Debug("Selected VRChat client: {ClientName}", serviceProfile.name);
-
-            bool result = await oscQueryHelper.ConnectToService(serviceProfile)
-                .ConfigureAwait(false);
-
-            return result;
+            return true;
         }
 
         private async Task StartOWOHelper()
