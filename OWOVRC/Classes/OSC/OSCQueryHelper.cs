@@ -23,7 +23,7 @@ namespace OWOVRC.Classes.OSC
             service = new OSCQueryServiceBuilder()
                 .WithTcpPort(tcpPort)
                 .WithUdpPort(udpPort)
-                .WithServiceName(name)
+                .WithServiceName(this.Name)
                 .WithDefaults()
                 .Build();
         }
