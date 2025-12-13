@@ -67,6 +67,7 @@
             // 
             // resolveHostsCheckbox
             // 
+            resolveHostsCheckbox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             resolveHostsCheckbox.AutoSize = true;
             resolveHostsCheckbox.Location = new Point(12, 344);
             resolveHostsCheckbox.Name = "resolveHostsCheckbox";
