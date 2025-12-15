@@ -46,16 +46,16 @@ jobs:
         path: "output/OWOSkin Prefab.unitypackage"
         name: OWOSkin Prefab
 
-    # Extended Interactions
-    - name: "Collect files for Extended Interactions"
-      run: find 'Unity/Extended Interactions/' -name \*.meta > metaList
-    - name: "Create unitypackage for Extended Interactions"
+    # Additional Interactions
+    - name: "Collect files for Additional Interactions"
+      run: find 'Unity/Additional Interactions/' -name \*.meta > metaList
+    - name: "Create unitypackage for Additional Interactions"
       uses: "pCYSl5EDgo/create-unitypackage@v1.2.3"
       with:
-        package-path: 'output/Extended Interactions.unitypackage'
+        package-path: 'output/Additional Interactions.unitypackage'
         include-files: metaList
-    - name: "Upload Extended Interactions"
+    - name: "Upload Additional Interactions"
       uses: actions/upload-artifact@v4
       with:
-        path: "output/Extended Interactions.unitypackage"
-        name: Extended Interactions
+        path: "output/Additional Interactions.unitypackage"
+        name: Additional Interactions
