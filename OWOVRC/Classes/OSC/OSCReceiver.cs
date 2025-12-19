@@ -15,11 +15,15 @@ namespace OWOVRC.Classes.OSC
         public int Port = 9001;
         private readonly OSCQueryHelper? oscQueryHelper;
 
-        public OSCReceiver(int port = 9001, OSCQueryHelper? queryHelper = null)
+        public OSCReceiver(int port = 9001, bool oscQuery = false, string serviceName = "OWOVRC")
         {
             Port = port;
             receiver = OscServer.GetOrCreate(Port);
-            oscQueryHelper = queryHelper;
+
+            if (oscQuery)
+            {
+                oscQueryHelper = new OSCQueryHelper(port, serviceName);
+            }
         }
 
         public void Start()
@@ -44,6 +48,8 @@ namespace OWOVRC.Classes.OSC
                 return;
             }
 
+            oscQueryHelper?.Dispose();
+
             receiver.Dispose();
             disposed = true;
         }
@@ -60,6 +66,15 @@ namespace OWOVRC.Classes.OSC
             string fullPath = $"{OSC_ADDRESS}{path}";
             oscQueryHelper?.RemoveEndpoint(fullPath);
             return receiver.RemoveMethod(fullPath, callback);
+        }
+
+        public async Task<bool> WaitForVRChatClientConnected(int maxwait, int refreshInterval, CancellationToken cancellationToken = default)
+        {
+            if (oscQueryHelper == null)
+            {
+                return IsRunning; // Unable to detect the client -> Everything ok, as long as the receiver is running
+            }
+            return (await oscQueryHelper.WaitForVRChat(maxwait, refreshInterval, cancellationToken)).Any();
         }
 
         public void Dispose()

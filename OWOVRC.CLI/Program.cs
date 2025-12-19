@@ -64,16 +64,14 @@ namespace OWOVRC.CLI
 
             // Create OSCQueryHelper if enabled
             int oscPort = settings.OSCPort;
-            OSCQueryHelper? oscQueryHelper = null;
             if (settings.UseOSCQuery)
             {
                 oscPort = Extensions.GetAvailableUdpPort();
-                oscQueryHelper = new OSCQueryHelper(oscPort, "OWOVRC-CLI");
             }
 
             // Start OSC listener
             Log.Information("Starting OSC receiver...");
-            OSCReceiver receiver = new(oscPort);
+            OSCReceiver receiver = new(oscPort, true, "OWOVRC-CLI");
             receiver.Start();
 
             // Register OSC effects
@@ -101,16 +99,13 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
 
             try
             {
-                // Start OSCQuery if enabled
-                if (oscQueryHelper != null)
-                {
-                    Task<bool> task = ConnectToVRChat(oscQueryHelper, settings.OSCQuery_MaxWait, settings.OSCQuery_RefreshInterval);
-                    task.Wait();
+                // Wait for the connection to be ready
+                Task<bool> task = ConnectToVRChat(receiver, settings.OSCQuery_MaxWait, settings.OSCQuery_RefreshInterval);
+                task.Wait();
 
-                    if (!task.Result)
-                    {
-                        return;
-                    }
+                if (!task.Result)
+                {
+                    return;
                 }
 
                 // Start World Integrator
@@ -165,12 +160,10 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
             }
         }
 
-        public static async Task<bool> ConnectToVRChat(OSCQueryHelper helper, int maxwait, int refreshInterval)
+        public static async Task<bool> ConnectToVRChat(OSCReceiver receiver, int maxwait, int refreshInterval)
         {
-            IEnumerable<OSCQueryServiceProfile> clients = await helper.WaitForVRChat(maxwait, refreshInterval);
-
-            OSCQueryServiceProfile? chosenClient = clients.FirstOrDefault();
-            if (chosenClient == null)
+            bool result = await receiver.WaitForVRChatClientConnected(maxwait, refreshInterval);
+            if (!result)
             {
                 Log.Error("Unable to find any VRChat clients via OSCQuery!");
                 return false;

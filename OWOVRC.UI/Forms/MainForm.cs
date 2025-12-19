@@ -40,7 +40,6 @@ namespace OWOVRC.UI
 
         // OSC
         private OSCReceiver? receiver;
-        private OSCQueryHelper? oscQueryHelper;
 
         // OWO
         private readonly OWOHelper owo = new();
@@ -393,18 +392,11 @@ namespace OWOVRC.UI
             stopSelectedSensationLoopButton.Enabled = itemSelected;
         }
 
-        private void ClearOSCQueryHelper()
-        {
-            oscQueryHelper?.Dispose();
-            oscQueryHelper = null;
-        }
-
         private void ClearOSCReceiver()
         {
             receiver?.Dispose();
             receiver = null;
 
-            ClearOSCQueryHelper();
         }
 
         private async Task<bool> StartOWO(CancellationToken cancellationToken = default)
@@ -418,12 +410,11 @@ namespace OWOVRC.UI
             if (connectionSettings.UseOSCQuery)
             {
                 oscPort = Extensions.GetAvailableUdpPort();
-                oscQueryHelper = new(oscPort, "OWOVRC-UI");
             }
 
             try
             {
-                receiver = new(oscPort, oscQueryHelper);
+                receiver = new(oscPort, connectionSettings.UseOSCQuery, "OWOVRC-UI");
             }
             catch (System.Net.Sockets.SocketException)
             {
@@ -445,18 +436,15 @@ namespace OWOVRC.UI
             // Start OSC receiver
             receiver.Start();
 
-            // Connect to VRChat via OSCQuery
-            if (connectionSettings.UseOSCQuery)
-            {
-                IsRunning = true;
-                UpdateControlAvailability();
+            // Wait for VRChat client connection
+            IsRunning = true;
+            UpdateControlAvailability();
 
-                bool result = await ConnectToVRChat(cancellationToken);
-                if (!result)
-                {
-                    StopOWO();
-                    return false;
-                }
+            bool result = await ConnectToVRChat(cancellationToken);
+            if (!result)
+            {
+                StopOWO();
+                return false;
             }
 
             // Start OWI
@@ -506,20 +494,20 @@ namespace OWOVRC.UI
 
         private async Task<bool> ConnectToVRChat(CancellationToken cancellationToken = default)
         {
-            if (oscQueryHelper == null)
+            if (receiver == null)
             {
                 return false;
             }
 
             // Wait for VRChat to be detected
-            IEnumerable<OSCQueryServiceProfile> services = await oscQueryHelper.WaitForVRChat(connectionSettings.OSCQuery_MaxWait, connectionSettings.OSCQuery_RefreshInterval, cancellationToken);
+            bool result = await receiver.WaitForVRChatClientConnected(connectionSettings.OSCQuery_MaxWait, connectionSettings.OSCQuery_RefreshInterval, cancellationToken);
 
             if (cancellationToken.IsCancellationRequested)
             {
                 return false;
             }
 
-            if (!services.Any())
+            if (!result)
             {
                 MessageBox.Show(
                     $"No VRChat clients found!{Environment.NewLine}Please launch VRChat before starting OWOVRC!",
