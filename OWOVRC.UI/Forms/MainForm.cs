@@ -203,7 +203,7 @@ namespace OWOVRC.UI
             stopButton.Visible = IsRunning;
 
             owoIPInput.Enabled = !IsRunning;
-            oscPortInput.Enabled = !IsRunning || !useOSCQueryCheckbox.Checked;
+            oscPortInput.Enabled = !IsRunning && !useOSCQueryCheckbox.Checked;
             useOSCQueryCheckbox.Enabled = !IsRunning;
 
             openDiscoveryButton.Enabled = !IsRunning;
