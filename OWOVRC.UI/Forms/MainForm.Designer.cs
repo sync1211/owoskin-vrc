@@ -116,6 +116,7 @@
             logLevelTitle = new Label();
             logBox = new RichTextBox();
             connectionGroup = new GroupBox();
+            useOSCQueryCheckbox = new CheckBox();
             audioStatusLabel = new Label();
             audioStatusTitle = new Label();
             openDiscoveryButton = new Button();
@@ -1134,6 +1135,7 @@
             // 
             // connectionGroup
             // 
+            connectionGroup.Controls.Add(useOSCQueryCheckbox);
             connectionGroup.Controls.Add(audioStatusLabel);
             connectionGroup.Controls.Add(audioStatusTitle);
             connectionGroup.Controls.Add(openDiscoveryButton);
@@ -1156,6 +1158,17 @@
             connectionGroup.TabIndex = 1;
             connectionGroup.TabStop = false;
             connectionGroup.Text = "Connection";
+            // 
+            // useOSCQueryCheckbox
+            // 
+            useOSCQueryCheckbox.AutoSize = true;
+            useOSCQueryCheckbox.Location = new Point(194, 45);
+            useOSCQueryCheckbox.Name = "useOSCQueryCheckbox";
+            useOSCQueryCheckbox.Size = new Size(52, 19);
+            useOSCQueryCheckbox.TabIndex = 18;
+            useOSCQueryCheckbox.Text = "Auto";
+            useOSCQueryCheckbox.UseVisualStyleBackColor = true;
+            useOSCQueryCheckbox.CheckedChanged += UseOSCQueryCheckbox_CheckedChanged;
             // 
             // audioStatusLabel
             // 
@@ -1692,5 +1705,6 @@
         private GroupBox velocityIgnoreGroup;
         private Label velocityIntensityLabel;
         private NumericUpDown velocityIntensityInput;
+        private CheckBox useOSCQueryCheckbox;
     }
 }

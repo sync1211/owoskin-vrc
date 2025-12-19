@@ -48,7 +48,6 @@
   <ItemGroup>
     <ProjectReference Include="..\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj" />
     <ProjectReference Include="..\OWOVRC.Audio\OWOVRC.Audio.csproj" />
-    <ProjectReference Include="..\vrc-oscquery-lib\vrc-oscquery-lib\vrc-oscquery-lib.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,25 +1,26 @@
-using OwoAdvancedSensationBuilder.manager;
 using NAudio.CoreAudioApi;
+using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
 using OWOVRC.Classes.Effects;
+using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using OWOVRC.UI.Classes;
+using OWOVRC.UI.Classes.Extensions;
+using OWOVRC.UI.Classes.Helpers;
+using OWOVRC.UI.Classes.Proxies;
 using OWOVRC.UI.Controls;
 using OWOVRC.UI.Forms;
 using OWOVRC.UI.Forms.Dialogs;
+using OWOVRC.UI.Forms.Monitors;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using System.Net;
 using System.ComponentModel;
-using OWOVRC.Classes.Helpers;
-using OWOVRC.UI.Forms.Monitors;
-using OWOVRC.UI.Classes.Helpers;
-using OWOVRC.UI.Classes.Proxies;
+using System.Net;
 using System.Net.Sockets;
-using OWOVRC.UI.Classes.Extensions;
+using VRC.OSCQuery;
 
 namespace OWOVRC.UI
 {
@@ -37,8 +38,10 @@ namespace OWOVRC.UI
         private OSCPresetsSettings oscPresetsSettings = new();
         private AudioEffectSettings audioSettings = new();
 
-        // OWO
+        // OSC
         private OSCReceiver? receiver;
+
+        // OWO
         private readonly OWOHelper owo = new();
         private const string UnnamedSensationName = "<Unnamed>";
 
@@ -70,6 +73,9 @@ namespace OWOVRC.UI
         private AudioMonitorForm? audioMonitorForm;
         private SpeedMonitorForm? speedMonitorForm;
         private SpeedHistoryForm? speedHistoryForm;
+
+        // Token for cancelling the start/connection process
+        private CancellationTokenSource cancellationTokenSource = new();
 
         public MainForm(LoggingLevelSwitch? logLevelSwitch = null)
         {
@@ -197,7 +203,8 @@ namespace OWOVRC.UI
             stopButton.Visible = IsRunning;
 
             owoIPInput.Enabled = !IsRunning;
-            oscPortInput.Enabled = !IsRunning;
+            oscPortInput.Enabled = !IsRunning && !useOSCQueryCheckbox.Checked;
+            useOSCQueryCheckbox.Enabled = !IsRunning;
 
             openDiscoveryButton.Enabled = !IsRunning;
 
@@ -210,13 +217,40 @@ namespace OWOVRC.UI
         {
             StartConnection();
             UpdateASMStatus();
+
         }
 
-        public void StartConnection()
+        public async void StartConnection()
         {
-            StartOWO();
-            UpdateControlAvailability();
-            uiUpdateTimer.Start();
+            if (!cancellationTokenSource.TryReset())
+            {
+                cancellationTokenSource.Dispose();
+                cancellationTokenSource = new();
+            }
+
+            try
+            {
+                if (!await StartOWO(cancellationTokenSource.Token))
+                {
+                    StopOWO(); // Clean up anything that's not fully started
+                    return;
+                }
+
+                UpdateControlAvailability();
+                uiUpdateTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "An unexpected error occurred while starting the connection!");
+                MessageBox.Show(
+                    $"An unexpected error occurred while starting the connection.{Environment.NewLine}See log output for more info.",
+                    "Failed to start connection",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
+                StopOWO();
+            }
         }
 
         private void StopButton_Click(object sender, EventArgs e)
@@ -362,16 +396,25 @@ namespace OWOVRC.UI
         {
             receiver?.Dispose();
             receiver = null;
+
         }
 
-        private void StartOWO()
+        private async Task<bool> StartOWO(CancellationToken cancellationToken = default)
         {
             // Create OSC receiver
             ClearOSCReceiver(); // The receiver does not have a stop method, so we're re-creating it on launch
 
+            int oscPort = connectionSettings.OSCPort;
+
+            // Create OSCQuery helper
+            if (connectionSettings.UseOSCQuery)
+            {
+                oscPort = Extensions.GetAvailableUdpPort();
+            }
+
             try
             {
-                receiver = new(connectionSettings.OSCPort);
+                receiver = new(oscPort, connectionSettings.UseOSCQuery, "OWOVRC-UI");
             }
             catch (System.Net.Sockets.SocketException)
             {
@@ -381,7 +424,7 @@ namespace OWOVRC.UI
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
-                return;
+                return false;
             }
 
             // Register effects
@@ -392,6 +435,17 @@ namespace OWOVRC.UI
 
             // Start OSC receiver
             receiver.Start();
+
+            // Wait for VRChat client connection
+            IsRunning = true;
+            UpdateControlAvailability();
+
+            bool result = await ConnectToVRChat(cancellationToken);
+            if (!result)
+            {
+                StopOWO();
+                return false;
+            }
 
             // Start OWI
             if (owi == null)
@@ -427,12 +481,44 @@ namespace OWOVRC.UI
             // Start OWO connection
             owo.Address = connectionSettings.OWOAddress;
 
-            _ = Task.Run(StartOWOHelper);
+            _ = Task.Run(StartOWOHelper, CancellationToken.None);
             Log.Information("Started OWOVRC");
 
-            IsRunning = true;
             speedMonitorForm?.SetOSCStatus(receiver.IsRunning);
             speedHistoryForm?.SetOSCStatus(receiver.IsRunning);
+
+            IsRunning = true;
+
+            return true;
+        }
+
+        private async Task<bool> ConnectToVRChat(CancellationToken cancellationToken = default)
+        {
+            if (receiver == null)
+            {
+                return false;
+            }
+
+            // Wait for VRChat to be detected
+            bool result = await receiver.WaitForVRChatClientConnected(connectionSettings.OSCQuery_MaxWait, connectionSettings.OSCQuery_RefreshInterval, cancellationToken);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return false;
+            }
+
+            if (!result)
+            {
+                MessageBox.Show(
+                    $"No VRChat clients found!{Environment.NewLine}Please launch VRChat before starting OWOVRC!",
+                    "VRChat not found!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+                return false;
+            }
+
+            return true;
         }
 
         private async Task StartOWOHelper()
@@ -468,6 +554,8 @@ namespace OWOVRC.UI
 
         private void StopOWO()
         {
+            cancellationTokenSource.Cancel();
+
             // Unregister effects
             if (receiver != null)
             {
@@ -549,6 +637,7 @@ namespace OWOVRC.UI
             oscPortInput_SkipValueChanged = true;
             owoIPInput.Text = connectionSettings.OWOAddress;
             oscPortInput.Value = connectionSettings.OSCPort;
+            useOSCQueryCheckbox.Checked = connectionSettings.UseOSCQuery;
         }
 
         private void UpdateCollidersEffectSettings()
@@ -558,7 +647,7 @@ namespace OWOVRC.UI
 
             collidersUseVelocityCheckbox.Checked = collidersSettings.UseVelocity;
             collidersMinIntensityInput.Value = collidersSettings.MinIntensity;
-            collidersSpeedMultiplierInput.Value = (decimal) collidersSettings.SpeedMultiplier;
+            collidersSpeedMultiplierInput.Value = (decimal)collidersSettings.SpeedMultiplier;
 
             collidersDecayInput.Value = collidersSettings.DecayTime;
             collidersDecayOnChangeCheckbox.Checked = collidersSettings.DecayOnChanges;
@@ -572,8 +661,8 @@ namespace OWOVRC.UI
             velocityEnabledCheckbox.Checked = velocitySettings.Enabled;
 
             velocityPriorityInput.Value = velocitySettings.Priority;
-            velocityThresholdInput.Value = (decimal) velocitySettings.MinSpeed;
-            velocitySpeedCapInput.Value = (decimal) velocitySettings.MaxSpeed;
+            velocityThresholdInput.Value = (decimal)velocitySettings.MinSpeed;
+            velocitySpeedCapInput.Value = (decimal)velocitySettings.MaxSpeed;
             velocityIntensityInput.Value = velocitySettings.Intensity;
 
             velocityIgnoreWhenGroundedCheckbox.Checked = velocitySettings.IgnoreWhenGrounded;
@@ -585,8 +674,8 @@ namespace OWOVRC.UI
             inertiaEnabledCheckbox.Checked = inertiaSettings.Enabled;
             inertiaPriorityInput.Value = inertiaSettings.Priority;
 
-            inertiaMinDeltaInput.Value = (decimal) inertiaSettings.MinDelta;
-            inertiaMaxDeltaInput.Value = (decimal) inertiaSettings.MaxDelta;
+            inertiaMinDeltaInput.Value = (decimal)inertiaSettings.MinDelta;
+            inertiaMaxDeltaInput.Value = (decimal)inertiaSettings.MaxDelta;
             inertiaIntensityInput.Value = inertiaSettings.Intensity;
 
             inertiaIgnoreWhenGroundedCheckbox.Checked = inertiaSettings.IgnoreWhenGrounded;
@@ -1290,6 +1379,13 @@ namespace OWOVRC.UI
             }
             speedHistoryForm.FormClosed -= SpeedHistoryForm_Closed;
             speedHistoryForm = null;
+        }
+
+        private void UseOSCQueryCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            oscPortInput.Enabled = !useOSCQueryCheckbox.Checked;
+            connectionSettings.UseOSCQuery = useOSCQueryCheckbox.Checked;
+            connectionSettings.SaveToFile();
         }
     }
 }
