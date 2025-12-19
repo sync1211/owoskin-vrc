@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace OWOVRC.AvaloniaUI
+namespace OWOVRC.AvaloniaUI.Forms
 {
     public partial class MainWindow : Window
     {

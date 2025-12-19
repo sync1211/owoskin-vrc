@@ -1,0 +1,209 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:collections="using:System.Collections"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:utilities="using:Avalonia.Utilities"
+        xmlns:Controls="using:OWOVRC.AvaloniaUI.Controls"
+        mc:Ignorable="d" Width="900" Height="460"
+        x:Class="OWOVRC.AvaloniaUI.Forms.MainWindow"
+        CanResize="False" CanMaximize="False"
+        Title="OWOVRC"
+        Background="#F0F0F0"
+        Icon="avares://OWOVRC.AvaloniaUI/Media/AppIcon.ico">
+
+  <StackPanel Margin="10">
+    <Controls:GroupBox Header="Connection">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="75" />
+          <ColumnDefinition Width="100" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Content="IP" Grid.Row="0" Grid.Column="0" />
+        <TextBox Grid.Row="0" Grid.Column="1" />
+
+        <Label Content="OSCPort" Grid.Row="1" Grid.Column="0" />   
+        <TextBox Grid.Row="1" Grid.Column="1" />
+        
+        <Button Content="Start" Name="StartButton" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Padding="50,5"/>
+        <Button Content="Stop" Name="StopButton" IsVisible="False" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Padding="50,5"/>
+        <!--TODO: Implement Button visibility-->
+      </Grid>
+    </Controls:GroupBox>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <TabControl Grid.Column="0">
+        <!-- Colliders -->
+        <TabItem Header="Colliders">
+            <Grid
+                ColumnDefinitions="2*, *"
+                RowDefinitions="Auto,Auto,Auto,Auto">
+              
+            <CheckBox Content="Enabled" Grid.Row="0" Grid.Column="0" />
+
+            <Label Content="Priority" Grid.Row="1" Grid.Column="0" />
+            <TextBox Text="1" Grid.Row="1" Grid.Column="1" />
+
+            <Label Content="Intensity %" Grid.Row="2" Grid.Column="0" />
+            <Button Content="Configure" Grid.Row="2" Grid.Column="1" />
+
+
+          </Grid>
+        </TabItem>
+
+        <!-- Velocity -->
+        <TabItem Header="Velocity">
+            <Grid
+                ColumnDefinitions="2*, *"
+                RowDefinitions="Auto,Auto,Auto,Auto">
+
+            <CheckBox Content="Enabled" Grid.Row="0" />
+
+            <Label Content="Priority" Grid.Row="1" />
+            <TextBox Text="1" Grid.Row="1" Grid.Column="1" />
+          </Grid>
+        </TabItem>
+
+        <!-- Innertia -->
+        <TabItem Header="Innertia">
+            <Grid
+                ColumnDefinitions="2*, *"
+                RowDefinitions="Auto,Auto,Auto,Auto">
+
+            <CheckBox Content="Enabled" Grid.Row="0" />
+
+            <Label Content="Priority" Grid.Row="1" />
+            <TextBox Text="1" Grid.Row="1" Grid.Column="1" />
+          </Grid>
+        </TabItem>
+
+        <!-- World -->
+        <TabItem Header="World">
+            <Grid
+                ColumnDefinitions="2*, *"
+                RowDefinitions="Auto,Auto,Auto,Auto">
+
+            <CheckBox Content="Enabled" Grid.Row="0" />
+
+            <Label Content="Priority" Grid.Row="1" />
+            <TextBox Text="1" Grid.Row="1" Grid.Column="1" />
+          </Grid>
+        </TabItem>
+
+        <!-- Presets -->
+        <TabItem Header="Presets">
+            <Grid
+                ColumnDefinitions="2*, *"
+                RowDefinitions="Auto,Auto,Auto,Auto">
+
+            <CheckBox Content="Enabled" Grid.Row="0" />
+
+            <Label Content="Priority" Grid.Row="1" />
+            <TextBox Text="1" Grid.Row="1" Grid.Column="1" />
+          </Grid>
+        </TabItem>
+
+       <!-- Audio -->
+        <TabItem Header="Audio">
+            <Grid
+                ColumnDefinitions="2*, *"
+                RowDefinitions="Auto,Auto,Auto,Auto">
+
+            <CheckBox Content="Enabled" Grid.Row="0" />
+
+            <Label Content="Priority" Grid.Row="1" />
+            <TextBox Text="1" Grid.Row="1" Grid.Column="1" />
+          </Grid>
+        </TabItem>
+      </TabControl>
+
+
+      <TabControl Grid.Column="1">
+        <TabItem Header="Logs">
+          <TextBox AcceptsReturn="true" Height="200" Text="Test" />
+        </TabItem>
+        <TabItem Header="Sensations"></TabItem>
+      </TabControl>
+    </Grid>
+  </StackPanel>
+
+  <Window.Styles>
+
+    <Style Selector="TabControl">
+      <Setter Property="Background" Value="White" />
+      <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <Style Selector="TabControl WrapPanel">
+      <Setter Property="MaxHeight" Value="12" />
+      <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <!-- TabItem Style -->
+    <Style Selector="TabItem">
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="MaxHeight" Value="20" />
+      <Setter Property="MinHeight" Value="20" />
+      <Setter Property="Height" Value="20" />
+    </Style>
+
+    <!-- GroupBox Style -->
+    <Style Selector="Controls|GroupBox">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Header -->
+            <Border
+                ZIndex="1"
+                Background="{Binding $parent[Window].Background}"
+                Padding="5,0,5,0"
+                Margin="5,0,0,0">
+              <TextBlock
+                  Text="{TemplateBinding Header}"
+                  FontWeight="Bold"/>
+            </Border>
+
+            <!-- Content Area -->
+            <Border
+                Grid.RowSpan="2"
+                Padding="0,5,0,0"
+                Grid.ColumnSpan="2"
+                CornerRadius="4"
+                Margin="0,10,0,0"
+                BorderBrush="{DynamicResource SystemControlForegroundBaseMediumBrush}"
+                BorderThickness="1">
+              <ContentPresenter
+                  Name="PART_ContentPresenter"
+                  Padding="8"
+                  Content="{TemplateBinding Content}"/>
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+  </Window.Styles>
+</Window>
