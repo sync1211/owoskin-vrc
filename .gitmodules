@@ -3,4 +3,4 @@
 	url = https://github.com/sync1211/OwoAdvancedSensationBuilderNet8Demo
 [submodule "vrc-oscquery-lib"]
 	path = vrc-oscquery-lib
-	url = https://github.com/vrchat-community/vrc-oscquery-lib.git
+	url = https://github.com/sync1211/vrc-oscquery-lib
