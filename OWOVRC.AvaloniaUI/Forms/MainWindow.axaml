@@ -13,11 +13,13 @@
         Icon="avares://OWOVRC.AvaloniaUI/Media/AppIcon.ico">
 
   <StackPanel Margin="10">
+    <!-- Connection Settings -->
     <Controls:GroupBox Header="Connection">
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="75" />
           <ColumnDefinition Width="100" />
+          <ColumnDefinition Width="10" />
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -25,17 +27,32 @@
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label Content="IP" Grid.Row="0" Grid.Column="0" />
-        <TextBox Grid.Row="0" Grid.Column="1" />
+        <MaskedTextBox Grid.Row="0" Grid.Column="1" Name="owoIPInput" />
+        <Button Name="openDiscoveryButton" Grid.Column="2" Grid.Row="0" />
 
         <Label Content="OSCPort" Grid.Row="1" Grid.Column="0" />   
-        <TextBox Grid.Row="1" Grid.Column="1" />
+        <TextBox Grid.Row="1" Grid.Column="1" Name="oscPortInput" />
+
+        <CheckBox Content="Auto" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Name="useOSCQueryCheckbox" />
         
-        <Button Content="Start" Name="StartButton" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Padding="50,5"/>
-        <Button Content="Stop" Name="StopButton" IsVisible="False" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Padding="50,5"/>
-        <!--TODO: Implement Button visibility-->
+        <Button Content="Stop all sensations" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Name="stopSensationsButton" />
+
+        <Button Content="Start" Name="startButton" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Right" Padding="50,5"/>
+        <Button Content="Stop" Name="stopButton" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Right" Padding="50,5"/>
+
+        <!-- Connection Status Group -->
+        <!--TODO: Grid location, RowSpan -->
+        <Grid ColumnDefinitions="auto,auto" RowDefinitions="auto,auto,auto,auto">
+			
+            <Label Content="OWO:" Name="connectionStatusTitle" FontWeight="Bold" Grid.Row="0" Grid.Column="0" /><Label Name="connectionStatusLabel" Grid.Row="0" Grid.Column="1" />
+            <Label Content="OSC:" Name="oscStatusTitle" FontWeight="Bold" Grid.Row="1" Grid.Column="0" /><Label Name="oscStatusLabel" Grid.Row="1" Grid.Column="1" />
+            <Label Content="OWI:" Name="owiStatusTitle" FontWeight="Bold" Grid.Row="2" Grid.Column="0" /><Label Name="owiStatusLabel" Grid.Row="2" Grid.Column="1" />
+            <Label Content="Audio:" Name="audioStatusTitle" FontWeight="Bold" Grid.Row="3" Grid.Column="0" /><Label Name="audioStatusLabel" Grid.Row="3" Grid.Column="1" />
+        </Grid>
       </Grid>
     </Controls:GroupBox>
     <Grid>
@@ -128,14 +145,30 @@
 
             <Label Content="Priority" Grid.Row="1" />
             <TextBox Text="1" Grid.Row="1" Grid.Column="1" />
+
+            <!-- Unfinished controls -->
+            <Button Name="audioDeviceSelectButton" Content="Select Device" FontWeight="Bold" />
           </Grid>
         </TabItem>
       </TabControl>
 
 
       <TabControl Grid.Column="1">
+        <!-- Logs -->
         <TabItem Header="Logs">
-          <TextBox AcceptsReturn="true" Height="200" Text="Test" />
+            <StackPanel>
+                <ComboBox Name="logLevelComboBox" />
+                <TextBox AcceptsReturn="true" Height="200" Text="Test" Name="logBox" />
+            </StackPanel>
+        </TabItem>
+
+        <!-- Sensations -->
+        <TabItem Header="Sensations">
+            <Grid>
+                <ListBox SelectionMode="Single" Name="activeSensationsListBox" />
+                <Button Content="Stop Sensation Now" Name="stopSelectedSensationNowButton" />
+                <Button Content="Stop Sensation after finish" Name="stopSelectedSensationLoopButton" />
+            </Grid>
         </TabItem>
         <TabItem Header="Sensations"></TabItem>
       </TabControl>

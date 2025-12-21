@@ -32,10 +32,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OWOVRC.UI\OWOVRC.UI.csproj" />
     <ProjectReference Include="..\OWOVRC\OWOVRC.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Classes\" />
+    <Compile Update="Forms\Dialogs\MessagePopup.axaml.cs">
+      <DependentUpon>MessagePopup.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
