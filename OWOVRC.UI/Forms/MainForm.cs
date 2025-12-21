@@ -321,7 +321,7 @@ namespace OWOVRC.UI
             else if (audioEffect.CaptureState == CaptureState.Starting)
             {
                 audioStatusLabel.Text = "Starting";
-                audioStatusLabel.ForeColor = Color.Yellow;
+                audioStatusLabel.ForeColor = Color.Blue;
             }
             else if (audioEffect.CaptureState == CaptureState.Capturing)
             {
