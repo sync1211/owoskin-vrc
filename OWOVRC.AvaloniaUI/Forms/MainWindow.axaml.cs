@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using VRC.OSCQuery;
 using OWOVRC.AvaloniaUI.Classes.Logging;
 using System.Windows.Forms;
-using System.Drawing;
 using Avalonia.Media;
 using Serilog.Events;
 using OWOVRC.UI.Classes.Helpers;
@@ -31,7 +30,6 @@ using OWOVRC.UI.Forms.Dialogs;
 using Avalonia.Input;
 using System.Linq;
 using Avalonia.Interactivity;
-using OWOVRC.UI.Controls;
 
 namespace OWOVRC.AvaloniaUI.Forms
 {
@@ -606,7 +604,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             speedHistoryForm?.SetOSCStatus(false);
         }
 
-        private void ComboBox1_SelectedIndexChanged(object? sender, EventArgs e)
+        private void ComboBox1_SelectedIndexChanged(object? sender, RoutedEventArgs e)
         {
             if (logLevelComboBox.SelectedItem is LogEventLevel level)
             {
@@ -615,7 +613,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, RoutedEventArgs e)
         {
             logLevelComboBox.ItemsSource = Logging.Levels;
             logLevelComboBox.SelectedItem = logLevelSwitch.MinimumLevel;
@@ -640,6 +638,9 @@ namespace OWOVRC.AvaloniaUI.Forms
 
             // Set up audio effect
             SetUpAudio();
+
+            UpdateConnectionStatus();
+            UpdateControlAvailability();
         }
 
         private void SetUpOWI()
@@ -737,8 +738,6 @@ namespace OWOVRC.AvaloniaUI.Forms
 
             uiUpdateTimer.Start();
             UpdateAudioSettings();
-
-            UpdateConnectionStatus();
         }
 
         private void MainForm_FormClosing(object sender, WindowClosingEventArgs e)
@@ -777,7 +776,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void OwoIPInput_Exit(object sender, EventArgs e)
+        private void OwoIPInput_Exit(object sender, RoutedEventArgs e)
         {
             if (IPAddress.TryParse(owoIPInput.Text, out IPAddress? ipAddress) && ipAddress != null)
             {
@@ -802,7 +801,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             connectionSettings.SaveToFile();
         }
 
-        private void OscPortInput_ValueChanged(object sender, EventArgs e)
+        private void OscPortInput_ValueChanged(object sender, NumericUpDownValueChangedEventArgs e)
         {
             // Programmatic change -> Skip event
             if (oscPortInput_SkipValueChanged)
@@ -977,7 +976,7 @@ namespace OWOVRC.AvaloniaUI.Forms
         {
             audioSettings.Enabled = (audioEnabledCheckbox.IsChecked ?? false);
 
-#warning AudioSettingsPriorityPanel is missing!
+            //TODO: AudioSettingsPriorityPanel
             //foreach (AudioSettingsEntry entry in audioSettingsPriorityPanel1.Items)
             //{
             //    entry.ApplyToSpectrumSettings();
@@ -1313,7 +1312,7 @@ namespace OWOVRC.AvaloniaUI.Forms
                 return;
             }
 
-#warning AudioSettingsPriorityPanel is missing!
+            //TODO: AudioSettingsPriorityPanel
             //audioSettingsPriorityPanel1.ClearItems();
             //audioSettingsPriorityPanel1.ImportSettings(audioSettings.SpectrumSettings, owo);
         }

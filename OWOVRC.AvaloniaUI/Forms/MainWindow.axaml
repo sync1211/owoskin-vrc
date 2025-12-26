@@ -12,7 +12,8 @@
         Background="#F0F0F0"
         Icon="avares://OWOVRC.AvaloniaUI/Media/AppIcon.ico"
         Closing="MainForm_FormClosing"
-        Opened="MainForm_Shown">
+        Opened="MainForm_Shown"
+        Loaded="MainForm_Load">
 
   <StackPanel Margin="10">
     <!-- Connection Settings -->
@@ -33,11 +34,11 @@
         </Grid.RowDefinitions>
 
         <Label Content="IP" Grid.Row="0" Grid.Column="0"/>
-        <MaskedTextBox Grid.Row="0" Grid.Column="1" Name="owoIPInput" Mask="##0\.##0\.##0\.##0" />
+        <MaskedTextBox Grid.Row="0" Grid.Column="1" Name="owoIPInput" Mask="##0\.##0\.##0\.##0" LostFocus="OwoIPInput_Exit" />
         <Button Name="openDiscoveryButton" Grid.Column="2" Grid.Row="0" />
 
         <Label Content="OSCPort" Grid.Row="1" Grid.Column="0" />   
-        <NumericUpDown Grid.Row="1" Grid.Column="1" Name="oscPortInput" />
+        <NumericUpDown Grid.Row="1" Grid.Column="1" Name="oscPortInput" ValueChanged="OscPortInput_ValueChanged" />
 
         <CheckBox Content="Auto" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Name="useOSCQueryCheckbox" />
         
@@ -194,7 +195,7 @@
         <TabItem Header="Logs">
             <StackPanel>
                 <ComboBox Name="logLevelComboBox" />
-                <TextBox AcceptsReturn="true" Height="200" Text="Test" Name="logBox" />
+                <TextBox AcceptsReturn="true" Height="200" Name="logBox" IsReadOnly="true" />
             </StackPanel>
         </TabItem>
 
