@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using OWOVRC.AvaloniaUI.Classes.Logging.Sinks;
 using Serilog;
 using Serilog.Core;
 
@@ -14,9 +15,8 @@ namespace OWOVRC.AvaloniaUI.Classes.Logging
                 .MinimumLevel.ControlledBy(loggingLevelSwitch)
                 .WriteTo.Console()
                 .WriteTo.Debug()
+                .WriteTo.AvaloniaTextBox(textBox)
                 .CreateLogger();
-
-            //TODO: Create a TextBox sink for Serilog
 
             Log.Debug("UI logger created!");
 
