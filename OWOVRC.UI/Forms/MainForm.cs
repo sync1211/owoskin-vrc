@@ -1320,7 +1320,7 @@ namespace OWOVRC.UI
             speedMonitorForm = null;
         }
 
-        private void SpeedMonitorButton_Click(object sender, EventArgs e)
+        private void VelocityMonitorButton_Click(object sender, EventArgs e)
         {
             if (velocityEffect == null)
             {
