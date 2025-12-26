@@ -815,7 +815,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             connectionSettings.SaveToFile();
         }
 
-        private void ApplyCollidersSettingsButton_Click(object sender, EventArgs e)
+        private void ApplyCollidersSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             collidersSettings.Enabled = collidersEnabledCheckbox.IsChecked ?? false;
             collidersSettings.UseVelocity = collidersUseVelocityCheckbox.IsChecked ?? false;
@@ -839,7 +839,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             collidersSettings.SaveToFile();
         }
 
-        private void ApplyVelocitySettingsButton_Click(object sender, EventArgs e)
+        private void ApplyVelocitySettingsButton_Click(object sender, RoutedEventArgs e)
         {
             // Enabled
             bool oldState = velocitySettings.Enabled;
