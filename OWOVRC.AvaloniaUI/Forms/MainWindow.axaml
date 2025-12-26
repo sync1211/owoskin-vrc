@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:utilities="using:Avalonia.Utilities"
         xmlns:Controls="using:OWOVRC.AvaloniaUI.Controls"
-        mc:Ignorable="d" Width="900" Height="460"
+        mc:Ignorable="d" Width="900" Height="500"
         x:Class="OWOVRC.AvaloniaUI.Forms.MainWindow"
         CanResize="False" CanMaximize="False"
         Title="OWOVRC"
@@ -50,7 +50,7 @@
 
         <!-- Connection Status Group -->
         <!--TODO: Fix location -->
-        <Grid ColumnDefinitions="auto,auto" RowDefinitions="auto,auto,auto,auto" Grid.Column="4" Grid.Row="0" Grid.RowSpan="2">
+        <Grid ColumnDefinitions="auto,auto" RowDefinitions="auto,auto,auto,auto" Grid.Column="4" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right">
 			
             <Label Content="OWO:" Name="connectionStatusTitle" FontWeight="Bold" Grid.Row="0" Grid.Column="0" /><Label Name="connectionStatusLabel" Grid.Row="0" Grid.Column="1" />
             <Label Content="OSC:" Name="oscStatusTitle" FontWeight="Bold" Grid.Row="1" Grid.Column="0" /><Label Name="oscStatusLabel" Grid.Row="1" Grid.Column="1" />
@@ -73,18 +73,16 @@
         <TabItem Header="Colliders">
             <Grid
                 ColumnDefinitions="2*, *"
-                RowDefinitions="Auto,Auto,Auto,Auto">
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
               
                 <CheckBox Content="Enabled" Grid.Row="0" Grid.Column="0" Name="collidersEnabledCheckbox" />
 
-                <Label Content="Priority" Grid.Row="1" Grid.Column="0" />
-                <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="collidersPriorityInput" />
+                <Label Content="Priority" Grid.Row="1" Grid.Column="0" /> <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="collidersPriorityInput" />
 
-                <Label Content="Intensity %" Grid.Row="2" Grid.Column="0" />
-                <Button Content="Configure" Grid.Row="2" Grid.Column="1" Click="ConfigureCollidersIntensityButton_Click" />
+                <Label Content="Intensity %" Grid.Row="2" Grid.Column="0" /> <Button Content="Configure" Grid.Row="2" Grid.Column="1" Click="ConfigureCollidersIntensityButton_Click" HorizontalAlignment="Right" />
 
                 <CheckBox Content="Use Velocity" Name="collidersUseVelocityCheckbox" IsCheckedChanged="CollidersUseVelocityCheckbox_CheckedChanged" Grid.Row="3" Grid.Column="0" />
-                <Controls:GroupBox Name="velocityBasedGroupBox" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                <Controls:GroupBox Name="velocityBasedGroupBox" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Header="Velocity settings">
                     <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto,Auto">
                             <Label Content="Intensity" Grid.Row="0" Grid.Column="0" /> <NumericUpDown Name="collidersMinIntensityInput" Grid.Row="0" Grid.Column="1" />
                             <Label Content="Multiplier" Grid.Row="1" Grid.Column="0" /> <NumericUpDown Name="collidersSpeedMultiplierInput" Grid.Row="1" Grid.Column="1" />
@@ -92,7 +90,7 @@
                 </Controls:GroupBox>
                 <Controls:GroupBox Header="Decay" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto,Auto">
-                        <Label Content="Decay time (ms)" /> <NumericUpDown Name="collidersDecayInput" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" />
+                        <Label Content="Decay time (ms)" Grid.Row="0" Grid.Column="0" /> <NumericUpDown Name="collidersDecayInput" Grid.Column="1" Grid.Row="0" />
                         <CheckBox Content="Apply on exit" Name="collidersDecayOnExitCheckbox" Grid.Column="0" Grid.Row="1" />
                         <CheckBox Content="Apply on change" Name="collidersDecayOnChangeCheckbox" Grid.Column="1" Grid.Row="1" />
                     </Grid>
@@ -105,20 +103,24 @@
         <TabItem Header="Velocity">
             <Grid
                 ColumnDefinitions="2*, *"
-                RowDefinitions="Auto,Auto,Auto,Auto">
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 
-                <CheckBox Content="Enabled" Grid.Row="0" Name="velocityEnabledCheckbox" />
+                <CheckBox Content="Enabled" Grid.Row="0" Grid.Column="0" Name="velocityEnabledCheckbox" />
 
-                <Label Content="Priority" Grid.Row="1" />
-                <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="velocityPriorityInput" />
+                <Label Content="Priority" Grid.Row="1" Grid.Column="0" /> <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="velocityPriorityInput" />
 
-                <!-- TODO: Place within UI -->
-                <NumericUpDown Name="velocityThresholdInput" />
-                <NumericUpDown Name="velocitySpeedCapInput" />
-                <NumericUpDown Name="velocityIntensityInput" />
-                <CheckBox Content="Grounded" Name="velocityIgnoreWhenGroundedCheckbox" />
-                <CheckBox Content="Seated" Name="velocityIgnoreWhenSeatedCheckbox" />
-                <Button Content="Monitor" FontWeight="Bold" Name="velocityMonitorButton" Click="VelocityMonitorButton_Click" />
+                <Label Content="Min. velocity (m/s)" Grid.Row="2" Grid.Column="0" /> <NumericUpDown Name="velocityThresholdInput" Grid.Row="2" Grid.Column="1" />
+                <Label Content="Max. velocity (m/s)" Grid.Row="3" Grid.Column="0" /> <NumericUpDown Name="velocitySpeedCapInput" Grid.Row="3" Grid.Column="1" />
+                <Label Content="Intensity (%)" Grid.Row="4" Grid.Column="0" /> <NumericUpDown Name="velocityIntensityInput" Grid.Row="4" Grid.Column="1" />
+                
+                <Controls:GroupBox Header="Ignore" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5">
+                    <StackPanel>
+                        <CheckBox Content="Grounded" Name="velocityIgnoreWhenGroundedCheckbox" />
+                        <CheckBox Content="Seated" Name="velocityIgnoreWhenSeatedCheckbox" />
+                    </StackPanel>
+                </Controls:GroupBox>
+
+                <Button Content="Monitor" FontWeight="Bold" Name="velocityMonitorButton" Click="VelocityMonitorButton_Click" Grid.Row="6" Grid.Column="0" />
           </Grid>
         </TabItem>
 
@@ -126,22 +128,30 @@
         <TabItem Header="Innertia">
             <Grid
                 ColumnDefinitions="2*, *"
-                RowDefinitions="Auto,Auto,Auto,Auto">
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 
                 <CheckBox Content="Enabled" Grid.Row="0" Name="inertiaEnabledCheckbox" />
 
-                <Label Content="Priority" Grid.Row="1" />
-                <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="inertiaPriorityInput" />
+                <Label Content="Priority" Grid.Row="1" Grid.Column="0" /> <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="inertiaPriorityInput" />
 
-                <!-- TODO: Place within UI -->
-                <NumericUpDown Name="inertiaMinDeltaInput" />
-                <NumericUpDown Name="inertiaMaxDeltaInput" />
-                <NumericUpDown Name="inertiaIntensityInput" />
-                <CheckBox Content="Grounded" Name="inertiaIgnoreWhenGroundedCheckbox" />
-                <CheckBox Content="Seated" Name="inertiaIgnoreWhenSeatedCheckbox" />
-                <CheckBox Content="Acceleration" Name="inertiaAccelCheckbox" />
-                <CheckBox Content="Deceleration" Name="inertiaDecelCheckbox" />
-                <Button Content="Monitor" FontWeight="Bold" Name="inertiaMonitorButton" Click="InertiaMonitorButton_Click" />
+                <Label Content="Min. velocity (m/s)" Grid.Row="2" Grid.Column="0" /> <NumericUpDown Name="inertiaMinDeltaInput" Grid.Row="2" Grid.Column="1" />
+                <Label Content="Max. velocity (m/s)" Grid.Row="3" Grid.Column="0" /> <NumericUpDown Name="inertiaMaxDeltaInput" Grid.Row="3" Grid.Column="1" />
+                <Label Content="Intensity (%)" Grid.Row="4" Grid.Column="0" /> <NumericUpDown Name="inertiaIntensityInput"  Grid.Row="4" Grid.Column="1" />
+                
+                <Controls:GroupBox Header="Activate on"  Grid.Row="5" Grid.Column="0">
+                    <StackPanel>
+                        <CheckBox Content="Acceleration" Name="inertiaAccelCheckbox" />
+                        <CheckBox Content="Deceleration" Name="inertiaDecelCheckbox" />
+                    </StackPanel>
+                </Controls:GroupBox>
+                <Controls:GroupBox Header="Ignore" Grid.Row="5" Grid.Column="1">
+                    <StackPanel>
+                        <CheckBox Content="Grounded" Name="inertiaIgnoreWhenGroundedCheckbox" />
+                        <CheckBox Content="Seated" Name="inertiaIgnoreWhenSeatedCheckbox" />
+                    </StackPanel>
+                </Controls:GroupBox>
+
+                <Button Content="Monitor" FontWeight="Bold" Name="inertiaMonitorButton" Click="InertiaMonitorButton_Click" Grid.Row="6" Grid.Column="0" />
           </Grid>
         </TabItem>
 
@@ -149,15 +159,16 @@
         <TabItem Header="World">
             <Grid
                 ColumnDefinitions="2*, *"
-                RowDefinitions="Auto,Auto,Auto,Auto">
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 
                 <CheckBox Content="Enabled" Grid.Row="0" Name="owiEnabledCheckbox" />
 
-                <Label Content="Priority" Grid.Row="1" />
-                <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="owiPriorityInput" />
+                <Label Content="Priority" Grid.Row="1" /> <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="owiPriorityInput" />
 
-                <!-- TODO: Place within UI -->
-                <NumericUpDown Name="owiUpdateIntervalInput" />
+                <Label Content="Log scan interval (ms)" Grid.Row="2" /> <NumericUpDown Name="owiUpdateIntervalInput" Grid.Row="2" Grid.Column="1" />
+                <Label Content="Intensity (%)" Grid.Row="3" /> <Button Content="Configure" FontWeight="Bold" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" Click="OwiConfigureIntensitiesButton_Click" />
+                <Label Content="Configure sensations" Grid.Row="4" /> <Button Content="Configure" FontWeight="Bold" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="1" Click="OwiConfigureSensationsButton_Click" />
+                <!--TODO: Infobox -->
           </Grid>
         </TabItem>
 
@@ -169,10 +180,9 @@
 
                 <CheckBox Content="Enabled" Grid.Row="0" Name="oscPresetsEnabledCheckbox" />
 
-                <Label Content="Priority" Grid.Row="1" />
-                <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="oscPresetsPriorityInput" />
+                <Label Content="Priority" Grid.Row="1" /> <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="oscPresetsPriorityInput" />
 
-                <Button Content="Configure" Name="openOscPresetsFormButton" Click="OpenOscPresetsFormButton_Click" />
+                <Label Content="Priority" Grid.Row="2" /> <Button Content="Configure" Name="openOscPresetsFormButton" Click="OpenOscPresetsFormButton_Click" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" />
           </Grid>
         </TabItem>
 
@@ -185,7 +195,7 @@
                 <CheckBox Content="Enabled" Grid.Row="0" Name="audioEnabledCheckbox" />
 
             <!-- Unfinished controls -->
-            <Button Name="audioDeviceSelectButton" Content="Select Device" FontWeight="Bold" Click="AudioDeviceSelectButton_Click" />
+            <Button Name="audioDeviceSelectButton" Content="Select Device" FontWeight="Bold" Click="AudioDeviceSelectButton_Click" Grid.Row="0" Grid.Column="1" />
           </Grid>
         </TabItem>
       </TabControl>
