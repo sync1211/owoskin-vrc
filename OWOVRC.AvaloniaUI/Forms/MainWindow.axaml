@@ -1,3 +1,4 @@
+<!--TODO: Tooltips -->
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:collections="using:System.Collections"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -195,7 +196,14 @@
         <TabItem Header="Logs">
             <StackPanel>
                 <ComboBox Name="logLevelComboBox" />
-                <TextBox AcceptsReturn="true" Height="200" Name="logBox" IsReadOnly="true" />
+                <TextBox AcceptsReturn="true" Height="200" Name="logBox" IsReadOnly="true">
+                        <TextBox.Styles>
+                        <Style Selector="TextBox#logBox">
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Background" Value="Black" />
+                        </Style>
+                    </TextBox.Styles>
+                </TextBox>
             </StackPanel>
         </TabItem>
 

@@ -87,10 +87,10 @@ namespace OWOVRC.AvaloniaUI.Forms
         private CancellationTokenSource cancellationTokenSource = new();
 
         // Brushes for text coloring
-        private readonly IBrush RedColorBrush = new SolidColorBrush((uint)0xFF0000);
-        private readonly IBrush BlueColorBrush = new SolidColorBrush((uint)0x0000FF);
-        private readonly IBrush GreenColorBrush = new SolidColorBrush((uint)0x00FF00);
-        private readonly IBrush BlackColorBrush = new SolidColorBrush((uint)0);
+        private readonly IBrush RedColorBrush = Brushes.Red;
+        private readonly IBrush BlueColorBrush = Brushes.Blue;
+        private readonly IBrush GreenColorBrush = Brushes.Green;
+        private readonly IBrush BlackColorBrush = Brushes.Black;
 
         // Cursors
         private readonly Avalonia.Input.Cursor WaitCursor = new Avalonia.Input.Cursor(StandardCursorType.Wait);
@@ -1302,7 +1302,7 @@ namespace OWOVRC.AvaloniaUI.Forms
                 }
             }
 
-            Cursor = Avalonia.Input.Cursor.Default;
+            Cursor = DefaultCursor;
         }
 
         private void AddAudioSettingsEntries()
