@@ -213,7 +213,6 @@
                 <Label Content="Block lower prio:" FontWeight="Bold" /><Label Name="sensationBlockLowerPrioLabel" />
             </Grid>
         </TabItem>
-        <TabItem Header="Sensations"></TabItem>
       </TabControl>
     </Grid>
   </StackPanel>
