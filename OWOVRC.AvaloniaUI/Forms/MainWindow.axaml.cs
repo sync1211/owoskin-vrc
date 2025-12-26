@@ -1075,7 +1075,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             WikiHelper.OpenURL(WikiHelper.OSC_PRESETS_WIKI_URL);
         }
 
-        private void ConfigureCollidersIntensityButton_Click(object sender, EventArgs e)
+        private void ConfigureCollidersIntensityButton_Click(object sender, RoutedEventArgs e)
         {
             using (MuscleIntensityForm intensityForm = new(collidersSettings.MuscleIntensities, collidersSettings.GetSensation(), title: null, owoHelper: owo))
             {
@@ -1083,7 +1083,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void OpenDiscoveryButtom_Click(object sender, EventArgs e)
+        private void OpenDiscoveryButton_Click(object sender, RoutedEventArgs e)
         {
             using (AppDiscoveryForm discoveryForm = new(connectionSettings.ResolveHostnames))
             {
@@ -1108,7 +1108,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void StopSelectedSensationNowButton_Click(object sender, EventArgs e)
+        private void StopSelectedSensationNowButton_Click(object sender, RoutedEventArgs e)
         {
             if (activeSensationsListBox.SelectedItem is not string sensationName)
             {
@@ -1132,7 +1132,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             StopSensationInstance(selectedSensation);
         }
 
-        private void StopSelectedSensationLoopButton_Click(object sender, EventArgs e)
+        private void StopSelectedSensationLoopButton_Click(object sender, RoutedEventArgs e)
         {
             if (activeSensationsListBox.SelectedItem is not string sensationName)
             {
@@ -1155,7 +1155,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             UpdateASMStatus();
         }
 
-        private void ActiveSensationsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ActiveSensationsListBox_SelectedIndexChanged(object sender, RoutedEventArgs e)
         {
             UpdateSensationControls();
 

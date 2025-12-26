@@ -81,7 +81,7 @@
                 <NumericUpDown Text="1" Grid.Row="1" Grid.Column="1" Name="collidersPriorityInput" />
 
                 <Label Content="Intensity %" Grid.Row="2" Grid.Column="0" />
-                <Button Content="Configure" Grid.Row="2" Grid.Column="1" />
+                <Button Content="Configure" Grid.Row="2" Grid.Column="1" Click="ConfigureCollidersIntensityButton_Click" />
 
                 <CheckBox Content="Use Velocity" Name="collidersUseVelocityCheckbox" IsCheckedChanged="CollidersUseVelocityCheckbox_CheckedChanged" Grid.Row="3" Grid.Column="0" />
                 <Controls:GroupBox Name="velocityBasedGroupBox" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
