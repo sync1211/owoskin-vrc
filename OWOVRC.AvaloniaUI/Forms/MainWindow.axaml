@@ -1,4 +1,4 @@
-<!--TODO: Tooltips -->
+﻿<!--TODO: Tooltips -->
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:collections="using:System.Collections"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -36,7 +36,7 @@
 
         <Label Content="IP" Grid.Row="0" Grid.Column="0"/>
         <MaskedTextBox Grid.Row="0" Grid.Column="1" Name="owoIPInput" Mask="##0\.##0\.##0\.##0" LostFocus="OwoIPInput_Exit" />
-        <Button Name="openDiscoveryButton" Grid.Column="2" Grid.Row="0" />
+        <Button Name="openDiscoveryButton" Content="🔎" Grid.Column="2" Grid.Row="0" Click="OpenDiscoveryButton_Click" />
 
         <Label Content="OSCPort" Grid.Row="1" Grid.Column="0" />   
         <NumericUpDown Grid.Row="1" Grid.Column="1" Name="oscPortInput" ValueChanged="OscPortInput_ValueChanged" />
