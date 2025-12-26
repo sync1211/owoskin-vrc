@@ -29,6 +29,9 @@ using OWOVRC.UI.Classes.Helpers;
 using OWOVRC.UI.Classes.Proxies;
 using OWOVRC.UI.Forms.Dialogs;
 using Avalonia.Input;
+using System.Linq;
+using Avalonia.Interactivity;
+using OWOVRC.UI.Controls;
 
 namespace OWOVRC.AvaloniaUI.Forms
 {
@@ -48,7 +51,6 @@ namespace OWOVRC.AvaloniaUI.Forms
 
         // OSC
         private OSCReceiver? receiver;
-        private OSCQueryHelper? oscQueryHelper;
 
         // OWO
         private readonly OWOHelper owo = new();
@@ -232,7 +234,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             stopSensationsButton.IsEnabled = IsRunning;
         }
 
-        private void StartButton_Click(object sender, EventArgs e)
+        private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             StartConnection();
             UpdateASMStatus();
@@ -272,7 +274,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void StopButton_Click(object sender, EventArgs e)
+        private void StopButton_Click(object sender, RoutedEventArgs e)
         {
             StopOWO();
             UpdateControlAvailability();
@@ -379,9 +381,9 @@ namespace OWOVRC.AvaloniaUI.Forms
 
             // Update entries
             Dictionary<string, AdvancedSensationStreamInstance> runningSensations = owo.GetRunningSensations();
-            activeSensationsListBox.BeginUpdate();
+            //activeSensationsListBox.BeginUpdate();
             UpdateSensationsList(runningSensations);
-            activeSensationsListBox.EndUpdate();
+            //activeSensationsListBox.EndUpdate();
 
             // Select previously selected item
             if (selectedItemIndex >= 0 && selectedItemIndex < activeSensationsListBox.Items.Count)
@@ -411,18 +413,10 @@ namespace OWOVRC.AvaloniaUI.Forms
             stopSelectedSensationLoopButton.IsEnabled = itemSelected;
         }
 
-        private void ClearOSCQueryHelper()
-        {
-            oscQueryHelper?.Dispose();
-            oscQueryHelper = null;
-        }
-
         private void ClearOSCReceiver()
         {
             receiver?.Dispose();
             receiver = null;
-
-            ClearOSCQueryHelper();
         }
 
         private async Task<bool> StartOWO(CancellationToken cancellationToken = default)
@@ -436,12 +430,11 @@ namespace OWOVRC.AvaloniaUI.Forms
             if (connectionSettings.UseOSCQuery)
             {
                 oscPort = Extensions.GetAvailableUdpPort();
-                oscQueryHelper = new(oscPort, "OWOVRC-UI");
             }
 
             try
             {
-                receiver = new(oscPort, oscQueryHelper);
+                receiver = new(oscPort, connectionSettings.UseOSCQuery, "OWOVRC-UI");
             }
             catch (System.Net.Sockets.SocketException)
             {
@@ -463,18 +456,15 @@ namespace OWOVRC.AvaloniaUI.Forms
             // Start OSC receiver
             receiver.Start();
 
-            // Connect to VRChat via OSCQuery
-            if (connectionSettings.UseOSCQuery)
-            {
-                IsRunning = true;
-                UpdateControlAvailability();
+            // Wait for VRChat client connection
+            IsRunning = true;
+            UpdateControlAvailability();
 
-                bool result = await ConnectToVRChat(cancellationToken);
-                if (!result)
-                {
-                    StopOWO();
-                    return false;
-                }
+            bool result = await ConnectToVRChat(cancellationToken);
+            if (!result)
+            {
+                StopOWO();
+                return false;
             }
 
             // Start OWI
@@ -524,20 +514,20 @@ namespace OWOVRC.AvaloniaUI.Forms
 
         private async Task<bool> ConnectToVRChat(CancellationToken cancellationToken = default)
         {
-            if (oscQueryHelper == null)
+            if (receiver == null)
             {
                 return false;
             }
 
             // Wait for VRChat to be detected
-            IEnumerable<OSCQueryServiceProfile> services = await oscQueryHelper.WaitForVRChat(connectionSettings.OSCQuery_MaxWait, connectionSettings.OSCQuery_RefreshInterval, cancellationToken);
+            bool result = await receiver.WaitForVRChatClientConnected(connectionSettings.OSCQuery_MaxWait, connectionSettings.OSCQuery_RefreshInterval, cancellationToken);
 
             if (cancellationToken.IsCancellationRequested)
             {
                 return false;
             }
 
-            if (!services.Any())
+            if (!result)
             {
                 MessageBox.Show(
                     $"No VRChat clients found!{Environment.NewLine}Please launch VRChat before starting OWOVRC!",
@@ -548,25 +538,7 @@ namespace OWOVRC.AvaloniaUI.Forms
                 return false;
             }
 
-            if (services.Skip(1).Any())
-            {
-                //TODO: Create a dialog for this!
-                MessageBox.Show(
-                    $"Multiple VRChat clients found.{Environment.NewLine}Unfortunately the selection dialog is not implemented yet, so we'll just choose the first one.",
-                    "More than one VRChat instance detected!",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-            }
-
-            OSCQueryServiceProfile serviceProfile = services.First();
-
-            Log.Debug("Selected VRChat client: {ClientName}", serviceProfile.name);
-
-            bool result = await oscQueryHelper.ConnectToService(serviceProfile)
-                .ConfigureAwait(false);
-
-            return result;
+            return true;
         }
 
         private async Task StartOWOHelper()
@@ -683,79 +655,79 @@ namespace OWOVRC.AvaloniaUI.Forms
         private void UpdateConnectionSettings()
         {
             oscPortInput_SkipValueChanged = true;
+            oscPortInput_SkipValueChanged = true;
             owoIPInput.Text = connectionSettings.OWOAddress;
             oscPortInput.Value = connectionSettings.OSCPort;
-            useOSCQueryCheckbox.Checked = connectionSettings.UseOSCQuery;
+            useOSCQueryCheckbox.IsChecked = connectionSettings.UseOSCQuery;
         }
 
         private void UpdateCollidersEffectSettings()
         {
-            collidersEnabledCheckbox.Checked = collidersSettings.Enabled;
+            collidersEnabledCheckbox.IsChecked = collidersSettings.Enabled;
             collidersPriorityInput.Value = collidersSettings.Priority;
 
-            collidersUseVelocityCheckbox.Checked = collidersSettings.UseVelocity;
+            collidersUseVelocityCheckbox.IsChecked = collidersSettings.UseVelocity;
             collidersMinIntensityInput.Value = collidersSettings.MinIntensity;
             collidersSpeedMultiplierInput.Value = (decimal)collidersSettings.SpeedMultiplier;
 
             collidersDecayInput.Value = collidersSettings.DecayTime;
-            collidersDecayOnChangeCheckbox.Checked = collidersSettings.DecayOnChanges;
-            collidersDecayOnExitCheckbox.Checked = collidersSettings.DecayOnExit;
+            collidersDecayOnChangeCheckbox.IsChecked = collidersSettings.DecayOnChanges;
+            collidersDecayOnExitCheckbox.IsChecked = collidersSettings.DecayOnExit;
 
-            velocityBasedGroupBox.Enabled = collidersUseVelocityCheckbox.Checked;
+            velocityBasedGroupBox.IsEnabled = (collidersUseVelocityCheckbox.IsChecked ?? false);
         }
 
         private void UpdateVelocityEffectSettings()
         {
-            velocityEnabledCheckbox.Checked = velocitySettings.Enabled;
+            velocityEnabledCheckbox.IsChecked = velocitySettings.Enabled;
 
             velocityPriorityInput.Value = velocitySettings.Priority;
             velocityThresholdInput.Value = (decimal)velocitySettings.MinSpeed;
             velocitySpeedCapInput.Value = (decimal)velocitySettings.MaxSpeed;
             velocityIntensityInput.Value = velocitySettings.Intensity;
 
-            velocityIgnoreWhenGroundedCheckbox.Checked = velocitySettings.IgnoreWhenGrounded;
-            velocityIgnoreWhenSeatedCheckbox.Checked = velocitySettings.IgnoreWhenSeated;
+            velocityIgnoreWhenGroundedCheckbox.IsChecked = velocitySettings.IgnoreWhenGrounded;
+            velocityIgnoreWhenSeatedCheckbox.IsChecked = velocitySettings.IgnoreWhenSeated;
         }
 
         private void UpdateInertiaEffectSettings()
         {
-            inertiaEnabledCheckbox.Checked = inertiaSettings.Enabled;
+            inertiaEnabledCheckbox.IsChecked = inertiaSettings.Enabled;
             inertiaPriorityInput.Value = inertiaSettings.Priority;
 
             inertiaMinDeltaInput.Value = (decimal)inertiaSettings.MinDelta;
             inertiaMaxDeltaInput.Value = (decimal)inertiaSettings.MaxDelta;
             inertiaIntensityInput.Value = inertiaSettings.Intensity;
 
-            inertiaIgnoreWhenGroundedCheckbox.Checked = inertiaSettings.IgnoreWhenGrounded;
-            inertiaIgnoreWhenSeatedCheckbox.Checked = inertiaSettings.IgnoreWhenSeated;
+            inertiaIgnoreWhenGroundedCheckbox.IsChecked = inertiaSettings.IgnoreWhenGrounded;
+            inertiaIgnoreWhenSeatedCheckbox.IsChecked = inertiaSettings.IgnoreWhenSeated;
 
-            inertiaAccelCheckbox.Checked = inertiaSettings.AccelEnabled;
-            inertiaDecelCheckbox.Checked = inertiaSettings.DecelEnabled;
+            inertiaAccelCheckbox.IsChecked = inertiaSettings.AccelEnabled;
+            inertiaDecelCheckbox.IsChecked = inertiaSettings.DecelEnabled;
         }
 
+        private bool owiEnabled { get; set; }
         private void UpdateOWISettings()
         {
-            owiEnabledCheckbox.Checked = owiSettings.Enabled;
+            owiEnabledCheckbox.IsChecked = owiSettings.Enabled;
             owiPriorityInput.Value = owiSettings.Priority;
             owiUpdateIntervalInput.Value = owiSettings.UpdateInterval;
         }
 
         private void UpdateOSCPrestsSettings()
         {
-            oscPresetsEnabledCheckbox.Checked = oscPresetsSettings.Enabled;
+            oscPresetsEnabledCheckbox.IsChecked = oscPresetsSettings.Enabled;
             oscPresetsPriorityInput.Value = oscPresetsSettings.Priority;
         }
 
         private void UpdateAudioSettings()
         {
-            audioEnabledCheckbox.Checked = audioSettings.Enabled;
+            audioEnabledCheckbox.IsChecked = audioSettings.Enabled;
             AddAudioSettingsEntries();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            owoIPInput.ValidatingType = typeof(System.Net.IPAddress);
-
             UpdateConnectionSettings();
             UpdateCollidersEffectSettings();
             UpdateVelocityEffectSettings();
@@ -765,9 +737,11 @@ namespace OWOVRC.AvaloniaUI.Forms
 
             uiUpdateTimer.Start();
             UpdateAudioSettings();
+
+            UpdateConnectionStatus();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, WindowClosingEventArgs e)
         {
             uiUpdateTimer.Stop();
 
@@ -789,7 +763,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             ClearOSCReceiver();
 
             // Unregister UI events
-            logLevelComboBox.SelectedIndexChanged -= ComboBox1_SelectedIndexChanged;
+            logLevelComboBox.SelectionChanged -= ComboBox1_SelectedIndexChanged;
 
             // Close forms
             audioMonitorForm?.Close();
@@ -837,31 +811,31 @@ namespace OWOVRC.AvaloniaUI.Forms
                 return;
             }
 
-            connectionSettings.OSCPort = (int)oscPortInput.Value;
+            connectionSettings.OSCPort = (int)(oscPortInput.Value ?? 0);
 
             connectionSettings.SaveToFile();
         }
 
         private void ApplyCollidersSettingsButton_Click(object sender, EventArgs e)
         {
-            collidersSettings.Enabled = collidersEnabledCheckbox.Checked;
-            collidersSettings.UseVelocity = collidersUseVelocityCheckbox.Checked;
+            collidersSettings.Enabled = collidersEnabledCheckbox.IsChecked ?? false;
+            collidersSettings.UseVelocity = collidersUseVelocityCheckbox.IsChecked ?? false;
 
             // Priority
-            collidersSettings.Priority = (int)collidersPriorityInput.Value;
+            collidersSettings.Priority = (int)(collidersPriorityInput.Value ?? 0);
 
             // MinIintensity
-            collidersSettings.MinIntensity = (int)collidersMinIntensityInput.Value;
+            collidersSettings.MinIntensity = (int)(collidersMinIntensityInput.Value ?? 0);
 
             // Speed multiplier
-            collidersSettings.SpeedMultiplier = (float)collidersSpeedMultiplierInput.Value;
+            collidersSettings.SpeedMultiplier = (float)(collidersSpeedMultiplierInput.Value ?? 0);
 
             // Decay Factor
-            collidersSettings.DecayTime = (int)collidersDecayInput.Value;
+            collidersSettings.DecayTime = (int)(collidersDecayInput.Value ?? 0);
 
             // Decay conditions
-            collidersSettings.DecayOnExit = collidersDecayOnExitCheckbox.Checked;
-            collidersSettings.DecayOnChanges = collidersDecayOnChangeCheckbox.Checked;
+            collidersSettings.DecayOnExit = collidersDecayOnExitCheckbox.IsChecked ?? false;
+            collidersSettings.DecayOnChanges = collidersDecayOnChangeCheckbox.IsChecked ?? false;
 
             collidersSettings.SaveToFile();
         }
@@ -870,23 +844,23 @@ namespace OWOVRC.AvaloniaUI.Forms
         {
             // Enabled
             bool oldState = velocitySettings.Enabled;
-            velocitySettings.Enabled = velocityEnabledCheckbox.Checked;
+            velocitySettings.Enabled = (velocityEnabledCheckbox.IsChecked ?? false);
 
             // Ignore conditions
-            velocitySettings.IgnoreWhenGrounded = velocityIgnoreWhenGroundedCheckbox.Checked;
-            velocitySettings.IgnoreWhenSeated = velocityIgnoreWhenSeatedCheckbox.Checked;
+            velocitySettings.IgnoreWhenGrounded = (velocityIgnoreWhenGroundedCheckbox.IsChecked ?? false);
+            velocitySettings.IgnoreWhenSeated = (velocityIgnoreWhenSeatedCheckbox.IsChecked ?? false);
 
             // Priority
-            velocitySettings.Priority = (int)velocityPriorityInput.Value;
+            velocitySettings.Priority = (int)(velocityPriorityInput.Value ?? 0);
 
             // Threshold
-            velocitySettings.MinSpeed = (float)velocityThresholdInput.Value;
+            velocitySettings.MinSpeed = (float)(velocityThresholdInput.Value ?? 0);
 
             // Speed cap
-            velocitySettings.MaxSpeed = (float)velocitySpeedCapInput.Value;
+            velocitySettings.MaxSpeed = (float)(velocitySpeedCapInput.Value ?? 0);
 
             // Intensity
-            velocitySettings.Intensity = (int)velocityIntensityInput.Value;
+            velocitySettings.Intensity = (int)(velocityIntensityInput.Value ?? 0);
 
             velocitySettings.SaveToFile();
 
@@ -918,10 +892,10 @@ namespace OWOVRC.AvaloniaUI.Forms
 
         private void UpdateVelocityMonitorButtonState()
         {
-            velocityMonitorButton.Enabled = velocitySettings.Enabled;
+            velocityMonitorButton.IsEnabled = velocitySettings.Enabled;
         }
 
-        private void StopSensationsButton_Click(object sender, EventArgs e)
+        private void StopSensationsButton_Click(object sender, RoutedEventArgs e)
         {
             owo.StopAllSensations();
 
@@ -935,15 +909,15 @@ namespace OWOVRC.AvaloniaUI.Forms
             //UpdateASMStatus();
         }
 
-        private void ApplyOwiSettingsButton_Click(object sender, EventArgs e)
+        private void ApplyOwiSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            owiSettings.Enabled = owiEnabledCheckbox.Checked;
+            owiSettings.Enabled = (owiEnabledCheckbox.IsChecked ?? false);
 
             // Priority
-            owiSettings.Priority = (int)owiPriorityInput.Value;
+            owiSettings.Priority = (int)(owiPriorityInput.Value ?? 0);
 
             // Log update interval
-            owiSettings.UpdateInterval = (int)owiUpdateIntervalInput.Value;
+            owiSettings.UpdateInterval = (int)(owiUpdateIntervalInput.Value ?? 0);
 
             owiSettings.SaveToFile();
             EnableOrDisableOWI();
@@ -971,16 +945,16 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void ApplyOscPresetsSettingsButton_Click(object sender, EventArgs e)
+        private void ApplyOscPresetsSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            oscPresetsSettings.Enabled = oscPresetsEnabledCheckbox.Checked;
+            oscPresetsSettings.Enabled = (oscPresetsEnabledCheckbox.IsChecked ?? false);
 
             // Priority
-            oscPresetsSettings.Priority = (int)oscPresetsPriorityInput.Value;
+            oscPresetsSettings.Priority = (int)(oscPresetsPriorityInput.Value ?? 0);
             oscPresetsSettings.SaveToFile();
         }
 
-        private void OpenOscPresetsFormButton_Click(object sender, EventArgs e)
+        private void OpenOscPresetsFormButton_Click(object sender, RoutedEventArgs e)
         {
             if (presetsEffect == null)
             {
@@ -999,54 +973,61 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void ApplyAudioSettingsButton_Click(object sender, EventArgs e)
+        private void ApplyAudioSettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            audioSettings.Enabled = audioEnabledCheckbox.Checked;
+            audioSettings.Enabled = (audioEnabledCheckbox.IsChecked ?? false);
 
-            foreach (AudioSettingsEntry entry in audioSettingsPriorityPanel1.Items)
-            {
-                entry.ApplyToSpectrumSettings();
-            }
+#warning AudioSettingsPriorityPanel is missing!
+            //foreach (AudioSettingsEntry entry in audioSettingsPriorityPanel1.Items)
+            //{
+            //    entry.ApplyToSpectrumSettings();
+            //}
 
             audioSettings.SaveToFile();
             EnableOrDisableAudio();
             UpdateAudioMonitorThresholds();
         }
 
-        private void ApplyInertiaSettingsButton_Click(object sender, EventArgs e)
+        private void ApplyInertiaSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             bool oldState = inertiaSettings.Enabled;
 
             // Invalid state: Both acceleration and deceleration disabled => Enable both and disable the effect
-            if (!inertiaAccelCheckbox.Checked && !inertiaDecelCheckbox.Checked && inertiaEnabledCheckbox.Checked)
+            bool inertiaAccelEnabled = inertiaAccelCheckbox.IsChecked ?? false;
+            bool inertiaDecelEnabled = inertiaDecelCheckbox.IsChecked ?? false;
+            bool inertiaEnabled = inertiaEnabledCheckbox.IsChecked ?? false;
+
+            bool isStupidState = !inertiaAccelEnabled && !inertiaDecelEnabled && inertiaEnabled;
+
+            if (isStupidState)
             {
                 // Show a message to inform the user that their current settings are stupid, then fix it for them
                 Log.Warning("Both acceleration and deceleration are disabled for the inertia effect! If only we had added a way to disable effects...");
-                inertiaAccelCheckbox.Checked = true;
-                inertiaDecelCheckbox.Checked = true;
-                inertiaEnabledCheckbox.Checked = false;
+                inertiaAccelCheckbox.IsChecked = true;
+                inertiaDecelCheckbox.IsChecked = true;
+                inertiaEnabledCheckbox.IsChecked = false;
             }
 
             // Enabled
-            inertiaSettings.Enabled = inertiaEnabledCheckbox.Checked;
+            inertiaSettings.Enabled = (inertiaEnabledCheckbox.IsChecked ?? false);
 
             // Priority
-            inertiaSettings.Priority = (int)inertiaPriorityInput.Value;
+            inertiaSettings.Priority = (int)(inertiaPriorityInput.Value ?? 0);
 
             // Delta bounds
-            inertiaSettings.MinDelta = (float)inertiaMinDeltaInput.Value;
-            inertiaSettings.MaxDelta = (float)inertiaMaxDeltaInput.Value;
+            inertiaSettings.MinDelta = (float)(inertiaMinDeltaInput.Value ?? 0);
+            inertiaSettings.MaxDelta = (float)(inertiaMaxDeltaInput.Value ?? 0);
 
             // Intensity scale
-            inertiaSettings.Intensity = (int)inertiaIntensityInput.Value;
+            inertiaSettings.Intensity = (int)(inertiaIntensityInput.Value ?? 0);
 
             // Ignore conditions
-            inertiaSettings.IgnoreWhenGrounded = inertiaIgnoreWhenGroundedCheckbox.Checked;
-            inertiaSettings.IgnoreWhenSeated = inertiaIgnoreWhenSeatedCheckbox.Checked;
+            inertiaSettings.IgnoreWhenGrounded = (inertiaIgnoreWhenGroundedCheckbox.IsChecked ?? false);
+            inertiaSettings.IgnoreWhenSeated = (inertiaIgnoreWhenSeatedCheckbox.IsChecked ?? false);
 
             // Activation conditions
-            inertiaSettings.AccelEnabled = inertiaAccelCheckbox.Checked;
-            inertiaSettings.DecelEnabled = inertiaDecelCheckbox.Checked;
+            inertiaSettings.AccelEnabled = (inertiaAccelCheckbox.IsChecked ?? false);
+            inertiaSettings.DecelEnabled = (inertiaDecelCheckbox.IsChecked ?? false);
 
             inertiaSettings.SaveToFile();
 
@@ -1077,7 +1058,7 @@ namespace OWOVRC.AvaloniaUI.Forms
 
         private void UpdateInertiaMonitorButtonState()
         {
-            inertiaMonitorButton.Enabled = inertiaSettings.Enabled;
+            inertiaMonitorButton.IsEnabled = inertiaSettings.Enabled;
         }
 
         private void OwiLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1205,20 +1186,20 @@ namespace OWOVRC.AvaloniaUI.Forms
 
         public void ClearSensationDetails()
         {
-            sensationNameLabel.Text = String.Empty;
-            sensationLoopLabel.Text = String.Empty;
-            sensationPriorityLabel.Text = String.Empty;
-            sensationDurationLabel.Text = String.Empty;
-            sensationBlockLowerPrioLabel.Text = String.Empty;
+            sensationNameLabel.Content = String.Empty;
+            sensationLoopLabel.Content = String.Empty;
+            sensationPriorityLabel.Content = String.Empty;
+            sensationDurationLabel.Content = String.Empty;
+            sensationBlockLowerPrioLabel.Content = String.Empty;
         }
 
         public void UpdateSensationDetails(AdvancedSensationStreamInstance instance)
         {
-            sensationNameLabel.Text = instance.name;
-            sensationLoopLabel.Text = instance.loop ? "Yes" : "No";
-            sensationPriorityLabel.Text = instance.sensation.Priority.ToString();
-            sensationDurationLabel.Text = instance.sensation.Duration.ToString("0.00s");
-            sensationBlockLowerPrioLabel.Text = instance.blockLowerPrio ? "Yes" : "No";
+            sensationNameLabel.Content = instance.name;
+            sensationLoopLabel.Content = instance.loop ? "Yes" : "No";
+            sensationPriorityLabel.Content = instance.sensation.Priority.ToString();
+            sensationDurationLabel.Content = instance.sensation.Duration.ToString("0.00s");
+            sensationBlockLowerPrioLabel.Content = instance.blockLowerPrio ? "Yes" : "No";
         }
 
         private void AudioMonitorForm_Closed(object? sender, EventArgs e)
@@ -1293,7 +1274,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void AudioDeviceSelectButton_Click(object sender, EventArgs e)
+        private void AudioDeviceSelectButton_Click(object sender, RoutedEventArgs e)
         {
             Cursor = WaitCursor;
             using (MMDeviceEnumerator enumerator = new())
@@ -1332,11 +1313,12 @@ namespace OWOVRC.AvaloniaUI.Forms
                 return;
             }
 
-            audioSettingsPriorityPanel1.ClearItems();
-            audioSettingsPriorityPanel1.ImportSettings(audioSettings.SpectrumSettings, owo);
+#warning AudioSettingsPriorityPanel is missing!
+            //audioSettingsPriorityPanel1.ClearItems();
+            //audioSettingsPriorityPanel1.ImportSettings(audioSettings.SpectrumSettings, owo);
         }
 
-        private void OwiConfigureSensationsButton_Click(object sender, EventArgs e)
+        private void OwiConfigureSensationsButton_Click(object sender, RoutedEventArgs e)
         {
             using (OWIIntensityListForm form = new(owiSettings.EnabledSensations))
             {
@@ -1344,12 +1326,12 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void CollidersUseVelocityCheckbox_CheckedChanged(object sender, EventArgs e)
+        private void CollidersUseVelocityCheckbox_CheckedChanged(object sender, RoutedEventArgs e)
         {
-            velocityBasedGroupBox.Enabled = collidersUseVelocityCheckbox.Checked;
+            velocityBasedGroupBox.IsEnabled = (collidersUseVelocityCheckbox.IsChecked ?? false);
         }
 
-        private void OwiConfigureIntensitiesButton_Click(object sender, EventArgs e)
+        private void OwiConfigureIntensitiesButton_Click(object sender, RoutedEventArgs e)
         {
             using (MuscleIntensityForm intensityForm = new(owiSettings.MuscleIntensities, Sensation.ShotBleeding, title: null, owoHelper: owo))
             {
@@ -1368,7 +1350,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             speedMonitorForm = null;
         }
 
-        private void SpeedMonitorButton_Click(object sender, EventArgs e)
+        private void VelocityMonitorButton_Click(object sender, RoutedEventArgs e)
         {
             if (velocityEffect == null)
             {
@@ -1391,7 +1373,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             speedMonitorForm.Activate();
         }
 
-        private void InertiaMonitorButton_Click(object sender, EventArgs e)
+        private void InertiaMonitorButton_Click(object sender, RoutedEventArgs e)
         {
             if (inertiaEffect == null)
             {
@@ -1419,7 +1401,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             }
         }
 
-        private void SpeedHistoryForm_Closed(object? sender, EventArgs e)
+        private void SpeedHistoryForm_Closed(object? sender, FormClosedEventArgs e)
         {
             if (speedHistoryForm == null)
             {
@@ -1429,7 +1411,7 @@ namespace OWOVRC.AvaloniaUI.Forms
             speedHistoryForm = null;
         }
 
-        private void UseOSCQueryCheckbox_CheckedChanged(object sender, EventArgs e)
+        private void UseOSCQueryCheckbox_CheckedChanged(object sender, RoutedEventArgs e)
         {
             oscPortInput.IsEnabled = !(useOSCQueryCheckbox.IsChecked ?? false);
             connectionSettings.UseOSCQuery = useOSCQueryCheckbox.IsChecked ?? false;
