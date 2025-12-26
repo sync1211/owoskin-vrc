@@ -10,6 +10,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>OWOVRC.AvaloniaUI.Program</StartupObject>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <CustomResourceTypesSupport>true</CustomResourceTypesSupport>
   </PropertyGroup>
 
   <ItemGroup>
