@@ -50,12 +50,9 @@ jobs:
     - name: Execute unit tests
       run: dotnet test
 
-    # Fix file access conflicts
-    - name: Clean Build Environment
-      run: dotnet clean
-    - name: Cleanup bin/obj folders
-      run: Get-childItem . -Directory | Foreach-Object { remove-item -Recurse -Path "$_\obj" -ErrorAction SilentlyContinue ; remove-item -Recurse -Path "$_\bin" -ErrorAction SilentlyContinue }
-      # No idea why, but this is apparently necessary to reliably build on Windows-11
+    # Fix for file access conflict error
+    - name: Build OWOVRC.CLI (workaround for "file in use" issues)
+      run: dotnet build OWOVRC.CLI/OWOVRC.CLI.csproj -r win-x64 ; $true
 
     # Build the app
     - name: Publish OWOVRC.CLI
