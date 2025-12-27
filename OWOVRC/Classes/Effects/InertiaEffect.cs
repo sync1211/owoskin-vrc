@@ -15,18 +15,21 @@ namespace OWOVRC.Classes.Effects
             Settings = settings;
             inertiaSensation = new InertiaSensation(0.2f);
 
-            timer.Elapsed += OnTimerElapsed;
-            timer.Start();
+            owo.OnCalculationCycle += OnTimerElapsed;
         }
 
-        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        private void OnTimerElapsed(object? sender, EventArgs e)
         {
+            if (!Settings.Enabled)
+            {
+                return;
+            }
             ProcessInertiaHaptics();
         }
 
         private void ProcessInertiaHaptics()
         {
-            if (!Settings.Enabled || (IsGrounded && Settings.IgnoreWhenGrounded) || (IsSeated && Settings.IgnoreWhenSeated))
+            if ((IsGrounded && Settings.IgnoreWhenGrounded) || (IsSeated && Settings.IgnoreWhenSeated))
             {
                 owo.StopSensation(InertiaSensation._Name, true);
                 return;
@@ -71,6 +74,12 @@ namespace OWOVRC.Classes.Effects
 
             // Stop sensation
             owo.StopSensation(InertiaSensation._Name, true);
+        }
+
+        public override void Dispose()
+        {
+            owo.OnCalculationCycle -= OnTimerElapsed;
+            GC.SuppressFinalize(this);
         }
     }
 }

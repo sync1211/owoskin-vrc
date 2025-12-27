@@ -1,6 +1,7 @@
 ﻿using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
+using OWOVRC.UI.Classes.Extensions;
 
 namespace OWOVRC.UI.Forms.Monitors
 {
@@ -36,20 +37,13 @@ namespace OWOVRC.UI.Forms.Monitors
 
         private void OnTimerElapsed(object? sender, EventArgs e)
         {
-            if (InvokeRequired)
+            try
             {
-                try
-                {
-                    this.Invoke(UpdateVelocityDisplay);
-                }
-                catch (ObjectDisposedException)
-                {
-                    this.Close();
-                }
+                this.InvokeIfRequired(UpdateVelocityDisplay);
             }
-            else
+            catch (ObjectDisposedException)
             {
-                UpdateVelocityDisplay();
+                this.InvokeIfRequired(Close);
             }
         }
 
@@ -78,15 +72,18 @@ namespace OWOVRC.UI.Forms.Monitors
             float velocityX = velocityEffect.VelX;
             float velocityY = velocityEffect.VelY;
             float velocityZ = velocityEffect.VelZ;
+            double speed = velocityEffect.Speed;
 
             velXLabel.Text = velocityX.ToString("0.00");
             velYLabel.Text = velocityY.ToString("0.00");
             velZLabel.Text = velocityZ.ToString("0.00");
+            speedLabel.Text = speed.ToString("0.00");
 
             // Mark values above the minVelocity threshold in bold
             velXLabel.Font = Math.Abs(velocityX) >= velocityThreshold ? boldFont : regularFont;
             velYLabel.Font = Math.Abs(velocityY) >= velocityThreshold ? boldFont : regularFont;
             velZLabel.Font = Math.Abs(velocityZ) >= velocityThreshold ? boldFont : regularFont;
+            speedLabel.Font = Math.Abs(speed) >= velocityThreshold ? boldFont : regularFont;
 
             // Top view
             topDirectionIndicator.ValueX = velocityX; // Left / Right
@@ -97,6 +94,10 @@ namespace OWOVRC.UI.Forms.Monitors
             sideDirectionIndicator.ValueY = velocityY; // Up / Down
 
             notRunningIndicator.Visible = !oscActiveStatus;
+
+            // Grounded / Seated indicators
+            groundedIndicator.Checked = velocityEffect.IsGrounded;
+            seatedIndicator.Checked = velocityEffect.IsSeated;
         }
 
         public void SetOSCStatus(bool isActive)

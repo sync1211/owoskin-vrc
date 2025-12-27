@@ -31,10 +31,16 @@ jobs:
         submodules: true
 
     # Install the .NET Core workload
-    - name: Install .NET Core
+    - name: Install .NET Core 9.0
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+
+    # Install the .NET Core 6.0 workload (required for vrc-oscquery-lib tests)
+    - name: Install .NET Core 6.0 (for vrc-oscquery-lib tests)
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 6.0.x
 
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
@@ -44,15 +50,19 @@ jobs:
     - name: Execute unit tests
       run: dotnet test
 
+    # Fix file access conflicts
+    - name: Clean Build Environment
+      run: dotnet clean
+
     # Build the app
-    - name: Publish OWOVRC.UI
-      run: dotnet publish "OWOVRC.UI/OWOVRC.UI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=false --self-contained true
     - name: Publish OWOVRC.CLI
-      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:PublishAOT=true --self-contained true
+      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishProfile=OWOVRC.CLI/Properties/PublishProfiles/Windows-x64.pubxml
+    - name: Publish OWOVRC.UI
+      run: dotnet publish "OWOVRC.UI/OWOVRC.UI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishProfile=OWOVRC.UI/Properties/PublishProfiles/Windows-x64.pubxml
 
     # Upload the EXE https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: OWOVRC
+        name: OWOVRC-win64
         path: "OWOVRC/bin/publish/win-x64/"

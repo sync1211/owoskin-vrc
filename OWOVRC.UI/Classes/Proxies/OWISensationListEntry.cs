@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace OWOVRC.UI.Classes.Helpers
+namespace OWOVRC.UI.Classes.Proxies
 {
     internal class OWISensationListEntry
     {

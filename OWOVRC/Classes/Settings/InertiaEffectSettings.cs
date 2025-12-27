@@ -6,9 +6,9 @@ namespace OWOVRC.Classes.Settings
     public class InertiaEffectSettings: EffectSettingsBase
     {
         [JsonInclude]
-        public float MaxDelta { get; set; } = 10.0f;
+        public float MaxDelta { get; set; } = 20.0f;
         [JsonInclude]
-        public float MinDelta { get; set; } = 5.0f;
+        public float MinDelta { get; set; } = 8.0f;
         [JsonInclude]
         public int Intensity { get; set; } = 100;
         [JsonInclude]
@@ -36,7 +36,7 @@ namespace OWOVRC.Classes.Settings
 
         public override void SaveToFile()
         {
-            SettingsHelper.SaveSettingsToFile(this, "inertia.json", "inertia effect", SettingsHelper.InertiaEffectSettingsContext.Default.InertiaEffectSettings);
+            SettingsHelper.SaveSettingsToFile(this, "inertia.json", "Inertia effect", SettingsHelper.InertiaEffectSettingsContext.Default.InertiaEffectSettings);
         }
     }
 }

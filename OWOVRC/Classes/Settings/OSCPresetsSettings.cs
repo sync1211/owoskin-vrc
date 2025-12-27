@@ -1,5 +1,6 @@
 ﻿using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.Helpers;
+using System.Collections.Concurrent;
 using System.Text.Json.Serialization;
 
 namespace OWOVRC.Classes.Settings
@@ -7,15 +8,22 @@ namespace OWOVRC.Classes.Settings
     public class OSCPresetsSettings: EffectSettingsBase
     {
         [JsonInclude]
-        public Dictionary<string, OSCSensationPreset> Presets { get; }
+        public ConcurrentDictionary<string, OSCSensationPreset> Presets { get; }
 
         public OSCPresetsSettings(Dictionary<string, OSCSensationPreset>? presets = null) : base(enabled: true, priority: 10)
         {
-            Presets = presets ?? [];
+            if (presets != null)
+            {
+                Presets = new ConcurrentDictionary<string, OSCSensationPreset>(presets);
+            }
+            else
+            {
+                Presets = [];
+            }
         }
 
         [JsonConstructor]
-        public OSCPresetsSettings(bool enabled, int priority, Dictionary<string, OSCSensationPreset> presets) : base(enabled, priority)
+        public OSCPresetsSettings(bool enabled, int priority, ConcurrentDictionary<string, OSCSensationPreset> presets) : base(enabled, priority)
         {
             Presets = presets;
         }

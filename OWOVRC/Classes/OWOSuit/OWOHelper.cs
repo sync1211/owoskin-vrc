@@ -7,6 +7,10 @@ namespace OWOVRC.Classes.OWOSuit
 {
     public partial class OWOHelper : IDisposable
     {
+        protected const int INTERVAL = 100;
+        private readonly System.Timers.Timer timer;
+
+        public EventHandler? OnCalculationCycle;
         public static bool IsConnected => OWO.ConnectionState == ConnectionState.Connected;
 
         public string Address { get; set; }
@@ -19,9 +23,22 @@ namespace OWOVRC.Classes.OWOSuit
         public OWOHelper(string ip = "127.0.0.1")
         {
             Address = ip;
+            timer = timer = new System.Timers.Timer()
+            {
+                Interval = INTERVAL,
+                AutoReset = true
+            };
+            timer.Elapsed += OnTimerElapsed;
+
+            timer.Start();
         }
 
-        public async Task Connect()
+        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            OnCalculationCycle?.Invoke(this, EventArgs.Empty);
+        }
+
+        public async Task<bool> Connect()
         {
             Log.Information("Connecting to OWO...");
 
@@ -37,7 +54,7 @@ namespace OWOVRC.Classes.OWOSuit
             catch (Exception e)
             {
                 Log.Error(e, "Failed to start OWO connection!");
-                return;
+                return false;
             }
 
             if (IsConnected)
@@ -48,6 +65,7 @@ namespace OWOVRC.Classes.OWOSuit
             {
                 Log.Information("Connection to OWO failed!");
             }
+            return true;
         }
 
         public void Disconnect()

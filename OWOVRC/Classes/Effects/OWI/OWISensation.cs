@@ -69,7 +69,7 @@ namespace OWOVRC.Classes.Effects.OWI
                 string muscleName = muscleData.Key;
 
                 // Get Single muscle
-                if (OWOMuscles.Muscles.TryGetValue(muscleName.ToLower(), out Muscle muscle))
+                if (OWOMuscles.MusclesLowercase.TryGetValue(muscleName.ToLower(), out Muscle muscle))
                 {
                     int intensity = (int) Math.Round((GetScaledIntensity(muscle.id, muscleIntensities) / 100f) * maxSensationIntensity);
                     musclesScaled.Add(muscle.WithIntensity(intensity));

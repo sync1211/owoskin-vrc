@@ -1,4 +1,4 @@
-﻿namespace OWOVRC.UI.Classes
+﻿namespace OWOVRC.UI.Classes.Helpers
 {
     public static class WikiHelper
     {

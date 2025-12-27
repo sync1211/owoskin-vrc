@@ -1,20 +1,34 @@
 ﻿using OWOGame;
+using OWOVRC.UI.Classes.Extensions;
+using OWOVRC.UI.Classes.Proxies;
+using Serilog;
 using System.ComponentModel;
+using System.Net;
+using System.Net.Sockets;
 
 namespace OWOVRC.UI.Forms
 {
     public partial class AppDiscoveryForm : Form
     {
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string? SelectedApp { get; private set; }
+        public HostEntry? SelectedApp { get; private set; }
+        public bool ResolveHostNames { get; private set; }
+
+        private const int TIMER_INTERVAL = 500;
         private readonly System.Timers.Timer timer;
 
-        public AppDiscoveryForm()
+        private readonly BindingList<HostEntry> discoveredApps;
+
+        public AppDiscoveryForm(bool resolveHostNames = true)
         {
             InitializeComponent();
+            discoveredApps = [];
+            appListBox.DataSource = discoveredApps;
+
+            resolveHostsCheckbox.Checked = resolveHostNames;
+
             timer = new()
             {
-                Interval = 500,
+                Interval = TIMER_INTERVAL,
                 AutoReset = true
             };
             timer.Elapsed += TimerElapsed;
@@ -30,14 +44,7 @@ namespace OWOVRC.UI.Forms
         {
             try
             {
-                if (InvokeRequired)
-                {
-                    this.Invoke(RefreshItems);
-                }
-                else
-                {
-                    RefreshItems();
-                }
+                this.InvokeIfRequired(RefreshItems);
             }
             catch (ObjectDisposedException)
             {
@@ -45,14 +52,77 @@ namespace OWOVRC.UI.Forms
             }
         }
 
+        private static string? GetHostName(string ip)
+        {
+            try
+            {
+                IPHostEntry hostEntry = Dns.GetHostEntry(ip);
+                return hostEntry.HostName;
+            }
+            catch (SocketException ex)
+            {
+                Log.Debug("Failed to resolve hostname for IP {IP}: {Message}", ip, ex.Message);
+                return null;
+            }
+        }
+
+        private HostEntry CreateHostEntry(string ip)
+        {
+            string? hostName = null;
+            if (ResolveHostNames)
+            {
+                hostName = GetHostName(ip);
+            }
+
+            return new(ip, hostName);
+        }
+
         private void RefreshItems()
         {
-            int selectedIndex = appListBox.SelectedIndex;
+            string? selectedIP = null;
+            int selectedIndex = -1;
+            if (appListBox.SelectedItem is HostEntry entry)
+            {
+                selectedIP = entry.IP;
+            }
 
-            appListBox.Items.Clear();
-            appListBox.Items.AddRange(OWO.DiscoveredApps);
+            // Save old enteries to avoid creating new objects unless we have to
+            Dictionary<string, HostEntry> oldEntries;
+            if (resolveHostsCheckbox.Checked == ResolveHostNames)
+            {
+                oldEntries = discoveredApps.ToDictionary(host => host.IP, host => host);
+            }
+            else
+            {
+                oldEntries = [];
+            }
+            ResolveHostNames = resolveHostsCheckbox.Checked;
 
-            if (selectedIndex >= 0 && selectedIndex < appListBox.Items.Count)
+            discoveredApps.RaiseListChangedEvents = false;
+            discoveredApps.Clear();
+
+            string[] newDiscoveredApps = OWO.DiscoveredApps;
+            for (int i = 0; i < newDiscoveredApps.Length; i++)
+            {
+                string ip = newDiscoveredApps[i];
+
+                HostEntry hostEntry =
+                    oldEntries.GetValueOrDefault(ip)
+                    ?? CreateHostEntry(ip);
+
+                discoveredApps.Add(hostEntry);
+
+                // Restore selection
+                if (hostEntry.IP == selectedIP)
+                {
+                    selectedIndex = i;
+                }
+            }
+
+            discoveredApps.RaiseListChangedEvents = true;
+            discoveredApps.ResetBindings();
+
+            if (selectedIndex != -1)
             {
                 appListBox.SelectedIndex = selectedIndex;
             }
@@ -60,12 +130,12 @@ namespace OWOVRC.UI.Forms
 
         private void SelectEntryButton_Click(object sender, EventArgs e)
         {
-            if (appListBox.SelectedItem is not string slectedApp)
+            if (appListBox.SelectedIndex < 0)
             {
                 return;
             }
 
-            SelectedApp = slectedApp;
+            SelectedApp = discoveredApps[appListBox.SelectedIndex];
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -81,6 +151,16 @@ namespace OWOVRC.UI.Forms
 
             timer.Stop();
             timer.Dispose();
+        }
+
+        private void AppListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (!selectEntryButton.Enabled)
+            {
+                return;
+            }
+
+            SelectEntryButton_Click(sender, e);
         }
     }
 }

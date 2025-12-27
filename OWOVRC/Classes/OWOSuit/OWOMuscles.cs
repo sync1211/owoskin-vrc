@@ -6,74 +6,78 @@ namespace OWOVRC.Classes.OWOSuit
 {
     public static class OWOMuscles
     {
-        public static readonly ImmutableDictionary<string, Muscle> Muscles = new Dictionary<string, Muscle>()
+        public static readonly ImmutableDictionary<string, Muscle> MusclesCaptialized = new Dictionary<string, Muscle>()
         {
             // Shadoki-Style naming
-            { "owo_suit_pectoral_r",  Muscle.Pectoral_R },
-            { "owo_suit_pectoral_l",  Muscle.Pectoral_L },
-            { "owo_suit_abdominal_r",  Muscle.Abdominal_R },
-            { "owo_suit_abdominal_l",  Muscle.Abdominal_L },
-            { "owo_suit_arm_r",  Muscle.Arm_R },
-            { "owo_suit_arm_l",  Muscle.Arm_L },
-            { "owo_suit_dorsal_r",  Muscle.Dorsal_R },
-            { "owo_suit_dorsal_l",  Muscle.Dorsal_L },
-            { "owo_suit_lumbar_r",  Muscle.Lumbar_R },
-            { "owo_suit_lumbar_l",  Muscle.Lumbar_L },
+            { "owo_suit_Pectoral_R",  Muscle.Pectoral_R },
+            { "owo_suit_Pectoral_L",  Muscle.Pectoral_L },
+            { "owo_suit_Abdominal_R",  Muscle.Abdominal_R },
+            { "owo_suit_Abdominal_L",  Muscle.Abdominal_L },
+            { "owo_suit_Arm_R",  Muscle.Arm_R },
+            { "owo_suit_Arm_L",  Muscle.Arm_L },
+            { "owo_suit_Dorsal_R",  Muscle.Dorsal_R },
+            { "owo_suit_Dorsal_L",  Muscle.Dorsal_L },
+            { "owo_suit_Lumbar_R",  Muscle.Lumbar_R },
+            { "owo_suit_Lumbar_L",  Muscle.Lumbar_L },
 
             // Exact naming
-            { "pectoral_r",  Muscle.Pectoral_R },
-            { "pectoral_l",  Muscle.Pectoral_L },
-            { "abdominal_r",  Muscle.Abdominal_R },
-            { "abdominal_l",  Muscle.Abdominal_L },
-            { "arm_r",  Muscle.Arm_R },
-            { "arm_l",  Muscle.Arm_L },
-            { "dorsal_r",  Muscle.Dorsal_R },
-            { "dorsal_l",  Muscle.Dorsal_L },
-            { "lumbar_r",  Muscle.Lumbar_R },
-            { "lumbar_l",  Muscle.Lumbar_L },
+            { "Pectoral_R",  Muscle.Pectoral_R },
+            { "Pectoral_L",  Muscle.Pectoral_L },
+            { "Abdominal_R",  Muscle.Abdominal_R },
+            { "Abdominal_L",  Muscle.Abdominal_L },
+            { "Arm_R",  Muscle.Arm_R },
+            { "Arm_L",  Muscle.Arm_L },
+            { "Dorsal_R",  Muscle.Dorsal_R },
+            { "Dorsal_L",  Muscle.Dorsal_L },
+            { "Lumbar_R",  Muscle.Lumbar_R },
+            { "Lumbar_L",  Muscle.Lumbar_L },
 
             // bHaptics mapping - Front
-            { "bosc_v1_vestfront_1", Muscle.Pectoral_R },
-            { "bosc_v1_vestfront_2", Muscle.Pectoral_R },
-            { "bosc_v1_vestfront_5", Muscle.Pectoral_R },
-            { "bosc_v1_vestfront_6", Muscle.Pectoral_R },
+            { "bOSC_v1_VestFront_1", Muscle.Pectoral_R },
+            { "bOSC_v1_VestFront_2", Muscle.Pectoral_R },
+            { "bOSC_v1_VestFront_5", Muscle.Pectoral_R },
+            { "bOSC_v1_VestFront_6", Muscle.Pectoral_R },
 
-            { "bosc_v1_vestfront_3", Muscle.Pectoral_L },
-            { "bosc_v1_vestfront_4", Muscle.Pectoral_L },
-            { "bosc_v1_vestfront_7", Muscle.Pectoral_L },
-            { "bosc_v1_vestfront_8", Muscle.Pectoral_L },
+            { "bOSC_v1_VestFront_3", Muscle.Pectoral_L },
+            { "bOSC_v1_VestFront_4", Muscle.Pectoral_L },
+            { "bOSC_v1_VestFront_7", Muscle.Pectoral_L },
+            { "bOSC_v1_VestFront_8", Muscle.Pectoral_L },
 
-            { "bosc_v1_vestfront_13", Muscle.Abdominal_R },
-            { "bosc_v1_vestfront_14", Muscle.Abdominal_R },
-            { "bosc_v1_vestfront_17", Muscle.Abdominal_R },
-            { "bosc_v1_vestfront_18", Muscle.Abdominal_R },
+            { "bOSC_v1_VestFront_13", Muscle.Abdominal_R },
+            { "bOSC_v1_VestFront_14", Muscle.Abdominal_R },
+            { "bOSC_v1_VestFront_17", Muscle.Abdominal_R },
+            { "bOSC_v1_VestFront_18", Muscle.Abdominal_R },
 
-            { "bosc_v1_vestfront_15", Muscle.Abdominal_L },
-            { "bosc_v1_vestfront_16", Muscle.Abdominal_L },
-            { "bosc_v1_vestfront_19", Muscle.Abdominal_L },
-            { "bosc_v1_vestfront_20", Muscle.Abdominal_L },
+            { "bOSC_v1_VestFront_15", Muscle.Abdominal_L },
+            { "bOSC_v1_VestFront_16", Muscle.Abdominal_L },
+            { "bOSC_v1_VestFront_19", Muscle.Abdominal_L },
+            { "bOSC_v1_VestFront_20", Muscle.Abdominal_L },
 
             // bHaptics mapping - Back
-            { "bosc_v1_vestback_1", Muscle.Dorsal_L },
-            { "bosc_v1_vestback_2", Muscle.Dorsal_L },
-            { "bosc_v1_vestback_5", Muscle.Dorsal_L },
-            { "bosc_v1_vestback_6", Muscle.Dorsal_L },
+            { "bOSC_v1_VestBack_1", Muscle.Dorsal_L },
+            { "bOSC_v1_VestBack_2", Muscle.Dorsal_L },
+            { "bOSC_v1_VestBack_5", Muscle.Dorsal_L },
+            { "bOSC_v1_VestBack_6", Muscle.Dorsal_L },
 
-            { "bosc_v1_vestback_3", Muscle.Dorsal_R },
-            { "bosc_v1_vestback_4", Muscle.Dorsal_R },
-            { "bosc_v1_vestback_7", Muscle.Dorsal_R },
-            { "bosc_v1_vestback_8", Muscle.Dorsal_R },
+            { "bOSC_v1_VestBack_3", Muscle.Dorsal_R },
+            { "bOSC_v1_VestBack_4", Muscle.Dorsal_R },
+            { "bOSC_v1_VestBack_7", Muscle.Dorsal_R },
+            { "bOSC_v1_VestBack_8", Muscle.Dorsal_R },
 
-            { "bosc_v1_vestback_13", Muscle.Lumbar_L },
-            { "bosc_v1_vestback_14", Muscle.Lumbar_L },
-            { "bosc_v1_vestback_17", Muscle.Lumbar_L },
-            { "bosc_v1_vestback_18", Muscle.Lumbar_L },
+            { "bOSC_v1_VestBack_13", Muscle.Lumbar_L },
+            { "bOSC_v1_VestBack_14", Muscle.Lumbar_L },
+            { "bOSC_v1_VestBack_17", Muscle.Lumbar_L },
+            { "bOSC_v1_VestBack_18", Muscle.Lumbar_L },
 
-            { "bosc_v1_vestback_15", Muscle.Lumbar_R },
-            { "bosc_v1_vestback_16", Muscle.Lumbar_R },
-            { "bosc_v1_vestback_19", Muscle.Lumbar_R },
-            { "bosc_v1_vestback_20", Muscle.Lumbar_R },
+            { "bOSC_v1_VestBack_15", Muscle.Lumbar_R },
+            { "bOSC_v1_VestBack_16", Muscle.Lumbar_R },
+            { "bOSC_v1_VestBack_19", Muscle.Lumbar_R },
+            { "bOSC_v1_VestBack_20", Muscle.Lumbar_R },
         }.ToImmutableDictionary();
+
+        public static readonly ImmutableDictionary<string, Muscle> MusclesLowercase = MusclesCaptialized
+            .ToDictionary(kvp => kvp.Key.ToLowerInvariant(), kvp => kvp.Value)
+            .ToImmutableDictionary();
 
         public static readonly ImmutableDictionary<string, Muscle[]> MuscleGroups = new Dictionary<string, Muscle[]>()
         {
@@ -84,6 +88,19 @@ namespace OWOVRC.Classes.OWOSuit
             { "leftMuscles", [Muscle.Arm_L, Muscle.Pectoral_L, Muscle.Dorsal_L, Muscle.Abdominal_L, Muscle.Lumbar_L] },
             { "rightMuscles", [Muscle.Arm_R, Muscle.Pectoral_R, Muscle.Dorsal_R, Muscle.Abdominal_R, Muscle.Lumbar_R] }
         }.ToImmutableDictionary();
+
+        public static Muscle[] GetMusclesFromSensation(Sensation sensation)
+        {
+            if (sensation is SensationWithMuscles sensationWithMuscles)
+            {
+                return sensationWithMuscles.muscles;
+            }
+            if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
+            {
+                return refSensationWithMuscles.muscles;
+            }
+            return Muscle.All;
+        }
 
         //OPTIMIZATION: Cache muscle count
         // This is needed as Muscle.All creates a new array every time it's called.

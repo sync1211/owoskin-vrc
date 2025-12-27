@@ -5,6 +5,7 @@ using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
+using VRC.OSCQuery;
 using Serilog.Core;
 
 namespace OWOVRC.CLI
@@ -45,7 +46,7 @@ namespace OWOVRC.CLI
                 .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings) ?? new();
             WorldIntegratorSettings owiSettings = SettingsHelper
                 .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings) ?? new();
-#if !TRIMMING_ENABLED
+#if !TRIMMING_ENABLED && !TARGET_LINUX
             AudioEffectSettings audioSettings = SettingsHelper
                 .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings) ?? new();
 #endif
@@ -61,44 +62,74 @@ namespace OWOVRC.CLI
                 new OSCPresetTrigger(owo, presetsSettings)
             ];
 
-            // Set up World Integrator
-            Log.Debug("Preparing OWI...");
-            WorldIntegrator owi = new(owiSettings, owo);
-            if (owiSettings.Enabled)
+            // Create OSCQueryHelper if enabled
+            int oscPort = settings.OSCPort;
+            if (settings.UseOSCQuery)
             {
-                try
-                {
-                    owi.Start();
-                }
-                catch (FileNotFoundException)
-                {
-                    Log.Warning("OWI client failed to initialize!");
-                }
+                oscPort = Extensions.GetAvailableUdpPort();
             }
-
-#if !TRIMMING_ENABLED
-            // Set up audio effects
-            Log.Debug("Preparing audio effects...");
-            AudioEffect audio = new(owo, audioSettings);
-            if (audioSettings.Enabled)
-            {
-                audio.Start();
-            }
-#else
-            Log.Information("Skipping audio effect initialization. If you want audio effects, compile without enabling trimming!");
-#endif
 
             // Start OSC listener
             Log.Information("Starting OSC receiver...");
-            OSCReceiver receiver = new(settings.OSCPort);
+            OSCReceiver receiver = new(oscPort, true, "OWOVRC-CLI");
             receiver.Start();
 
             // Register OSC effects
             RegisterEffects(effects, receiver);
 
-            // Start main task
+            // Set up World Integrator
+            Log.Debug("Preparing OWI...");
+            WorldIntegrator owi = new(owiSettings, owo);
+
+            // Set up Audio effect
+            AudioEffect? audio = null;
+
+#if TARGET_LINUX
+#warning Audio effect is disabled for Linux targets!
+Log.Information("Audio effect is not yet supported on Linux!");
+#elif TRIMMING_ENABLED
+#warning Audio effect is disabled due to trimming being enabled!
+Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with trimming enabled!");
+#else
+            // Set up audio effects
+            Log.Debug("Preparing audio effects...");
+            audio = new(owo, audioSettings);
+#endif
+
+
             try
             {
+                // Wait for the connection to be ready
+                Task<bool> task = ConnectToVRChat(receiver, settings.OSCQuery_MaxWait, settings.OSCQuery_RefreshInterval);
+                task.Wait();
+
+                if (!task.Result)
+                {
+                    return;
+                }
+
+                // Start World Integrator
+                if (owiSettings.Enabled)
+                {
+                    try
+                    {
+                        owi.Start();
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        Log.Warning("OWI client failed to initialize!");
+                    }
+                }
+
+                // Start Audio effect
+#if !TRIMMING_ENABLED && !TARGET_LINUX
+                if (audioSettings.Enabled)
+                {
+                    audio?.Start();
+                }
+#endif
+
+                // Start main task
                 Log.Information("Starting MainLoop...");
                 Task.Run(() => MainLoop(owo)).Wait();
             }
@@ -109,7 +140,7 @@ namespace OWOVRC.CLI
 
                 // Stop everything
                 owi.Stop();
-#if !TRIMMING_ENABLED
+#if !TRIMMING_ENABLED && !TARGET_LINUX
                 //audio.Stop();
 #endif
 
@@ -117,10 +148,29 @@ namespace OWOVRC.CLI
                 receiver.Dispose();
                 owo.Dispose();
                 owi.Dispose();
-#if !TRIMMING_ENABLED
+#if !TRIMMING_ENABLED && !TARGET_LINUX
                 audio.Dispose();
 #endif
+
+                // Dispose effects
+                for (int i = 0; i < effects.Length; i++)
+                {
+                    effects[i].Dispose();
+                }
             }
+        }
+
+        public static async Task<bool> ConnectToVRChat(OSCReceiver receiver, int maxwait, int refreshInterval)
+        {
+            bool result = await receiver.WaitForVRChatClientConnected(maxwait, refreshInterval);
+            if (!result)
+            {
+                Log.Error("Unable to find any VRChat clients via OSCQuery!");
+                return false;
+            }
+
+            Log.Information("Connected to VRChat!");
+            return true;
         }
 
         public static async Task MainLoop(OWOHelper owo)
@@ -142,7 +192,7 @@ namespace OWOVRC.CLI
         {
             foreach (OSCEffectBase effect in effects)
             {
-                receiver.OnMessageReceived -= effect.OnOSCMessageReceived;
+                effect.UnregisterCallbacks(receiver);
             }
         }
 
@@ -150,7 +200,7 @@ namespace OWOVRC.CLI
         {
             foreach (OSCEffectBase effect in effects)
             {
-                receiver.OnMessageReceived += effect.OnOSCMessageReceived;
+                effect.RegisterCallbacks(receiver);
             }
         }
     }

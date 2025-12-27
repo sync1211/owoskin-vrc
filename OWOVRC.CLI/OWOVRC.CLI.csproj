@@ -5,7 +5,6 @@
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PublishAot>true</PublishAot>
     <InvariantGlobalization>true</InvariantGlobalization>
     <StartupObject>OWOVRC.CLI.Program</StartupObject>
     <PlatformTarget>x64</PlatformTarget>
@@ -15,8 +14,8 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(PublishTrimmed)' == 'true'">
-    <DefineConstants>$(DefineConstants);TRIMMING_ENABLED</DefineConstants>
+  <PropertyGroup Condition="!$(DefineConstants.Contains('TARGET_LINUX')) and !$(DefineContants.Contains('TRIMMING_ENABLED'))">
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +30,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OWOVRC\OWOVRC.csproj" />
+    <ProjectReference Include="..\OWOVRC\OWOVRC.csproj">
+      <Properties Condition="$(DefineConstants.Contains('TARGET_LINUX'))">DefineConstants=TARGET_LINUX</Properties>
+    </ProjectReference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\OWOVRC\OWOVRC.csproj">
+      <Properties Condition="$(DefineConstants.Contains('TRIMMING_ENABLED'))">DefineConstants=TRIMMING_ENABLED</Properties>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using OWOGame;
+﻿using BuildSoft.OscCore;
+using OWOGame;
 using OWOVRC.Classes.Effects.OSCPresets;
 using OWOVRC.Classes.OSC;
 using OWOVRC.Classes.OWOSuit;
@@ -9,7 +10,7 @@ namespace OWOVRC.Classes.Effects
 {
     public class OSCPresetTrigger : OSCEffectBase
     {
-        private const string OSC_ADDRESS_PREFIX = "OWO/SensationsTrigger/";
+        private const string PATH_BASE = "OWO/SensationsTrigger";
         public readonly OSCPresetsSettings Settings;
 
         public OSCPresetTrigger(OWOHelper owo, OSCPresetsSettings settings) : base(owo)
@@ -17,84 +18,161 @@ namespace OWOVRC.Classes.Effects
             Settings = settings;
         }
 
-        public void AddPreset(OSCSensationPreset preset)
+        public bool AddPreset(OSCSensationPreset preset)
         {
-            Settings.Presets.Add(preset.Name, preset);
-        }
-
-        public void RemovePreset(string name)
-        {
-            Settings.Presets.Remove(name);
-        }
-
-        public void ClearPresets()
-        {
-            Settings.Presets.Clear();
-        }
-
-        public override void OnOSCMessageReceived(object? sender, OSCMessage message)
-        {
-            ProcessMessage(message);
-        }
-
-        public OSCSensationPreset? GetPresetFromMessage(OSCMessage message, out Muscle[] muscles)
-        {
-            muscles = [];
-            if (!message.Address.StartsWith(OSC_ADDRESS_PREFIX) || message.Address.Length <= (OSC_ADDRESS_PREFIX.Length + 1))
+            if (!Settings.Presets.TryAdd(preset.Name, preset))
             {
-                return null;
+                return false;
             }
 
-            string presetString = message.Address.Substring(OSC_ADDRESS_PREFIX.Length);
-            string muscleGroupName = String.Empty;
-            string presetName = presetString;
+            AddCallbackToPreset(preset);
+            return true;
+        }
 
-            // Check if preset contains muscle information
-            if (presetString.Contains('/'))
+        public void UpdatePresetRegistration(OSCReceiver receiver, OSCSensationPreset preset)
+        {
+            // Remove registration
+            UnregisterCallbackForPreset(receiver, preset, clear: true);
+
+            // Re-register
+            RegisterCallbackForPreset(receiver, preset);
+        }
+
+        public void ReRegisterAllPresets(OSCReceiver receiver)
+        {
+            foreach (OSCSensationPreset preset in Settings.Presets.Values)
             {
-                string[] split = presetString.Split('/');
-                presetName = split[0];
-                muscleGroupName = split[1];
+                UpdatePresetRegistration(receiver, preset);
+            }
+        }
+
+        private void AddCallbackToPreset(OSCSensationPreset preset)
+        {
+            // Muscle groups
+            for (int i = 0; i < OWOMuscles.MuscleGroups.Count; i++)
+            {
+                KeyValuePair<string, Muscle[]> muscleGroup = OWOMuscles.MuscleGroups.ElementAt(i);
+
+                string address = $"{PATH_BASE}/{preset.Name}/{muscleGroup.Key}";
+
+                if (preset.MessageCallbacks.TryAdd(address, (values) => ProcessMessage(values, preset, muscleGroup.Value)))
+                {
+                    Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                }
+                else
+                {
+                    Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                }
             }
 
-            // Get preset
-            if (!Settings.Presets.TryGetValue(presetName, out OSCSensationPreset? preset) || preset == null)
+            // Individual muscles
+            for (int i = 0; i < OWOMuscles.MusclesCount; i++)
             {
-                Log.Warning("Preset {PresetName} not found!", presetName);
-                return null;
+                KeyValuePair<string, Muscle> muscleInfo = OWOMuscles.MusclesCaptialized.ElementAt(i);
+
+                string address = $"{PATH_BASE}/{preset.Name}/{muscleInfo.Key}";
+                Muscle[] muscles = [muscleInfo.Value];
+                
+                if (preset.MessageCallbacks.TryAdd(address, (values) => ProcessMessage(values, preset, muscles)))
+                {
+                    Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                }
+                else
+                {
+                    Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                }
             }
 
-            // Get muscles
-            if (OWOMuscles.MuscleGroups.TryGetValue(muscleGroupName, out Muscle[]? muscleGroup))
+            // Base sensation without any muscles specified
+            Muscle[] sensationMuscles = OWOMuscles.GetMusclesFromSensation(preset.SensationObject);
+            
+            string presetBaseAddr = $"{PATH_BASE}/{preset.Name}";
+            if (preset.MessageCallbacks.TryAdd(presetBaseAddr, (values) => ProcessMessage(values, preset, sensationMuscles)))
             {
-                muscles = muscleGroup;
-            }
-            else if (OWOMuscles.Muscles.TryGetValue($"owo_suit_{muscleGroupName.ToLower()}", out Muscle muscle))
-            {
-                muscles = [muscle];
+                Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, presetBaseAddr);
             }
             else
             {
-                muscles = GetMusclesFromSensation(preset.SensationObject);
+                Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, presetBaseAddr);
             }
-
-            return preset;
         }
 
-        public static Muscle[] GetMusclesFromSensation(Sensation sensation)
+        public bool RemovePreset(string name, OSCReceiver receiver)
         {
-            if (sensation is SensationWithMuscles sensationWithMuscles)
+            if (!Settings.Presets.TryRemove(name, out OSCSensationPreset? preset))
             {
-                return sensationWithMuscles.muscles;
+                return false;
             }
-            if (sensation is BakedSensation bakedSensation && bakedSensation.reference is SensationWithMuscles refSensationWithMuscles)
-            {
-                return refSensationWithMuscles.muscles;
-            }
-            return Muscle.All;
+
+            UnregisterCallbackForPreset(receiver, preset);
+            return true;
         }
 
-        public void ProcessMessage(OSCMessage message)
+        public void ClearPresets(OSCReceiver receiver)
+        {
+            UnregisterCallbacks(receiver);
+            Settings.Presets.Clear();
+        }
+
+        public override void RegisterCallbacks(OSCReceiver receiver)
+        {
+            foreach (OSCSensationPreset preset in Settings.Presets.Values)
+            {
+                RegisterCallbackForPreset(receiver, preset);
+            }
+        }
+
+        public void RegisterCallbackForPreset(OSCReceiver receiver, OSCSensationPreset preset)
+        {
+            if (preset.MessageCallbacks.Count == 0)
+            {
+                AddCallbackToPreset(preset);
+            }
+
+            foreach (KeyValuePair<string, Action<OscMessageValues>> kvp in preset.MessageCallbacks)
+            {
+                bool result = receiver.TryAddMessageCallback(kvp.Key, kvp.Value);
+                if (result)
+                {
+                    Log.Debug("Register OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
+                }
+                else
+                {
+                    Log.Warning("Failed to register OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
+                }
+            }
+        }
+
+        public override void UnregisterCallbacks(OSCReceiver receiver)
+        {
+            foreach (OSCSensationPreset preset in Settings.Presets.Values)
+            {
+                UnregisterCallbackForPreset(receiver, preset);
+            }
+        }
+
+        public static void UnregisterCallbackForPreset(OSCReceiver receiver, OSCSensationPreset preset, bool clear=false)
+        {
+            foreach (KeyValuePair<string, Action<OscMessageValues>> kvp in preset.MessageCallbacks)
+            {
+                bool result = receiver.TryRemoveMessageCallback(kvp.Key, kvp.Value);
+                if (result)
+                {
+                    Log.Debug("Unregistered OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
+                }
+                else
+                {
+                    Log.Warning("Failed to unregister OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
+                }
+            }
+
+            if (clear)
+            {
+                preset.MessageCallbacks.Clear();
+            }
+        }
+
+        public void ProcessMessage(OscMessageValues values, OSCSensationPreset preset, Muscle[] muscles)
         {
             if (!Settings.Enabled)
             {
@@ -102,14 +180,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Get intensity
-            float oscIntensity = OSCHelpers.GetFloatValueFromMessage(message);
-
-            // Get preset
-            OSCSensationPreset? preset = GetPresetFromMessage(message, out Muscle[] muscles);
-            if (preset == null)
-            {
-                return;
-            }
+            float oscIntensity = OSCHelpers.GetFloatValueFromMessageValues(values);
 
             if (!preset.Enabled)
             {
@@ -158,6 +229,12 @@ namespace OWOVRC.Classes.Effects
             {
                 owo.StopSensation(preset.Name);
             }
+        }
+
+        public override void Dispose()
+        {
+            Stop();
+            GC.SuppressFinalize(this);
         }
     }
 }

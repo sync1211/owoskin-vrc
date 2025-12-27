@@ -1,0 +1,50 @@
+name: Compile OWOVRC.CLI (Linux)
+permissions:
+  contents: read
+  actions: write
+
+on:
+  push:
+    branches: [ "master", "ConcurrentManager" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Release]
+
+    runs-on: ubuntu-latest
+
+    env:
+      Solution_Name: OWOVRC.sln
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: true
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    
+    - name: Build OWOVRC.CLI (this will fail due to a file access conflict)
+      run: dotnet build OWOVRC.CLI/OWOVRC.CLI.csproj -r linux-x64 || echo "build failed, but continuing anyway"
+
+    # Publish OWOVRC
+    - name: Publish OWOVRC.CLI
+      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r linux-x64 -o "OWOVRC/bin/publish/linux-x64/" -p:PublishProfile=OWOVRC.CLI/Properties/PublishProfiles/Linux-x64.pubxml
+
+    # Upload the EXE https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: OWOVRC-linux64
+        path: "OWOVRC/bin/publish/linux-x64/"

@@ -2,29 +2,59 @@
 {
     public class MuscleCollisionData
     {
-        public string Name { get; private set; }
-        public float Proximity { get; private set; }
-        public DateTime LastUpdate { get; private set; }
-        public float VelocityMultiplier { get; set; }
-        public float DecayFactor { get; private set; }
-        public bool StopOnNextCycle { get; set; }
+        //public int ID { get; }
 
-        public MuscleCollisionData(string name, float proximity)
+        public int DecayCyclesTotal { get; private set; }
+        public int DecayCyclesLeft { get; private set; }
+        public float DecayPercent
         {
-            Name = name;
-            Proximity = proximity;
-            LastUpdate = DateTime.UtcNow;
-            VelocityMultiplier = 0;
+            get
+            {
+                return (float)DecayCyclesLeft / (float)DecayCyclesTotal;
+            }
+        }
+        public int DecayStartIntensity { get; set; }
+
+        public int MaxCyclesLeft { get; private set; } // Failsafe to prevent stuck muscles, decreased each calculation cycle, resets on every update
+        private readonly int MaxCycles = 100;
+        public float CurrentProximity { get; private set; }
+        public float ProximityDelta { get; set; } // Sum of all proximity changes between haptic updates
+
+        public MuscleCollisionData(int maxCycles = 100)
+        {
+            MaxCyclesLeft = maxCycles;
+            MaxCycles = maxCycles;
         }
 
-        public void AddDecay(int cycleCount)
+        public void UpdateProximity(float newProximity, int DecayCycleCount)
         {
-            DecayFactor = VelocityMultiplier / cycleCount;
+            float delta = Math.Abs(newProximity - CurrentProximity);
+            ProximityDelta += delta;
+
+            CurrentProximity = newProximity;
+
+            MaxCyclesLeft = MaxCycles;
+
+            DecayCyclesTotal = DecayCycleCount;
+            DecayCyclesLeft = DecayCycleCount;
         }
 
-        public void ApplyDecay()
+        public void ResetDecay()
         {
-            VelocityMultiplier = Math.Max(0, VelocityMultiplier - DecayFactor);
+            DecayCyclesLeft = DecayCyclesTotal;
+        }
+
+        public void ProcessCycle()
+        {
+            MaxCyclesLeft = Math.Max(0, MaxCyclesLeft - 1);
+            DecayCyclesLeft = Math.Max(0, DecayCyclesLeft - 1);
+
+            ProximityDelta = 0f;
+        }
+
+        public void Disable()
+        {
+            MaxCyclesLeft = 0;
         }
     }
 }

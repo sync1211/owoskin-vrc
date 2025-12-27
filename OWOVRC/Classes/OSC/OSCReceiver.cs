@@ -1,6 +1,6 @@
-﻿using BlobHandles;
-using BuildSoft.OscCore;
+﻿using BuildSoft.OscCore;
 using Serilog;
+using VRC.OSCQuery;
 
 namespace OWOVRC.Classes.OSC
 {
@@ -12,14 +12,18 @@ namespace OWOVRC.Classes.OSC
         private const string OSC_ADDRESS = "/avatar/parameters/";
         private readonly OscServer receiver;
 
-        public EventHandler<OSCMessage>? OnMessageReceived;
         public int Port = 9001;
+        private readonly OSCQueryHelper? oscQueryHelper;
 
-        public OSCReceiver(int port = 9001)
+        public OSCReceiver(int port = 9001, bool oscQuery = false, string serviceName = "OWOVRC")
         {
             Port = port;
             receiver = OscServer.GetOrCreate(Port);
-            receiver.AddMonitorCallback(MessageReceived);
+
+            if (oscQuery)
+            {
+                oscQueryHelper = new OSCQueryHelper(port, serviceName);
+            }
         }
 
         public void Start()
@@ -37,27 +41,6 @@ namespace OWOVRC.Classes.OSC
             Log.Information("OSC listener started on port {Port}!", Port);
         }
 
-        private void MessageReceived(BlobString address, OscMessageValues values)
-        {
-            string addressString = address.ToString();
-            if (!addressString.StartsWith(OSC_ADDRESS, StringComparison.CurrentCultureIgnoreCase))
-            {
-                Log.Verbose("Ignoring non-vrchat message at {Address}", addressString);
-                return;
-            }
-
-            // Remove OSC prefix
-            addressString = addressString[OSC_ADDRESS.Length..];
-
-            if (values.ElementCount == 0)
-            {
-                Log.Verbose("Message at {Address} does not include any values, ignoring.", addressString);
-                return;
-            }
-
-            OnMessageReceived?.Invoke(this, new OSCMessage(addressString, values));
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (disposed || !disposing)
@@ -65,13 +48,39 @@ namespace OWOVRC.Classes.OSC
                 return;
             }
 
+            oscQueryHelper?.Dispose();
+
             receiver.Dispose();
             disposed = true;
+        }
+
+        public bool TryAddMessageCallback(string path, Action<OscMessageValues> callback)
+        {
+            string fullPath = $"{OSC_ADDRESS}{path}";
+            oscQueryHelper?.AddEndpoint(fullPath, "float"); // "float" seems to work for all types (VRC does not seem to care and we convert the received value anyways)
+            return receiver.TryAddMethod(fullPath, callback);
+        }
+
+        public bool TryRemoveMessageCallback(string path, Action<OscMessageValues> callback)
+        {
+            string fullPath = $"{OSC_ADDRESS}{path}";
+            oscQueryHelper?.RemoveEndpoint(fullPath);
+            return receiver.RemoveMethod(fullPath, callback);
+        }
+
+        public async Task<bool> WaitForVRChatClientConnected(int maxwait, int refreshInterval, CancellationToken cancellationToken = default)
+        {
+            if (oscQueryHelper == null)
+            {
+                return IsRunning; // Unable to detect the client -> Everything ok, as long as the receiver is running
+            }
+            return (await oscQueryHelper.WaitForVRChat(maxwait, refreshInterval, cancellationToken)).Any();
         }
 
         public void Dispose()
         {
             IsRunning = false;
+
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

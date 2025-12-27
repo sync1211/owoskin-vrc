@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.11.35327.3
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11217.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OWOVRC", "OWOVRC\OWOVRC.csproj", "{9189C910-B27E-4F8B-AEF7-F9AAB7935E4F}"
 EndProject
@@ -23,11 +23,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{5C92223B-7147-4D81-A930-7C5AB15237C6}"
+	ProjectSection(SolutionItems) = preProject
+		.github\Screenshot_1.png = .github\Screenshot_1.png
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{8A9D8DE1-DEC1-4B7E-862F-6B938021B310}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\create-unitypackages.yml = .github\workflows\create-unitypackages.yml
-		.github\workflows\dotnet-desktop.yml = .github\workflows\dotnet-desktop.yml
+		.github\workflows\dotnet-cli-linux.yml = .github\workflows\dotnet-cli-linux.yml
+		.github\workflows\dotnet-desktop-windows.yml = .github\workflows\dotnet-desktop-windows.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWOVRC.UI.Test", "OWOVRC.UI.Test\OWOVRC.UI.Test.csproj", "{875E4846-F964-497C-9C80-056F30F260C4}"
@@ -38,6 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection
@@ -45,6 +50,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{20276BE6-2718-385D-AD1F-1090590D5F77}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder.Test", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.Test\OwoAdvancedSensationBuilder.Test.csproj", "{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vrc-oscquery-lib", "vrc-oscquery-lib\vrc-oscquery-lib\vrc-oscquery-lib.csproj", "{E42E2992-76A9-B747-D33A-856E2C787445}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vrc-oscquery-tests", "vrc-oscquery-lib\Tests\vrc-oscquery-tests\vrc-oscquery-tests.csproj", "{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -188,6 +197,30 @@ Global
 		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|x64.Build.0 = Release|Any CPU
 		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|x86.ActiveCfg = Release|Any CPU
 		{5DF9D119-A369-C5C2-5DA0-DB22B09A6285}.Release|x86.Build.0 = Release|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Debug|x64.Build.0 = Debug|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Debug|x86.Build.0 = Debug|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Release|x64.ActiveCfg = Release|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Release|x64.Build.0 = Release|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Release|x86.ActiveCfg = Release|Any CPU
+		{E42E2992-76A9-B747-D33A-856E2C787445}.Release|x86.Build.0 = Release|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Debug|x64.Build.0 = Debug|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Debug|x86.Build.0 = Debug|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|x64.ActiveCfg = Release|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|x64.Build.0 = Release|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|x86.ActiveCfg = Release|Any CPU
+		{7C0C94BF-4502-5B39-9CDE-2A4096C8CB46}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,11 +18,10 @@ namespace OWOVRC.Classes.Effects
             this.Settings = settings;
             windSensation = new WindSensation(0.3f);
 
-            timer.Elapsed += OnTimerElapsed;
-            timer.Start();
+            owo.OnCalculationCycle += OnTimerElapsed;
         }
 
-        private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        private void OnTimerElapsed(object? sender, EventArgs e)
         {
             if (!Settings.Enabled)
             {
@@ -62,7 +61,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             double speedCapped = Math.Min(Speed, Settings.MaxSpeed);
-            int speedPercent = (int)(100 * (speedCapped / Settings.MaxSpeed));
+            int speedPercent = (int)(Settings.Intensity * (speedCapped / Settings.MaxSpeed));
 
             // Send sensation to vest
             PlayWindSensation(speedPercent);
@@ -86,6 +85,12 @@ namespace OWOVRC.Classes.Effects
             owo.StopSensation(WindSensation._Name);
 
             Log.Debug("Velocity effect reset!");
+        }
+
+        public override void Dispose()
+        {
+            owo.OnCalculationCycle -= OnTimerElapsed;
+            GC.SuppressFinalize(this);
         }
     }
 }
