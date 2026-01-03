@@ -82,7 +82,6 @@ namespace OWOVRC.CLI
             WorldIntegrator owi = new(owiSettings, owo);
 
             // Set up Audio effect
-            AudioEffect? audio = null;
 
 #if TARGET_LINUX
 #warning Audio effect is disabled for Linux targets!
@@ -91,6 +90,8 @@ Log.Information("Audio effect is not yet supported on Linux!");
 #warning Audio effect is disabled due to trimming being enabled!
 Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with trimming enabled!");
 #else
+            AudioEffect? audio = null;
+
             // Set up audio effects
             Log.Debug("Preparing audio effects...");
             audio = new(owo, audioSettings);
