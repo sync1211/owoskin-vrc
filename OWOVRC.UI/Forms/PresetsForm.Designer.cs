@@ -224,7 +224,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(765, 461);
             Name = "PresetsForm";
-            Text = "PresetsForm";
+            Text = "Avatar triggers";
             Shown += PresetsForm_Shown;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             presetContextMenuStrip.ResumeLayout(false);

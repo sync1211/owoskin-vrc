@@ -948,7 +948,7 @@
             oscPresetsPage.Padding = new Padding(3);
             oscPresetsPage.Size = new Size(360, 275);
             oscPresetsPage.TabIndex = 3;
-            oscPresetsPage.Text = "Presets";
+            oscPresetsPage.Text = "Avatar";
             oscPresetsPage.ToolTipText = "Custom sensation presets";
             oscPresetsPage.UseVisualStyleBackColor = true;
             // 
