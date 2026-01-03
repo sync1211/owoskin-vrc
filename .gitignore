@@ -4,3 +4,4 @@
 .cr/**
 *.pubxml.user
 *.csproj.user
+Examples/**
