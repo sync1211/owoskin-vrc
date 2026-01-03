@@ -94,9 +94,9 @@
             descriptionLabel.AutoSize = true;
             descriptionLabel.Location = new Point(12, 9);
             descriptionLabel.Name = "descriptionLabel";
-            descriptionLabel.Size = new Size(211, 15);
+            descriptionLabel.Size = new Size(264, 15);
             descriptionLabel.TabIndex = 4;
-            descriptionLabel.Text = "The following persets will be imported:";
+            descriptionLabel.Text = "The following sensation presets will be imported:";
             // 
             // collisionIndicatorLabel
             // 
