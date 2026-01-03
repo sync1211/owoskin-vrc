@@ -51,7 +51,7 @@ namespace OWOVRC.Classes.Settings
             SetUpPriorityListener();
         }
 
-        public AudioEffectSettings(bool enabled = true) : base(enabled, 0)
+        public AudioEffectSettings(bool enabled = false) : base(enabled, 0)
         {
             SetUpSpectrumSettings();
             SetUpPriorityListener();
