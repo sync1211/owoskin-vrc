@@ -1,33 +1,11 @@
-﻿using OWOVRC.Classes.Settings;
-using Serilog;
+﻿using Serilog;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
 namespace OWOVRC.Classes.Helpers
 {
     public static partial class SettingsHelper
     {
-        // Required for deserialization via System.Text.Json
-        [JsonSerializable(typeof(ConnectionSettings))]
-        public partial class ConnectionSettingsJsonContext : JsonSerializerContext;
-
-        [JsonSerializable(typeof(VelocityEffectSettings))]
-        public partial class VelocityEffectSettingsContext : JsonSerializerContext;
-        [JsonSerializable(typeof(InertiaEffectSettings))]
-        public partial class InertiaEffectSettingsContext : JsonSerializerContext;
-
-        [JsonSerializable(typeof(CollidersEffectSettings))]
-        public partial class CollidersEffectSettingsContext : JsonSerializerContext;
-
-        [JsonSerializable(typeof(OSCPresetsSettings))]
-        public partial class OSCPresetsSettingsContext : JsonSerializerContext;
-
-        [JsonSerializable(typeof(WorldIntegratorSettings))]
-        public partial class WorldIntegratorSettingsContext : JsonSerializerContext;
-        [JsonSerializable(typeof(AudioEffectSettings))]
-        public partial class AudioEffectSettingsContext : JsonSerializerContext;
-
         // Settings directory
         public static readonly string settingsDir = Environment.CurrentDirectory;
         public static T? LoadSettingsFromFile<T>(string filename, string displayName, JsonTypeInfo<T> jsonTypeInfo)

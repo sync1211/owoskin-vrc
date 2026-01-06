@@ -30,7 +30,7 @@ namespace OWOVRC.Classes.Settings
 
         public override void SaveToFile()
         {
-            SettingsHelper.SaveSettingsToFile(this, "velocity.json", "Velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
+            SettingsHelper.SaveSettingsToFile(this, "velocity.json", "Velocity effect", SettingsJsonContext.Default.VelocityEffectSettings);
         }
     }
 }

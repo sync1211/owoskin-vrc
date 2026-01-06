@@ -37,18 +37,18 @@ namespace OWOVRC.CLI
 
             // Get Settings
             ConnectionSettings settings = SettingsHelper
-                .LoadSettingsFromFile("connection.json", "connection", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings) ?? new();
+                .LoadSettingsFromFile("connection.json", "connection", SettingsJsonContext.Default.ConnectionSettings) ?? new();
             VelocityEffectSettings velocitySettings = SettingsHelper
-                .LoadSettingsFromFile("velocity.json", "colliders effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings) ?? new();
+                .LoadSettingsFromFile("velocity.json", "colliders effect", SettingsJsonContext.Default.VelocityEffectSettings) ?? new();
             CollidersEffectSettings collisionSettings = SettingsHelper
-                .LoadSettingsFromFile("colliders.json", "velocity effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings) ?? new();
+                .LoadSettingsFromFile("colliders.json", "velocity effect", SettingsJsonContext.Default.CollidersEffectSettings) ?? new();
             OSCPresetsSettings presetsSettings = SettingsHelper
-                .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings) ?? new();
+                .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsJsonContext.Default.OSCPresetsSettings) ?? new();
             WorldIntegratorSettings owiSettings = SettingsHelper
-                .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings) ?? new();
+                .LoadSettingsFromFile("owi.json", "OWI integration", SettingsJsonContext.Default.WorldIntegratorSettings) ?? new();
 #if !TRIMMING_ENABLED && !TARGET_LINUX
             AudioEffectSettings audioSettings = SettingsHelper
-                .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings) ?? new();
+                .LoadSettingsFromFile("audio.json", "Audio", SettingsJsonContext.Default.AudioEffectSettings) ?? new();
 #endif
             // Prepare OWOHelper
             Log.Debug("Preparing OSC listener...");

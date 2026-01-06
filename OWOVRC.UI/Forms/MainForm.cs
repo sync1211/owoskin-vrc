@@ -138,7 +138,7 @@ namespace OWOVRC.UI
         {
             // Connection settings
             ConnectionSettings? loadedConnectionSettings = SettingsHelper
-                .LoadSettingsFromFile("connection.json", "connection", SettingsHelper.ConnectionSettingsJsonContext.Default.ConnectionSettings);
+                .LoadSettingsFromFile("connection.json", "connection", SettingsJsonContext.Default.ConnectionSettings);
             if (loadedConnectionSettings != null)
             {
                 this.connectionSettings = loadedConnectionSettings;
@@ -146,7 +146,7 @@ namespace OWOVRC.UI
 
             // Colliders effect settings
             CollidersEffectSettings? loadedCollidersSettings = SettingsHelper
-                .LoadSettingsFromFile("colliders.json", "colliders effect", SettingsHelper.CollidersEffectSettingsContext.Default.CollidersEffectSettings);
+                .LoadSettingsFromFile("colliders.json", "colliders effect", SettingsJsonContext.Default.CollidersEffectSettings);
             if (loadedCollidersSettings != null)
             {
                 this.collidersSettings = loadedCollidersSettings;
@@ -154,7 +154,7 @@ namespace OWOVRC.UI
 
             // Velocity effect settings
             VelocityEffectSettings? loadedVelocitySettings = SettingsHelper
-                .LoadSettingsFromFile("velocity.json", "velocity effect", SettingsHelper.VelocityEffectSettingsContext.Default.VelocityEffectSettings);
+                .LoadSettingsFromFile("velocity.json", "velocity effect", SettingsJsonContext.Default.VelocityEffectSettings);
             if (loadedVelocitySettings != null)
             {
                 this.velocitySettings = loadedVelocitySettings;
@@ -162,7 +162,7 @@ namespace OWOVRC.UI
 
             // Velocity effect settings
             InertiaEffectSettings? loadedInertiaSettings = SettingsHelper
-                .LoadSettingsFromFile("inertia.json", "inertia effect", SettingsHelper.InertiaEffectSettingsContext.Default.InertiaEffectSettings);
+                .LoadSettingsFromFile("inertia.json", "inertia effect", SettingsJsonContext.Default.InertiaEffectSettings);
             if (loadedInertiaSettings != null)
             {
                 this.inertiaSettings = loadedInertiaSettings;
@@ -170,7 +170,7 @@ namespace OWOVRC.UI
 
             // OWI settings
             WorldIntegratorSettings? loadedOwiSettings = SettingsHelper
-                .LoadSettingsFromFile("owi.json", "OWI integration", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
+                .LoadSettingsFromFile("owi.json", "OWI integration", SettingsJsonContext.Default.WorldIntegratorSettings);
             if (loadedOwiSettings != null)
             {
                 this.owiSettings = loadedOwiSettings;
@@ -178,7 +178,7 @@ namespace OWOVRC.UI
 
             // OSC Presets settings
             OSCPresetsSettings? loadedOscPresetsSettings = SettingsHelper
-                .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
+                .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsJsonContext.Default.OSCPresetsSettings);
             if (loadedOscPresetsSettings != null)
             {
                 this.oscPresetsSettings = loadedOscPresetsSettings;
@@ -186,7 +186,7 @@ namespace OWOVRC.UI
 
             // Audio settings
             AudioEffectSettings? loadedAudioSettings = SettingsHelper
-                .LoadSettingsFromFile("audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
+                .LoadSettingsFromFile("audio.json", "Audio", SettingsJsonContext.Default.AudioEffectSettings);
             if (loadedAudioSettings != null)
             {
                 this.audioSettings = loadedAudioSettings;

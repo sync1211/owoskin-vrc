@@ -44,7 +44,7 @@ namespace OWOVRC.Classes.Settings
 
         public override void SaveToFile()
         {
-            SettingsHelper.SaveSettingsToFile(this, "owi.json", "OWO World Integrator", SettingsHelper.WorldIntegratorSettingsContext.Default.WorldIntegratorSettings);
+            SettingsHelper.SaveSettingsToFile(this, "owi.json", "OWO World Integrator", SettingsJsonContext.Default.WorldIntegratorSettings);
         }
     }
 }

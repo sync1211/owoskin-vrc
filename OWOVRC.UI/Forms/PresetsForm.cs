@@ -198,7 +198,7 @@ namespace OWOVRC.UI.Forms
 
         private bool ImportSensationsFromSettingsFile(string path)
         {
-            OSCPresetsSettings? importedSettings = SettingsHelper.LoadSettingsFromFile<OSCPresetsSettings>(path, "imported preset", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
+            OSCPresetsSettings? importedSettings = SettingsHelper.LoadSettingsFromFile<OSCPresetsSettings>(path, "imported preset", SettingsJsonContext.Default.OSCPresetsSettings);
             if (importedSettings == null || importedSettings.Presets == null)
             {
                 MessageBox.Show(

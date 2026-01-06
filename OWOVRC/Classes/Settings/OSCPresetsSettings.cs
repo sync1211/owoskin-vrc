@@ -30,7 +30,7 @@ namespace OWOVRC.Classes.Settings
 
         public override void SaveToFile()
         {
-            SettingsHelper.SaveSettingsToFile(this, "oscPresets.json", "OSC Presets", SettingsHelper.OSCPresetsSettingsContext.Default.OSCPresetsSettings);
+            SettingsHelper.SaveSettingsToFile(this, "oscPresets.json", "OSC Presets", SettingsJsonContext.Default.OSCPresetsSettings);
         }
     }
 }

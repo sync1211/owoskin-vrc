@@ -77,7 +77,7 @@ namespace OWOVRC.Classes.Settings
 
         public override void SaveToFile()
         {
-            SettingsHelper.SaveSettingsToFile(this, "audio.json", "Audio", SettingsHelper.AudioEffectSettingsContext.Default.AudioEffectSettings);
+            SettingsHelper.SaveSettingsToFile(this, "audio.json", "Audio", SettingsJsonContext.Default.AudioEffectSettings);
         }
     }
 }
