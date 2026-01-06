@@ -36,12 +36,6 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
-    # Install the .NET Core 6.0 workload (required for vrc-oscquery-lib tests)
-    - name: Install .NET Core 6.0 (for vrc-oscquery-lib tests)
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 6.0.x
-
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
