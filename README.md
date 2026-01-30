@@ -1,4 +1,5 @@
 # OWOVRC: OWO Skin VRChat integration
+[![.NET 9.0](.github/badges/badge-dotnet9.svg)](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) [![GPLv3](.github/badges/badge-gpl3.svg)](LICENSE.md) [![Documentation](.github/badges/badge-docs.svg)](https://github.com/sync1211/owoskin-vrc/wiki)
 
 Yet another [VRChat](https://vrchat.com) integration for the [OWO Skin](https://owogame.com/).
 
