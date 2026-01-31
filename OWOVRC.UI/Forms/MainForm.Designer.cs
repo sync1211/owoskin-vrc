@@ -1168,7 +1168,6 @@
             useOSCQueryCheckbox.TabIndex = 18;
             useOSCQueryCheckbox.Text = "Auto";
             useOSCQueryCheckbox.UseVisualStyleBackColor = true;
-            useOSCQueryCheckbox.CheckedChanged += UseOSCQueryCheckbox_CheckedChanged;
             // 
             // audioStatusLabel
             // 

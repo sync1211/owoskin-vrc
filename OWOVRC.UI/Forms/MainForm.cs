@@ -715,6 +715,9 @@ namespace OWOVRC.UI
             UpdateOWISettings();
             UpdateOSCPrestsSettings();
 
+            // Late-Add handler to prevent triggering a save when initially applying settings
+            useOSCQueryCheckbox.CheckedChanged += UseOSCQueryCheckbox_CheckedChanged;
+
             uiUpdateTimer.Start();
             UpdateAudioSettings();
         }
@@ -770,14 +773,21 @@ namespace OWOVRC.UI
                     owoIPInput.Text = connectionSettings.OWOAddress;
                     return;
                 }
-                connectionSettings.OWOAddress = ipAddress.ToString();
+
+                string ipAddressString = ipAddress.ToString();
+                if (connectionSettings.OWOAddress == ipAddressString)
+                {
+                    // No changes -> Don't update or save any settings
+                    return;
+                }
+
+                connectionSettings.OWOAddress = ipAddressString;
+                connectionSettings.SaveToFile();
             }
             else
             {
                 owoIPInput.Text = connectionSettings.OWOAddress;
             }
-
-            connectionSettings.SaveToFile();
         }
 
         private void OscPortInput_ValueChanged(object sender, EventArgs e)
@@ -1381,7 +1391,7 @@ namespace OWOVRC.UI
             speedHistoryForm = null;
         }
 
-        private void UseOSCQueryCheckbox_CheckedChanged(object sender, EventArgs e)
+        private void UseOSCQueryCheckbox_CheckedChanged(object? sender, EventArgs e)
         {
             oscPortInput.Enabled = !useOSCQueryCheckbox.Checked;
             connectionSettings.UseOSCQuery = useOSCQueryCheckbox.Checked;
