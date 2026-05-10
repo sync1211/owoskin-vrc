@@ -10,6 +10,9 @@ on:
     branches: [ "master" ]
 
 jobs:
+    defaults:
+      run:
+        working-directory: ./Unity
   unitypackage:
     runs-on: ubuntu-latest
     steps:
@@ -20,7 +23,7 @@ jobs:
     
     # Example Avatar
     - name: "Collect files for Example Avatar"
-      run: find 'Unity/Example Avatar/' -name \*.meta > metaList
+      run: find 'Example Avatar/' -name \*.meta > metaList
     - name: "Create unitypackage for Example Avatar"
       uses: pCYSl5EDgo/create-unitypackage@v1.2.3
       with:
@@ -34,7 +37,7 @@ jobs:
     
     # OWOSkin Prefab
     - name: "Collect files for OWOSkin Prefab"
-      run: find 'Unity/OWOSkin Prefab/' -name \*.meta > metaList
+      run: find 'OWOSkin Prefab/' -name \*.meta > metaList
     - name: "Create unitypackage for OWOSkin Prefab"
       uses: "pCYSl5EDgo/create-unitypackage@v1.2.3"
       with:
@@ -48,7 +51,7 @@ jobs:
 
     # Additional Interactions
     - name: "Collect files for Additional Interactions"
-      run: find 'Unity/Additional Interactions/' -name \*.meta > metaList
+      run: find 'Additional Interactions/' -name \*.meta > metaList
     - name: "Create unitypackage for Additional Interactions"
       uses: "pCYSl5EDgo/create-unitypackage@v1.2.3"
       with:
@@ -58,4 +61,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         path: "output/Additional Interactions.unitypackage"
+
         name: Additional Interactions
