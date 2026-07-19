@@ -30,7 +30,7 @@ Please refer to the [Wiki](https://github.com/sync1211/owoskin-vrc/wiki) for a q
 * [RevoForge & SonoVr's OWO World Integration](https://github.com/RevoForge/Vrchat-OWO-Integration)
 * [McSolo's OwoAdvancedSensationBuilder](https://github.com/joeloestreich/OwoAdvancedSensationBuilderNet8Demo)
 
-## Dislcaimer
+## Disclaimer
 
 This is a community project; I am not affiliated with OWOGame.
 
