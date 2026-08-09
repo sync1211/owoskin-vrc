@@ -1,6 +1,4 @@
 ﻿using OWOVRC.Classes.Effects;
-using OWOVRC.Classes.OSC;
-using OWOVRC.Classes.OWOSuit;
 using OWOVRC.UI.Classes.Extensions;
 
 namespace OWOVRC.UI.Forms.Monitors
@@ -41,10 +39,7 @@ namespace OWOVRC.UI.Forms.Monitors
             {
                 this.InvokeIfRequired(UpdateVelocityDisplay);
             }
-            catch (ObjectDisposedException)
-            {
-                this.InvokeIfRequired(Close);
-            }
+            catch (ObjectDisposedException) { }
         }
 
         public void SetMaxVelocity(float maxVelocity)

@@ -31,10 +31,7 @@ namespace OWOVRC.UI.Forms.Monitors
             {
                 this.InvokeIfRequired(AddSpeedItem, [value]);
             }
-            catch (ObjectDisposedException)
-            {
-                this.InvokeIfRequired(Close);
-            }
+            catch (ObjectDisposedException) { }
         }
 
         public void SetMaxVelocity(float maxVelocity)
