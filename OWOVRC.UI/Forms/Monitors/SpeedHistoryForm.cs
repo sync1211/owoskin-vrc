@@ -30,6 +30,7 @@ namespace OWOVRC.UI.Forms.Monitors
             try
             {
                 this.InvokeIfRequired(AddSpeedItem, [value]);
+                this.InvokeIfRequired(UpdatePlayerState);
             }
             catch (ObjectDisposedException) { }
         }
@@ -48,6 +49,12 @@ namespace OWOVRC.UI.Forms.Monitors
         private void AddSpeedItem(float value)
         {
             speedHistoryGraph.AddValue(value);
+        }
+
+        private void UpdatePlayerState()
+        {
+            seatedIndicator.Checked = inertiaEffect.IsSeated;
+            seatedIndicator.Checked = inertiaEffect.IsGrounded;
         }
 
         public void SetOSCStatus(bool isActive)

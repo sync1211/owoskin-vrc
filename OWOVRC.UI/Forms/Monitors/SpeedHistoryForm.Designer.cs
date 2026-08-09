@@ -34,6 +34,10 @@
             closeButton = new Button();
             resumeGraphButton = new Button();
             pauseGraphButton = new Button();
+            seatedIndicator = new CheckBox();
+            groundedIndicator = new CheckBox();
+            playerStateGroup = new GroupBox();
+            playerStateGroup.SuspendLayout();
             SuspendLayout();
             // 
             // speedHistoryGraph
@@ -42,11 +46,11 @@
             speedHistoryGraph.DeltaThreshold = 30F;
             speedHistoryGraph.DeltaThresholdColor = Color.Orange;
             speedHistoryGraph.LineColor = Color.Black;
-            speedHistoryGraph.Location = new Point(12, 40);
+            speedHistoryGraph.Location = new Point(12, 49);
             speedHistoryGraph.MaxY = 100F;
             speedHistoryGraph.Name = "speedHistoryGraph";
             speedHistoryGraph.SegmentCount = 20;
-            speedHistoryGraph.Size = new Size(1135, 240);
+            speedHistoryGraph.Size = new Size(1135, 249);
             speedHistoryGraph.TabIndex = 0;
             // 
             // notRunningIndicator
@@ -54,7 +58,7 @@
             notRunningIndicator.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             notRunningIndicator.AutoSize = true;
             notRunningIndicator.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            notRunningIndicator.Location = new Point(12, 286);
+            notRunningIndicator.Location = new Point(12, 304);
             notRunningIndicator.Name = "notRunningIndicator";
             notRunningIndicator.Size = new Size(166, 30);
             notRunningIndicator.TabIndex = 9;
@@ -65,7 +69,7 @@
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             closeButton.DialogResult = DialogResult.Cancel;
             closeButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            closeButton.Location = new Point(1072, 288);
+            closeButton.Location = new Point(1072, 306);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(75, 23);
             closeButton.TabIndex = 8;
@@ -76,9 +80,9 @@
             // resumeGraphButton
             // 
             resumeGraphButton.Image = Properties.Resources.Pause;
-            resumeGraphButton.Location = new Point(1125, 12);
+            resumeGraphButton.Location = new Point(1115, 12);
             resumeGraphButton.Name = "resumeGraphButton";
-            resumeGraphButton.Size = new Size(22, 22);
+            resumeGraphButton.Size = new Size(32, 32);
             resumeGraphButton.TabIndex = 10;
             resumeGraphButton.UseVisualStyleBackColor = true;
             resumeGraphButton.Click += ResumeGraphButton_Click;
@@ -86,19 +90,53 @@
             // pauseGraphButton
             // 
             pauseGraphButton.Image = Properties.Resources.Play;
-            pauseGraphButton.Location = new Point(1125, 12);
+            pauseGraphButton.Location = new Point(1115, 12);
             pauseGraphButton.Name = "pauseGraphButton";
-            pauseGraphButton.Size = new Size(22, 22);
+            pauseGraphButton.Size = new Size(32, 32);
             pauseGraphButton.TabIndex = 11;
             pauseGraphButton.UseVisualStyleBackColor = true;
             pauseGraphButton.Click += PauseGraphButton_Click;
+            // 
+            // seatedIndicator
+            // 
+            seatedIndicator.AutoCheck = false;
+            seatedIndicator.AutoSize = true;
+            seatedIndicator.Location = new Point(95, 15);
+            seatedIndicator.Name = "seatedIndicator";
+            seatedIndicator.Size = new Size(61, 19);
+            seatedIndicator.TabIndex = 17;
+            seatedIndicator.Text = "Seated";
+            seatedIndicator.UseVisualStyleBackColor = true;
+            // 
+            // groundedIndicator
+            // 
+            groundedIndicator.AutoCheck = false;
+            groundedIndicator.AutoSize = true;
+            groundedIndicator.Location = new Point(10, 15);
+            groundedIndicator.Name = "groundedIndicator";
+            groundedIndicator.Size = new Size(79, 19);
+            groundedIndicator.TabIndex = 16;
+            groundedIndicator.Text = "Grounded";
+            groundedIndicator.UseVisualStyleBackColor = true;
+            // 
+            // playerStateGroup
+            // 
+            playerStateGroup.Controls.Add(seatedIndicator);
+            playerStateGroup.Controls.Add(groundedIndicator);
+            playerStateGroup.Location = new Point(12, 3);
+            playerStateGroup.Name = "playerStateGroup";
+            playerStateGroup.Size = new Size(166, 40);
+            playerStateGroup.TabIndex = 19;
+            playerStateGroup.TabStop = false;
+            playerStateGroup.Text = "Player state";
             // 
             // SpeedHistoryForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = closeButton;
-            ClientSize = new Size(1159, 323);
+            ClientSize = new Size(1159, 341);
+            Controls.Add(playerStateGroup);
             Controls.Add(pauseGraphButton);
             Controls.Add(resumeGraphButton);
             Controls.Add(notRunningIndicator);
@@ -109,6 +147,8 @@
             MaximizeBox = false;
             Name = "SpeedHistoryForm";
             Text = "Player Speed";
+            playerStateGroup.ResumeLayout(false);
+            playerStateGroup.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -120,5 +160,8 @@
         private Button closeButton;
         private Button resumeGraphButton;
         private Button pauseGraphButton;
+        private CheckBox seatedIndicator;
+        private CheckBox groundedIndicator;
+        private GroupBox playerStateGroup;
     }
 }
