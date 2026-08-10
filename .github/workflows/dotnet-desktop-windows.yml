@@ -35,7 +35,7 @@ jobs:
         submodules: true
 
     # Install the .NET Core workload
-    - name: Install .NET Core 9.0
+    - name: Install .NET Core
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.x
