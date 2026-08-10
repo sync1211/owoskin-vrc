@@ -3,9 +3,13 @@ permissions:
   contents: read
   actions: write
 
+env:
+  # Fix "file is in use by another process" errors during build
+  MSBUILDNODECOUNT: 1
+
 on:
   push:
-    branches: [ "master", "ConcurrentManager" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -42,13 +46,13 @@ jobs:
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test
+      run: dotnet test -m:1
 
     # Build the app
     - name: Publish OWOVRC.CLI
-      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishProfile=OWOVRC.CLI/Properties/PublishProfiles/Windows-x64.pubxml
+      run: dotnet publish "OWOVRC.CLI/OWOVRC.CLI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishProfile=OWOVRC.CLI/Properties/PublishProfiles/Windows-x64.pubxml -m:1
     - name: Publish OWOVRC.UI
-      run: dotnet publish "OWOVRC.UI/OWOVRC.UI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishProfile=OWOVRC.UI/Properties/PublishProfiles/Windows-x64.pubxml
+      run: dotnet publish "OWOVRC.UI/OWOVRC.UI.csproj" -r win-x64 -o "OWOVRC/bin/publish/win-x64/" -p:PublishProfile=OWOVRC.UI/Properties/PublishProfiles/Windows-x64.pubxml -m:1
 
     # Upload the EXE https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
