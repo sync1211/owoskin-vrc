@@ -13,10 +13,13 @@ namespace OWOVRC.Classes.Effects
         // Settings
         public readonly VelocityEffectSettings Settings;
 
+        // Constants
+        public const float SENSATION_DURATION = 0.3f;
+
         public VelocityEffect(OWOHelper owo, VelocityEffectSettings settings): base(owo, settings)
         {
             this.Settings = settings;
-            windSensation = new WindSensation(0.3f);
+            windSensation = new WindSensation(SENSATION_DURATION);
 
             owo.OnCalculationCycle += OnTimerElapsed;
         }
