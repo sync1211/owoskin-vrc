@@ -51,6 +51,8 @@
             collidersEnabledCheckbox = new CheckBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
+            velocityTestButton = new Button();
+            velocityTestLabel = new Label();
             velocityIntensityLabel = new Label();
             velocityIntensityInput = new NumericUpDown();
             velocityIgnoreGroup = new GroupBox();
@@ -249,7 +251,7 @@
             collidersDecayOnExitCheckbox.AutoSize = true;
             collidersDecayOnExitCheckbox.Location = new Point(6, 46);
             collidersDecayOnExitCheckbox.Name = "collidersDecayOnExitCheckbox";
-            collidersDecayOnExitCheckbox.Size = new Size(96, 19);
+            collidersDecayOnExitCheckbox.Size = new Size(95, 19);
             collidersDecayOnExitCheckbox.TabIndex = 15;
             collidersDecayOnExitCheckbox.Text = "Apply on exit";
             helpToolTip.SetToolTip(collidersDecayOnExitCheckbox, resources.GetString("collidersDecayOnExitCheckbox.ToolTip"));
@@ -418,6 +420,8 @@
             // 
             // velocitySettingsPage
             // 
+            velocitySettingsPage.Controls.Add(velocityTestButton);
+            velocitySettingsPage.Controls.Add(velocityTestLabel);
             velocitySettingsPage.Controls.Add(velocityIntensityLabel);
             velocitySettingsPage.Controls.Add(velocityIntensityInput);
             velocitySettingsPage.Controls.Add(velocityIgnoreGroup);
@@ -438,6 +442,28 @@
             velocitySettingsPage.Text = "Velocity";
             velocitySettingsPage.ToolTipText = "Player velocity-based effects";
             velocitySettingsPage.UseVisualStyleBackColor = true;
+            // 
+            // velocityTestButton
+            // 
+            velocityTestButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            velocityTestButton.Location = new Point(262, 142);
+            velocityTestButton.Name = "velocityTestButton";
+            velocityTestButton.Size = new Size(89, 23);
+            velocityTestButton.TabIndex = 52;
+            velocityTestButton.Text = "Preview";
+            helpToolTip.SetToolTip(velocityTestButton, "Preview the effect using the current settings.");
+            velocityTestButton.UseVisualStyleBackColor = true;
+            velocityTestButton.Click += VelocityTestButton_Click;
+            // 
+            // velocityTestLabel
+            // 
+            velocityTestLabel.AutoSize = true;
+            velocityTestLabel.Location = new Point(6, 144);
+            velocityTestLabel.Name = "velocityTestLabel";
+            velocityTestLabel.Size = new Size(101, 15);
+            velocityTestLabel.TabIndex = 51;
+            velocityTestLabel.Text = "Preview sensation";
+            helpToolTip.SetToolTip(velocityTestLabel, "Preview the effect using the current settings.");
             // 
             // velocityIntensityLabel
             // 
@@ -507,7 +533,7 @@
             velocitySpeedCapLabel.AutoSize = true;
             velocitySpeedCapLabel.Location = new Point(6, 86);
             velocitySpeedCapLabel.Name = "velocitySpeedCapLabel";
-            velocitySpeedCapLabel.Size = new Size(109, 15);
+            velocitySpeedCapLabel.Size = new Size(108, 15);
             velocitySpeedCapLabel.TabIndex = 11;
             velocitySpeedCapLabel.Text = "Max. velocity (m/s)";
             helpToolTip.SetToolTip(velocitySpeedCapLabel, "Maximum speed for wind effects (used for scaling)");
@@ -701,7 +727,7 @@
             inertiaMaxDeltaLabel.AutoSize = true;
             inertiaMaxDeltaLabel.Location = new Point(6, 86);
             inertiaMaxDeltaLabel.Name = "inertiaMaxDeltaLabel";
-            inertiaMaxDeltaLabel.Size = new Size(109, 15);
+            inertiaMaxDeltaLabel.Size = new Size(108, 15);
             inertiaMaxDeltaLabel.TabIndex = 39;
             inertiaMaxDeltaLabel.Text = "Max. velocity (m/s)";
             helpToolTip.SetToolTip(inertiaMaxDeltaLabel, "Maximum speed difference for inertia effects (used for scaling)");
@@ -1705,5 +1731,7 @@
         private Label velocityIntensityLabel;
         private NumericUpDown velocityIntensityInput;
         private CheckBox useOSCQueryCheckbox;
+        private Button velocityTestButton;
+        private Label velocityTestLabel;
     }
 }

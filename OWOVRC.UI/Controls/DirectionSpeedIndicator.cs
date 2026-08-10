@@ -213,12 +213,13 @@ namespace OWOVRC.UI.Controls
             int centerX = Width / 2;
             int centerY = Height / 2;
 
-            float valueXScaled = (int) (Math.Clamp(valueX / maxX, -1f, 1f) * Width);
-            float valueYScaled = (int) (Math.Clamp(valueY / maxY, -1f, 1f) * Height);
+            float valueXScaled = (int) (Math.Clamp(valueX / maxX, -1f, 1f) * (Width - centerX));
+            float valueYScaled = (int) (Math.Clamp(valueY / maxY, -1f, 1f) * (Height - centerY));
 
             int indicatorX = (int) (centerX + valueXScaled);
             int indicatorY = (int) (centerY - valueYScaled);
-
+               
+            //TODO: FIXME: ValueY at 100% (positive) is out of bounds (-1)
             indicatorEnd = new Point(indicatorX, indicatorY);
 
             Invalidate();
@@ -229,8 +230,8 @@ namespace OWOVRC.UI.Controls
             int centerX = Width / 2;
             int centerY = Height / 2;
 
-            int thresholdWidth = (int)(Math.Clamp(thresholdX / maxX, -1f, 1f) * Width);
-            int thresholdHeight = (int)(Math.Clamp(thresholdY / maxY, -1f, 1f) * Height);
+            int thresholdWidth = (int)(Math.Clamp(thresholdX / maxX, -1f, 1f) * (Width - centerX));
+            int thresholdHeight = (int)(Math.Clamp(thresholdY / maxY, -1f, 1f) * (Height - centerY));
 
             int thresholdOffsetX = centerX - thresholdWidth;
             int thresholdOffsetY = centerY - thresholdHeight;

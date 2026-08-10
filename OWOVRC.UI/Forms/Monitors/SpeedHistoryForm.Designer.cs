@@ -147,6 +147,7 @@
             MaximizeBox = false;
             Name = "SpeedHistoryForm";
             Text = "Player Speed";
+            FormClosing += SpeedHistoryForm_FormClosing;
             playerStateGroup.ResumeLayout(false);
             playerStateGroup.PerformLayout();
             ResumeLayout(false);

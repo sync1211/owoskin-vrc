@@ -69,10 +69,12 @@ namespace OWOVRC.UI
         // DataSource for activeSensationListBox
         private readonly BindingList<string> activeSensationList = [];
 
-        // Monitor forms (single-instance, not shown as dialogs)
+        // Monitor/Test forms (single-instance, not shown as dialogs)
         private AudioMonitorForm? audioMonitorForm;
         private SpeedMonitorForm? speedMonitorForm;
         private SpeedHistoryForm? speedHistoryForm;
+
+        private SpeedTestForm? speedTestForm;
 
         // Token for cancelling the start/connection process
         private CancellationTokenSource cancellationTokenSource = new();
@@ -193,7 +195,7 @@ namespace OWOVRC.UI
             }
 
             // Update buttons
-            UpdateVelocityMonitorButtonState();
+            UpdateVelocityButtonsState();
             UpdateInertiaMonitorButtonState();
         }
 
@@ -282,6 +284,7 @@ namespace OWOVRC.UI
                 connectionStatusLabel.Text = "Disconnected";
                 connectionStatusLabel.ForeColor = Color.Red;
             }
+            UpdateVelocityButtonsState();
 
             // OSC receiver
             if (receiver?.IsRunning ?? false)
@@ -852,14 +855,19 @@ namespace OWOVRC.UI
 
             velocitySettings.SaveToFile();
 
-            UpdateVelocityMonitorButtonState();
+            UpdateVelocityButtonsState();
 
+            // Monitor window
             speedMonitorForm?.SetMaxVelocity(velocitySettings.MaxSpeed);
             speedMonitorForm?.SetMinVelocity(velocitySettings.MinSpeed);
+
+            // Sensation test window
+            speedTestForm?.UpdateValues();
 
             if (!velocitySettings.Enabled)
             {
                 speedMonitorForm?.Close();
+                speedTestForm?.Close();
             }
 
             // (Optimization) Unregister callbacks when disabled
@@ -878,9 +886,10 @@ namespace OWOVRC.UI
             }
         }
 
-        private void UpdateVelocityMonitorButtonState()
+        private void UpdateVelocityButtonsState()
         {
             velocityMonitorButton.Enabled = velocitySettings.Enabled;
+            velocityTestButton.Enabled = velocitySettings.Enabled && OWOHelper.IsConnected;
         }
 
         private void StopSensationsButton_Click(object sender, EventArgs e)
@@ -1396,6 +1405,25 @@ namespace OWOVRC.UI
             oscPortInput.Enabled = !useOSCQueryCheckbox.Checked;
             connectionSettings.UseOSCQuery = useOSCQueryCheckbox.Checked;
             connectionSettings.SaveToFile();
+        }
+
+        private void VelocityTestButton_Click(object sender, EventArgs e)
+        {
+            if (speedTestForm == null)
+            {
+                speedTestForm = new SpeedTestForm(owo, velocitySettings);
+                speedTestForm.FormClosed += SpeedTestForm_Closed;
+                speedTestForm.Show();
+            }
+
+            speedTestForm.WindowState = FormWindowState.Normal; // Show if minimized
+            speedTestForm.Activate();
+        }
+
+        private void SpeedTestForm_Closed(object? sender, EventArgs e)
+        {
+            speedTestForm?.Dispose();
+            speedTestForm = null;
         }
     }
 }
