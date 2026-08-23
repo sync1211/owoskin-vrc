@@ -211,7 +211,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;sideDirectionIndicator.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>0</value>
   </data>
   <data name="topDirectionTitle.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -325,7 +325,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;sideDirectionTitle.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="playerZBar2.Location" type="System.Drawing.Point, System.Drawing">
     <value>194, 24</value>
@@ -346,7 +346,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;playerZBar2.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="playerYBar.Location" type="System.Drawing.Point, System.Drawing">
     <value>325, 63</value>
@@ -397,7 +397,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;closeButton.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="startTestButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 196</value>
@@ -418,7 +418,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;startTestButton.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="stopTestButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 196</value>
@@ -442,7 +442,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;stopTestButton.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="xSpeedLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -472,7 +472,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;xSpeedLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="xSpeedInput.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 195</value>
@@ -493,7 +493,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;xSpeedInput.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="ySpeedInput.Location" type="System.Drawing.Point, System.Drawing">
     <value>148, 195</value>
@@ -514,7 +514,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ySpeedInput.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="ySpeedLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -547,7 +547,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;ySpeedLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="zSpeedInput.Location" type="System.Drawing.Point, System.Drawing">
     <value>225, 195</value>
@@ -568,7 +568,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;zSpeedInput.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="zSpeedLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -601,7 +601,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;zSpeedLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>

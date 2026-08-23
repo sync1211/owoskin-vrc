@@ -197,6 +197,7 @@
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(sideDirectionIndicator);
             Controls.Add(zSpeedInput);
             Controls.Add(zSpeedLabel);
             Controls.Add(ySpeedInput);
@@ -208,7 +209,6 @@
             Controls.Add(closeButton);
             Controls.Add(playerZBar2);
             Controls.Add(sideDirectionTitle);
-            Controls.Add(sideDirectionIndicator);
             Controls.Add(topDirectionTitle);
             Controls.Add(topDirectionIndicator);
             Controls.Add(playerZBar);
