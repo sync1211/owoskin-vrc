@@ -14,7 +14,7 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="!$(DefineConstants.Contains('TARGET_LINUX')) and !$(DefineContants.Contains('TRIMMING_ENABLED'))">
+  <PropertyGroup Condition="!$(DefineConstants.Contains('TARGET_LINUX')) and !$(DefineConstants.Contains('TRIMMING_ENABLED'))">
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
 
