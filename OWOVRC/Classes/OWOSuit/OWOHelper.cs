@@ -190,7 +190,7 @@ namespace OWOVRC.Classes.OWOSuit
 
         public void Dispose()
         {
-            timer.stop();
+            timer.Stop();
             timer.Elapsed -= OnTimerElapsed;
             timer.Dispose();
 
