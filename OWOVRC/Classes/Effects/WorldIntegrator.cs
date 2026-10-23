@@ -56,7 +56,7 @@ namespace OWOVRC.Classes.Effects
             FileInfo? logFile = GetVRCLogFile();
             if (logFile == null)
             {
-                throw new FileNotFoundException($"No VRChat log file not found at {VRC_LOG_DIR}!");
+                throw new FileNotFoundException($"No VRChat log file found at {VRC_LOG_DIR}!");
             }
 
             // Update log watcher parameters
@@ -88,7 +88,7 @@ namespace OWOVRC.Classes.Effects
 
         private FileInfo? GetVRCLogFile()
         {
-            Log.Debug("VRChat log directory: ", VRC_LOG_DIR);
+            Log.Debug("VRChat log directory: {Path}", VRC_LOG_DIR);
             // Log directory
             if (!Directory.Exists(VRC_LOG_DIR))
             {
