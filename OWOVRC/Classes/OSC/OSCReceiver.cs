@@ -19,6 +19,14 @@ namespace OWOVRC.Classes.OSC
         {
             Port = port;
             receiver = OscServer.GetOrCreate(Port);
+            
+            //NOTE: GetOrCreate may return an already existing instance.
+            //      Even if we reuse an instance; It should normally be at 0 callbacks.
+            //      Logging this unlikely case, just in case it actually happens.
+            int handlerCount = receiver.CountHandlers();
+            if (handlerCount > 0) {
+                Log.Warning("New OSC receiver already has {num} registered callback handlers!", handlerCount);
+            }
 
             if (oscQuery)
             {
@@ -49,6 +57,11 @@ namespace OWOVRC.Classes.OSC
             }
 
             oscQueryHelper?.Dispose();
+
+            int handlerCount = receiver.CountHandlers();
+            if (handlerCount > 0) {
+                Log.Warning("Disposing a receiver which still has {num} callback handlers!", handlerCount);
+            }
 
             receiver.Dispose();
             disposed = true;
