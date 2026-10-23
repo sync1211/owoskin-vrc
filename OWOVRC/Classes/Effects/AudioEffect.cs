@@ -54,7 +54,7 @@ namespace OWOVRC.Classes.Effects
             for (int i = 0; i < Settings.SpectrumSettings.Length; i++)
             {
                 AudioEffectSpectrumSettings spectrumSettings = Settings.SpectrumSettings[i];
-                Sensation? sensation = ProcessSpectrum(rightSample, leftSample, spectrumSettings);
+                Sensation? sensation = ProcessSpectrum(leftSample, rightSample, spectrumSettings);
 
                 // No sensation created -> Try next effect
                 if (sensation == null)
