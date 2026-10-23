@@ -57,14 +57,13 @@ namespace OWOVRC.Classes.OWOSuit
                 return false;
             }
 
-            if (IsConnected)
-            {
-                Log.Information("Connected to OWO!");
-            }
-            else
+            if (!IsConnected)
             {
                 Log.Information("Connection to OWO failed!");
+                return false;
             }
+
+            Log.Information("Connected to OWO!");
             return true;
         }
 

@@ -176,8 +176,13 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
 
         public static async Task MainLoop(OWOHelper owo)
         {
-            await owo.Connect()
+            bool connectResult = await owo.Connect()
                 .ConfigureAwait(false);
+
+            if (!connectResult) {
+                return;
+            }
+
             try
             {
                 await Task.Delay(-1)
