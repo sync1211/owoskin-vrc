@@ -94,11 +94,6 @@ namespace OWOVRC.Classes.Commandline
                         continue;
                     }
 
-                    if (options.CpuAffinity != null)
-                    {
-                        Log.Warning("CPU affinity already set, ignoring other CPU affinity value of {Arg:X}", options.CpuAffinity);
-                    }
-
                     options.Priority = priorityClass.Value;
                 }
 
