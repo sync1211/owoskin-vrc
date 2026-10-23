@@ -118,7 +118,7 @@ namespace OWOVRC.Classes.Effects
 
         public void Dispose()
         {
-            Analyzer.OnSampleRead -= OnSampleRead;
+            Analyzer.OnSampleRead -= Analyzer_OnSampleRead;
             Stop();
             Analyzer.Dispose();
             GC.SuppressFinalize(this);
