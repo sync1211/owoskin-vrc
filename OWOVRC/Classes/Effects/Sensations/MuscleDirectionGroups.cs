@@ -41,7 +41,7 @@ namespace OWOVRC.Classes.Effects.Sensations
             Back  = back  ?? Muscle.Back;
             Left  = left  ?? OWOMuscles.MuscleGroups["leftMuscles"];
             Right = right ?? OWOMuscles.MuscleGroups["rightMuscles"];
-            Up    = up    ?? [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Dorsal_L, Muscle.Dorsal_L];
+            Up    = up    ?? [Muscle.Arm_L, Muscle.Arm_R, Muscle.Pectoral_L, Muscle.Pectoral_R, Muscle.Dorsal_L, Muscle.Dorsal_R];
             Down  = down  ?? [Muscle.Abdominal_L, Muscle.Abdominal_R, Muscle.Lumbar_L, Muscle.Lumbar_R];
         }
     }
