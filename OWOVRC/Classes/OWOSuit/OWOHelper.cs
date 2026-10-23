@@ -190,6 +190,10 @@ namespace OWOVRC.Classes.OWOSuit
 
         public void Dispose()
         {
+            timer.stop();
+            timer.Elapsed -= OnTimerElapsed;
+            timer.Dispose();
+
             StopAllSensations();
             OWO.Disconnect();
             GC.SuppressFinalize(this);
