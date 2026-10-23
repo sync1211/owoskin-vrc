@@ -77,8 +77,8 @@ namespace OWOVRC.Classes.Effects
             float rightDB = rightSample.GetFrequencyRange(spectrumSettings.AudioFrequencyStart, spectrumSettings.AudioFrequencyEnd);
             float leftDB = leftSample.GetFrequencyRange(spectrumSettings.AudioFrequencyStart, spectrumSettings.AudioFrequencyEnd);
 
-            int leftIntensity = CalculateIntensityPercentage(rightDB, spectrumSettings);
-            int rightIntensity = CalculateIntensityPercentage(leftDB, spectrumSettings);
+            int leftIntensity = CalculateIntensityPercentage(leftDB, spectrumSettings);
+            int rightIntensity = CalculateIntensityPercentage(rightDB, spectrumSettings);
 
             if ((leftIntensity == 0) && (rightIntensity == 0))
             {
