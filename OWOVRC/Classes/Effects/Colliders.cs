@@ -41,9 +41,8 @@ namespace OWOVRC.Classes.Effects
 
         private void PopulateCallbacks()
         {
-            for (int i = 0; i < OWOMuscles.MusclesCaptialized.Count; i++)
+            foreach (KeyValuePair<string, Muscle> kvp in OWOMuscles.MusclesCaptialized)
             {
-                KeyValuePair<string, Muscle> kvp = OWOMuscles.MusclesCaptialized.ElementAt(i);
                 string muscleName = kvp.Key;
                 string muscleNameLower = muscleName.ToLower();
 
@@ -192,9 +191,8 @@ namespace OWOVRC.Classes.Effects
 
         public override void RegisterCallbacks(OSCReceiver receiver)
         {
-            for (int i = 0; i < messageCallbacks.Count; i++)
+            foreach (KeyValuePair<string, Action<OscMessageValues>> pair in messageCallbacks)
             {
-                KeyValuePair<string, Action<OscMessageValues>> pair = messageCallbacks.ElementAt(i);
                 string muscleName = pair.Key;
                 Action<OscMessageValues> callback = pair.Value;
 
@@ -212,9 +210,8 @@ namespace OWOVRC.Classes.Effects
 
         public override void UnregisterCallbacks(OSCReceiver receiver)
         {
-            for (int i = 0; i < messageCallbacks.Count; i++)
+            foreach (KeyValuePair<string, Action<OscMessageValues>> pair in messageCallbacks)
             {
-                KeyValuePair<string, Action<OscMessageValues>> pair = messageCallbacks.ElementAt(i);
                 string muscleName = pair.Key;
                 Action<OscMessageValues> callback = pair.Value;
 

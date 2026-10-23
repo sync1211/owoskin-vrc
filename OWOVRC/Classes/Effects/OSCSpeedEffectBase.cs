@@ -60,9 +60,8 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            for (int i = 0; i < oscCallbacks.Count; i++)
+            foreach (KeyValuePair<string, Action<OscMessageValues>> callbackKvp in oscCallbacks)
             {
-                KeyValuePair<string, Action<OscMessageValues>> callbackKvp = oscCallbacks.ElementAt(i);
                 bool result = receiver.TryAddMessageCallback(callbackKvp.Key, callbackKvp.Value);
 
                 if (result)
@@ -83,9 +82,8 @@ namespace OWOVRC.Classes.Effects
                 return;
             }
 
-            for (int i = 0; i < oscCallbacks.Count; i++)
+            foreach (KeyValuePair<string, Action<OscMessageValues>> callbackKvp in oscCallbacks)
             {
-                KeyValuePair<string, Action<OscMessageValues>> callbackKvp = oscCallbacks.ElementAt(i);
                 bool result = receiver.TryRemoveMessageCallback(callbackKvp.Key, callbackKvp.Value);
 
                 if (result)

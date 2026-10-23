@@ -49,10 +49,8 @@ namespace OWOVRC.Classes.Effects
         private void AddCallbackToPreset(OSCSensationPreset preset)
         {
             // Muscle groups
-            for (int i = 0; i < OWOMuscles.MuscleGroups.Count; i++)
+            foreach (KeyValuePair<string, Muscle[]> muscleGroup in OWOMuscles.MuscleGroups)
             {
-                KeyValuePair<string, Muscle[]> muscleGroup = OWOMuscles.MuscleGroups.ElementAt(i);
-
                 string address = $"{PATH_BASE}/{preset.Name}/{muscleGroup.Key}";
 
                 if (preset.MessageCallbacks.TryAdd(address, (values) => ProcessMessage(values, preset, muscleGroup.Value)))
@@ -66,10 +64,8 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Individual muscles
-            for (int i = 0; i < OWOMuscles.MusclesCount; i++)
+            foreach (KeyValuePair<string, Muscle> muscleInfo in OWOMuscles.MusclesCaptialized)
             {
-                KeyValuePair<string, Muscle> muscleInfo = OWOMuscles.MusclesCaptialized.ElementAt(i);
-
                 string address = $"{PATH_BASE}/{preset.Name}/{muscleInfo.Key}";
                 Muscle[] muscles = [muscleInfo.Value];
                 
