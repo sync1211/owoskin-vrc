@@ -23,7 +23,7 @@ namespace OWOVRC.Classes.OWOSuit
         public OWOHelper(string ip = "127.0.0.1")
         {
             Address = ip;
-            timer = timer = new System.Timers.Timer()
+            timer = new System.Timers.Timer()
             {
                 Interval = INTERVAL,
                 AutoReset = true
