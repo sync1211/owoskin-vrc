@@ -32,8 +32,15 @@ namespace OWOVRC.Classes.Effects.OWI
                 Log.Warning("Another reader thread may already be running, stopping existing thread before creating a new one!");
                 Stop();
             }
+
+            if (cancellationTokenSource != null) {
+                Log.Warning("Cancellation token is not null! Trying to stop potentially orphaned thread.");
+                Stop();
+            }
+
             cancellationTokenSource = new CancellationTokenSource();
             readerThread = new Thread(ReadLog);
+
             readerThread.Start();
             Log.Debug("Log reader thread started!");
         }
@@ -42,8 +49,7 @@ namespace OWOVRC.Classes.Effects.OWI
         {
             if (readerThread == null)
             {
-                Log.Warning("Unable to stop log reader thread: readerThread is null!");
-                return;
+                Log.Warning("Stop called but no active thread. Attempting cancellation anyways...");
             }
 
             if (cancellationTokenSource == null)
@@ -54,11 +60,12 @@ namespace OWOVRC.Classes.Effects.OWI
 
             cancellationTokenSource.Cancel();
             Log.Debug("Requested cancellation of log reader thread!");
-            readerThread.Join(); // Wait for thread to close
+            readerThread?.Join(); // Wait for thread to close
 
             // Cleanup
-            readerThread = null;
-            cancellationTokenSource = null;
+            //NOTE: Done in the exit condition of the thread to prevent orphan threads
+            // readerThread = null;
+            // cancellationTokenSource = null;
         }
 
         //this will run in a separate thread
@@ -96,8 +103,13 @@ namespace OWOVRC.Classes.Effects.OWI
                         if (cancellationToken.IsCancellationRequested)
                         {
                             Log.Debug("Log reader thread cancelled!");
+
+                            // Clean up cancellation Token
                             cancellationTokenSource.Dispose();
                             cancellationTokenSource = null;
+
+                            // Prevents readerThread from being null while the thread is still alive
+                            readerThread = null; 
                             return;
                         }
 
