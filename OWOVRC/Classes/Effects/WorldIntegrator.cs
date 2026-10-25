@@ -53,11 +53,8 @@ namespace OWOVRC.Classes.Effects
 
         public void Start()
         {
-            FileInfo? logFile = GetVRCLogFile();
-            if (logFile == null)
-            {
-                throw new FileNotFoundException($"No VRChat log file found at {VRC_LOG_DIR}!");
-            }
+            FileInfo? logFile = GetVRCLogFile()
+                ?? throw new FileNotFoundException($"No VRChat log file found at {VRC_LOG_DIR}!");
 
             // Update log watcher parameters
             logWatcher.LogPath = logFile.FullName;
