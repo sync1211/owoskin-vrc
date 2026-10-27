@@ -10,7 +10,10 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         [JsonInclude]
         public bool Enabled { get; set; }
         [JsonInclude]
-        public string Name { get; set; }
+        [Browsable(false)]
+        public string? Name { get; set; } // Required for backwards compatibility
+        [JsonInclude]
+        public string Path { get; set; }
         [JsonInclude]
         public int Priority { get; set; }
         [JsonInclude]
@@ -42,10 +45,20 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         public readonly Dictionary<string, Action<OscMessageValues>> MessageCallbacks = [];
 
         [JsonConstructor]
-        public OSCSensationPreset(bool enabled, string name, int priority, int intensity, bool loop, bool interruptible, string sensationString)
+        public OSCSensationPreset(bool enabled, string? path, int priority, int intensity, bool loop, bool interruptible, string sensationString, string? name = null)
         {
             Enabled = enabled;
-            Name = name;
+
+            // Migrate name to path, if necessary
+            if (name != null)
+            {
+                Path = GetPrefixedPath(name);
+            }
+            else
+            {
+                Path = path ?? String.Empty;
+            }
+
             Priority = priority;
             Intensity = intensity;
             Loop = loop;
@@ -54,11 +67,16 @@ namespace OWOVRC.Classes.Effects.OSCPresets
             SensationObject = Sensation.Parse(SensationString);
         }
 
+        public static string GetPrefixedPath(string name)
+        {
+            return $"{OSCPresetTrigger.PATH_BASE}/{name}";
+        }
+
         public OSCSensationPreset Clone()
         {
             return new(
                 this.Enabled,
-                this.Name,
+                this.Path,
                 this.Priority,
                 this.Intensity,
                 this.Loop,

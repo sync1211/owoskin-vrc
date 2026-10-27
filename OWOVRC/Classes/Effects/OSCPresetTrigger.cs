@@ -10,7 +10,7 @@ namespace OWOVRC.Classes.Effects
 {
     public class OSCPresetTrigger : OSCEffectBase
     {
-        private const string PATH_BASE = "OWO/SensationsTrigger";
+        public const string PATH_BASE = "OWO/SensationsTrigger";
         public readonly OSCPresetsSettings Settings;
 
         public OSCPresetTrigger(OWOHelper owo, OSCPresetsSettings settings) : base(owo)
@@ -20,7 +20,7 @@ namespace OWOVRC.Classes.Effects
 
         public bool AddPreset(OSCSensationPreset preset)
         {
-            if (!Settings.Presets.TryAdd(preset.Name, preset))
+            if (!Settings.Presets.TryAdd(preset.Path, preset))
             {
                 return false;
             }
@@ -51,45 +51,45 @@ namespace OWOVRC.Classes.Effects
             // Muscle groups
             foreach (KeyValuePair<string, Muscle[]> muscleGroup in OWOMuscles.MuscleGroups)
             {
-                string address = $"{PATH_BASE}/{preset.Name}/{muscleGroup.Key}";
+                string address = $"{preset.Path}/{muscleGroup.Key}";
 
                 if (preset.MessageCallbacks.TryAdd(address, (values) => ProcessMessage(values, preset, muscleGroup.Value)))
                 {
-                    Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                    Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Path, address);
                 }
                 else
                 {
-                    Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                    Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Path, address);
                 }
             }
 
             // Individual muscles
             foreach (KeyValuePair<string, Muscle> muscleInfo in OWOMuscles.MusclesCaptialized)
             {
-                string address = $"{PATH_BASE}/{preset.Name}/{muscleInfo.Key}";
+                string address = $"{preset.Path}/{muscleInfo.Key}";
                 Muscle[] muscles = [muscleInfo.Value];
                 
                 if (preset.MessageCallbacks.TryAdd(address, (values) => ProcessMessage(values, preset, muscles)))
                 {
-                    Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                    Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Path, address);
                 }
                 else
                 {
-                    Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, address);
+                    Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Path, address);
                 }
             }
 
             // Base sensation without any muscles specified
             Muscle[] sensationMuscles = OWOMuscles.GetMusclesFromSensation(preset.SensationObject);
-            
-            string presetBaseAddr = $"{PATH_BASE}/{preset.Name}";
+
+            string presetBaseAddr = preset.Path;
             if (preset.MessageCallbacks.TryAdd(presetBaseAddr, (values) => ProcessMessage(values, preset, sensationMuscles)))
             {
-                Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Name, presetBaseAddr);
+                Log.Debug("Created callback for preset {PresetName} at address {Address}!", preset.Path, presetBaseAddr);
             }
             else
             {
-                Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Name, presetBaseAddr);
+                Log.Warning("Failed to create callback for preset {PresetName} at address {Address}!", preset.Path, presetBaseAddr);
             }
         }
 
@@ -130,11 +130,11 @@ namespace OWOVRC.Classes.Effects
                 bool result = receiver.TryAddMessageCallback(kvp.Key, kvp.Value);
                 if (result)
                 {
-                    Log.Debug("Register OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
+                    Log.Debug("Register OSC callback for preset {PresetName} at address {Address}!", preset.Path, kvp.Key);
                 }
                 else
                 {
-                    Log.Warning("Failed to register OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
+                    Log.Warning("Failed to register OSC callback for preset {PresetName} at address {Address}!", preset.Path, kvp.Key);
                 }
             }
         }
@@ -154,11 +154,11 @@ namespace OWOVRC.Classes.Effects
                 bool result = receiver.TryRemoveMessageCallback(kvp.Key, kvp.Value);
                 if (result)
                 {
-                    Log.Debug("Unregistered OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
+                    Log.Debug("Unregistered OSC callback for preset {PresetName} at address {Address}!", preset.Path, kvp.Key);
                 }
                 else
                 {
-                    Log.Warning("Failed to unregister OSC callback for preset {PresetName} at address {Address}!", preset.Name, kvp.Key);
+                    Log.Warning("Failed to unregister OSC callback for preset {PresetName} at address {Address}!", preset.Path, kvp.Key);
                 }
             }
 
@@ -180,16 +180,16 @@ namespace OWOVRC.Classes.Effects
 
             if (!preset.Enabled)
             {
-                Log.Debug("Disabled preset {PresetName} called!", preset.Name);
+                Log.Debug("Disabled preset {PresetName} called!", preset.Path);
                 return;
             }
 
             // Stop looped sensation
             if (oscIntensity <= 0)
             {
-                Log.Debug("Stopping preset {PresetName}!", preset.Name);
+                Log.Debug("Stopping preset {PresetName}!", preset.Path);
 
-                owo.StopSensation(preset.Name, preset.Interruptible);
+                owo.StopSensation(preset.Path, preset.Interruptible);
                 return;
             }
 
@@ -201,21 +201,21 @@ namespace OWOVRC.Classes.Effects
                 muscles[i] = muscles[i].WithIntensity((int)intensity);
             }
 
-            Log.Debug("Triggering preset {PresetName} at {Intensity} intensity!", preset.Name, intensity);
+            Log.Debug("Triggering preset {PresetName} at {Intensity} intensity!", preset.Path, intensity);
             Sensation sensation = preset.SensationObject;
 
             // Play sensation
             if (!preset.Loop)
             {
-                owo.AddSensation(preset.Name, sensation, muscles);
+                owo.AddSensation(preset.Path, sensation, muscles);
             }
-            else if (owo.GetRunningSensations().ContainsKey(preset.Name))
+            else if (owo.GetRunningSensations().ContainsKey(preset.Path))
             {
-                owo.UpdateLoopedSensation(preset.Name, sensation, muscles);
+                owo.UpdateLoopedSensation(preset.Path, sensation, muscles);
             }
             else
             {
-                owo.AddLoopedSensation(preset.Name, sensation, muscles);
+                owo.AddLoopedSensation(preset.Path, sensation, muscles);
             }
         }
 
@@ -223,7 +223,7 @@ namespace OWOVRC.Classes.Effects
         {
             foreach (OSCSensationPreset preset in Settings.Presets.Values)
             {
-                owo.StopSensation(preset.Name);
+                owo.StopSensation(preset.Path);
             }
         }
 

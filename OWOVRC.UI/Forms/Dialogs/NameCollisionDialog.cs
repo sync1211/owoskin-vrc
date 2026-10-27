@@ -10,7 +10,7 @@
         public NameCollisionDialog(string name, StringComparison stringComparison = StringComparison.CurrentCultureIgnoreCase)
         {
             InitializeComponent();
-            descriptionLabel.Text = $"Please enter a new name for '{name}':";
+            descriptionLabel.Text = $"Please enter a new path for{Environment.NewLine}{name}";
             newNameInput.Text = name;
             origName = name;
             this.stringComparison = stringComparison;
@@ -27,8 +27,8 @@
             if (IsCollision)
             {
                 MessageBox.Show(
-                    $"The name '{origName}' is already in use. Please enter a new name!",
-                    "Name already in use",
+                    $"The name '{origName}' is already in use. Please enter a new path!",
+                    "Path already in use",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
                 );

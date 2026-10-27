@@ -36,7 +36,7 @@ namespace OWOVRC.UI.Forms.Dialogs
 
             foreach (OSCSensationPreset preset in Presets)
             {
-                preset.Name = $"{prefix}/{preset.Name}";
+                preset.Path = $"{prefix}/{preset.Path}";
             }
 
             dataGridView1.Refresh();
@@ -54,7 +54,7 @@ namespace OWOVRC.UI.Forms.Dialogs
         {
             for (int i = 0; i < Presets.Count; i++)
             {
-                if (existing.Any(p => p.Name.Equals(Presets[i].Name, stringComparison)))
+                if (existing.Any(p => p.Path.Equals(Presets[i].Path, stringComparison)))
                 {
                     return true;
                 }
@@ -78,10 +78,10 @@ namespace OWOVRC.UI.Forms.Dialogs
 
         private void ValidateCell(int rowIndex)
         {
-            DataGridViewColumn? column = dataGridView1.Columns[nameof(OSCSensationPreset.Name)];
+            DataGridViewColumn? column = dataGridView1.Columns[nameof(OSCSensationPreset.Path)];
             if (column == null)
             {
-                Log.Warning("[Validation] Column not found: {Name}", nameof(OSCSensationPreset.Name));
+                Log.Warning("[Validation] Column not found: {Name}", nameof(OSCSensationPreset.Path));
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace OWOVRC.UI.Forms.Dialogs
 
             if (cell == null)
             {
-                Log.Warning("[Validation] Cell not found: {Name}", nameof(OSCSensationPreset.Name));
+                Log.Warning("[Validation] Cell not found: {Name}", nameof(OSCSensationPreset.Path));
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace OWOVRC.UI.Forms.Dialogs
             }
 
             // Name already taken by existing preset
-            bool hasCollision = existing.Any((p) => p.Name.Equals(data, stringComparison));
+            bool hasCollision = existing.Any((p) => p.Path.Equals(data, stringComparison));
             if (hasCollision)
             {
                 cell.ErrorText = "A preset with this name already exists!";
@@ -119,7 +119,7 @@ namespace OWOVRC.UI.Forms.Dialogs
                     continue;
                 }
 
-                if (Presets[i].Name.Equals(data, stringComparison))
+                if (Presets[i].Path.Equals(data, stringComparison))
                 {
                     cell.ErrorText = "A preset with this name already exists within this import!";
                     return;

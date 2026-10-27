@@ -2,7 +2,7 @@
     "Presets": {
         "OWO/SensationsTrigger/TestMuscles1": {
             "Enabled": true,
-            "Name": "TestMuscles1",
+            "Name": "OWO/SensationsTrigger/TestMuscles1",
             "Priority": 10,
             "Intensity": 100,
             "Loop": false,
@@ -11,7 +11,7 @@
         },
         "OWO/SensationsTrigger/LoopTest": {
             "Enabled": true,
-            "Name": "LoopTest",
+            "Name": "OWO/SensationsTrigger/LoopTest",
             "Priority": 10,
             "Intensity": 100,
             "Loop": true,
@@ -20,7 +20,7 @@
         },
         "OWO/SensationsTrigger/Test1": {
             "Enabled": true,
-            "Name": "Test1",
+            "Name": "OWO/SensationsTrigger/Test1",
             "Priority": 10,
             "Intensity": 100,
             "Loop": false,
@@ -29,7 +29,7 @@
         },
         "OWO/SensationsTrigger/Test2": {
             "Enabled": true,
-            "Name": "Test2",
+            "Name": "OWO/SensationsTrigger/Test2",
             "Priority": 10,
             "Intensity": 100,
             "Loop": false,
@@ -38,7 +38,7 @@
         },
         "OWO/SensationsTrigger/TestFloat1": {
             "Enabled": true,
-            "Name": "TestFloat1",
+            "Name": "OWO/SensationsTrigger/TestFloat1",
             "Priority": 10,
             "Intensity": 100,
             "Loop": false,

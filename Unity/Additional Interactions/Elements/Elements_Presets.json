@@ -2,7 +2,7 @@
     "Presets": {
         "Water": {
             "Enabled": true,
-            "Name": "Water",
+            "Name": "OWO/SensationsTrigger/Water",
             "Priority": 10,
             "Intensity": 100,
             "Loop": false,
@@ -11,7 +11,7 @@
         },
         "Fire": {
             "Enabled": true,
-            "Name": "Fire",
+            "Name": "OWO/SensationsTrigger/Fire",
             "Priority": 10,
             "Intensity": 100,
             "Loop": false,
@@ -20,7 +20,7 @@
         },
         "Wind": {
             "Enabled": true,
-            "Name": "Wind",
+            "Name": "OWO/SensationsTrigger/Wind",
             "Priority": 10,
             "Intensity": 100,
             "Loop": false,

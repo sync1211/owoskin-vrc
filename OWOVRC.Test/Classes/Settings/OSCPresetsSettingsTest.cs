@@ -29,7 +29,7 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
             Assert.AreEqual(settings.Presets.Count, decodedSettings.Presets.Count);
-            Assert.AreEqual(settings.Presets["Test1"].Name, decodedSettings.Presets["Test1"].Name);
+            Assert.AreEqual(settings.Presets["Test1"].Path, decodedSettings.Presets["Test1"].Path);
         }
     }
 }

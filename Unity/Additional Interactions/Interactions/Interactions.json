@@ -2,7 +2,7 @@
     "Presets": {
         "Brush": {
             "Enabled": true,
-            "Name": "Brush",
+            "Name": "OWO/SensationsTrigger/Brush",
             "Priority": 10,
             "Intensity": 100,
             "Loop": false,

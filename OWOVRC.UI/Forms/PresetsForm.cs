@@ -108,7 +108,7 @@ namespace OWOVRC.UI.Forms
                 muscles[i] = muscles[i].WithIntensity(preset.Intensity);
             }
 
-            owo.AddSensation(preset.Name, preset.SensationObject, muscles);
+            owo.AddSensation(preset.Path, preset.SensationObject, muscles);
         }
 
         private void OnListChange(object? sender, ListChangedEventArgs args)
@@ -249,16 +249,16 @@ namespace OWOVRC.UI.Forms
             return ImportOWOSensation(fileName, sensationString);
         }
 
-        private string? ResolveNameCollisions(string name)
+        private string? ResolvePathCollisions(string path)
         {
-            if (!presets.Any((preset) => preset.Name.Equals(name)))
+            if (!presets.Any((preset) => preset.Path.Equals(path)))
             {
-                return name;
+                return path;
             }
 
             if (showCollisionDialog)
             {
-                using (NameCollisionDialog dialog = new(name, stringComparison))
+                using (NameCollisionDialog dialog = new(path, stringComparison))
                 {
                     DialogResult result = dialog.ShowDialog();
                     if (result == DialogResult.OK)
@@ -277,7 +277,7 @@ namespace OWOVRC.UI.Forms
             }
 
             // Rename by adding a "(<i>)" suffix
-            return GetNonCollidingName(name, presets, stringComparison);
+            return GetNonCollidingName(path, presets, stringComparison);
         }
 
         public static string GetNonCollidingName(string name, IEnumerable<OSCSensationPreset> presets, StringComparison stringComparison)
@@ -289,7 +289,7 @@ namespace OWOVRC.UI.Forms
             {
                 newName = $"{name} ({i})";
                 i++;
-            } while (presets.Any((preset) => preset.Name.Equals(newName, stringComparison)));
+            } while (presets.Any((preset) => preset.Path.Equals(newName, stringComparison)));
 
             return newName;
         }
@@ -299,15 +299,16 @@ namespace OWOVRC.UI.Forms
             try
             {
                 Log.Verbose("Importing sensation {Name}: {Value}", name, sensationString);
+                string path = OSCSensationPreset.GetPrefixedPath(name);
 
                 // Fix potential name collisions
-                string? newName = ResolveNameCollisions(name);
-                if (newName == null)
+                string? newPath = ResolvePathCollisions(path);
+                if (newPath == null)
                 {
                     return false; // Indicate the request to cancel
                 }
 
-                OSCSensationPreset preset = new(true, newName, 10, 100, false, false, sensationString);
+                OSCSensationPreset preset = new(true, newPath, 10, 100, false, false, sensationString);
                 presets.Add(preset);
             }
             catch (System.FormatException)
@@ -331,10 +332,10 @@ namespace OWOVRC.UI.Forms
             {
                 OSCSensationPreset preset = presets[i];
 
-                if (!names.Add(preset.Name))
+                if (!names.Add(preset.Path))
                 {
                     MessageBox.Show(
-                        $"The preset {preset.Name} is listed more than once!{Environment.NewLine}Preset names must be unique!",
+                        $"The preset {preset.Path} is listed more than once!{Environment.NewLine}Preset names must be unique!",
                         "Duplicate preset names found",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
@@ -357,7 +358,7 @@ namespace OWOVRC.UI.Forms
             for (int i = 0; i < presets.Count; i++)
             {
                 OSCSensationPreset preset = presets[i];
-                settings.Presets.TryAdd(preset.Name, preset);
+                settings.Presets.TryAdd(preset.Path, preset);
             }
 
             // Register all presets
@@ -455,10 +456,10 @@ namespace OWOVRC.UI.Forms
 
         private bool CheckForCollisions()
         {
-            DataGridViewColumn? column = dataGridView1.Columns[nameof(OSCSensationPreset.Name)];
+            DataGridViewColumn? column = dataGridView1.Columns[nameof(OSCSensationPreset.Path)];
             if (column == null)
             {
-                Log.Warning("[Validation] Column not found: {Name}", nameof(OSCSensationPreset.Name));
+                Log.Warning("[Validation] Column not found: {Name}", nameof(OSCSensationPreset.Path));
                 return false;
             }
 
@@ -470,7 +471,7 @@ namespace OWOVRC.UI.Forms
 
                 if (cell == null)
                 {
-                    Log.Warning("[Validation] Cell not found: {Name}", nameof(OSCSensationPreset.Name));
+                    Log.Warning("[Validation] Cell not found: {Name}", nameof(OSCSensationPreset.Path));
                     return false;
                 }
 
@@ -491,7 +492,7 @@ namespace OWOVRC.UI.Forms
                         continue;
                     }
 
-                    if (presets[i].Name.Equals(data, stringComparison))
+                    if (presets[i].Path.Equals(data, stringComparison))
                     {
                         cell.ErrorText = "A preset with this name already exists!";
                         result = true;
@@ -565,18 +566,23 @@ namespace OWOVRC.UI.Forms
             int rowIndex = dataGridView1.SelectedRows[0].Index;
             OSCSensationPreset preset = presets[rowIndex];
 
-            using (NameCollisionDialog dialog = new(preset.Name))
+            using (NameCollisionDialog dialog = new(preset.Path, stringComparison))
             {
                 dialog.ShowDialog();
 
-                if (dialog.DialogResult != DialogResult.OK)
+                string path = dialog.Value;
+                if (dialog.DialogResult == DialogResult.Continue)
+                {
+                    path = GetNonCollidingName(path, presets, stringComparison);
+                }
+                else if (dialog.DialogResult != DialogResult.OK)
                 {
                     return;
                 }
 
                 // Duplicate preset
                 OSCSensationPreset newPreset = preset.Clone();
-                newPreset.Name = dialog.Value;
+                newPreset.Path = path;
                 presets.Add(newPreset);
             }
         }

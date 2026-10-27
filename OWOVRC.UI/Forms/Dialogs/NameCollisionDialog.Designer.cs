@@ -40,7 +40,7 @@
             // 
             okButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             okButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            okButton.Location = new Point(237, 63);
+            okButton.Location = new Point(237, 82);
             okButton.Name = "okButton";
             okButton.Size = new Size(75, 23);
             okButton.TabIndex = 2;
@@ -52,7 +52,7 @@
             // 
             cancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             cancelButton.DialogResult = DialogResult.Cancel;
-            cancelButton.Location = new Point(156, 63);
+            cancelButton.Location = new Point(156, 82);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(75, 23);
             cancelButton.TabIndex = 3;
@@ -64,14 +64,14 @@
             descriptionLabel.AutoSize = true;
             descriptionLabel.Location = new Point(12, 16);
             descriptionLabel.Name = "descriptionLabel";
-            descriptionLabel.Size = new Size(140, 15);
+            descriptionLabel.Size = new Size(155, 30);
             descriptionLabel.TabIndex = 3;
-            descriptionLabel.Text = "Please enter a new name:";
+            descriptionLabel.Text = "Please enter a new name for\r\nOWO/SensationsTrigger";
             // 
             // newNameInput
             // 
-            newNameInput.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            newNameInput.Location = new Point(12, 34);
+            newNameInput.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            newNameInput.Location = new Point(12, 53);
             newNameInput.Name = "newNameInput";
             newNameInput.Size = new Size(300, 23);
             newNameInput.TabIndex = 4;
@@ -82,7 +82,7 @@
             autoRenameButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             autoRenameButton.DialogResult = DialogResult.Continue;
             autoRenameButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            autoRenameButton.Location = new Point(12, 63);
+            autoRenameButton.Location = new Point(12, 82);
             autoRenameButton.Name = "autoRenameButton";
             autoRenameButton.Size = new Size(92, 23);
             autoRenameButton.TabIndex = 5;
@@ -95,7 +95,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = cancelButton;
-            ClientSize = new Size(324, 98);
+            ClientSize = new Size(324, 117);
             Controls.Add(autoRenameButton);
             Controls.Add(newNameInput);
             Controls.Add(descriptionLabel);
