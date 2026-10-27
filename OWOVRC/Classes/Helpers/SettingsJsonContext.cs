@@ -11,5 +11,6 @@ namespace OWOVRC.Classes.Helpers
     [JsonSerializable(typeof(OSCPresetsSettings))]
     [JsonSerializable(typeof(WorldIntegratorSettings))]
     [JsonSerializable(typeof(AudioEffectSettings))]
+    [JsonSerializable(typeof(OSCControlSettings))]
     public partial class SettingsJsonContext : JsonSerializerContext;
 }
