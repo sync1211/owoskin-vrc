@@ -12,7 +12,7 @@ namespace OWOVRC.CLI
 {
     internal static class Program
     {
-        private static CancellationTokenSource cancellationTokenSource = new();
+        private static readonly CancellationTokenSource cancellationTokenSource = new();
         static void Main()
         {
             // Logger
