@@ -12,6 +12,7 @@ namespace OWOVRC.CLI
 {
     internal static class Program
     {
+        private static CancellationTokenSource cancellationTokenSource = new();
         static void Main()
         {
             // Logger
@@ -97,11 +98,14 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
             audio = new(owo, audioSettings);
 #endif
 
-
+            // Set up cancel & exit logic
+            Console.CancelKeyPress += CancellationHandler;
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
+            
             try
             {
                 // Wait for the connection to be ready
-                Task<bool> task = ConnectToVRChat(receiver, settings.OSCQuery_MaxWait, settings.OSCQuery_RefreshInterval);
+                Task<bool> task = ConnectToVRChat(receiver, settings.OSCQuery_MaxWait, settings.OSCQuery_RefreshInterval, cancellationToken);
                 task.Wait();
 
                 if (!task.Result)
@@ -132,7 +136,7 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
 
                 // Start main task
                 Log.Information("Starting MainLoop...");
-                Task.Run(() => MainLoop(owo)).Wait();
+                Task.Run(() => MainLoop(owo, cancellationToken)).Wait();
             }
             finally
             {
@@ -154,16 +158,19 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
 #endif
 
                 // Dispose effects
+                Log.Debug("Cleaning up events..");
                 for (int i = 0; i < effects.Length; i++)
                 {
                     effects[i].Dispose();
                 }
+
+                Log.Information("Goodbye!");
             }
         }
 
-        public static async Task<bool> ConnectToVRChat(OSCReceiver receiver, int maxwait, int refreshInterval)
+        public static async Task<bool> ConnectToVRChat(OSCReceiver receiver, int maxwait, int refreshInterval, CancellationToken cancellationToken = default)
         {
-            bool result = await receiver.WaitForVRChatClientConnected(maxwait, refreshInterval);
+            bool result = await receiver.WaitForVRChatClientConnected(maxwait, refreshInterval, cancellationToken);
             if (!result)
             {
                 Log.Error("Unable to find any VRChat clients via OSCQuery!");
@@ -174,9 +181,9 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
             return true;
         }
 
-        public static async Task MainLoop(OWOHelper owo)
+        public static async Task MainLoop(OWOHelper owo, CancellationToken cancellationToken = default)
         {
-            bool connectResult = await owo.Connect()
+            bool connectResult = await owo.Connect() //FIXME: OWO.Connect() does not accept a cancellationToken
                 .ConfigureAwait(false);
 
             if (!connectResult) {
@@ -185,13 +192,21 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
 
             try
             {
-                await Task.Delay(-1)
+                await Task.Delay(-1, cancellationToken)
                     .ConfigureAwait(false);
             }
             finally
             {
-                Log.Information("Quit");
+                Log.Information("Shutting down...");
             }
+        }
+
+        private static void CancellationHandler(object? sender, ConsoleCancelEventArgs args)
+        {
+            Log.Information("Shutdown requested!");
+            cancellationTokenSource.Cancel();
+
+            args.Cancel = true;
         }
 
         public static void UnregisterEffects(OSCEffectBase[] effects, OSCReceiver receiver)
