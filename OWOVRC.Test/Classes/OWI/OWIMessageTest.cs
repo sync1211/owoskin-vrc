@@ -6,7 +6,7 @@ namespace OWOVRC.Test.Classes.OWI
     [TestClass]
     public class OWIMessageTest
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("{\"priority\": 1,\"sensation\": \"Front Wind\",\"frequency\": 100,\"duration\": 1,\"intensity\": 70,\"rampup\":0.2,\"rampdown\":0.2,\"exitdelay\":0,\"Muscles\": {\"frontMuscles\": 100}}", 1, "Front Wind", 100, 1, 70, 0.2f, 0.2f, 0)]
         [DataRow("{ \"sensation\": \"PaintBall\", \"frequency\": 5, \"duration\": 0.2, \"intensity\": 100, \"rampup\": 0, \"rampdown\": 0.1, \"exitdelay\": 0, \"Muscles\": { \"pectoral_R\": 50, \"abdominal_L\": 50, \"abdominal_R\": 25, \"arm_L\": 25 } }", 0, "PaintBall", 5, 0.2f, 100, 0, 0.1f, 0)]
         public void TestDeserialize(string jsonString, int priority, string sensation, int frequency, float duration, int intensity, float rampup, float rampdown, float exitdelay)
@@ -81,7 +81,7 @@ namespace OWOVRC.Test.Classes.OWI
             Assert.AreEqual(message.Rampup, decodedMessage.Rampup);
             Assert.AreEqual(message.Rampdown, decodedMessage.Rampdown);
             Assert.AreEqual(message.ExitDelay, decodedMessage.ExitDelay);
-            Assert.AreEqual(message.Muscles.Count, decodedMessage.Muscles.Count);
+            Assert.HasCount(message.Muscles.Count, decodedMessage.Muscles);
 
             foreach (KeyValuePair<string, int> muscle in message.Muscles)
             {

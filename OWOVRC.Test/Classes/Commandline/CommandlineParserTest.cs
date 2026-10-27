@@ -9,7 +9,7 @@ namespace OWOVRC.Test.Classes.Commandline
     [TestClass]
     public class CommandlineParserTest
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(new string[] { "--start", "--affinity" }, true, null, null, null)]
         [DataRow(new string[] { "--start", "--affinity=", "--process-priority=0" }, true, null, ProcessPriorityClass.Normal, null)]
         [DataRow(new string[] { "--start", "--affinity=FFFFFF", "--process-priority=-1" }, true, 0xFFFFFF, ProcessPriorityClass.BelowNormal, null)]

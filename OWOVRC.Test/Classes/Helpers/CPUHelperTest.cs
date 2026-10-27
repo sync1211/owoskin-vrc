@@ -16,7 +16,7 @@ namespace OWOVRC.Test.Classes.Helpers
             Assert.AreEqual(expected, result, $"Expected {expected:X}, got {result:X}");
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(0xFFFFFFFF, 0xFFFF, 0xFFFF0000)] // 16 cores, first 8 cores
         [DataRow(0xFFFFFFFF, 0xFFFF0000, 0xFFFF)] // 16 cores, last 8 cores
         public void TestInvertAffinityValue(long maxAffinity, long input, long expected)

@@ -33,7 +33,7 @@ namespace OWOVRC.Test.Classes.OWOSuit
             }
         }
 
-        [DataTestMethod]
+        [TestMethod]
         public void TestGetMusclesFromSensation()
         {
             // Normal sensation
@@ -41,21 +41,21 @@ namespace OWOVRC.Test.Classes.OWOSuit
             Muscle[] musclesExpected = [Muscle.Pectoral_R, Muscle.Pectoral_L];
 
             Muscle[] musclesResult = OWOMuscles.GetMusclesFromSensation(sensation);
-            CollectionAssert.AreEquivalent(musclesExpected, musclesResult, "Muscles for Sensation do not match expected.");
+            Assert.AreSequenceEqual(musclesExpected, musclesResult, "Muscles for Sensation do not match expected.");
 
             // Micro sensation
             sensation = Sensation.Dart;
             musclesExpected = Muscle.All;
 
             musclesResult = OWOMuscles.GetMusclesFromSensation(sensation);
-            CollectionAssert.AreEquivalent(musclesExpected, musclesResult, "Muscles for MicroSensation do not match expected.");
+            Assert.AreSequenceEqual(musclesExpected, musclesResult, "Muscles for MicroSensation do not match expected.");
 
             // Baked sensation
             sensation = Sensation.Parse("12~Cast Fire~26,25,60,0,1000,0,|0%100,1%100,2%100,3%100,4%100,5%100~weapon-0~");
             musclesExpected = Muscle.Front;
 
             musclesResult = OWOMuscles.GetMusclesFromSensation(sensation);
-            CollectionAssert.AreEquivalent(musclesExpected, musclesResult, "Muscles for BakedSensation do not match expected.");
+            Assert.AreSequenceEqual(musclesExpected, musclesResult, "Muscles for BakedSensation do not match expected.");
         }
     }
 }

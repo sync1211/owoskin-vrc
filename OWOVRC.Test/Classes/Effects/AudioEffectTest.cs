@@ -7,7 +7,7 @@ namespace OWOVRC.Test.Classes.Effects
     [TestClass]
     public class AudioEffectTest
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(50, 0, 100, 50)]
         [DataRow(50, 10, 110, 40)]
         [DataRow(0.5f, 0, 1, 50)]

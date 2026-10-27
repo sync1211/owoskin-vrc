@@ -5,7 +5,7 @@ namespace OWOVRC.Audio.WinForms.Test.Classes
     [TestClass]
     public class ScalingHelperTest
     {
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(0, 10, 0)]
         [DataRow(5, 10, 50)]
         [DataRow(10, 10, 100)]
