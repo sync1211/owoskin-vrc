@@ -47,6 +47,8 @@
             oscPathHintLabel = new Label();
             oscPathLabel = new Label();
             presetsHelpLinkLabel = new LinkLabel();
+            importToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator3 = new ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             presetContextMenuStrip.SuspendLayout();
             SuspendLayout();
@@ -78,38 +80,39 @@
             // 
             // presetContextMenuStrip
             // 
-            presetContextMenuStrip.Items.AddRange(new ToolStripItem[] { previewToolStripMenuItem, toolStripSeparator2, duplicateToolStripMenuItem, toolStripSeparator1, deleteToolStripMenuItem });
+            presetContextMenuStrip.Items.AddRange(new ToolStripItem[] { importToolStripMenuItem, toolStripSeparator3, previewToolStripMenuItem, toolStripSeparator2, duplicateToolStripMenuItem, toolStripSeparator1, deleteToolStripMenuItem });
             presetContextMenuStrip.Name = "contextMenuStrip1";
-            presetContextMenuStrip.Size = new Size(125, 82);
+            presetContextMenuStrip.Size = new Size(181, 132);
+            presetContextMenuStrip.Opening += PresetContextMenuStrip_Opening;
             // 
             // previewToolStripMenuItem
             // 
             previewToolStripMenuItem.Name = "previewToolStripMenuItem";
-            previewToolStripMenuItem.Size = new Size(124, 22);
+            previewToolStripMenuItem.Size = new Size(180, 22);
             previewToolStripMenuItem.Text = "Preview";
             previewToolStripMenuItem.Click += PreviewToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(121, 6);
+            toolStripSeparator2.Size = new Size(177, 6);
             // 
             // duplicateToolStripMenuItem
             // 
             duplicateToolStripMenuItem.Name = "duplicateToolStripMenuItem";
-            duplicateToolStripMenuItem.Size = new Size(124, 22);
+            duplicateToolStripMenuItem.Size = new Size(180, 22);
             duplicateToolStripMenuItem.Text = "Duplicate";
             duplicateToolStripMenuItem.Click += DuplicateToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(121, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(124, 22);
+            deleteToolStripMenuItem.Size = new Size(180, 22);
             deleteToolStripMenuItem.Text = "Remove";
             deleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             // 
@@ -205,6 +208,18 @@
             presetsHelpLinkLabel.Text = "Avatar triggers setup";
             presetsHelpLinkLabel.LinkClicked += PresetsHelpLinkLabel_LinkClicked;
             // 
+            // importToolStripMenuItem
+            // 
+            importToolStripMenuItem.Name = "importToolStripMenuItem";
+            importToolStripMenuItem.Size = new Size(180, 22);
+            importToolStripMenuItem.Text = "Import Sensations";
+            importToolStripMenuItem.Click += ImportToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(177, 6);
+            // 
             // PresetsForm
             // 
             AcceptButton = saveButton;
@@ -249,5 +264,7 @@
         private ToolStripMenuItem duplicateToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem importToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator3;
     }
 }

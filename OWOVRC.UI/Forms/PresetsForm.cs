@@ -122,8 +122,8 @@ namespace OWOVRC.UI.Forms
         {
             using (OpenFileDialog openFileDialog = new()
             {
-                Filter = "OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (*.json)|*.json",
-                Title = "Select a file to import",
+                Filter = "Supported OWO Sensation Files (.owo)|*.owo;*.json|OWO Sensation Files (*.owo)|*.owo|OWOVRC Preset settings (*.json)|*.json",
+                Title = "Select sensations to import",
                 Multiselect = true
             })
             {
@@ -161,6 +161,7 @@ namespace OWOVRC.UI.Forms
                     }
                     else
                     {
+                        Log.Debug("Unsupported file extension:{FilePath}", filePath);
                         MessageBox.Show(
                             $"Unsupported file extension:{Environment.NewLine}{filePath}",
                             "Unsupported file extension",
@@ -179,6 +180,7 @@ namespace OWOVRC.UI.Forms
                 // Nothing happened -> inform user to prevent confusion
                 if (presets.Count == sensationsCount)
                 {
+                    Log.Debug("The provided files did not contain any sensations to import!");
                     MessageBox.Show(
                         "The provided files did not contain any sensations to import!",
                         "No sensations imported",
@@ -415,17 +417,17 @@ namespace OWOVRC.UI.Forms
 
         private void RemovePresetButton_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedCells.Count == 0)
+            if (dataGridView1.SelectedRows.Count == 0)
             {
                 return;
             }
 
             // Get preset objects as the index will change when removing
-            OSCSensationPreset[] presetsToDelete = new OSCSensationPreset[dataGridView1.SelectedCells.Count];
+            OSCSensationPreset[] presetsToDelete = new OSCSensationPreset[dataGridView1.SelectedRows.Count];
             for (int i = 0; i < presetsToDelete.Length; i++)
             {
-                DataGridViewCell cell = dataGridView1.SelectedCells[i];
-                presetsToDelete[i] = presets[cell.RowIndex];
+                DataGridViewRow row = dataGridView1.SelectedRows[i];
+                presetsToDelete[i] = presets[row.Index];
             }
 
             // Delete selected presets
@@ -537,9 +539,18 @@ namespace OWOVRC.UI.Forms
             dataGridView1.CancelEdit();
         }
 
+        private void ImportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportSensationButton_Click(sender, e);
+        }
+
         private void PreviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int rowIndex = dataGridView1.SelectedCells[0].RowIndex;
+            if (dataGridView1.SelectedRows.Count != 1)
+            {
+                return;
+            }
+            int rowIndex = dataGridView1.SelectedRows[0].Index;
 
             TestSensation(presets[rowIndex]);
         }
@@ -551,7 +562,7 @@ namespace OWOVRC.UI.Forms
                 return;
             }
 
-            int rowIndex = dataGridView1.SelectedCells[0].RowIndex;
+            int rowIndex = dataGridView1.SelectedRows[0].Index;
             OSCSensationPreset preset = presets[rowIndex];
 
             using (NameCollisionDialog dialog = new(preset.Name))
@@ -597,6 +608,15 @@ namespace OWOVRC.UI.Forms
 
             DataGridViewCell cell = row.Cells[e.ColumnIndex];
             cell.Selected = true;
+        }
+
+        private void PresetContextMenuStrip_Opening(object sender, CancelEventArgs e)
+        {
+            int selectedRows = dataGridView1.SelectedRows.Count;
+
+            deleteToolStripMenuItem.Enabled = selectedRows >= 1;
+            duplicateToolStripMenuItem.Enabled = selectedRows == 1;
+            previewToolStripMenuItem.Enabled = (selectedRows == 1) && (owo != null) && (OWOHelper.IsConnected);
         }
     }
 }
