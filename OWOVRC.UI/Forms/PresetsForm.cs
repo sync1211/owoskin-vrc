@@ -565,18 +565,23 @@ namespace OWOVRC.UI.Forms
             int rowIndex = dataGridView1.SelectedRows[0].Index;
             OSCSensationPreset preset = presets[rowIndex];
 
-            using (NameCollisionDialog dialog = new(preset.Name))
+            using (NameCollisionDialog dialog = new(preset.Name, stringComparison))
             {
                 dialog.ShowDialog();
 
-                if (dialog.DialogResult != DialogResult.OK)
+                string name = dialog.Value;
+                if (dialog.DialogResult == DialogResult.Continue)
+                {
+                    name = GetNonCollidingName(name, presets, stringComparison);
+                }
+                else if (dialog.DialogResult != DialogResult.OK)
                 {
                     return;
                 }
 
                 // Duplicate preset
                 OSCSensationPreset newPreset = preset.Clone();
-                newPreset.Name = dialog.Value;
+                newPreset.Name = name;
                 presets.Add(newPreset);
             }
         }
