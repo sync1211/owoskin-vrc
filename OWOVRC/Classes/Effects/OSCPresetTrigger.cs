@@ -189,7 +189,7 @@ namespace OWOVRC.Classes.Effects
             {
                 Log.Debug("Stopping preset {PresetName}!", preset.Name);
 
-                owo.StopSensation(preset.Name, preset.Interruptable);
+                owo.StopSensation(preset.Name, preset.Interruptible);
                 return;
             }
 

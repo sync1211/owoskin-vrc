@@ -1,6 +1,5 @@
 ﻿using BuildSoft.OscCore;
 using OWOGame;
-using OWOVRC.Classes.OWOSuit;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
@@ -31,7 +30,7 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         [JsonInclude]
         public bool Loop { get; set; }
         [JsonInclude]
-        public bool Interruptable { get; set; }
+        public bool Interruptible { get; set; }
         [JsonInclude]
         [Browsable(false)]
         public string SensationString { get; }
@@ -43,14 +42,14 @@ namespace OWOVRC.Classes.Effects.OSCPresets
         public readonly Dictionary<string, Action<OscMessageValues>> MessageCallbacks = [];
 
         [JsonConstructor]
-        public OSCSensationPreset(bool enabled, string name, int priority, int intensity, bool loop, bool interruptable, string sensationString)
+        public OSCSensationPreset(bool enabled, string name, int priority, int intensity, bool loop, bool interruptible, string sensationString)
         {
             Enabled = enabled;
             Name = name;
             Priority = priority;
             Intensity = intensity;
             Loop = loop;
-            Interruptable = interruptable;
+            Interruptible = interruptible;
             SensationString = sensationString;
             SensationObject = Sensation.Parse(SensationString);
         }
@@ -63,7 +62,7 @@ namespace OWOVRC.Classes.Effects.OSCPresets
                 this.Priority,
                 this.Intensity,
                 this.Loop,
-                this.Interruptable,
+                this.Interruptible,
                 this.SensationString
             );
         }

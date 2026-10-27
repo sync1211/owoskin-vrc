@@ -23,7 +23,7 @@ namespace OWOVRC.Test.Classes.OSCPresets
             Assert.AreEqual(preset.Intensity, decodedPreset.Intensity);
             Assert.AreEqual(preset.SensationString, decodedPreset.SensationString);
             Assert.AreEqual(preset.Loop, decodedPreset.Loop);
-            Assert.AreEqual(preset.Interruptable, decodedPreset.Interruptable);
+            Assert.AreEqual(preset.Interruptible, decodedPreset.Interruptible);
         }
     }
 }
