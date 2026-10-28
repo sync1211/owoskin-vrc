@@ -534,6 +534,12 @@ namespace OWOVRC.UI
                 return;
             }
 
+            // Prevent the error message from showing up when the connection was aborted
+            if (cancellationTokenSource.Token.IsCancellationRequested)
+            {
+                return;
+            }
+
             // Connection error
             try
             {
