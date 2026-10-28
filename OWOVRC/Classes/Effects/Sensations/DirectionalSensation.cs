@@ -2,7 +2,6 @@
 using OWOVRC.Classes.Helpers;
 using OWOVRC.Classes.OWOSuit;
 using Serilog;
-using System.Runtime.CompilerServices;
 
 namespace OWOVRC.Classes.Effects.Sensations
 {
@@ -78,11 +77,11 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             // 0. Split velocity values into directions
             float frontVelocity = Math.Max(0, velocityZ * -1);
-            float backVelocity =  Math.Max(0, velocityZ);
-            float leftVelocity =  Math.Max(0, velocityX * -1);
+            float backVelocity  = Math.Max(0, velocityZ);
+            float leftVelocity  = Math.Max(0, velocityX * -1);
             float rightVelocity = Math.Max(0, velocityX);
-            float upVelocity =    Math.Max(0, velocityY * -1);
-            float downVelocity =  Math.Max(0, velocityY);
+            float upVelocity    = Math.Max(0, velocityY * -1);
+            float downVelocity  = Math.Max(0, velocityY);
 
             // Calculate max velocity
             float maxVelocity = MaxHelper.Max(frontVelocity, backVelocity, leftVelocity, rightVelocity, upVelocity, downVelocity);
@@ -103,19 +102,19 @@ namespace OWOVRC.Classes.Effects.Sensations
 
             // 2. Assign a weight to every direction based on their % of the maximum
             int frontWeight = (int)(frontVelocity / maxVelocity) * 100;
-            int backWeight  = (int)(backVelocity / maxVelocity) * 100;
-            int leftWeight  = (int)(leftVelocity / maxVelocity) * 100;
+            int backWeight  = (int)(backVelocity / maxVelocity)  * 100;
+            int leftWeight  = (int)(leftVelocity / maxVelocity)  * 100;
             int rightWeight = (int)(rightVelocity / maxVelocity) * 100;
-            int upWeight    = (int)(upVelocity / maxVelocity) * 100;
-            int downWeight  = (int)(downVelocity / maxVelocity) * 100;
+            int upWeight    = (int)(upVelocity / maxVelocity)    * 100;
+            int downWeight  = (int)(downVelocity / maxVelocity)  * 100;
 
             // 3. For each direction, add its weight to the muscles affected by it
             AddMuscleWeights(muscleIntensityScore, directions.Front, frontWeight);
-            AddMuscleWeights(muscleIntensityScore, directions.Back, backWeight);
-            AddMuscleWeights(muscleIntensityScore, directions.Left, leftWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Back,  backWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Left,  leftWeight);
             AddMuscleWeights(muscleIntensityScore, directions.Right, rightWeight);
-            AddMuscleWeights(muscleIntensityScore, directions.Up, upWeight);
-            AddMuscleWeights(muscleIntensityScore, directions.Down, downWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Up,    upWeight);
+            AddMuscleWeights(muscleIntensityScore, directions.Down,  downWeight);
 
             // 4. Convert the muscle values to a % value of the maximum
             int maxMuscleValue = muscleIntensityScore.Values.Max();
