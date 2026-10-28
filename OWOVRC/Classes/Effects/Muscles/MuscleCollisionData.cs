@@ -13,7 +13,14 @@
                 return (float)DecayCyclesLeft / (float)DecayCyclesTotal;
             }
         }
-        public int DecayStartIntensity { get; set; }
+        public int DecayStartIntensity { get; set; } // Intensity before the decay has been applied
+        public int DecayIntensity // Intensity decay in percent
+        {
+            get
+            {
+                return (int) (DecayStartIntensity * DecayPercent);
+            }
+        }
 
         public int MaxCyclesLeft { get; private set; } // Failsafe to prevent stuck muscles, decreased each calculation cycle, resets on every update
         private readonly int MaxCycles = 100;
