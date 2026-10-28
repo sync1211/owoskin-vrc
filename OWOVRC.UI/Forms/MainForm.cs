@@ -535,6 +535,12 @@ namespace OWOVRC.UI
                 return;
             }
 
+            // Prevent the error message from showing up when the connection was aborted
+            if (cancellationTokenSource.Token.IsCancellationRequested)
+            {
+                return;
+            }
+
             // Connection error
             try
             {
@@ -1267,6 +1273,12 @@ namespace OWOVRC.UI
 
         private void AudioDeviceSelectButton_Click(object sender, EventArgs e)
         {
+            if (audioEffect == null)
+            {
+                Log.Error("Could not open audio capture settings: audioEffect is null!");
+                return;
+            }
+
             Cursor = Cursors.WaitCursor;
             using (MMDeviceEnumerator enumerator = new())
             {
@@ -1282,14 +1294,17 @@ namespace OWOVRC.UI
                     selectedIndex = Array.FindIndex(deviceArray, d => d.ID.Equals(defaultDevice.ID));
                 }
 
-                using (SelectionDialog<MMDevice> dialog = new(deviceArray, "Select an audio device:", "Select audio device", selectedIndex))
+                using (AudioCaptureSettingsDialog dialog = new(deviceArray, selectedIndex, audioSettings.CaptureVRCOnly))
                 {
                     DialogResult result = dialog.ShowDialog();
 
                     if (result == DialogResult.OK)
                     {
-                        audioEffect = new(owo, audioSettings, dialog.Value);
-                        Log.Information("Audio device changed to {Device}", dialog.Value);
+                       
+                        audioSettings.CaptureVRCOnly = dialog.CaptureVRCProcess;
+                        audioEffect?.SetDevice(dialog.SelectedDevice);
+
+                        Log.Information("Audio device changed to {Device}", dialog.SelectedDevice);
                     }
                 }
             }

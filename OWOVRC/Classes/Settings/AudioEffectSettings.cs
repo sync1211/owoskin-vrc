@@ -8,6 +8,9 @@ namespace OWOVRC.Classes.Settings
     public partial class AudioEffectSettings : EffectSettingsBase
     {
         [JsonInclude]
+        public bool CaptureVRCOnly = false;
+
+        [JsonInclude]
         public AudioEffectSpectrumSettings BassSettings { get; set; } =
             new("Bass", AudioSpectrum.Bass, DefaultBassMuscles, baseIntensity: 55, priority: 5, minDB: 4, maxDB: 20, sensationFrequency: 15);
 
@@ -41,8 +44,10 @@ namespace OWOVRC.Classes.Settings
         }
 
         [JsonConstructor]
-        public AudioEffectSettings(bool enabled, AudioEffectSpectrumSettings bassSettings, AudioEffectSpectrumSettings subBassSettings, AudioEffectSpectrumSettings trebleSettings) : base(enabled, 0)
+        public AudioEffectSettings(bool enabled, bool captureVRCOnly, AudioEffectSpectrumSettings bassSettings, AudioEffectSpectrumSettings subBassSettings, AudioEffectSpectrumSettings trebleSettings) : base(enabled, 0)
         {
+            CaptureVRCOnly = captureVRCOnly;
+
             BassSettings = bassSettings;
             SubBassSettings = subBassSettings;
             TrebleSettings = trebleSettings;

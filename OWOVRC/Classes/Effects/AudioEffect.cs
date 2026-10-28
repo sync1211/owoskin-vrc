@@ -5,27 +5,28 @@ using OWOVRC.Audio.Classes;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
 using Serilog;
+using System.Diagnostics;
 
 namespace OWOVRC.Classes.Effects
 {
     public partial class AudioEffect : IDisposable
     {
+        public const string VRCHAT_PROCESS_NAME = "VRChat";
         public const string SENSATION_NAME = "AudioEffect";
-        public bool IsRunning => Analyzer.IsListening;
-        public CaptureState CaptureState => Analyzer.CaptureState;
+        public bool IsRunning => Analyzer?.IsListening ?? false;
+        public CaptureState CaptureState => Analyzer?.CaptureState ?? CaptureState.Stopped;
         public readonly AudioEffectSettings Settings;
         public EventHandler<AnalyzedAudioSample>? OnSampleRead;
 
-        private readonly AudioCapture Analyzer;
+        private AudioCapture? Analyzer;
+        private MMDevice? device;
         private readonly OWOHelper owo;
 
         public AudioEffect(OWOHelper owo, AudioEffectSettings settings, MMDevice? device = null)
         {
+            this.device = device;
             this.owo = owo;
             Settings = settings;
-
-            Analyzer = new(device);
-            Analyzer.OnSampleRead += Analyzer_OnSampleRead;
         }
 
         public virtual void Analyzer_OnSampleRead(object? sender, AnalyzedAudioSample sample)
@@ -107,21 +108,60 @@ namespace OWOVRC.Classes.Effects
                 .WithMuscles(muscles);
         }
 
+        public bool SetDevice(MMDevice? device)
+        {
+            this.device = device;
+
+            if (IsRunning)
+            {
+                Stop();
+                return Start();
+            }
+
+            return true;
+        }
+
+
         public bool Start()
         {
+            // Get VRChat process ID if requested
+            uint? processId = null;
+            if (Settings.CaptureVRCOnly)
+            {
+                Process[] processes = Process.GetProcessesByName(VRCHAT_PROCESS_NAME);
+                if (processes.Length == 0)
+                {
+                    Log.Error("Could not find the VRChat process.");
+                    return false;
+                }
+
+                processId = (uint)processes[0].Id;
+                Log.Information("Found VRChat process: {Name}[{PID}]", processes[0].ProcessName, processId);
+            }
+
+            // Create new analyzer
+            Analyzer = new(device, true, 100, null, processId);
+            Analyzer.OnSampleRead += Analyzer_OnSampleRead;
+
             return Analyzer.Start();
         }
 
         public void Stop()
         {
+            if (Analyzer == null)
+            {
+                return;
+            }
+
+            Analyzer.OnSampleRead -= Analyzer_OnSampleRead;
             Analyzer.Stop();
+            Analyzer.Dispose();
+            Analyzer = null;
         }
 
         public void Dispose()
         {
-            Analyzer.OnSampleRead -= Analyzer_OnSampleRead;
             Stop();
-            Analyzer.Dispose();
             GC.SuppressFinalize(this);
         }
     }
