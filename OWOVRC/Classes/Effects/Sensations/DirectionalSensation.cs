@@ -67,6 +67,7 @@ namespace OWOVRC.Classes.Effects.Sensations
         /// <param name="velocityY">down/up</param>
         /// <param name="velocityZ">back/front</param></param>
         /// </summary>
+        private readonly Dictionary<Muscle, int> muscleIntensityScore = []; // OPTIMIZATION: Prevents reallocation on every function call
         public void UpdateDirection(float velocityX, float velocityY, float velocityZ, int intensity = 100)
         {
             // Generate affected muscles dynamically based on direction
@@ -93,8 +94,12 @@ namespace OWOVRC.Classes.Effects.Sensations
             }
 
             // 1. Create a dictionary of each muscle and their value (starting at 0)
-            Dictionary<Muscle, int> muscleIntensityScore = directions.All
-                .ToDictionary(ReturnMuscle, ReturnZero); // These functions are muscle => muscle and _ => 0
+            //NOTE: Dictionary is reused and zeroed
+            for (int i = 0; i < directions.All.Length; i++)
+            {
+                Muscle key = directions.All[i];
+                muscleIntensityScore[key] = 0;
+            }
 
             // 2. Assign a weight to every direction based on their % of the maximum
             int frontWeight = (int)(frontVelocity / maxVelocity) * 100;
@@ -133,20 +138,6 @@ namespace OWOVRC.Classes.Effects.Sensations
                 Muscle muscle = directionMuscles[i];
                 muscles[muscle] += weight;
             }
-        }
-
-        // Used to create the muscleIntensityScore dictionary
-        //NOTE: These were once a lambda, but this is faster (no closure allocation)
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Muscle ReturnMuscle(Muscle muscle)
-        {
-            return muscle;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static int ReturnZero(Muscle muscle)
-        {
-            return 0;
         }
     }
 }
