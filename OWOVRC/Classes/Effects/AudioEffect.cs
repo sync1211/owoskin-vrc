@@ -1,4 +1,5 @@
 ﻿using NAudio.CoreAudioApi;
+using NAudio.Wave;
 using OWOGame;
 using OWOVRC.Audio.Classes;
 using OWOVRC.Classes.OWOSuit;
@@ -106,9 +107,9 @@ namespace OWOVRC.Classes.Effects
                 .WithMuscles(muscles);
         }
 
-        public void Start()
+        public bool Start()
         {
-            Analyzer.Start();
+            return Analyzer.Start();
         }
 
         public void Stop()

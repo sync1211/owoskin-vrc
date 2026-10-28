@@ -2,6 +2,7 @@
 using NAudio.Dsp;
 using NAudio.Wave;
 using Serilog;
+using System.ComponentModel;
 
 namespace OWOVRC.Audio.Classes
 {
@@ -25,7 +26,7 @@ namespace OWOVRC.Audio.Classes
 
         public readonly AnalyzedAudioSample Analyzer;
 
-        private readonly WasapiLoopbackCapture capture;
+        private readonly WasapiRecorder capture;
 
         private readonly Complex[] bufferR;
         private readonly Complex[] bufferL;
@@ -37,22 +38,39 @@ namespace OWOVRC.Audio.Classes
 
         private Func<ReadOnlySpan<byte>, Complex> CreateComplexFromBuffer = null!;
 
-        public AudioCapture(MMDevice? device = null)
+        public AudioCapture(MMDevice? device = null, bool rawMode = true, int bufferLength = 100, WaveFormat? format = null, uint? processID = null)
         {
-            if (device != null)
+            format ??= new WaveFormat(44100, 16, 2);
+            WasapiRecorderBuilder recorderBuilder = new WasapiRecorderBuilder()
+                .WithLowLatency()
+                .WithEventSync()                            // default: event sync (vs WithPollingSync)
+                .WithBufferLength(bufferLength)             // default: 100ms
+                .WithRawMode();
+                //.WithFormat(format);  // default: device mix format;
+
+            if (processID != null)
             {
-                capture = new(device);
+                recorderBuilder = recorderBuilder.WithProcessLoopback(processID.Value, ProcessLoopbackMode.IncludeTargetProcessTree);
+            }
+            else if (device != null)
+            {
+                recorderBuilder = recorderBuilder.WithDevice(device);
             }
             else
             {
-                capture = new();
+                recorderBuilder = recorderBuilder.WithLoopbackCapture();
             }
 
-            int sampleRate = capture.WaveFormat.SampleRate;
+            if (rawMode)
+            {
+                recorderBuilder = recorderBuilder.WithRawMode();
+            }
 
-            bufferLength = sampleRate / 2;
-            bufferR = new Complex[bufferLength];
-            bufferL = new Complex[bufferLength];
+            capture = recorderBuilder.Build();
+
+            this.bufferLength = bufferLength;
+            bufferR = new Complex[1024];
+            bufferL = new Complex[1024];
 
             bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
@@ -60,7 +78,7 @@ namespace OWOVRC.Audio.Classes
             double fftPeriod = (double)capture.WaveFormat.SampleRate / bufferLength;
             Analyzer = new(bufferR, bufferL, fftPeriod);
 
-            SelectFormatProcessor(capture.WaveFormat.Encoding);
+            //SelectFormatProcessor(capture.WaveFormat.Encoding);
 
             capture.DataAvailable += OnDataAvailable;
         }
@@ -69,13 +87,13 @@ namespace OWOVRC.Audio.Classes
         {
             if (waveEncoding == WaveFormatEncoding.Pcm)
             {
-                if (bytesPerSampleChannel == 2)
+                if (capture.WaveFormat.BitsPerSample == 16)
                 {
                     // 16-bit PCM
                     Log.Debug("Audio mode: 16-bit PCM");
                     CreateComplexFromBuffer = CreateComplexFromBuffer_PCM16;
                 }
-                else if (bytesPerSampleChannel == 4)
+                else if (capture.WaveFormat.BitsPerSample == 32)
                 {
                     // 32-bit PCM
                     Log.Debug("Audio mode: 32-bit PCM");
@@ -100,10 +118,20 @@ namespace OWOVRC.Audio.Classes
             }
         }
 
-        public void Start()
+        public bool Start()
         {
-            capture.StartRecording();
+            try
+            {
+                capture.StartRecording();
+            }
+            catch (NAudio.CoreAudioApi.CoreAudioException e)
+            {
+                Log.Error("Exception when starting audio capture.", e);
+                return false;
+            }
+
             Log.Information("Audio capture started!");
+            return true;
         }
 
         public void Stop()
@@ -112,16 +140,28 @@ namespace OWOVRC.Audio.Classes
             Log.Information("Audio capture stopped!");
         }
 
-        private void OnDataAvailable(object? sender, WaveInEventArgs e)
+        private Complex ConvertTmp(ReadOnlySpan<byte> slice)
         {
-            int sampleCount = Math.Min(e.BytesRecorded / bytesPerSample, bufferR.Length);
+            return new Complex()
+            {
+                X = BitConverter.ToSingle(slice),
+                Y = 0
+            };
+        }
 
-            ReadOnlySpan<byte> bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
+        private void OnDataAvailable(ReadOnlySpan<byte> bufferSpan, AudioClientBufferFlags flags, long devicePosition, long qpcPosition)
+        {
+            if (bufferSpan.Length == 0)
+            {
+                // Buffer empty -> ignore
+                return;
+            }
 
+            int sampleCount = Math.Min(bufferSpan.Length / bytesPerSample, bufferR.Length);
             for (int i = 0; i < sampleCount; i++)
             {
-                bufferL[i] = CreateComplexFromBuffer(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                bufferR[i] = CreateComplexFromBuffer(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
+                bufferL[i] = ConvertTmp(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                bufferR[i] = ConvertTmp(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
 
             OnSampleRead?.Invoke(this, AnalyzeAudio());
@@ -132,7 +172,7 @@ namespace OWOVRC.Audio.Classes
         {
             return new Complex()
             {
-                X = BitConverter.ToSingle(sliceX),
+                X = BitConverter.ToSingle(sliceX) / 21474836480f,
                 Y = 0
             };
         }
@@ -142,7 +182,7 @@ namespace OWOVRC.Audio.Classes
         {
             return new Complex()
             {
-                X = BitConverter.ToInt16(sliceX),
+                X = BitConverter.ToInt16(sliceX) / 327680f,
                 Y = 0
             };
         }
@@ -159,7 +199,7 @@ namespace OWOVRC.Audio.Classes
 
         public AnalyzedAudioSample AnalyzeAudio()
         {
-            FastFourierTransform.FFT(true, (int)Math.Log2(bufferR.Length), bufferR);
+            FastFourierTransform.FFT(true, (int)Math.Log2(bufferL.Length), bufferR);
             FastFourierTransform.FFT(true, (int)Math.Log2(bufferL.Length), bufferL);
 
             return Analyzer;

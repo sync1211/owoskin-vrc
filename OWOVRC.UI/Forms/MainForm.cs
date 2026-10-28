@@ -1,4 +1,5 @@
 using NAudio.CoreAudioApi;
+using NAudio.Wave;
 using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
 using OWOVRC.Classes.Effects;

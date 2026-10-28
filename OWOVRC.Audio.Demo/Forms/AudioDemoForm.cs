@@ -73,7 +73,10 @@ namespace OWOVRC.Audio.Demo
 
         private void Start()
         {
-            analyzer.Start();
+            if (!analyzer.Start())
+            {
+                return;
+            }
 
             stopButton.Enabled = true;
             startButton.Enabled = false;
