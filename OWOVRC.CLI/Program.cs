@@ -151,6 +151,7 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
 
                 // Clean up
                 receiver.Dispose();
+                owo.Disconnect();
                 owo.Dispose();
                 owi.Dispose();
 #if !TRIMMING_ENABLED && !TARGET_LINUX
