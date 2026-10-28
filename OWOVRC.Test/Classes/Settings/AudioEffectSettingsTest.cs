@@ -12,6 +12,7 @@ namespace OWOVRC.Test.Classes.Settings
             AudioEffectSettings settings = new()
             {
                 Enabled = false,
+                CaptureVRCOnly = true,
                 Priority = 2
             };
 
@@ -43,6 +44,7 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.IsNotNull(decodedSettings);
 
             Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);
+            Assert.AreEqual(settings.CaptureVRCOnly, decodedSettings.CaptureVRCOnly);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
 
             Assert.AreEqual(settings.BassSettings.Name, decodedSettings.BassSettings.Name);
