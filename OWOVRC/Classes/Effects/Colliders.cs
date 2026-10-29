@@ -134,7 +134,7 @@ namespace OWOVRC.Classes.Effects
                     muscleData.ResetDecay();
                 }
 
-                // Decay towards minimum intensity
+                // Decay towards minimum intensity (intensity == minIntensity in this case)
                 return intensity + muscleData.DecayIntensity;
             }
             else
