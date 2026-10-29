@@ -52,7 +52,9 @@ namespace OWOVRC.Audio.Classes
             }
             else if (device != null)
             {
-                recorderBuilder = recorderBuilder.WithDevice(device);
+                recorderBuilder = recorderBuilder
+                    .WithLoopbackCapture()
+                    .WithDevice(device);
             }
             else
             {
