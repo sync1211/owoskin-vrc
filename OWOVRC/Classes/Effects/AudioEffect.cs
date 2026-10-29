@@ -140,7 +140,7 @@ namespace OWOVRC.Classes.Effects
             }
 
             // Create new analyzer
-            Analyzer = new(device, true, 100, null, processId);
+            Analyzer = new(device, processId);
             Analyzer.OnSampleRead += Analyzer_OnSampleRead;
 
             return Analyzer.Start();

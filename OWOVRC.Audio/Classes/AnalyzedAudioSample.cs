@@ -8,7 +8,7 @@ namespace OWOVRC.Audio.Classes
         public readonly AnalyzedAudioChannel Right;
         public readonly double Period;
 
-        public AnalyzedAudioSample(Complex[] bufferR, Complex[] bufferL, double period, int amplification = 1_000)
+        public AnalyzedAudioSample(Complex[] bufferR, Complex[] bufferL, double period, int amplification = 100)
         {
             Period = period;
             Left = new(bufferL, period, amplification);

@@ -2,7 +2,6 @@
 using NAudio.Dsp;
 using NAudio.Wave;
 using Serilog;
-using System.ComponentModel;
 
 namespace OWOVRC.Audio.Classes
 {
@@ -39,15 +38,14 @@ namespace OWOVRC.Audio.Classes
 
         private Func<ReadOnlySpan<byte>, Complex> CreateComplexFromBuffer = null!;
 
-        public AudioCapture(MMDevice? device = null, bool rawMode = true, int bufferLength = 100, WaveFormat? format = null, uint? processID = null)
+        public AudioCapture(MMDevice? device = null, uint? processID = null, int amplification = 100)
         {
-            format ??= new WaveFormat(44100, 16, 2);
             WasapiRecorderBuilder recorderBuilder = new WasapiRecorderBuilder()
                 .WithLowLatency()
                 .WithEventSync()                            // default: event sync (vs WithPollingSync)
-                .WithBufferLength(bufferLength)             // default: 100ms
+                //.WithBufferLength(bufferLength)             // default: 100ms
                 .WithRawMode()
-                .WithFormat(format);  // default: device mix format;
+                .WithFormat(new WaveFormat(44100, 16, 2));  // default: device mix format;
 
             if (processID != null)
             {
@@ -62,11 +60,6 @@ namespace OWOVRC.Audio.Classes
                 recorderBuilder = recorderBuilder.WithLoopbackCapture();
             }
 
-            if (rawMode)
-            {
-                recorderBuilder = recorderBuilder.WithRawMode();
-            }
-
             capture = recorderBuilder.Build();
 
             this.bufferLength = 1024;
@@ -77,7 +70,7 @@ namespace OWOVRC.Audio.Classes
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
 
             double fftPeriod = (double)capture.WaveFormat.SampleRate / this.bufferLength;
-            Analyzer = new(bufferR, bufferL, fftPeriod);
+            Analyzer = new(bufferR, bufferL, fftPeriod, amplification = 100);
 
             SelectFormatProcessor(capture.WaveFormat.Encoding);
 
@@ -172,17 +165,17 @@ namespace OWOVRC.Audio.Classes
         {
             return new Complex()
             {
-                X = BitConverter.ToSingle(sliceX) / 21474836480f,
+                X = BitConverter.ToSingle(sliceX) / 2147483648f,
                 Y = 0
             };
         }
 
         // 16-bit PCM
         private Complex CreateComplexFromBuffer_PCM16(ReadOnlySpan<byte> sliceX)
-        {
+       {
             return new Complex()
             {
-                X = BitConverter.ToInt16(sliceX) / 327680f,
+                X = BitConverter.ToInt16(sliceX) / 32768f,
                 Y = 0
             };
         }

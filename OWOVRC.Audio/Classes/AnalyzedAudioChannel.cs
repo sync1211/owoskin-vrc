@@ -59,7 +59,7 @@ namespace OWOVRC.Audio.Classes
         public readonly Complex[] Buffer;
         public readonly double Period;
 
-        public AnalyzedAudioChannel(Complex[] fftBuffer, double period, int amplification = 1_000)
+        public AnalyzedAudioChannel(Complex[] fftBuffer, double period, int amplification = 100)
         {
             Buffer = fftBuffer;
             Period = period;
