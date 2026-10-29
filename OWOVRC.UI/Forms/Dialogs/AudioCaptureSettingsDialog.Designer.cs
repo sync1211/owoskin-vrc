@@ -69,11 +69,11 @@
             descriptionLabel.TabIndex = 3;
             descriptionLabel.Text = "Audio device:";
             // 
-            // comboBox1
+            // audioDeviceComboBox
             // 
             audioDeviceComboBox.FormattingEnabled = true;
             audioDeviceComboBox.Location = new Point(12, 34);
-            audioDeviceComboBox.Name = "comboBox1";
+            audioDeviceComboBox.Name = "audioDeviceComboBox";
             audioDeviceComboBox.Size = new Size(300, 23);
             audioDeviceComboBox.TabIndex = 4;
             // 
@@ -86,6 +86,7 @@
             vrcOnlyCheckbox.TabIndex = 5;
             vrcOnlyCheckbox.Text = "Only capture audio from the VRChat process";
             vrcOnlyCheckbox.UseVisualStyleBackColor = true;
+            vrcOnlyCheckbox.CheckedChanged += VrcOnlyCheckbox_CheckedChanged;
             // 
             // AudioCaptureSettingsDialog
             // 

@@ -30,15 +30,14 @@ namespace OWOVRC.Audio.Classes
         private int fftWritePos = 0;
         private readonly Complex[] bufferR;
         private readonly Complex[] bufferL;
-
         private readonly int bytesPerSampleChannel;
         private readonly int bytesPerSample;
 
         private readonly int bufferLength;
 
-        private Func<ReadOnlySpan<byte>, Complex> CreateComplexFromBuffer = null!;
+        //private Func<ReadOnlySpan<byte>, Complex> CreateComplexFromBuffer = null!;
 
-        public AudioCapture(MMDevice? device = null, uint? processID = null, int amplification = 100)
+        public AudioCapture(MMDevice? device = null, uint? processID = null, int amplification = 100, bool useHammingWindow = true)
         {
             WasapiRecorderBuilder recorderBuilder = new WasapiRecorderBuilder()
                 .WithLowLatency()
@@ -70,47 +69,47 @@ namespace OWOVRC.Audio.Classes
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
 
             double fftPeriod = (double)capture.WaveFormat.SampleRate / this.bufferLength;
-            Analyzer = new(bufferR, bufferL, fftPeriod, amplification = 100);
+            Analyzer = new(bufferR, bufferL, fftPeriod, amplification = 100, useHammingWindow);
 
-            SelectFormatProcessor(capture.WaveFormat.Encoding);
+            //SelectFormatProcessor(capture.WaveFormat.Encoding);
 
             capture.DataAvailable += OnDataAvailable;
         }
 
-        private void SelectFormatProcessor(WaveFormatEncoding waveEncoding)
-        {
-            if (waveEncoding == WaveFormatEncoding.Pcm)
-            {
-                if (capture.WaveFormat.BitsPerSample == 16)
-                {
-                    // 16-bit PCM
-                    Log.Debug("Audio mode: 16-bit PCM");
-                    CreateComplexFromBuffer = CreateComplexFromBuffer_PCM16;
-                }
-                else if (capture.WaveFormat.BitsPerSample == 32)
-                {
-                    // 32-bit PCM
-                    Log.Debug("Audio mode: 32-bit PCM");
-                    CreateComplexFromBuffer = CreateComplexFromBuffer_PCM32;
-                }
-                else
-                {
-                    // Not supported!
-                    throw new FormatException("Unsupported PCM format!");
-                }
-            }
-            else if (waveEncoding == WaveFormatEncoding.IeeeFloat && (bytesPerSampleChannel == 4))
-            {
-                // 32-bit IEEE float
-                Log.Debug("Audio mode: 32-bit IEEE float");
-                CreateComplexFromBuffer = CreateComplexFromBuffer_IeeeFloat32;
-            }
-            else
-            {
-                // Not supported!
-                throw new FormatException("Unsupported encoding!");
-            }
-        }
+        //private void SelectFormatProcessor(WaveFormatEncoding waveEncoding)
+        //{
+        //    if (waveEncoding == WaveFormatEncoding.Pcm)
+        //    {
+        //        if (capture.WaveFormat.BitsPerSample == 16)
+        //        {
+        //            // 16-bit PCM
+        //            Log.Debug("Audio mode: 16-bit PCM");
+        //            CreateComplexFromBuffer = CreateComplexFromBuffer_PCM16;
+        //        }
+        //        else if (capture.WaveFormat.BitsPerSample == 32)
+        //        {
+        //            // 32-bit PCM
+        //            Log.Debug("Audio mode: 32-bit PCM");
+        //            CreateComplexFromBuffer = CreateComplexFromBuffer_PCM32;
+        //        }
+        //        else
+        //        {
+        //            // Not supported!
+        //            throw new FormatException("Unsupported PCM format!");
+        //        }
+        //    }
+        //    else if (waveEncoding == WaveFormatEncoding.IeeeFloat && (bytesPerSampleChannel == 4))
+        //    {
+        //        // 32-bit IEEE float
+        //        Log.Debug("Audio mode: 32-bit IEEE float");
+        //        CreateComplexFromBuffer = CreateComplexFromBuffer_IeeeFloat32;
+        //    }
+        //    else
+        //    {
+        //        // Not supported!
+        //        throw new FormatException("Unsupported encoding!");
+        //    }
+        //}
 
         public bool Start()
         {
@@ -141,8 +140,8 @@ namespace OWOVRC.Audio.Classes
             for (int i = 0; i < maxRead; i++)
             {
                 int idx = fftWritePos + i;
-                bufferL[idx] = CreateComplexFromBuffer(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                bufferR[idx] = CreateComplexFromBuffer(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
+                bufferL[idx] = CreateComplexFromBuffer_PCM16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                bufferR[idx] = CreateComplexFromBuffer_PCM16(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
             fftWritePos += maxRead;
 
@@ -155,20 +154,20 @@ namespace OWOVRC.Audio.Classes
             for (int i = maxRead; i < sampleCount; i++)
             {
                 int idx = fftWritePos + (i - maxRead);
-                bufferL[idx] = CreateComplexFromBuffer(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                bufferR[idx] = CreateComplexFromBuffer(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
+                bufferL[idx] = CreateComplexFromBuffer_PCM16(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                bufferR[idx] = CreateComplexFromBuffer_PCM16(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
         }
 
-        // 32-bit IEEE float
-        private Complex CreateComplexFromBuffer_IeeeFloat32(ReadOnlySpan<byte> sliceX)
-        {
-            return new Complex()
-            {
-                X = BitConverter.ToSingle(sliceX) / 2147483648f,
-                Y = 0
-            };
-        }
+        //// 32-bit IEEE float
+        //private Complex CreateComplexFromBuffer_IeeeFloat32(ReadOnlySpan<byte> sliceX)
+        //{
+        //    return new Complex()
+        //    {
+        //        X = BitConverter.ToSingle(sliceX) / 2147483648f,
+        //        Y = 0
+        //    };
+        //}
 
         // 16-bit PCM
         private Complex CreateComplexFromBuffer_PCM16(ReadOnlySpan<byte> sliceX)
@@ -180,15 +179,15 @@ namespace OWOVRC.Audio.Classes
             };
         }
 
-        // 32-bit PCM
-        private Complex CreateComplexFromBuffer_PCM32(ReadOnlySpan<byte> sliceX)
-        {
-            return new Complex()
-            {
-                X = BitConverter.ToInt32(sliceX),
-                Y = 0
-            };
-        }
+        //// 32-bit PCM
+        //private Complex CreateComplexFromBuffer_PCM32(ReadOnlySpan<byte> sliceX)
+        //{
+        //    return new Complex()
+        //    {
+        //        X = BitConverter.ToInt32(sliceX),
+        //        Y = 0
+        //    };
+        //}
 
         public AnalyzedAudioSample AnalyzeAudio()
         {

@@ -1,5 +1,4 @@
 ﻿using NAudio.Dsp;
-using static OWOVRC.Audio.Classes.AnalyzedAudioSample;
 
 namespace OWOVRC.Audio.Classes
 {
