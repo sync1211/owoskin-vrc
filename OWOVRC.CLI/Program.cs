@@ -47,7 +47,7 @@ namespace OWOVRC.CLI
                 .LoadSettingsFromFile("oscPresets.json", "OSC presets", SettingsJsonContext.Default.OSCPresetsSettings) ?? new();
             WorldIntegratorSettings owiSettings = SettingsHelper
                 .LoadSettingsFromFile("owi.json", "OWI integration", SettingsJsonContext.Default.WorldIntegratorSettings) ?? new();
-#if !TRIMMING_ENABLED && !TARGET_LINUX
+#if !TARGET_LINUX
             AudioEffectSettings audioSettings = SettingsHelper
                 .LoadSettingsFromFile("audio.json", "Audio", SettingsJsonContext.Default.AudioEffectSettings) ?? new();
 #endif
@@ -87,9 +87,6 @@ namespace OWOVRC.CLI
 #if TARGET_LINUX
 #warning Audio effect is disabled for Linux targets!
 Log.Information("Audio effect is not yet supported on Linux!");
-#elif TRIMMING_ENABLED
-#warning Audio effect is disabled due to trimming being enabled!
-Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with trimming enabled!");
 #else
             AudioEffect? audio = null;
 
@@ -127,7 +124,7 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
                 }
 
                 // Start Audio effect
-#if !TRIMMING_ENABLED && !TARGET_LINUX
+#if !TARGET_LINUX
                 if (audioSettings.Enabled)
                 {
                     audio?.Start();
@@ -145,15 +142,15 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
 
                 // Stop everything
                 owi.Stop();
-#if !TRIMMING_ENABLED && !TARGET_LINUX
-                //audio.Stop();
+#if !TARGET_LINUX
+                audio.Stop();
 #endif
 
                 // Clean up
                 receiver.Dispose();
                 owo.Dispose();
                 owi.Dispose();
-#if !TRIMMING_ENABLED && !TARGET_LINUX
+#if !TARGET_LINUX
                 audio.Dispose();
 #endif
 
