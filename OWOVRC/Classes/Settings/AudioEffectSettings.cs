@@ -10,7 +10,7 @@ namespace OWOVRC.Classes.Settings
         [JsonInclude]
         public bool CaptureVRCOnly;
         [JsonInclude]
-        public bool UseHammingWindow = true;
+        public bool UseHammingWindow;
         [JsonInclude]
         public int Amplification = 100;
 

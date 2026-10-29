@@ -211,7 +211,7 @@ namespace OWOVRC.UI
 
             openDiscoveryButton.Enabled = !IsRunning;
 
-            audioCaptureSettingsButton.Enabled = !IsRunning;
+            //audioCaptureSettingsButton.Enabled = !IsRunning;
 
             stopSensationsButton.Enabled = IsRunning;
         }
@@ -1271,7 +1271,7 @@ namespace OWOVRC.UI
             }
         }
 
-        private void AudioDeviceSelectButton_Click(object sender, EventArgs e)
+        private void AudioCaptureSettingsButton_Click(object sender, EventArgs e)
         {
             if (audioEffect == null)
             {
@@ -1279,9 +1279,9 @@ namespace OWOVRC.UI
                 return;
             }
 
-            Cursor = Cursors.WaitCursor;
             using (MMDeviceEnumerator enumerator = new())
             {
+                Cursor = Cursors.WaitCursor;
                 Log.Information("Loading audio devices...");
                 MMDeviceCollection devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
                 MMDevice[] deviceArray = [.. devices];
@@ -1293,24 +1293,31 @@ namespace OWOVRC.UI
                 {
                     selectedIndex = Array.FindIndex(deviceArray, d => d.ID.Equals(defaultDevice.ID));
                 }
+                Cursor = Cursors.Default;
 
                 using (AudioCaptureSettingsDialog dialog = new(deviceArray, audioSettings, selectedIndex))
                 {
                     DialogResult result = dialog.ShowDialog();
 
-                    if (result == DialogResult.OK)
+                    if (result != DialogResult.OK)
                     {
-                        audioSettings.CaptureVRCOnly = dialog.CaptureVRCProcess;
-                        audioSettings.UseHammingWindow = dialog.UseHammingWindow;
-                        audioEffect?.SetDevice(dialog.SelectedDevice);
+                        return;
+                    }
 
-                        Log.Information("Audio device changed to {Device}", dialog.SelectedDevice);
-                        audioSettings.SaveToFile();
+                    audioSettings.CaptureVRCOnly = dialog.CaptureVRCProcess;
+                    audioSettings.UseHammingWindow = dialog.UseHammingWindow;
+                    audioEffect?.SetDevice(dialog.SelectedDevice);
+
+                    Log.Information("Audio device changed to {Device}", dialog.SelectedDevice);
+                    audioSettings.SaveToFile();
+
+                    // Start the audio effect if it had been stopped previously (e.g. because VRChat couldn't be found)
+                    if ((IsRunning || audioMonitorForm != null) && audioSettings.Enabled && audioEffect != null && !audioEffect.IsRunning)
+                    {
+                        audioEffect.Start();
                     }
                 }
             }
-
-            Cursor = Cursors.Default;
         }
 
         private void AddAudioSettingsEntries()

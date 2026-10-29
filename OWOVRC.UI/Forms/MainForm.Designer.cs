@@ -1066,7 +1066,7 @@
             audioCaptureSettingsButton.Text = "Capture Settings";
             helpToolTip.SetToolTip(audioCaptureSettingsButton, "Configure which audio device the effect uses.\r\nShift-Click to show all available audio devices (input and output).");
             audioCaptureSettingsButton.UseVisualStyleBackColor = true;
-            audioCaptureSettingsButton.Click += AudioDeviceSelectButton_Click;
+            audioCaptureSettingsButton.Click += AudioCaptureSettingsButton_Click;
             // 
             // audioMonitorButton
             // 
