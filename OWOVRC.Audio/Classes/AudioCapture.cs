@@ -40,28 +40,34 @@ namespace OWOVRC.Audio.Classes
         public AudioCapture(MMDevice? device = null, uint? processID = null, int amplification = 100, bool useHammingWindow = true)
         {
             WasapiRecorderBuilder recorderBuilder = new WasapiRecorderBuilder()
-                .WithLowLatency()
                 .WithEventSync()                            // default: event sync (vs WithPollingSync)
                 //.WithBufferLength(bufferLength)             // default: 100ms
-                .WithRawMode()
                 .WithFormat(new WaveFormat(44100, 16, 2));  // default: device mix format;
 
             if (processID != null)
             {
-                recorderBuilder = recorderBuilder.WithProcessLoopback(processID.Value, ProcessLoopbackMode.IncludeTargetProcessTree);
-            }
-            else if (device != null)
-            {
                 recorderBuilder = recorderBuilder
-                    .WithLoopbackCapture()
-                    .WithDevice(device);
+                    .WithProcessLoopback(processID.Value, ProcessLoopbackMode.IncludeTargetProcessTree);
+
+                Task<WasapiRecorder> task = Task.Run(async () => await recorderBuilder.BuildAsync().ConfigureAwait(false));
+                task.Wait();
+                capture = task.Result;
             }
             else
             {
-                recorderBuilder = recorderBuilder.WithLoopbackCapture();
-            }
+                recorderBuilder = recorderBuilder
+                    .WithLowLatency()
+                    .WithRawMode()
+                    .WithLoopbackCapture();
 
-            capture = recorderBuilder.Build();
+                if (device != null)
+                {
+                    recorderBuilder = recorderBuilder
+                        .WithDevice(device);
+                }
+
+                capture = recorderBuilder.Build();
+            }
 
             this.bufferLength = 1024;
             bufferR = new Complex[this.bufferLength];
@@ -121,7 +127,7 @@ namespace OWOVRC.Audio.Classes
             }
             catch (NAudio.CoreAudioApi.CoreAudioException e)
             {
-                Log.Error("Exception when starting audio capture.", e);
+                Log.Error(e, "Exception when starting audio capture.");
                 return false;
             }
 
