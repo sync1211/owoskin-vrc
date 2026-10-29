@@ -9,9 +9,9 @@ env:
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "improvement/naudio3" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "improvement/naudio3" ]
 
 jobs:
 
