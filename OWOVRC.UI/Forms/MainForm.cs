@@ -211,7 +211,7 @@ namespace OWOVRC.UI
 
             openDiscoveryButton.Enabled = !IsRunning;
 
-            audioDeviceSelectButton.Enabled = !IsRunning;
+            audioCaptureSettingsButton.Enabled = !IsRunning;
 
             stopSensationsButton.Enabled = IsRunning;
         }
@@ -1294,17 +1294,18 @@ namespace OWOVRC.UI
                     selectedIndex = Array.FindIndex(deviceArray, d => d.ID.Equals(defaultDevice.ID));
                 }
 
-                using (AudioCaptureSettingsDialog dialog = new(deviceArray, selectedIndex, audioSettings.CaptureVRCOnly))
+                using (AudioCaptureSettingsDialog dialog = new(deviceArray, audioSettings, selectedIndex))
                 {
                     DialogResult result = dialog.ShowDialog();
 
                     if (result == DialogResult.OK)
                     {
-                       
                         audioSettings.CaptureVRCOnly = dialog.CaptureVRCProcess;
+                        audioSettings.UseHammingWindow = dialog.UseHammingWindow;
                         audioEffect?.SetDevice(dialog.SelectedDevice);
 
                         Log.Information("Audio device changed to {Device}", dialog.SelectedDevice);
+                        audioSettings.SaveToFile();
                     }
                 }
             }

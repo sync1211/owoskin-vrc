@@ -8,7 +8,11 @@ namespace OWOVRC.Classes.Settings
     public partial class AudioEffectSettings : EffectSettingsBase
     {
         [JsonInclude]
-        public bool CaptureVRCOnly = false;
+        public bool CaptureVRCOnly;
+        [JsonInclude]
+        public bool UseHammingWindow = true;
+        [JsonInclude]
+        public int Amplification = 100;
 
         [JsonInclude]
         public AudioEffectSpectrumSettings BassSettings { get; set; } =
@@ -44,9 +48,19 @@ namespace OWOVRC.Classes.Settings
         }
 
         [JsonConstructor]
-        public AudioEffectSettings(bool enabled, bool captureVRCOnly, AudioEffectSpectrumSettings bassSettings, AudioEffectSpectrumSettings subBassSettings, AudioEffectSpectrumSettings trebleSettings) : base(enabled, 0)
+        public AudioEffectSettings(
+            bool enabled,
+            bool captureVRCOnly,
+            bool useHammingWindow,
+            int amplification,
+            AudioEffectSpectrumSettings bassSettings,
+            AudioEffectSpectrumSettings subBassSettings,
+            AudioEffectSpectrumSettings trebleSettings
+        ) : base(enabled, 0)
         {
             CaptureVRCOnly = captureVRCOnly;
+            UseHammingWindow = useHammingWindow;
+            Amplification = amplification;
 
             BassSettings = bassSettings;
             SubBassSettings = subBassSettings;

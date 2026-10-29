@@ -13,12 +13,12 @@ namespace OWOVRC.Classes.Effects
     {
         public const string VRCHAT_PROCESS_NAME = "VRChat";
         public const string SENSATION_NAME = "AudioEffect";
-        public bool IsRunning => Analyzer?.IsListening ?? false;
-        public CaptureState CaptureState => Analyzer?.CaptureState ?? CaptureState.Stopped;
+        public bool IsRunning => AudioCapture?.IsListening ?? false;
+        public CaptureState CaptureState => AudioCapture?.CaptureState ?? CaptureState.Stopped;
         public readonly AudioEffectSettings Settings;
         public EventHandler<AnalyzedAudioSample>? OnSampleRead;
 
-        private AudioCapture? Analyzer;
+        private AudioCapture? AudioCapture;
         private MMDevice? device;
         private readonly OWOHelper owo;
 
@@ -139,24 +139,24 @@ namespace OWOVRC.Classes.Effects
                 Log.Information("Found VRChat process: {Name}[{PID}]", processes[0].ProcessName, processId);
             }
 
-            // Create new analyzer
-            Analyzer = new(device, processId);
-            Analyzer.OnSampleRead += Analyzer_OnSampleRead;
+            // Create new audio capture
+            AudioCapture = new(device, processId, Settings.Amplification, Settings.UseHammingWindow);
+            AudioCapture.OnSampleRead += Analyzer_OnSampleRead;
 
-            return Analyzer.Start();
+            return AudioCapture.Start();
         }
 
         public void Stop()
         {
-            if (Analyzer == null)
+            if (AudioCapture == null)
             {
                 return;
             }
 
-            Analyzer.OnSampleRead -= Analyzer_OnSampleRead;
-            Analyzer.Stop();
-            Analyzer.Dispose();
-            Analyzer = null;
+            AudioCapture.OnSampleRead -= Analyzer_OnSampleRead;
+            AudioCapture.Stop();
+            AudioCapture.Dispose();
+            AudioCapture = null;
         }
 
         public void Dispose()

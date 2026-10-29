@@ -107,7 +107,7 @@
             openOscPresetsFormButton = new Button();
             applyOscPresetsSettingsButton = new Button();
             audioResponsePage = new TabPage();
-            audioDeviceSelectButton = new Button();
+            audioCaptureSettingsButton = new Button();
             audioMonitorButton = new Button();
             applyAudioSettingsButton = new Button();
             audioEnabledCheckbox = new CheckBox();
@@ -251,7 +251,7 @@
             collidersDecayOnExitCheckbox.AutoSize = true;
             collidersDecayOnExitCheckbox.Location = new Point(6, 46);
             collidersDecayOnExitCheckbox.Name = "collidersDecayOnExitCheckbox";
-            collidersDecayOnExitCheckbox.Size = new Size(95, 19);
+            collidersDecayOnExitCheckbox.Size = new Size(96, 19);
             collidersDecayOnExitCheckbox.TabIndex = 15;
             collidersDecayOnExitCheckbox.Text = "Apply on exit";
             helpToolTip.SetToolTip(collidersDecayOnExitCheckbox, resources.GetString("collidersDecayOnExitCheckbox.ToolTip"));
@@ -533,7 +533,7 @@
             velocitySpeedCapLabel.AutoSize = true;
             velocitySpeedCapLabel.Location = new Point(6, 86);
             velocitySpeedCapLabel.Name = "velocitySpeedCapLabel";
-            velocitySpeedCapLabel.Size = new Size(108, 15);
+            velocitySpeedCapLabel.Size = new Size(109, 15);
             velocitySpeedCapLabel.TabIndex = 11;
             velocitySpeedCapLabel.Text = "Max. velocity (m/s)";
             helpToolTip.SetToolTip(velocitySpeedCapLabel, "Maximum speed for wind effects (used for scaling)");
@@ -727,7 +727,7 @@
             inertiaMaxDeltaLabel.AutoSize = true;
             inertiaMaxDeltaLabel.Location = new Point(6, 86);
             inertiaMaxDeltaLabel.Name = "inertiaMaxDeltaLabel";
-            inertiaMaxDeltaLabel.Size = new Size(108, 15);
+            inertiaMaxDeltaLabel.Size = new Size(109, 15);
             inertiaMaxDeltaLabel.TabIndex = 39;
             inertiaMaxDeltaLabel.Text = "Max. velocity (m/s)";
             helpToolTip.SetToolTip(inertiaMaxDeltaLabel, "Maximum speed difference for inertia effects (used for scaling)");
@@ -1044,7 +1044,7 @@
             // 
             // audioResponsePage
             // 
-            audioResponsePage.Controls.Add(audioDeviceSelectButton);
+            audioResponsePage.Controls.Add(audioCaptureSettingsButton);
             audioResponsePage.Controls.Add(audioMonitorButton);
             audioResponsePage.Controls.Add(applyAudioSettingsButton);
             audioResponsePage.Controls.Add(audioEnabledCheckbox);
@@ -1056,17 +1056,17 @@
             audioResponsePage.Text = "Audio";
             audioResponsePage.UseVisualStyleBackColor = true;
             // 
-            // audioDeviceSelectButton
+            // audioCaptureSettingsButton
             // 
-            audioDeviceSelectButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            audioDeviceSelectButton.Location = new Point(254, 3);
-            audioDeviceSelectButton.Name = "audioDeviceSelectButton";
-            audioDeviceSelectButton.Size = new Size(100, 23);
-            audioDeviceSelectButton.TabIndex = 37;
-            audioDeviceSelectButton.Text = "Select Device";
-            helpToolTip.SetToolTip(audioDeviceSelectButton, "Configure which audio device the effect uses.\r\nShift-Click to show all available audio devices (input and output).");
-            audioDeviceSelectButton.UseVisualStyleBackColor = true;
-            audioDeviceSelectButton.Click += AudioDeviceSelectButton_Click;
+            audioCaptureSettingsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            audioCaptureSettingsButton.Location = new Point(239, 3);
+            audioCaptureSettingsButton.Name = "audioCaptureSettingsButton";
+            audioCaptureSettingsButton.Size = new Size(115, 23);
+            audioCaptureSettingsButton.TabIndex = 37;
+            audioCaptureSettingsButton.Text = "Capture Settings";
+            helpToolTip.SetToolTip(audioCaptureSettingsButton, "Configure which audio device the effect uses.\r\nShift-Click to show all available audio devices (input and output).");
+            audioCaptureSettingsButton.UseVisualStyleBackColor = true;
+            audioCaptureSettingsButton.Click += AudioDeviceSelectButton_Click;
             // 
             // audioMonitorButton
             // 
@@ -1681,7 +1681,7 @@
         private Controls.AudioSettingsPriorityPanel audioSettingsPriorityPanel1;
         private Button audioMonitorButton;
         private GroupBox owiInformationGroup;
-        private Button audioDeviceSelectButton;
+        private Button audioCaptureSettingsButton;
         private TabControl statusTabControl;
         private TabPage logPage;
         private TabPage sensationsPage;

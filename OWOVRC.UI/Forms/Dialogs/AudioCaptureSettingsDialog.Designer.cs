@@ -34,6 +34,7 @@
             descriptionLabel = new Label();
             audioDeviceComboBox = new ComboBox();
             vrcOnlyCheckbox = new CheckBox();
+            hammingWindowCheckbox = new CheckBox();
             SuspendLayout();
             // 
             // okButton
@@ -41,7 +42,7 @@
             okButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             okButton.DialogResult = DialogResult.OK;
             okButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            okButton.Location = new Point(237, 88);
+            okButton.Location = new Point(237, 109);
             okButton.Name = "okButton";
             okButton.Size = new Size(75, 23);
             okButton.TabIndex = 2;
@@ -52,7 +53,7 @@
             // 
             cancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             cancelButton.DialogResult = DialogResult.Cancel;
-            cancelButton.Location = new Point(156, 88);
+            cancelButton.Location = new Point(156, 109);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(75, 23);
             cancelButton.TabIndex = 3;
@@ -63,7 +64,7 @@
             // 
             descriptionLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             descriptionLabel.AutoSize = true;
-            descriptionLabel.Location = new Point(12, 16);
+            descriptionLabel.Location = new Point(12, 11);
             descriptionLabel.Name = "descriptionLabel";
             descriptionLabel.Size = new Size(79, 15);
             descriptionLabel.TabIndex = 3;
@@ -72,7 +73,7 @@
             // audioDeviceComboBox
             // 
             audioDeviceComboBox.FormattingEnabled = true;
-            audioDeviceComboBox.Location = new Point(12, 34);
+            audioDeviceComboBox.Location = new Point(12, 29);
             audioDeviceComboBox.Name = "audioDeviceComboBox";
             audioDeviceComboBox.Size = new Size(300, 23);
             audioDeviceComboBox.TabIndex = 4;
@@ -80,7 +81,7 @@
             // vrcOnlyCheckbox
             // 
             vrcOnlyCheckbox.AutoSize = true;
-            vrcOnlyCheckbox.Location = new Point(12, 63);
+            vrcOnlyCheckbox.Location = new Point(12, 58);
             vrcOnlyCheckbox.Name = "vrcOnlyCheckbox";
             vrcOnlyCheckbox.Size = new Size(261, 19);
             vrcOnlyCheckbox.TabIndex = 5;
@@ -88,13 +89,24 @@
             vrcOnlyCheckbox.UseVisualStyleBackColor = true;
             vrcOnlyCheckbox.CheckedChanged += VrcOnlyCheckbox_CheckedChanged;
             // 
+            // hammingWindowCheckbox
+            // 
+            hammingWindowCheckbox.AutoSize = true;
+            hammingWindowCheckbox.Location = new Point(12, 83);
+            hammingWindowCheckbox.Name = "hammingWindowCheckbox";
+            hammingWindowCheckbox.Size = new Size(127, 19);
+            hammingWindowCheckbox.TabIndex = 6;
+            hammingWindowCheckbox.Text = "Hamming Window";
+            hammingWindowCheckbox.UseVisualStyleBackColor = true;
+            // 
             // AudioCaptureSettingsDialog
             // 
             AcceptButton = okButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = cancelButton;
-            ClientSize = new Size(324, 123);
+            ClientSize = new Size(324, 144);
+            Controls.Add(hammingWindowCheckbox);
             Controls.Add(vrcOnlyCheckbox);
             Controls.Add(audioDeviceComboBox);
             Controls.Add(descriptionLabel);
@@ -117,5 +129,6 @@
         private Label descriptionLabel;
         protected ComboBox audioDeviceComboBox;
         private CheckBox vrcOnlyCheckbox;
+        private CheckBox hammingWindowCheckbox;
     }
 }

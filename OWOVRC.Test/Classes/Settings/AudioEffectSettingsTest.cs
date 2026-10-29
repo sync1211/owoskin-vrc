@@ -13,6 +13,8 @@ namespace OWOVRC.Test.Classes.Settings
             {
                 Enabled = false,
                 CaptureVRCOnly = true,
+                UseHammingWindow = true,
+                Amplification = 256,
                 Priority = 2
             };
 
@@ -44,8 +46,12 @@ namespace OWOVRC.Test.Classes.Settings
             Assert.IsNotNull(decodedSettings);
 
             Assert.AreEqual(settings.Enabled, decodedSettings.Enabled);
-            Assert.AreEqual(settings.CaptureVRCOnly, decodedSettings.CaptureVRCOnly);
             Assert.AreEqual(settings.Priority, decodedSettings.Priority);
+
+            Assert.AreEqual(settings.CaptureVRCOnly, decodedSettings.CaptureVRCOnly);
+            Assert.AreEqual(settings.UseHammingWindow, decodedSettings.UseHammingWindow);
+            
+            Assert.AreEqual(settings.Amplification, decodedSettings.Amplification);
 
             Assert.AreEqual(settings.BassSettings.Name, decodedSettings.BassSettings.Name);
             Assert.AreEqual(settings.BassSettings.Priority, decodedSettings.BassSettings.Priority);

@@ -1,4 +1,5 @@
 ﻿using NAudio.CoreAudioApi;
+using OWOVRC.Classes.Settings;
 
 namespace OWOVRC.UI.Forms.Dialogs
 {
@@ -13,8 +14,15 @@ namespace OWOVRC.UI.Forms.Dialogs
                 return vrcOnlyCheckbox.Checked;
             }
         }
+        public bool UseHammingWindow
+        {
+            get
+            {
+                return hammingWindowCheckbox.Checked;
+            }
+        }
 
-        public AudioCaptureSettingsDialog(MMDevice?[] devices, int selectedIndex = 0, bool captureVRCOnly = false)
+        public AudioCaptureSettingsDialog(MMDevice?[] devices, AudioEffectSettings settings, int selectedIndex = 0)
         {
             InitializeComponent();
 
@@ -23,7 +31,9 @@ namespace OWOVRC.UI.Forms.Dialogs
             audioDeviceComboBox.DataSource = devices;
             audioDeviceComboBox.SelectedIndex = selectedIndex;
 
-            vrcOnlyCheckbox.Checked = captureVRCOnly;
+            hammingWindowCheckbox.Checked = settings.UseHammingWindow;
+
+            vrcOnlyCheckbox.Checked = settings.CaptureVRCOnly;
             audioDeviceComboBox.Enabled = !vrcOnlyCheckbox.Checked;
         }
 
