@@ -28,6 +28,7 @@ namespace OWOVRC.Audio.Classes
 
         private readonly WasapiRecorder capture;
 
+        private int fftWritePos = 0;
         private readonly Complex[] bufferR;
         private readonly Complex[] bufferL;
 
@@ -45,8 +46,8 @@ namespace OWOVRC.Audio.Classes
                 .WithLowLatency()
                 .WithEventSync()                            // default: event sync (vs WithPollingSync)
                 .WithBufferLength(bufferLength)             // default: 100ms
-                .WithRawMode();
-                //.WithFormat(format);  // default: device mix format;
+                .WithRawMode()
+                .WithFormat(format);  // default: device mix format;
 
             if (processID != null)
             {
@@ -68,17 +69,17 @@ namespace OWOVRC.Audio.Classes
 
             capture = recorderBuilder.Build();
 
-            this.bufferLength = bufferLength;
-            bufferR = new Complex[1024];
-            bufferL = new Complex[1024];
+            this.bufferLength = 1024;
+            bufferR = new Complex[this.bufferLength];
+            bufferL = new Complex[this.bufferLength];
 
             bytesPerSampleChannel = capture.WaveFormat.BitsPerSample / 8;
             bytesPerSample = bytesPerSampleChannel * capture.WaveFormat.Channels;
 
-            double fftPeriod = (double)capture.WaveFormat.SampleRate / bufferLength;
+            double fftPeriod = (double)capture.WaveFormat.SampleRate / this.bufferLength;
             Analyzer = new(bufferR, bufferL, fftPeriod);
 
-            //SelectFormatProcessor(capture.WaveFormat.Encoding);
+            SelectFormatProcessor(capture.WaveFormat.Encoding);
 
             capture.DataAvailable += OnDataAvailable;
         }
@@ -140,31 +141,30 @@ namespace OWOVRC.Audio.Classes
             Log.Information("Audio capture stopped!");
         }
 
-        private Complex ConvertTmp(ReadOnlySpan<byte> slice)
-        {
-            return new Complex()
-            {
-                X = BitConverter.ToSingle(slice),
-                Y = 0
-            };
-        }
-
         private void OnDataAvailable(ReadOnlySpan<byte> bufferSpan, AudioClientBufferFlags flags, long devicePosition, long qpcPosition)
         {
-            if (bufferSpan.Length == 0)
+            int sampleCount = bufferSpan.Length / bytesPerSample;
+            int maxRead = Math.Min(this.bufferLength - fftWritePos, sampleCount);
+            for (int i = 0; i < maxRead; i++)
             {
-                // Buffer empty -> ignore
-                return;
+                int idx = fftWritePos + i;
+                bufferL[idx] = CreateComplexFromBuffer(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                bufferR[idx] = CreateComplexFromBuffer(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
+            }
+            fftWritePos += maxRead;
+
+            if (fftWritePos == this.bufferLength)
+            {
+                OnSampleRead?.Invoke(this, AnalyzeAudio());
+                fftWritePos = 0;
             }
 
-            int sampleCount = Math.Min(bufferSpan.Length / bytesPerSample, bufferR.Length);
-            for (int i = 0; i < sampleCount; i++)
+            for (int i = maxRead; i < sampleCount; i++)
             {
-                bufferL[i] = ConvertTmp(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
-                bufferR[i] = ConvertTmp(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
+                int idx = fftWritePos + (i - maxRead);
+                bufferL[idx] = CreateComplexFromBuffer(bufferSpan.Slice(i * bytesPerSample, bytesPerSampleChannel));
+                bufferR[idx] = CreateComplexFromBuffer(bufferSpan.Slice((i * bytesPerSample) + bytesPerSampleChannel, bytesPerSampleChannel));
             }
-
-            OnSampleRead?.Invoke(this, AnalyzeAudio());
         }
 
         // 32-bit IEEE float
