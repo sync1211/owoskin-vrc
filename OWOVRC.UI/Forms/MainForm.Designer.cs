@@ -42,12 +42,12 @@
             collidersPriorityLabel = new Label();
             collidersPriorityInput = new NumericUpDown();
             configureCollidersIntensityLabel = new Label();
+            collidersUseVelocityCheckbox = new CheckBox();
             velocityBasedGroupBox = new GroupBox();
             collidersSpeedMultiplierLabel = new Label();
             collidersSpeedMultiplierInput = new NumericUpDown();
             collidersMinIntensityLabel = new Label();
             collidersMinIntensityInput = new NumericUpDown();
-            collidersUseVelocityCheckbox = new CheckBox();
             collidersEnabledCheckbox = new CheckBox();
             applyCollisionSettingsButton = new Button();
             velocitySettingsPage = new TabPage();
@@ -210,6 +210,7 @@
             collidersSettingsPage.Controls.Add(collidersPriorityLabel);
             collidersSettingsPage.Controls.Add(collidersPriorityInput);
             collidersSettingsPage.Controls.Add(configureCollidersIntensityLabel);
+            collidersSettingsPage.Controls.Add(collidersUseVelocityCheckbox);
             collidersSettingsPage.Controls.Add(velocityBasedGroupBox);
             collidersSettingsPage.Controls.Add(collidersEnabledCheckbox);
             collidersSettingsPage.Controls.Add(applyCollisionSettingsButton);
@@ -251,7 +252,7 @@
             collidersDecayOnExitCheckbox.AutoSize = true;
             collidersDecayOnExitCheckbox.Location = new Point(6, 46);
             collidersDecayOnExitCheckbox.Name = "collidersDecayOnExitCheckbox";
-            collidersDecayOnExitCheckbox.Size = new Size(95, 19);
+            collidersDecayOnExitCheckbox.Size = new Size(96, 19);
             collidersDecayOnExitCheckbox.TabIndex = 15;
             collidersDecayOnExitCheckbox.Text = "Apply on exit";
             helpToolTip.SetToolTip(collidersDecayOnExitCheckbox, resources.GetString("collidersDecayOnExitCheckbox.ToolTip"));
@@ -329,13 +330,25 @@
             configureCollidersIntensityLabel.Text = "Intensity (%)";
             helpToolTip.SetToolTip(configureCollidersIntensityLabel, "Configure the maximum intensity for each muscle\r\n");
             // 
+            // collidersUseVelocityCheckbox
+            // 
+            collidersUseVelocityCheckbox.AutoSize = true;
+            collidersUseVelocityCheckbox.BackColor = SystemColors.ControlLightLight;
+            collidersUseVelocityCheckbox.Location = new Point(18, 84);
+            collidersUseVelocityCheckbox.Name = "collidersUseVelocityCheckbox";
+            collidersUseVelocityCheckbox.Size = new Size(103, 19);
+            collidersUseVelocityCheckbox.TabIndex = 3;
+            collidersUseVelocityCheckbox.Text = "Velocity-Based";
+            helpToolTip.SetToolTip(collidersUseVelocityCheckbox, "Enables velocity-based intensity on collision.\r\nThe velocity is calculated using the distance to the center of the collider.");
+            collidersUseVelocityCheckbox.UseVisualStyleBackColor = false;
+            collidersUseVelocityCheckbox.CheckedChanged += CollidersUseVelocityCheckbox_CheckedChanged;
+            // 
             // velocityBasedGroupBox
             // 
             velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierLabel);
             velocityBasedGroupBox.Controls.Add(collidersSpeedMultiplierInput);
             velocityBasedGroupBox.Controls.Add(collidersMinIntensityLabel);
             velocityBasedGroupBox.Controls.Add(collidersMinIntensityInput);
-            velocityBasedGroupBox.Controls.Add(collidersUseVelocityCheckbox);
             velocityBasedGroupBox.Location = new Point(8, 84);
             velocityBasedGroupBox.Name = "velocityBasedGroupBox";
             velocityBasedGroupBox.Size = new Size(348, 79);
@@ -381,19 +394,6 @@
             collidersMinIntensityInput.Size = new Size(89, 23);
             collidersMinIntensityInput.TabIndex = 8;
             helpToolTip.SetToolTip(collidersMinIntensityInput, "The base intensity for velocity-based collisions. (Intensity of collisions without movement)");
-            // 
-            // collidersUseVelocityCheckbox
-            // 
-            collidersUseVelocityCheckbox.AutoSize = true;
-            collidersUseVelocityCheckbox.BackColor = SystemColors.ControlLightLight;
-            collidersUseVelocityCheckbox.Location = new Point(10, 0);
-            collidersUseVelocityCheckbox.Name = "collidersUseVelocityCheckbox";
-            collidersUseVelocityCheckbox.Size = new Size(103, 19);
-            collidersUseVelocityCheckbox.TabIndex = 3;
-            collidersUseVelocityCheckbox.Text = "Velocity-Based";
-            helpToolTip.SetToolTip(collidersUseVelocityCheckbox, "Enables velocity-based intensity on collision.\r\nThe velocity is calculated using the distance to the center of the collider.");
-            collidersUseVelocityCheckbox.UseVisualStyleBackColor = false;
-            collidersUseVelocityCheckbox.CheckedChanged += CollidersUseVelocityCheckbox_CheckedChanged;
             // 
             // collidersEnabledCheckbox
             // 
@@ -533,7 +533,7 @@
             velocitySpeedCapLabel.AutoSize = true;
             velocitySpeedCapLabel.Location = new Point(6, 86);
             velocitySpeedCapLabel.Name = "velocitySpeedCapLabel";
-            velocitySpeedCapLabel.Size = new Size(108, 15);
+            velocitySpeedCapLabel.Size = new Size(109, 15);
             velocitySpeedCapLabel.TabIndex = 11;
             velocitySpeedCapLabel.Text = "Max. velocity (m/s)";
             helpToolTip.SetToolTip(velocitySpeedCapLabel, "Maximum speed for wind effects (used for scaling)");
@@ -727,7 +727,7 @@
             inertiaMaxDeltaLabel.AutoSize = true;
             inertiaMaxDeltaLabel.Location = new Point(6, 86);
             inertiaMaxDeltaLabel.Name = "inertiaMaxDeltaLabel";
-            inertiaMaxDeltaLabel.Size = new Size(108, 15);
+            inertiaMaxDeltaLabel.Size = new Size(109, 15);
             inertiaMaxDeltaLabel.TabIndex = 39;
             inertiaMaxDeltaLabel.Text = "Max. velocity (m/s)";
             helpToolTip.SetToolTip(inertiaMaxDeltaLabel, "Maximum speed difference for inertia effects (used for scaling)");
