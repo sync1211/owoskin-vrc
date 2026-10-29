@@ -57,9 +57,11 @@ namespace OWOVRC.Audio.Classes
 
         public readonly Complex[] Buffer;
         public readonly double Period;
+        private readonly float[] hammingWindow;
 
-        public AnalyzedAudioChannel(Complex[] fftBuffer, double period, int amplification = 100)
+        public AnalyzedAudioChannel(Complex[] fftBuffer, double period, float[] hammingWindow, int amplification = 100)
         {
+            this.hammingWindow = hammingWindow;
             Buffer = fftBuffer;
             Period = period;
             Amplification = amplification;
@@ -69,7 +71,7 @@ namespace OWOVRC.Audio.Classes
         {
             int actualFrequency = (int)(frequency / Period);
 
-            return Buffer[actualFrequency].X * Amplification;
+            return (Buffer[actualFrequency].X * hammingWindow[actualFrequency]) * Amplification;
         }
 
         public float GetFrequencyRange(int start, int end)
@@ -80,7 +82,7 @@ namespace OWOVRC.Audio.Classes
             double highest = 0;
             for (int i = actualStart; i <= actualEnd; i++)
             {
-                highest = Math.Max(Buffer[i].X, highest);
+                highest = Math.Max(Buffer[i].X * hammingWindow[i], highest);
             }
 
             return (float)highest * Amplification;
