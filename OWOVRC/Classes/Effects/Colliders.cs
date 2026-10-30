@@ -7,7 +7,6 @@ using OWOVRC.Classes.Settings;
 using Serilog;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
-using System.Timers;
 
 namespace OWOVRC.Classes.Effects
 {
@@ -135,8 +134,8 @@ namespace OWOVRC.Classes.Effects
                     muscleData.ResetDecay();
                 }
 
-                // Decay towards minimum intensity
-                return intensity + (int)(muscleData.DecayStartIntensity * muscleData.DecayPercent);
+                // Decay towards minimum intensity (intensity == minIntensity in this case)
+                return intensity + muscleData.DecayIntensity;
             }
             else
             {

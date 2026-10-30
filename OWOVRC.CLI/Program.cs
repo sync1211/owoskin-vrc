@@ -148,6 +148,7 @@ Log.Information("Audio effect is not yet supported on Linux!");
 
                 // Clean up
                 receiver.Dispose();
+                owo.Disconnect();
                 owo.Dispose();
                 owi.Dispose();
 #if !TARGET_LINUX
