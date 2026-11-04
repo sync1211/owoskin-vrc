@@ -459,14 +459,7 @@ namespace OWOVRC.UI
 
             if (owiSettings.Enabled)
             {
-                try
-                {
-                    owi!.Start();
-                }
-                catch (FileNotFoundException e)
-                {
-                    Log.Warning("Failed to start OWO World Integration: {0}", e.Message);
-                }
+                StartOWI();
             }
 
             // Start Audio effects
@@ -493,6 +486,18 @@ namespace OWOVRC.UI
             IsRunning = true;
 
             return true;
+        }
+
+        private void StartOWI(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                owi!.Start();
+            }
+            catch (FileNotFoundException e)
+            {
+                Log.Warning("Failed to start OWO World Integration: {0}", e.Message);
+            }
         }
 
         private async Task<bool> ConnectToVRChat(CancellationToken cancellationToken = default)
@@ -944,7 +949,7 @@ namespace OWOVRC.UI
 
             if (!owi.IsRunning && owiSettings.Enabled)
             {
-                owi.Start();
+                StartOWI();
             }
         }
 

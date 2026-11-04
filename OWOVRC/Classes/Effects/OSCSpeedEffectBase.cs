@@ -77,11 +77,6 @@ namespace OWOVRC.Classes.Effects
 
         public override void UnregisterCallbacks(OSCReceiver receiver)
         {
-            if (!settings.Enabled)
-            {
-                return;
-            }
-
             foreach (KeyValuePair<string, Action<OscMessageValues>> callbackKvp in oscCallbacks)
             {
                 bool result = receiver.TryRemoveMessageCallback(callbackKvp.Key, callbackKvp.Value);
