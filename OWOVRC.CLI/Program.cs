@@ -166,6 +166,7 @@ Log.Information("Audio effect is disabled as OWOVRC.CLI has been compiled with t
                 }
 
                 Log.Information("Goodbye!");
+                Log.CloseAndFlush();
             }
         }
 
