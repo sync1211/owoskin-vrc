@@ -210,8 +210,8 @@ namespace OWOVRC.Audio.Classes
             // Wait for audio capture to stop without blocking the thread used by the audio capture.
             while (capture.CaptureState == CaptureState.Stopping)
             {
-                Log.Information("DISPOSE: Waiting for audio capture to stop...");
-                await Task.Delay(1000)
+                Log.Information("Waiting for audio capture to stop...");
+                await Task.Delay(250)
                     .ConfigureAwait(false);
             }
 
@@ -229,6 +229,8 @@ namespace OWOVRC.Audio.Classes
 
             if (capture.CaptureState == CaptureState.Stopping)
             {
+                Log.Warning("The audio capture is still in the 'Stopping' state. Postponing dispose until it's stopped to avoid a deadlock!");
+                //TODO: This is terrible, but I haven't found a better solution yet.
                 // Wait asynchronously for audio capture to stop and call Dispose again.
                 // Can't be done via Thread.Sleep as it blocks the thread used by the audio capture.
                 _ = Task.Run(DisposeAsync);
