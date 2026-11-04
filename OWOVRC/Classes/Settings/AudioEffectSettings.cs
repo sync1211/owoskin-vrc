@@ -32,6 +32,8 @@ namespace OWOVRC.Classes.Settings
             new("Mid", AudioSpectrum.Mid, DefaultMidMuscles, baseIntensity: 30, priority: 1, minDB: 2, maxDB: 10, sensationFrequency: 100);
         [JsonIgnore] //NOTE: This array is auto-sorted on priority changes via the OnPriorityChanged event
         public AudioEffectSpectrumSettings[] SpectrumSettings { get; private set; } = null!;
+        [JsonInclude]
+        public string VRChatProcessName = "VRChat";
 
         //NOTE: Add all spectrum settings here to be recognized by the audio effect and UI
         //      This array is used to sort the spectrum settings by priority to avoid sorting overhead when triggering audio effects
@@ -55,7 +57,8 @@ namespace OWOVRC.Classes.Settings
             int amplification,
             AudioEffectSpectrumSettings bassSettings,
             AudioEffectSpectrumSettings subBassSettings,
-            AudioEffectSpectrumSettings trebleSettings
+            AudioEffectSpectrumSettings trebleSettings,
+            string vrchatProcessName
         ) : base(enabled, 0)
         {
             CaptureVRCOnly = captureVRCOnly;
@@ -65,6 +68,11 @@ namespace OWOVRC.Classes.Settings
             BassSettings = bassSettings;
             SubBassSettings = subBassSettings;
             TrebleSettings = trebleSettings;
+
+            if (!String.IsNullOrEmpty(vrchatProcessName))
+            {
+                VRChatProcessName = vrchatProcessName;
+            }
 
             SetUpSpectrumSettings();
             SetUpPriorityListener();

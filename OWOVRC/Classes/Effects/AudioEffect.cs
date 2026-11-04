@@ -11,7 +11,6 @@ namespace OWOVRC.Classes.Effects
 {
     public partial class AudioEffect : IDisposable
     {
-        public const string VRCHAT_PROCESS_NAME = "VRChat";
         public const string SENSATION_NAME = "AudioEffect";
         public bool IsRunning => AudioCapture?.IsListening ?? false;
         public CaptureState CaptureState => AudioCapture?.CaptureState ?? CaptureState.Stopped;
@@ -128,10 +127,11 @@ namespace OWOVRC.Classes.Effects
             uint? processId = null;
             if (Settings.CaptureVRCOnly)
             {
-                Process[] processes = Process.GetProcessesByName(VRCHAT_PROCESS_NAME);
+                Log.Information("Searching for VRChat process '{Name}' to capture its audio output...", Settings.VRChatProcessName);
+                Process[] processes = Process.GetProcessesByName(Settings.VRChatProcessName);
                 if (processes.Length == 0)
                 {
-                    Log.Error("Could not find the VRChat process.");
+                    Log.Warning("Failed to start audio capture: VRChat process could not be found!");
                     return false;
                 }
 
