@@ -15,10 +15,6 @@
     <PublishAot>true</PublishAot>
   </PropertyGroup>
 
-  <PropertyGroup Condition="!$(DefineConstants.Contains('TARGET_LINUX')) and !$(DefineConstants.Contains('TRIMMING_ENABLED'))">
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-  </PropertyGroup>
-
   <ItemGroup>
     <Content Include="owo.ico" />
   </ItemGroup>
