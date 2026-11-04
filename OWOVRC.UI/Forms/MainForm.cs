@@ -1313,6 +1313,7 @@ namespace OWOVRC.UI
                     audioSettings.UseHammingWindow = dialog.UseHammingWindow;
                     audioEffect?.SetDevice(dialog.SelectedDevice);
 
+                    Log.Information("Audio device changed to {Device}", dialog.SelectedDevice);
                     audioSettings.SaveToFile();
 
                     // Start the audio effect if it had been stopped previously (e.g. because VRChat couldn't be found)

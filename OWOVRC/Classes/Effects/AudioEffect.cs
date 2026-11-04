@@ -110,11 +110,9 @@ namespace OWOVRC.Classes.Effects
         public bool SetDevice(MMDevice? device)
         {
             this.device = device;
-            Log.Information("Audio device changed to {Device}", device);
 
             if (IsRunning)
             {
-                Log.Information("Audio device has changed, restarting audio capture...");
                 Stop();
                 return Start();
             }
