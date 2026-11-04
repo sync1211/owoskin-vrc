@@ -35,7 +35,7 @@ namespace OWOVRC.Classes.Commandline
         {
             CommandlineArgs options = new();
 
-            for (int i = 0; i < args.Length; i++)
+            for (int i = 1; i < args.Length; i++)
             {
                 string arg = args[i];
 
