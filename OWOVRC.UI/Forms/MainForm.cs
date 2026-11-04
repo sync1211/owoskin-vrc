@@ -488,7 +488,7 @@ namespace OWOVRC.UI
             return true;
         }
 
-        private void StartOWI(CancellationToken cancellationToken = default)
+        private void StartOWI()
         {
             try
             {
