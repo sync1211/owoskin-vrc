@@ -220,6 +220,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SpeedTestForm";
+            FormClosing += SpeedTestForm_FormClosing;
             Shown += SpeedTestForm_Shown;
             ((System.ComponentModel.ISupportInitialize)playerZBar).EndInit();
             ((System.ComponentModel.ISupportInitialize)playerXBar).EndInit();

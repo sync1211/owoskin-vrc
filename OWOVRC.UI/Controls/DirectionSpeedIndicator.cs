@@ -183,11 +183,20 @@ namespace OWOVRC.UI.Controls
         private Point axisStartX = new();
         private Point axisEndX = new();
 
+        // Events
+        // Event dispatched when the control is clicked. Provides value of clicked coordinates.
+        public EventHandler<IndicatorMouseEventValues>? ValueClicked;
 
+        // Event dispatched when moving the mouse while holding the left button. Provides value of clicked coordinates.
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public EventHandler<IndicatorMouseEventValues>? ValueDrag;
 
         public DirectionSpeedIndicator()
         {
             InitializeComponent();
+
+            MouseClick += HandleMouseClick;
+            MouseMove += HandleMouseMove;
 
             // Enable double buffering to reduce flickering
             SetStyle(
@@ -200,6 +209,47 @@ namespace OWOVRC.UI.Controls
             CalculateContentScale();
 
             UpdateIndicator();
+        }
+
+        private IndicatorMouseEventValues GetValuesFromMousePos(int mouseX, int mouseY)
+        {
+            float percentX = ((float)mouseX / Width) * 100f;
+            float percentY = ((float)mouseY / Height) * 100f;
+
+            float percentXCentered = Math.Clamp( (percentX - 50f) * 2, -100f, 100f);
+            float percentYCentered = Math.Clamp(-(percentY - 50f) * 2, -100f, 100f);
+
+            float clickValueX = (percentXCentered / 100f) * MaxX;
+            float clickValueY = (percentYCentered / 100f) * MaxY;
+
+             return new IndicatorMouseEventValues(
+                mouseX,
+                mouseY,
+                percentXCentered,
+                percentYCentered,
+                clickValueX,
+                clickValueY
+            );
+        }
+
+        private void HandleMouseClick(object? sender, MouseEventArgs e)
+        {
+            if (ValueClicked == null)
+            {
+                return;
+            }
+
+            ValueClicked.Invoke(this, GetValuesFromMousePos(e.X, e.Y));
+        }
+
+        private void HandleMouseMove(object? sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left || ValueDrag == null)
+            {
+                return;
+            }
+
+            ValueDrag.Invoke(this, GetValuesFromMousePos(e.X, e.Y));
         }
 
         public void ForceUpdate()

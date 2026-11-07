@@ -2,6 +2,7 @@
 using OWOVRC.Classes.Effects;
 using OWOVRC.Classes.OWOSuit;
 using OWOVRC.Classes.Settings;
+using OWOVRC.UI.Controls;
 
 namespace OWOVRC.UI.Forms
 {
@@ -19,6 +20,28 @@ namespace OWOVRC.UI.Forms
             this.effectSettings = effectSettings;
 
             windSensation = new WindSensation(VelocityEffect.SENSATION_DURATION);
+
+            sideDirectionIndicator.ValueClicked += HandleSideValueClicked;
+            sideDirectionIndicator.ValueDrag += HandleSideValueClicked;
+
+            topDirectionIndicator.ValueClicked += HandleTopValueClicked;
+            topDirectionIndicator.ValueDrag += HandleTopValueClicked;
+        }
+
+        public void HandleSideValueClicked(object? sender, IndicatorMouseEventValues values)
+        {
+            zSpeedInput.Value = (int)values.ValueX; // Speed Z (Fwd-Back)
+            ySpeedInput.Value = (int)values.ValueY; // Speed Y (Up-Down)
+
+            UpdateSensation();
+        }
+
+        public void HandleTopValueClicked(object? sender, IndicatorMouseEventValues values)
+        {
+            xSpeedInput.Value = (int)values.ValueX; // Speed X (L-R)
+            zSpeedInput.Value = (int)values.ValueY; // Speed Z (Fwd-Back)
+
+            UpdateSensation();
         }
 
         public void UpdateValues()
@@ -183,6 +206,15 @@ namespace OWOVRC.UI.Forms
         private void SpeedTestForm_Shown(object sender, EventArgs e)
         {
             UpdateLimits();
+        }
+
+        private void SpeedTestForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            sideDirectionIndicator.ValueClicked -= HandleSideValueClicked;
+            sideDirectionIndicator.ValueDrag -= HandleSideValueClicked;
+
+            topDirectionIndicator.ValueClicked -= HandleTopValueClicked;
+            topDirectionIndicator.ValueDrag -= HandleTopValueClicked;
         }
     }
 }
