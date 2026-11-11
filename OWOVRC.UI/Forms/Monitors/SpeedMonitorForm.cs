@@ -254,10 +254,9 @@ namespace OWOVRC.UI.Forms.Monitors
             {
                 StartSensation();
             }
-            else
-            {
-                StopSensation();
-            }
+
+            // prevent the effect from stopping the sensation
+            effectSettings.Enabled = !previewActive;
         }
 
         private void StartSensation()
@@ -288,6 +287,7 @@ namespace OWOVRC.UI.Forms.Monitors
 
             startTestButton.Focus();
 
+            StopSensation();
             UpdatePreview();
         }
 
