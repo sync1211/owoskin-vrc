@@ -63,9 +63,8 @@ namespace OWOVRC.Classes.Effects.OWI
             // * The result from this is then again scaled by the maximum intensity allowed for this sensation
 
             // Apply intensity for each muscle
-            for (int i = 0; i < Muscles.Count; i++)
+            foreach (KeyValuePair<string, int> muscleData in Muscles)
             {
-                KeyValuePair<string, int> muscleData = Muscles.ElementAt(i);
                 string muscleName = muscleData.Key;
 
                 // Get Single muscle
