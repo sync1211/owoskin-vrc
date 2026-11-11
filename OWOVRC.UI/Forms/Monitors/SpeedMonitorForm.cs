@@ -72,7 +72,7 @@ namespace OWOVRC.UI.Forms.Monitors
             return (decimal) (input * (effectSettings.MaxSpeed / 100));
         }
 
-        public void HandleTopValueClicked(object? sender, IndicatorMouseEventValues values)
+        private void HandleTopValueClicked(object? sender, IndicatorMouseEventValues values)
         {
             if (!previewMode)
             {
@@ -85,7 +85,7 @@ namespace OWOVRC.UI.Forms.Monitors
             UpdatePreview();
         }
 
-        public void HandleSideValueClicked(object? sender, IndicatorMouseEventValues values)
+        private void HandleSideValueClicked(object? sender, IndicatorMouseEventValues values)
         {
             if (!previewMode)
             {
@@ -164,6 +164,14 @@ namespace OWOVRC.UI.Forms.Monitors
         {
             refreshTimer.Stop();
             refreshTimer.Dispose();
+
+            sideDirectionIndicator.ValueClicked -= HandleSideValueClicked;
+            sideDirectionIndicator.ValueDrag -= HandleSideValueClicked;
+
+            topDirectionIndicator.ValueClicked -= HandleTopValueClicked;
+            topDirectionIndicator.ValueDrag -= HandleTopValueClicked;
+
+            StopSensation();
         }
 
         private void SpeedMonitorForm_Shown(object sender, EventArgs e)
