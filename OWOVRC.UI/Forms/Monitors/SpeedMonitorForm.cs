@@ -67,11 +67,6 @@ namespace OWOVRC.UI.Forms.Monitors
             catch (ObjectDisposedException) { }
         }
 
-        private decimal SpeedFromPercentage(float input)
-        {
-            return (decimal) (input * (effectSettings.MaxSpeed / 100));
-        }
-
         private void HandleTopValueClicked(object? sender, IndicatorMouseEventValues values)
         {
             if (!previewMode)
@@ -79,8 +74,8 @@ namespace OWOVRC.UI.Forms.Monitors
                 return;
             }
 
-            xSpeedInput.Value = SpeedFromPercentage(values.ValueX); // Speed X (L-R)
-            zSpeedInput.Value = SpeedFromPercentage(values.ValueY); // Speed Z (Fwd-Back)
+            xSpeedInput.Value = (decimal) values.ValueX; // Speed X (L-R)
+            zSpeedInput.Value = (decimal) values.ValueY; // Speed Z (Fwd-Back)
 
             UpdatePreview();
         }
@@ -92,8 +87,8 @@ namespace OWOVRC.UI.Forms.Monitors
                 return;
             }
 
-            zSpeedInput.Value = SpeedFromPercentage(values.ValueX); // Speed Z (Fwd-Back)
-            ySpeedInput.Value = SpeedFromPercentage(values.ValueY); // Speed Y (Up-Down)
+            zSpeedInput.Value = (decimal) values.ValueX; // Speed Z (Fwd-Back)
+            ySpeedInput.Value = (decimal) values.ValueY; // Speed Y (Up-Down)
 
             UpdatePreview();
         }
@@ -105,6 +100,16 @@ namespace OWOVRC.UI.Forms.Monitors
 
             sideDirectionIndicator.MaxX = maxVelocity;
             sideDirectionIndicator.MaxY = maxVelocity;
+
+            // Set limits for NumericUpDown
+            xSpeedInput.Maximum = (decimal) maxVelocity;
+            xSpeedInput.Minimum = (decimal) -maxVelocity;
+
+            ySpeedInput.Maximum = (decimal) maxVelocity;
+            ySpeedInput.Minimum = (decimal) -maxVelocity;
+
+            zSpeedInput.Maximum = (decimal) maxVelocity;
+            zSpeedInput.Minimum = (decimal) -maxVelocity;
         }
 
         public void SetMinVelocity(float minVelocity)
@@ -198,7 +203,6 @@ namespace OWOVRC.UI.Forms.Monitors
                 ? "Intensity"
                 : "Speed";
 
-
             if (previewMode) {
                 notRunningIndicator.Visible = !OWOHelper.IsConnected;
                 notRunningIndicator.Text = $"Please connect to OWO to preview the sensation.";
@@ -224,17 +228,15 @@ namespace OWOVRC.UI.Forms.Monitors
         private void UpdatePreview()
         {
             //float totalSpeed = (float)speedInput.Value;
-            float speedX = SpeedToPercentage((float) xSpeedInput.Value);
-            float speedY = SpeedToPercentage((float) ySpeedInput.Value);
-            float speedZ = SpeedToPercentage((float) zSpeedInput.Value);
+
 
             // Top view
-            topDirectionIndicator.ValueX = speedX; // Left / Right
-            topDirectionIndicator.ValueY = speedZ; // Forward / Backward
+            topDirectionIndicator.ValueX = (float) xSpeedInput.Value; // Left / Right
+            topDirectionIndicator.ValueY = (float) zSpeedInput.Value; // Forward / Backward
 
             // Side view
-            sideDirectionIndicator.ValueX = speedZ; // Forward / Backward
-            sideDirectionIndicator.ValueY = speedY; // Up / Down
+            sideDirectionIndicator.ValueX = (float) zSpeedInput.Value; // Forward / Backward
+            sideDirectionIndicator.ValueY = (float) ySpeedInput.Value; // Up / Down
 
             if (!previewMode)
             {
@@ -242,6 +244,10 @@ namespace OWOVRC.UI.Forms.Monitors
             }
 
             speedLabel.Text = $"{effectSettings.Intensity}%";
+
+            float speedX = SpeedToPercentage((float) xSpeedInput.Value);
+            float speedY = SpeedToPercentage((float) ySpeedInput.Value);
+            float speedZ = SpeedToPercentage((float) zSpeedInput.Value);
             windSensation.UpdateDirection(speedX, speedY, speedZ, effectSettings.Intensity);
             
             if (previewActive)
