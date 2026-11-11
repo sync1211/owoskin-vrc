@@ -74,8 +74,6 @@ namespace OWOVRC.UI
         private SpeedMonitorForm? speedMonitorForm;
         private SpeedHistoryForm? speedHistoryForm;
 
-        private SpeedTestForm? speedTestForm;
-
         // Token for cancelling the start/connection process
         private CancellationTokenSource cancellationTokenSource = new();
 
@@ -872,15 +870,6 @@ namespace OWOVRC.UI
             speedMonitorForm?.SetMaxVelocity(velocitySettings.MaxSpeed);
             speedMonitorForm?.SetMinVelocity(velocitySettings.MinSpeed);
 
-            // Sensation test window
-            speedTestForm?.UpdateValues();
-
-            if (!velocitySettings.Enabled)
-            {
-                speedMonitorForm?.Close();
-                speedTestForm?.Close();
-            }
-
             // (Optimization) Unregister callbacks when disabled
             if (!IsRunning || velocityEffect == null || receiver == null || oldState == velocitySettings.Enabled)
             {
@@ -900,7 +889,6 @@ namespace OWOVRC.UI
         private void UpdateVelocityButtonsState()
         {
             velocityMonitorButton.Enabled = velocitySettings.Enabled;
-            velocityTestButton.Enabled = velocitySettings.Enabled && OWOHelper.IsConnected;
         }
 
         private void StopSensationsButton_Click(object sender, EventArgs e)
@@ -1360,7 +1348,7 @@ namespace OWOVRC.UI
 
             if (speedMonitorForm == null)
             {
-                speedMonitorForm = new SpeedMonitorForm(velocityEffect);
+                speedMonitorForm = new SpeedMonitorForm(velocityEffect, velocitySettings, owo);
                 speedMonitorForm.FormClosed += SpeedMonitorForm_Closed;
                 speedMonitorForm.Show();
             }
@@ -1416,25 +1404,6 @@ namespace OWOVRC.UI
             oscPortInput.Enabled = !useOSCQueryCheckbox.Checked;
             connectionSettings.UseOSCQuery = useOSCQueryCheckbox.Checked;
             connectionSettings.SaveToFile();
-        }
-
-        private void VelocityTestButton_Click(object sender, EventArgs e)
-        {
-            if (speedTestForm == null)
-            {
-                speedTestForm = new SpeedTestForm(owo, velocitySettings);
-                speedTestForm.FormClosed += SpeedTestForm_Closed;
-                speedTestForm.Show();
-            }
-
-            speedTestForm.WindowState = FormWindowState.Normal; // Show if minimized
-            speedTestForm.Activate();
-        }
-
-        private void SpeedTestForm_Closed(object? sender, EventArgs e)
-        {
-            speedTestForm?.Dispose();
-            speedTestForm = null;
         }
     }
 }
