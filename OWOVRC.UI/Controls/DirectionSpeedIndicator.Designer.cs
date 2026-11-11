@@ -17,6 +17,12 @@
             {
                 MouseClick -= HandleMouseClick;
                 MouseMove -= HandleMouseMove;
+
+                indicatorPen.Dispose();
+                thresholdPen.Dispose();
+                axisPen.Dispose();
+
+                panelBGBrush.Dispose();
             }
 
             if (disposing && (components != null))
