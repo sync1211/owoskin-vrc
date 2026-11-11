@@ -1276,7 +1276,7 @@ namespace OWOVRC.UI
             }
         }
 
-        private void AudioCaptureSettingsButton_Click(object sender, EventArgs e)
+        private async void AudioCaptureSettingsButton_Click(object sender, EventArgs e)
         {
             if (audioEffect == null)
             {
@@ -1284,43 +1284,55 @@ namespace OWOVRC.UI
                 return;
             }
 
-            using (MMDeviceEnumerator enumerator = new())
+            try
             {
-                Cursor = Cursors.WaitCursor;
-                Log.Information("Loading audio devices...");
-                MMDeviceCollection devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
-                MMDevice[] deviceArray = [.. devices];
-
-                // Get index of default device
-                int selectedIndex;
-                Log.Debug("Getting default audio device...");
-                using (MMDevice defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
+                using (MMDeviceEnumerator enumerator = new())
                 {
-                    selectedIndex = Array.FindIndex(deviceArray, d => d.ID.Equals(defaultDevice.ID));
-                }
-                Cursor = Cursors.Default;
+                    Cursor = Cursors.WaitCursor;
+                    Log.Information("Loading audio devices...");
+                    MMDeviceCollection devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+                    MMDevice[] deviceArray = [.. devices];
 
-                using (AudioCaptureSettingsDialog dialog = new(deviceArray, audioSettings, selectedIndex))
-                {
-                    DialogResult result = dialog.ShowDialog();
-
-                    if (result != DialogResult.OK)
+                    // Get index of default device
+                    int selectedIndex;
+                    Log.Debug("Getting default audio device...");
+                    using (MMDevice defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
                     {
-                        return;
+                        selectedIndex = Array.FindIndex(deviceArray, d => d.ID.Equals(defaultDevice.ID));
                     }
+                    Cursor = Cursors.Default;
 
-                    audioSettings.CaptureVRCOnly = dialog.CaptureVRCProcess;
-                    audioSettings.UseHammingWindow = dialog.UseHammingWindow;
-                    audioEffect?.SetDevice(dialog.SelectedDevice);
-
-                    audioSettings.SaveToFile();
-
-                    // Start the audio effect if it had been stopped previously (e.g. because VRChat couldn't be found)
-                    if ((IsRunning || audioMonitorForm != null) && audioSettings.Enabled && audioEffect != null && !audioEffect.IsRunning)
+                    using (AudioCaptureSettingsDialog dialog = new(deviceArray, audioSettings, selectedIndex))
                     {
-                        audioEffect.Start();
+                        DialogResult result = dialog.ShowDialog();
+
+                        if (result != DialogResult.OK)
+                        {
+                            return;
+                        }
+
+                        audioSettings.CaptureVRCOnly = dialog.CaptureVRCProcess;
+                        audioSettings.UseHammingWindow = dialog.UseHammingWindow;
+                        
+                        // Set device (restarts if necessary)
+                        if (audioEffect != null)
+                        {
+                            await audioEffect.SetDeviceAsync(dialog.SelectedDevice);
+                        }
+
+                        audioSettings.SaveToFile();
+
+                        // Start the audio effect if it had been stopped previously (e.g. because VRChat couldn't be found)
+                        if ((IsRunning || audioMonitorForm != null) && audioSettings.Enabled && audioEffect != null && !audioEffect.IsRunning)
+                        {
+                            audioEffect.Start();
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error showing audio settings dialog.");
             }
         }
 

@@ -107,15 +107,45 @@ namespace OWOVRC.Classes.Effects
                 .WithMuscles(muscles);
         }
 
-        public bool SetDevice(MMDevice? device)
+        /// <summary>
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns>True, if the device has been changed. False if the device is identical.</returns>
+        private bool ChangeDevice(MMDevice? device)
         {
+            if (this.device == device)
+            {
+                Log.Information("Audio device unchanged");
+                return false;
+            }
+
             this.device = device;
             Log.Information("Audio device changed to {Device}", device);
+            return true;
+        }
 
-            if (IsRunning)
+        public bool SetDevice(MMDevice? device)
+        {
+            bool restartRequired = ChangeDevice(device);
+
+            if (IsRunning && restartRequired)
             {
-                Log.Information("Audio device has changed, restarting audio capture...");
+                Log.Information("Audio device has been changed, restarting audio capture...");
                 Stop();
+                return Start();
+            }
+
+            return true;
+        }
+
+        public async ValueTask<bool> SetDeviceAsync(MMDevice? device)
+        {
+            bool restartRequired = ChangeDevice(device);
+
+            if (IsRunning && restartRequired)
+            {
+                Log.Information("Audio device has been changed, restarting audio capture...");
+                await StopAsync();
                 return Start();
             }
 
@@ -148,6 +178,20 @@ namespace OWOVRC.Classes.Effects
             return AudioCapture.Start();
         }
 
+        public async Task StopAsync()
+        {
+            if (AudioCapture == null)
+            {
+                return;
+            }
+
+            AudioCapture.OnSampleRead -= Analyzer_OnSampleRead;
+            AudioCapture.Stop();
+            await AudioCapture.DisposeAsync();
+            AudioCapture = null;
+        }
+
+        //NOTE: Prefer StopAsync due to weird behavior in AudioCapture.Dispose()
         public void Stop()
         {
             if (AudioCapture == null)

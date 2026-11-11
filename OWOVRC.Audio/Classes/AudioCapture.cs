@@ -205,7 +205,7 @@ namespace OWOVRC.Audio.Classes
             return Analyzer;
         }
 
-        private async Task DisposeAsync()
+        public async Task DisposeAsync()
         {
             // Wait for audio capture to stop without blocking the thread used by the audio capture.
             while (capture.CaptureState == CaptureState.Stopping)
