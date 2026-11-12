@@ -10,11 +10,11 @@ on:
     branches: [ "master" ]
 
 jobs:
+  unitypackage:
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./Unity
-  unitypackage:
-    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -23,12 +23,12 @@ jobs:
     
     # Example Avatar
     - name: "Collect files for Example Avatar"
-      run: find 'Example Avatar/' -name \*.meta > metaList
+      run: find 'Example Avatar/' -name \*.meta | tee ./metaList
     - name: "Create unitypackage for Example Avatar"
       uses: pCYSl5EDgo/create-unitypackage@v1.2.3
       with:
         package-path: 'output/Example Avatar.unitypackage'
-        include-files: metaList
+        include-files: ./metaList
     - name: "Upload Example Avatar"
       uses: actions/upload-artifact@v4
       with:
@@ -37,7 +37,7 @@ jobs:
     
     # OWOSkin Prefab
     - name: "Collect files for OWOSkin Prefab"
-      run: find 'OWOSkin Prefab/' -name \*.meta > metaList
+      run: find 'OWOSkin Prefab/' -name \*.meta | tee metaList
     - name: "Create unitypackage for OWOSkin Prefab"
       uses: "pCYSl5EDgo/create-unitypackage@v1.2.3"
       with:
