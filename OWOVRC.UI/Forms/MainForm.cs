@@ -787,7 +787,7 @@ namespace OWOVRC.UI
                 }
 
                 string ipAddressString = ipAddress.ToString();
-                if (connectionSettings.OWOAddress == ipAddressString)
+                if (connectionSettings.OWOAddress.Equals(ipAddressString))
                 {
                     // No changes -> Don't update or save any settings
                     return;

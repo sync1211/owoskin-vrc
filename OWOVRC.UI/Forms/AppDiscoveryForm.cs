@@ -113,7 +113,7 @@ namespace OWOVRC.UI.Forms
                 discoveredApps.Add(hostEntry);
 
                 // Restore selection
-                if (hostEntry.IP == selectedIP)
+                if (hostEntry.IP.Equals(selectedIP))
                 {
                     selectedIndex = i;
                 }
