@@ -66,7 +66,7 @@
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             closeButton.DialogResult = DialogResult.Cancel;
             closeButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            closeButton.Location = new Point(217, 314);
+            closeButton.Location = new Point(217, 302);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(75, 23);
             closeButton.TabIndex = 6;
@@ -77,7 +77,7 @@
             // monitorButton
             // 
             monitorButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            monitorButton.Location = new Point(74, 1);
+            monitorButton.Location = new Point(74, 5);
             monitorButton.Name = "monitorButton";
             monitorButton.Size = new Size(75, 23);
             monitorButton.TabIndex = 19;
@@ -88,7 +88,7 @@
             // previewButton
             // 
             previewButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            previewButton.Location = new Point(153, 1);
+            previewButton.Location = new Point(153, 5);
             previewButton.Name = "previewButton";
             previewButton.Size = new Size(75, 23);
             previewButton.TabIndex = 20;
@@ -110,14 +110,14 @@
             // 
             speedLabel.Location = new Point(84, 30);
             speedLabel.Name = "speedLabel";
-            speedLabel.Size = new Size(62, 23);
+            speedLabel.Size = new Size(172, 23);
             speedLabel.TabIndex = 62;
             speedLabel.Text = "Speed";
             speedLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // sideDirectionTitle
             // 
-            sideDirectionTitle.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            sideDirectionTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             sideDirectionTitle.AutoSize = true;
             sideDirectionTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             sideDirectionTitle.Location = new Point(206, 135);
@@ -129,7 +129,7 @@
             // 
             // sideDirectionIndicator
             // 
-            sideDirectionIndicator.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            sideDirectionIndicator.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             sideDirectionIndicator.DirectionIndicatorColor = Color.Red;
             sideDirectionIndicator.Location = new Point(157, 163);
             sideDirectionIndicator.MaxX = 100F;
@@ -146,7 +146,7 @@
             // 
             // topDirectionTitle
             // 
-            topDirectionTitle.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            topDirectionTitle.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             topDirectionTitle.AutoSize = true;
             topDirectionTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             topDirectionTitle.Location = new Point(63, 135);
@@ -158,7 +158,7 @@
             // 
             // topDirectionIndicator
             // 
-            topDirectionIndicator.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            topDirectionIndicator.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             topDirectionIndicator.DirectionIndicatorColor = Color.Red;
             topDirectionIndicator.Location = new Point(13, 163);
             topDirectionIndicator.MaxX = 100F;
@@ -177,7 +177,7 @@
             // 
             notRunningIndicator.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             notRunningIndicator.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            notRunningIndicator.Location = new Point(12, 308);
+            notRunningIndicator.Location = new Point(12, 296);
             notRunningIndicator.Name = "notRunningIndicator";
             notRunningIndicator.Size = new Size(166, 32);
             notRunningIndicator.TabIndex = 57;
@@ -215,7 +215,7 @@
             // 
             // label13
             // 
-            label13.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label13.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label13.ImeMode = ImeMode.NoControl;
@@ -227,7 +227,7 @@
             // 
             // label14
             // 
-            label14.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label14.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label14.AutoSize = true;
             label14.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label14.ImeMode = ImeMode.NoControl;
@@ -355,9 +355,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = closeButton;
-            ClientSize = new Size(304, 349);
+            ClientSize = new Size(304, 337);
             Controls.Add(speedTitle);
-            Controls.Add(speedLabel);
             Controls.Add(startTestButton);
             Controls.Add(stopTestButton);
             Controls.Add(sideDirectionTitle);
@@ -380,6 +379,7 @@
             Controls.Add(previewButton);
             Controls.Add(monitorButton);
             Controls.Add(closeButton);
+            Controls.Add(speedLabel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;

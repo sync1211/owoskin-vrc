@@ -167,6 +167,8 @@ namespace OWOVRC.UI.Forms.Monitors
 
         private void SpeedMonitorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            refreshTimer.Elapsed -= OnTimerElapsed;
+
             refreshTimer.Stop();
             refreshTimer.Dispose();
 
@@ -199,10 +201,6 @@ namespace OWOVRC.UI.Forms.Monitors
             previewButton.Enabled = !previewMode;
             monitorButton.Enabled = previewMode;
 
-            speedTitle.Text = previewMode
-                ? "Intensity"
-                : "Speed";
-
             if (previewMode) {
                 notRunningIndicator.Visible = !OWOHelper.IsConnected;
                 notRunningIndicator.Text = $"Please connect to OWO to preview the sensation.";
@@ -220,35 +218,50 @@ namespace OWOVRC.UI.Forms.Monitors
             }
         }
 
-        private int SpeedToPercentage(float input)
+        private static float SpeedToPercentage(float input, float max)
         {
-            return (int)((input / effectSettings.MaxSpeed) * 100);
+            return input / max;
+        }
+
+        private static float GetNormalizedSpeed(float speedX, float speedY, float speedZ)
+        {
+            // √( x² + y² + z²)
+            return MathF.Sqrt(
+                MathF.Pow(speedX, 2)
+                + MathF.Pow(speedY, 2)
+                + MathF.Pow(speedZ, 2)
+            );
         }
 
         private void UpdatePreview()
-        {
+{
             //float totalSpeed = (float)speedInput.Value;
 
+            float speedX = (float) xSpeedInput.Value;
+            float speedY = (float) ySpeedInput.Value;
+            float speedZ = (float) zSpeedInput.Value;
 
             // Top view
-            topDirectionIndicator.ValueX = (float) xSpeedInput.Value; // Left / Right
-            topDirectionIndicator.ValueY = (float) zSpeedInput.Value; // Forward / Backward
+            topDirectionIndicator.ValueX = speedX; // Left / Right
+            topDirectionIndicator.ValueY = speedZ; // Forward / Backward
 
             // Side view
-            sideDirectionIndicator.ValueX = (float) zSpeedInput.Value; // Forward / Backward
-            sideDirectionIndicator.ValueY = (float) ySpeedInput.Value; // Up / Down
+            sideDirectionIndicator.ValueX = speedZ; // Forward / Backward
+            sideDirectionIndicator.ValueY = speedY; // Up / Down
 
             if (!previewMode)
             {
                 return;
             }
 
-            speedLabel.Text = $"{effectSettings.Intensity}%";
+            //TODO: Do not play sensation if speed is below MinSpeed?
+            float speedMagnitude = GetNormalizedSpeed(speedX, speedY, speedZ);
+            float intensityPercent = SpeedToPercentage(speedMagnitude, effectSettings.MaxSpeed);
+            int intensity = (int) Math.Min(100, effectSettings.Intensity * intensityPercent);
 
-            float speedX = SpeedToPercentage((float) xSpeedInput.Value);
-            float speedY = SpeedToPercentage((float) ySpeedInput.Value);
-            float speedZ = SpeedToPercentage((float) zSpeedInput.Value);
-            windSensation.UpdateDirection(speedX, speedY, speedZ, effectSettings.Intensity);
+            speedLabel.Text = $"{speedMagnitude:0.00} (Intensity: {intensity}%)";
+
+            windSensation.UpdateDirection(speedX, speedY, speedZ, intensity);
             
             if (previewActive)
             {
