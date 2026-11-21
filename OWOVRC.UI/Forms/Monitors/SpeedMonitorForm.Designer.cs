@@ -231,7 +231,7 @@
             label14.AutoSize = true;
             label14.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label14.ImeMode = ImeMode.NoControl;
-            label14.Location = new Point(281, 218);
+            label14.Location = new Point(281, 217);
             label14.Name = "label14";
             label14.Size = new Size(15, 15);
             label14.TabIndex = 70;

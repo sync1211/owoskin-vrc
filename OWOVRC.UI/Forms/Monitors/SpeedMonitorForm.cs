@@ -259,6 +259,12 @@ namespace OWOVRC.UI.Forms.Monitors
 
             //TODO: Do not play sensation if speed is below MinSpeed?
             float speedMagnitude = GetNormalizedSpeed(speedX, speedY, speedZ);
+            if (speedMagnitude == 0)
+            {
+                StopSensation();
+                return;
+            }
+
             float intensityPercent = SpeedToPercentage(speedMagnitude, effectSettings.MaxSpeed);
             int intensity = (int) Math.Min(100, effectSettings.Intensity * intensityPercent);
 
