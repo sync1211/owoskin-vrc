@@ -234,9 +234,7 @@ namespace OWOVRC.UI.Forms.Monitors
         }
 
         private void UpdatePreview()
-{
-            //float totalSpeed = (float)speedInput.Value;
-
+        {
             float speedX = (float) xSpeedInput.Value;
             float speedY = (float) ySpeedInput.Value;
             float speedZ = (float) zSpeedInput.Value;
