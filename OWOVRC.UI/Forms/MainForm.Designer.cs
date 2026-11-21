@@ -500,7 +500,7 @@
             velocityMonitorButton.Text = "Monitor";
             helpToolTip.SetToolTip(velocityMonitorButton, "Show player speed monitor window");
             velocityMonitorButton.UseVisualStyleBackColor = true;
-            velocityMonitorButton.Click += SpeedMonitorButton_Click;
+            velocityMonitorButton.Click += VelocityMonitorButton_Click;
             // 
             // velocitySpeedCapLabel
             // 

@@ -167,6 +167,11 @@ namespace OWOVRC.UI.Forms.Monitors
 
         private void SpeedMonitorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (previewActive)
+            {
+                StopTestButton_Click(sender, e);
+            }
+
             refreshTimer.Elapsed -= OnTimerElapsed;
 
             refreshTimer.Stop();
